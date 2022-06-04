@@ -26,12 +26,14 @@ namespace amethyst_installer_gui
 
         #region Win UI 3 Window Functionality
         
+        // Dragging
         private void Titlebar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
 
+        // Titlebar buttons
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
