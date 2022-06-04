@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:amethyst_installer_gui"
 		xmlns:Controls="clr-namespace:amethyst_installer_gui.Controls"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
         Title="Amethyst Installer" Height="502" Width="822" Background="#FF282828" Foreground="White">
     <Border Name="ContentRoot" BorderThickness="1" BorderBrush="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}">
