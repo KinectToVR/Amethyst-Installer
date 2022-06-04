@@ -19,7 +19,9 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Border Background="Transparent" Grid.Row="0" MouseDown="Titlebar_MouseDown" Margin="-34,0,0,0" Height="25" />
-                    <StackPanel Grid.Row="1" />
+                    <StackPanel Grid.Row="1">
+                        
+                    </StackPanel>
                     <Label x:Name="label" Content="Amethyst Installer v3.0.1" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Row="3" Margin="-5,0,0,25"/>
                 </Grid>
             </StackPanel>
