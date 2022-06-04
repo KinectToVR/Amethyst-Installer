@@ -7,16 +7,18 @@
 
         <FontFamily x:Key="SymbolThemeFontFamily">Segoe MDL2 Assets</FontFamily>
 
-        <Style TargetType="{x:Type Button}" x:Key="TitlebarButton">
-            <Setter Property="Foreground" Value="{x:Static local:WindowsColorHelpers.ButtonTransparentForeground}"/>
-            <Setter Property="Background" Value="{x:Static local:WindowsColorHelpers.ButtonTransparentBackground}"/>
+		<SolidColorBrush x:Key="BrushForeground" Color="#FFFFFFFF" />
+
+		<Style TargetType="{x:Type Button}" x:Key="TitlebarButton">
+            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            <Setter Property="Background" Value="#00FFFFFF"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{x:Static local:WindowsColorHelpers.ButtonTransparentBorder}" CornerRadius="4" Padding="4 4">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#19FFFFFF" CornerRadius="4" Padding="4 4">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -24,18 +26,18 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{x:Static local:WindowsColorHelpers.ButtonTransparentBackgroundHovered}"/>
+					<Setter Property="Background" Value="#0FFFFFFF"/>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Foreground" Value="#AAFFFFFF"/>
-                    <Setter Property="Background" Value="{x:Static local:WindowsColorHelpers.ButtonTransparentBackgroundHovered}"/>
+                    <Setter Property="Background" Value="#0AFFFFFF"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
 
         <Style TargetType="{x:Type Button}" x:Key="WinUIButton">
-            <Setter Property="Foreground" Value="{x:Static local:WindowsColorHelpers.ButtonForeground}"/>
-            <Setter Property="Background" Value="{x:Static local:WindowsColorHelpers.ButtonBackground}"/>
+            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+			<Setter Property="Background" Value="#0FFFFFFF"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
@@ -55,7 +57,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{x:Static local:WindowsColorHelpers.ButtonBackgroundHovered}"/>
+                    <Setter Property="Background" Value="#28FFFFFF"/>
                     <Setter Property="Button.Effect">
                         <Setter.Value>
                             <DropShadowEffect Color="Black" Direction="270" ShadowDepth="6" BlurRadius="4" Opacity="0.7" />
@@ -64,7 +66,7 @@
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Foreground" Value="#AAFFFFFF"/>
-                    <Setter Property="Background" Value="{x:Static local:WindowsColorHelpers.ButtonBackgroundDisabled}"/>
+					<Setter Property="Background" Value="#28FFFFFF"/>
                     <Setter Property="Button.Effect">
                         <Setter.Value>
                             <DropShadowEffect Color="Black" Direction="270" ShadowDepth="4" BlurRadius="4" Opacity="0.19" />

@@ -18,19 +18,6 @@ namespace amethyst_installer_gui
         public static Brush Accent { get { return new SolidColorBrush(GetAccentColor()); } }
         public static Brush AccentText { get { return new SolidColorBrush(GetContrastingColor(GetAccentColor())); } }
 
-
-        public static Brush ButtonBackground { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromArgb(15, 255, 255, 255) : Color.FromArgb(15, 0, 0, 0)); } }
-        public static Brush ButtonForeground { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0)); } }
-        public static Brush ButtonBackgroundHovered { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromArgb(40, 255, 255, 255) : Color.FromArgb(40, 0, 0, 0)); } }
-        public static Brush ButtonBackgroundDisabled { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromArgb(40, 255, 255, 255) : Color.FromArgb(40, 0, 0, 0)); } }
-        public static Brush ButtonBorder { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromArgb(25, 255, 255, 255) : Color.FromArgb(25, 0, 0, 0)); } }
-
-        public static Brush ButtonTransparentBackground { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromArgb(0, 255, 255, 255) : Color.FromArgb(0, 0, 0, 0)); } }
-        public static Brush ButtonTransparentForeground { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromRgb(255, 255, 255) : Color.FromRgb(0, 0, 0)); } }
-        public static Brush ButtonTransparentBackgroundHovered { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromArgb(15, 255, 255, 255) : Color.FromArgb(15, 0, 0, 0)); } }
-        public static Brush ButtonTransparentBackgroundDisabled { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromArgb(10, 255, 255, 255) : Color.FromArgb(10, 0, 0, 0)); } }
-        public static Brush ButtonTransparentBorder { get { return new SolidColorBrush(IsDarkTheme() ? Color.FromArgb(25, 255, 255, 255) : Color.FromArgb(25, 0, 0, 0)); } }
-
         // Extended from
         // https://stackoverflow.com/a/50848113
         public static Color GetAccentColor()
@@ -80,12 +67,6 @@ namespace amethyst_installer_gui
             colorG *= 0.7154f;
             colorB *= 0.0721f;
             return colorR + colorG + colorB;
-        }
-
-        public static bool IsDarkTheme()
-        {
-            // TODO: Poll Win32API
-            return true;
         }
 
         private static Color ParseDWordColor(int color)
