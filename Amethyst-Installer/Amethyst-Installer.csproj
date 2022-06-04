@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\SidebarTask.xaml.cs">
+      <DependentUpon>SidebarTask.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\DataFlow.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\DeviceState.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Interfaces\Blob.cs" />
@@ -83,6 +86,10 @@
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\PropVariantNative.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Role.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
+    <Page Include="Controls\SidebarTask.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,8 +130,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
     <Folder Include="Pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\1x\Checkmark.png" />
+    <Resource Include="Resources\Icons\1x\Default.png" />
+    <Resource Include="Resources\Icons\1x\Question.png" />
+    <Resource Include="Resources\Icons\2x\Checkmark.png" />
+    <Resource Include="Resources\Icons\2x\Default.png" />
+    <Resource Include="Resources\Icons\2x\Question.png" />
+    <Resource Include="Resources\Icons\4x\Checkmark.png" />
+    <Resource Include="Resources\Icons\4x\Default.png" />
+    <Resource Include="Resources\Icons\4x\Question.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets')" />

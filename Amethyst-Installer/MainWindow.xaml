@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:amethyst_installer_gui"
+		xmlns:Controls="clr-namespace:amethyst_installer_gui.Controls"
         mc:Ignorable="d"
         WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
         Title="Amethyst Installer" Height="502" Width="822" Background="#FF282828" Foreground="White">
@@ -19,8 +20,14 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Border Background="Transparent" Grid.Row="0" MouseDown="Titlebar_MouseDown" Margin="-34,0,0,0" Height="25" />
-                    <StackPanel Grid.Row="1">
-                        
+                    <StackPanel Grid.Row="1" Orientation="Vertical">
+						<Controls:SidebarTask x:Name="sidebar_welcome" State="Checkmark" Text="Welcome" Margin="0,0,0,22" />
+						<Controls:SidebarTask x:Name="sidebar_installOptions" State="Default" Text="What to install" Margin="0,0,0,22" />
+						<Controls:SidebarTask x:Name="sidebar_location" State="Default" Text="Choose destination" Margin="0,0,0,22"/>
+						<Controls:SidebarTask x:Name="sidebar_sysreq" State="Default" Text="System requirements" Margin="0,0,0,22"/>
+						<Controls:SidebarTask x:Name="sidebar_download" State="Default" Text="Downloading" Margin="0,0,0,22"/>
+						<Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="Installation" Margin="0,0,0,22"/>
+						<Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="Install completed" Margin="0,0,0,22"/>
                     </StackPanel>
                     <Label x:Name="versionLabel" Content="Amethyst Installer v3.0.1" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Row="3" Margin="-5,0,0,25"/>
                 </Grid>
