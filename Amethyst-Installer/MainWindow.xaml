@@ -22,7 +22,7 @@
                     <StackPanel Grid.Row="1">
                         
                     </StackPanel>
-                    <Label x:Name="label" Content="Amethyst Installer v3.0.1" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Row="3" Margin="-5,0,0,25"/>
+                    <Label x:Name="versionLabel" Content="Amethyst Installer v3.0.1" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Row="3" Margin="-5,0,0,25"/>
                 </Grid>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right">
