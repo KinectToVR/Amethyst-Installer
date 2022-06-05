@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:amethyst_installer_gui"
+        xmlns:res = "clr-namespace:amethyst_installer_gui.Properties"
 		xmlns:Controls="clr-namespace:amethyst_installer_gui.Controls"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -22,13 +23,13 @@
                     </Grid.RowDefinitions>
                     <Border Background="Transparent" Grid.Row="0" MouseDown="Titlebar_MouseDown" Margin="-34,0,0,0" Height="25" />
                     <StackPanel Grid.Row="1" Orientation="Vertical">
-						<Controls:SidebarTask x:Name="sidebar_welcome" State="Checkmark" Text="Welcome" Margin="0,0,0,22" />
-						<Controls:SidebarTask x:Name="sidebar_installOptions" State="Default" Text="What to install" Margin="0,0,0,22" />
-						<Controls:SidebarTask x:Name="sidebar_location" State="Default" Text="Choose destination" Margin="0,0,0,22"/>
-						<Controls:SidebarTask x:Name="sidebar_sysreq" State="Default" Text="System requirements" Margin="0,0,0,22"/>
-						<Controls:SidebarTask x:Name="sidebar_download" State="Default" Text="Downloading" Margin="0,0,0,22"/>
-						<Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="Installation" Margin="0,0,0,22"/>
-						<Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="Install completed" Margin="0,0,0,22"/>
+                        <Controls:SidebarTask x:Name="sidebar_welcome" State="Checkmark" Text="{x:Static res:Resources.Sidebar_Task_Welcome}" Margin="0,0,0,22" />
+                        <Controls:SidebarTask x:Name="sidebar_installOptions" State="Default" Text="{x:Static res:Resources.Sidebar_Task_InstallOptions}" Margin="0,0,0,22" />
+                        <Controls:SidebarTask x:Name="sidebar_location" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Location}" Margin="0,0,0,22"/>
+                        <Controls:SidebarTask x:Name="sidebar_sysreq" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Sysreq}" Margin="0,0,0,22"/>
+                        <Controls:SidebarTask x:Name="sidebar_download" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Download}" Margin="0,0,0,22"/>
+                        <Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Install}" Margin="0,0,0,22"/>
+                        <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Done}" Margin="0,0,0,22"/>
                     </StackPanel>
                     <Label x:Name="versionLabel" Content="Amethyst Installer v3.0.1" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Row="3" Margin="-5,0,0,25"/>
                 </Grid>
@@ -56,7 +57,7 @@
                         <Canvas VerticalAlignment="Stretch" />
                     </Grid>
                     <Grid Grid.Row="2" Height="60" Margin="0,0,0,26">
-                        <Button Content="Next" Width="170" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource WinUIButton}" Margin="0,0,0,2"/>
+                        <Button Content="{x:Static res:Resources.Installer_Action_Next}" Width="170" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource WinUIButton}" Margin="0,0,0,2"/>
                     </Grid>
                 </Grid>
             </StackPanel>

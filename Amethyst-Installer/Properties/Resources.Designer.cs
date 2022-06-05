@@ -22,7 +22,7 @@ namespace amethyst_installer_gui.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace amethyst_installer_gui.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("amethyst_installer_gui.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,84 @@ namespace amethyst_installer_gui.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string Installer_Action_Next {
+            get {
+                return ResourceManager.GetString("Installer_Action_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install completed.
+        /// </summary>
+        public static string Sidebar_Task_Done {
+            get {
+                return ResourceManager.GetString("Sidebar_Task_Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading.
+        /// </summary>
+        public static string Sidebar_Task_Download {
+            get {
+                return ResourceManager.GetString("Sidebar_Task_Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installation.
+        /// </summary>
+        public static string Sidebar_Task_Install {
+            get {
+                return ResourceManager.GetString("Sidebar_Task_Install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What to install.
+        /// </summary>
+        public static string Sidebar_Task_InstallOptions {
+            get {
+                return ResourceManager.GetString("Sidebar_Task_InstallOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose destination.
+        /// </summary>
+        public static string Sidebar_Task_Location {
+            get {
+                return ResourceManager.GetString("Sidebar_Task_Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System requirements.
+        /// </summary>
+        public static string Sidebar_Task_Sysreq {
+            get {
+                return ResourceManager.GetString("Sidebar_Task_Sysreq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome.
+        /// </summary>
+        public static string Sidebar_Task_Welcome {
+            get {
+                return ResourceManager.GetString("Sidebar_Task_Welcome", resourceCulture);
             }
         }
     }
