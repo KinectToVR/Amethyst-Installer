@@ -25,8 +25,14 @@ namespace amethyst_installer_gui
             const string DWM_KEY = @"Software\Microsoft\Windows\DWM";
             using (RegistryKey dwmKey = Registry.CurrentUser.OpenSubKey(DWM_KEY, RegistryKeyPermissionCheck.ReadSubTree))
             {
-                const String KEY_EX_MSG = "The \"HKCU\\" + DWM_KEY + "\" registry key does not exist.";
-                if (dwmKey is null) throw new InvalidOperationException(KEY_EX_MSG);
+                if (dwmKey is null)
+                {
+                    // const string KEY_EX_MSG = "The \"HKCU\\" + DWM_KEY + "\" registry key does not exist.";
+                    // throw new InvalidOperationException(KEY_EX_MSG);
+
+                    // Fallback to default accent color: teal blue
+                    return Color.FromRgb(24, 131, 215);
+                }
 
                 object accentColorObj = dwmKey.GetValue("AccentColor");
                 if (accentColorObj is int accentColorDword)
