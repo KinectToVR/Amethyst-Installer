@@ -82,6 +82,10 @@
     <Compile Include="Controls\SidebarTask.xaml.cs">
       <DependentUpon>SidebarTask.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Installer\OpenVRUtil.cs" />
+    <Compile Include="Pages\PageWelcome.xaml.cs">
+      <DependentUpon>PageWelcome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\DataFlow.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\DeviceState.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Interfaces\Blob.cs" />
@@ -103,6 +107,12 @@
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\PropVariant.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\PropVariantNative.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Role.cs" />
+    <Compile Include="Properties\Resources.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Util\Util.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
     <Page Include="Controls\SidebarTask.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -120,6 +130,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\PageWelcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -136,20 +150,23 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="ILRepack.targets" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Properties\Resources.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.en.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Icons\1x\Checkmark.png" />
     <Resource Include="Resources\Icons\1x\Default.png" />
