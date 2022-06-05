@@ -72,6 +72,69 @@ namespace amethyst_installer_gui.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Install completed.
         /// </summary>
+        public static string Page_Done_Title {
+            get {
+                return ResourceManager.GetString("Page_Done_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading.
+        /// </summary>
+        public static string Page_Download_Title {
+            get {
+                return ResourceManager.GetString("Page_Download_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installation.
+        /// </summary>
+        public static string Page_Install_Title {
+            get {
+                return ResourceManager.GetString("Page_Install_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What to install.
+        /// </summary>
+        public static string Page_InstallOptions_Title {
+            get {
+                return ResourceManager.GetString("Page_InstallOptions_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose destination.
+        /// </summary>
+        public static string Page_Location_Title {
+            get {
+                return ResourceManager.GetString("Page_Location_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System requirements.
+        /// </summary>
+        public static string Page_Sysreq_Title {
+            get {
+                return ResourceManager.GetString("Page_Sysreq_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome.
+        /// </summary>
+        public static string Page_Welcome_Title {
+            get {
+                return ResourceManager.GetString("Page_Welcome_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install completed.
+        /// </summary>
         public static string Sidebar_Task_Done {
             get {
                 return ResourceManager.GetString("Sidebar_Task_Done", resourceCulture);
