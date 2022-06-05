@@ -7,9 +7,16 @@
 
         <FontFamily x:Key="SymbolThemeFontFamily">Segoe MDL2 Assets</FontFamily>
 
-		<SolidColorBrush x:Key="BrushForeground" Color="#FFFFFFFF" />
+        <SolidColorBrush x:Key="BrushForeground" Color="#FFFFFFFF" />
 
-		<Style TargetType="{x:Type Button}" x:Key="TitlebarButton">
+        <Style TargetType="{x:Type TextBlock}" x:Key="Title">
+            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            <Setter Property="Background" Value="#00FFFFFF"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="TitlebarButton">
             <Setter Property="Foreground" Value="#FFFFFFFF"/>
             <Setter Property="Background" Value="#00FFFFFF"/>
             <Setter Property="FontWeight" Value="Normal"/>
