@@ -31,7 +31,7 @@
                         <Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Install}" Margin="0,0,0,22"/>
                         <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Done}" Margin="0,0,0,22"/>
                     </StackPanel>
-                    <Label x:Name="versionLabel" Content="Amethyst Installer v3.0.1" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Row="3" Margin="-5,0,0,25"/>
+                    <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Row="3" Margin="-5,0,0,25"/>
                 </Grid>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right">
