@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="amethyst_installer_gui.Pages.PageWelcome"
+﻿<UserControl x:Class="amethyst_installer_gui.Pages.PageSystemRequirements"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid>
-        
+            
     </Grid>
 </UserControl>

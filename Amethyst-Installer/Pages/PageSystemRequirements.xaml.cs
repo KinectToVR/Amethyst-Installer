@@ -17,23 +17,23 @@ using System.Windows.Shapes;
 namespace amethyst_installer_gui.Pages
 {
     /// <summary>
-    /// Interaction logic for PageWelcome.xaml
+    /// Interaction logic for PageSystemRequirements.xaml
     /// </summary>
-    public partial class PageWelcome : UserControl, IInstallerPage
+    public partial class PageSystemRequirements : UserControl, IInstallerPage
     {
-        public PageWelcome()
+        public PageSystemRequirements()
         {
             InitializeComponent();
         }
 
         public InstallerState GetInstallerState()
         {
-            return InstallerState.Welcome;
+            return InstallerState.SystemRequirements;
         }
 
         public string GetTitle()
         {
-            return Properties.Resources.Page_Welcome_Title;
+            return Properties.Resources.Page_Sysreq_Title;
         }
 
         public void OnSelected()
