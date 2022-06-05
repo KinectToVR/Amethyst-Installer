@@ -18,7 +18,9 @@ namespace amethyst_installer_gui
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            // TODO: Replace with WinUI3-esque custom dialog box
             MessageBox.Show("big chungus", "no way");
+
             // Check if the Kinect microphone is muted, and if so, prompt the user to enable it.
             var enumerator = new MMDeviceEnumerator();
             foreach (MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.All))
