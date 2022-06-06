@@ -7,6 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid>
-        
+        <Border CornerRadius="8,8,8,8">
+            <Border.Background>
+                <ImageBrush Stretch="Fill" ImageSource="/Resources/welcome-splash.png"/>
+            </Border.Background>
+        </Border>
+
     </Grid>
 </UserControl>

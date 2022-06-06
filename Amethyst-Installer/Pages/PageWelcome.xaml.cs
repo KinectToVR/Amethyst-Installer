@@ -33,7 +33,7 @@ namespace amethyst_installer_gui.Pages
 
         public string GetTitle()
         {
-            return Properties.Resources.Page_Welcome_Title;
+            return "";
         }
 
         public void OnSelected()
