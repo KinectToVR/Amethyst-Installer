@@ -31,6 +31,7 @@ namespace amethyst_installer_gui
                 return m_ameTmpDir;
             }
         }
+        // use a static variable to not pollute the tmp dir
         private static string m_ameTmpDir = Path.GetTempPath();
     }
 }
