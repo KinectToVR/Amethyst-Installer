@@ -214,7 +214,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\welcome-splash.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\1x\Checkmark.png" />
     <Resource Include="Resources\Icons\1x\Default.png" />
