@@ -124,15 +124,6 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome.
-        /// </summary>
-        public static string Page_Welcome_Title {
-            get {
-                return ResourceManager.GetString("Page_Welcome_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Install completed.
         /// </summary>
         public static string Sidebar_Task_Done {
