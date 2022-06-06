@@ -50,8 +50,8 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Border Background="Transparent" Grid.Column="0" MouseDown="Titlebar_MouseDown" VerticalAlignment="Bottom" >
-                            <TextBlock x:Name="windowTitle" TextAlignment="Left" Text="" Style="{StaticResource Title}" Margin="28,0,0,-4" />
+                        <Border Background="Transparent" Grid.Column="0" MouseDown="Titlebar_MouseDown" >
+                            <TextBlock x:Name="windowTitle" TextAlignment="Left" Text="" Style="{StaticResource Title}" Margin="28,0,0,-4" VerticalAlignment="Bottom" />
                         </Border>
                         <Button Name="Minimise" Content="&#xE921;" Style="{StaticResource TitlebarButton}" Grid.Column="1" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,10,0" Click="Minimise_Click" />
                         <Button Name="Close"    Content="&#xE8BB;" Style="{StaticResource TitlebarButton}" Grid.Column="2" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,33,0" Click="Close_Click" />
