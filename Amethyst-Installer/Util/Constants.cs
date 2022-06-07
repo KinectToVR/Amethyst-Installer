@@ -33,5 +33,10 @@ namespace amethyst_installer_gui
         }
         // use a static variable to not pollute the tmp dir
         private static string m_ameTmpDir = Path.GetTempPath();
+
+        /// <summary>
+        /// An invite to the K2VR Community Discord server
+        /// </summary>
+        public static readonly string DiscordInvite = "https://discord.gg/YBQCRDG";
     }
 }
