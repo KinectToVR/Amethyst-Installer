@@ -50,6 +50,17 @@ namespace amethyst_installer_gui
             return Color.FromRgb(24, 131, 215);
         }
 
+        public static Color Lighten(Color color, float amount = 0f)
+        {
+            float H, S, L;
+            ColorToHSL(color, out H, out S, out L);
+            S -= .3f;
+            L += .04f;
+            S = Math.Max(0.02f, Math.Min(0.98f, S)); // clamp between 0.02 and 0.98
+            L = Math.Max(0.02f, Math.Min(0.98f, L)); // clamp between 0.02 and 0.98
+            return ColorFromHSL(H, S, L);
+        }
+
         /// <summary>
         /// Returns a color which maintains contrast with the given color. Useful for getting text colors
         /// </summary>
@@ -86,5 +97,83 @@ namespace amethyst_installer_gui
             return Color.FromRgb(r, g, b);
         }
 
+        /// <summary>
+        /// Converts a color from RGB space to HSL space
+        /// </summary>
+        private static void ColorToHSL(Color color, out float H, out float S, out float L)
+        {
+            // normalize the RGB range to 0 - 1
+            float normR = color.R / 255f;
+            float normG = color.G / 255f;
+            float normB = color.B / 255f;
+
+            float min = Math.Min(normR, Math.Min(normG, normB));
+            float max = Math.Max(normR, Math.Max(normG, normB));
+            float delta = max - min;
+
+            // min and max are equal if the colour is a shade of gray
+            if (min == max)
+            {
+                H = 0;
+                S = 0;
+                L = max;
+                return;
+            }
+
+            // thus colour isn't gray
+            L = (max + min) / 2f;
+            if (L < 0.5f)
+                S = delta / (max + min);
+            else
+                S = delta / (2f - max - min);
+
+            H = 0;
+            if (normR == max) H = (normG - normB) / delta;
+            if (normG == max) H = 2f + (normB - normR) / delta;
+            if (normB == max) H = 4f + (normR - normG) / delta;
+            H *= 60f;
+            if (H < 0) H += 360f;
+        }
+
+        /// <summary>
+        /// Converts a color from HSL space to RGB space
+        /// </summary>
+        private static Color ColorFromHSL(float H, float S, float L)
+        {
+            // gray is a special case
+            if (S == 0)
+            {
+                byte lightnessAsByte = (byte)(L * 255f);
+                return Color.FromRgb(lightnessAsByte, lightnessAsByte, lightnessAsByte);
+            }
+
+            float t1, t2;
+            if (L < 0.5f)
+                t1 = L * (1f + S);
+            else
+                t1 = L + S - (L * S);
+            t2 = 2f * L - t1;
+            float normH = H / 360f;
+
+            float tR = normH + (1f/3f);
+            float tB = normH - (1f/3f);
+
+            return Color.FromRgb(EvalHSLTuple(t1, t2, tR), EvalHSLTuple(t1, t2, normH), EvalHSLTuple(t1, t2, tB));
+        }
+
+        private static byte EvalHSLTuple(float t1, float t2, float t3)
+        {
+            if (t3 < 0f) t3 += 1f;
+            if (t3 > 1f) t3 -= 1f;
+
+            float col;
+            if (6f * t3 < 1f) col = t2 + (t1 - t2) * 6f * t3;
+            else if (2f * t3 < 1f) col = t1;
+            else if (3f * t3 < 2f) col = t2 + (t1 - t2) * 6f * (2f/3f - t3);
+            else col = t2;
+
+            // convert to byte and return
+            return (byte)(col * 255f);
+        }
     }
 }
