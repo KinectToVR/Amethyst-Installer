@@ -1,4 +1,5 @@
-﻿using System;
+﻿using amethyst_installer_gui.Pages;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -109,6 +110,8 @@ namespace amethyst_installer_gui
             Console.ResetColor();
             Console.WriteLine(message);
             File.AppendAllLines(LogFilePath, new[] { message });
+
+            PageLogs.LogLine(message, ConsoleColor.White);
         }
 
         private static void LogInternal(string message, ConsoleColor color)
@@ -118,6 +121,8 @@ namespace amethyst_installer_gui
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             File.AppendAllLines(LogFilePath, new[] { message });
+
+            PageLogs.LogLine(message, color);
         }
         
         #endregion
