@@ -22,7 +22,15 @@ namespace amethyst_installer_gui
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Dictionary<InstallerState, IInstallerPage> Pages = new Dictionary<InstallerState, IInstallerPage>();
+        public Dictionary<InstallerState, IInstallerPage> Pages = new Dictionary<InstallerState, IInstallerPage>();
+        // Basically an undo buffer ; max of 5 steps
+        private List<InstallerState> pageStack = new List<InstallerState>(5);
+        private int pageStackPointer = 0;
+
+        /// <summary>
+        /// Returns the current instance of the <see cref="MainWindow"/>
+        /// </summary>
+        public static MainWindow Instance { get { return (Application.Current.MainWindow as MainWindow); } }
 
         public MainWindow()
         {
@@ -36,18 +44,26 @@ namespace amethyst_installer_gui
             Pages.Add(InstallerState.Downloading, new PageDownloading());
             Pages.Add(InstallerState.Installation, new PageInstallation());
             Pages.Add(InstallerState.Done, new PageDone());
-            
+
+            Pages.Add(InstallerState.Logs, new PageLogs());
+            Pages.Add(InstallerState.EULA, new PageEULA());
+            Pages.Add(InstallerState.Exception, new PageException());
+
             // Set default page to welcome
-            SetTab(InstallerState.Welcome);
+            SetPage(InstallerState.Welcome);
         }
 
         #region Win UI 3 Window Functionality
-        
+
         // Dragging
         private void Titlebar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+        private void Titlebar_MouseRightUp(object sender, MouseButtonEventArgs e)
+        {
+            SystemCommands.ShowSystemMenu(this, PointToScreen(Mouse.GetPosition(this)));
         }
 
         // Titlebar buttons
@@ -78,34 +94,97 @@ namespace amethyst_installer_gui
 
         private static void CurrentInstallerPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as MainWindow).PageView.Content = (IInstallerPage)e.NewValue;
+            var mainWindowInstance = (d as MainWindow);
+            var newPage = (IInstallerPage)e.NewValue;
+
+            // Reset action button state to enabled on page load
+            mainWindowInstance.ActionButtonPrimary.IsEnabled = true;
+            mainWindowInstance.ActionButtonSecondary.IsEnabled = true;
+            mainWindowInstance.ActionButtonTertiary.IsEnabled = true;
+
+            // Set new page to view container
+            mainWindowInstance.PageView.Content = newPage;
+            newPage.OnFocus();
+            mainWindowInstance.windowTitle.Text = newPage.GetTitle();
+
+            // Reset if not logs
+            if (newPage.GetInstallerState() != InstallerState.Logs)
+                mainWindowInstance.viewBntCount = 0;
         }
 
-        public void SetTab(InstallerState destinatonTab)
+        public void SetPage(InstallerState destinatonTab)
         {
             CurrentInstallerPage = Pages[destinatonTab];
+            Logger.Info($"Changing installer page to {destinatonTab}");
             CurrentInstallerPage.OnSelected();
-            Logger.Info($"Changing installer state to {destinatonTab}");
 
-            windowTitle.Text = CurrentInstallerPage.GetTitle();
+            // Reset the stack
+            pageStack.Clear();
+            pageStackPointer = 0;
+            pageStack.Add(destinatonTab);
 
             // Update checkmarks in sidebar
-            // IDK how we're going to handle ?s yet
-            sidebar_welcome.State           = destinatonTab < InstallerState.Welcome               ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_installOptions.State    = destinatonTab < InstallerState.InstallOptions        ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_location.State          = destinatonTab < InstallerState.InstallDestination    ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_sysreq.State            = destinatonTab < InstallerState.SystemRequirements    ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_download.State          = destinatonTab < InstallerState.Downloading           ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_install.State           = destinatonTab < InstallerState.Installation          ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_done.State              = destinatonTab < InstallerState.Done                  ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+            sidebar_welcome.State = destinatonTab < InstallerState.Welcome ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+            sidebar_installOptions.State = destinatonTab < InstallerState.InstallOptions ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+            sidebar_location.State = destinatonTab < InstallerState.InstallDestination ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+            sidebar_sysreq.State = destinatonTab < InstallerState.SystemRequirements ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+            sidebar_download.State = destinatonTab < InstallerState.Downloading ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+            sidebar_install.State = destinatonTab < InstallerState.Installation ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+            sidebar_done.State = destinatonTab < InstallerState.Done ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+        }
+
+        // Used to take flow from current to some other page
+        public void OverridePage(InstallerState target)
+        {
+            if (pageStack.Count > 0 && pageStack[pageStackPointer] == InstallerState.Logs)
+                return;
+            pageStack.Add(target);
+            Logger.Info($"Overriding view to page {target}...");
+            pageStackPointer++;
+            CurrentInstallerPage = Pages[target];
+        }
+        // Goes down the page stack
+        public void GoToLastPage()
+        {
+            pageStackPointer--;
+            CurrentInstallerPage = Pages[pageStack[pageStackPointer]];
+            Logger.Info($"Changing view to previous page {pageStack[pageStackPointer]}...");
         }
 
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: route into currentpage?
-            SetTab(CurrentInstallerPage.GetInstallerState() + 1);
+            CurrentInstallerPage.OnButtonPrimary(sender, e);
+        }
+        private void ActionButtonSecondary_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentInstallerPage.OnButtonSecondary(sender, e);
+        }
+        private void ActionButtonTertiary_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentInstallerPage.OnButtonTertiary(sender, e);
         }
 
         #endregion
+
+        int viewBntCount = 0;
+
+        string[] altLogsBtnStrings = new string[]
+                {
+                    "Chungus Bungus",
+                    "Among Us",
+                    "LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS",
+                };
+        bool altLogsBtnTxtActive = false;
+
+        private void viewLogsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (altLogsBtnTxtActive == false && viewBntCount > 2 && pageStack[pageStackPointer] == InstallerState.Logs)
+            {
+                altLogsBtnTxtActive = true;
+                viewLogsBtn.Content = altLogsBtnStrings[new Random().Next(0, altLogsBtnStrings.Length)];
+            }
+            viewBntCount++;
+            OverridePage(InstallerState.Logs);
+        }
     }
 }

@@ -10,11 +10,13 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
+        MinHeight="502"
+        MinWidth="822"
         Title="Amethyst Installer" Height="502" Width="822" Background="#FF282828" Foreground="White">
     <Border Name="ContentRoot" BorderThickness="1" BorderBrush="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}">
         <DockPanel>
-            <StackPanel DockPanel.Dock="Left" Width="251" Background="#FF202020">
-                <Grid Grid.Row="0" Margin="34,0,0,0" Height="{Binding ElementName=ContentRoot, Path=ActualHeight}">
+            <StackPanel DockPanel.Dock="Left" Width="251" Background="{StaticResource BrushBackgroundAlt}">
+                <Grid x:Name="SidebarGridContainer" Grid.Row="0" Margin="34,0,0,0" Height="{Binding ElementName=ContentRoot, Path=ActualHeight}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -32,7 +34,10 @@
                         <Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Install}" Margin="0,0,0,22"/>
                         <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Done}" Margin="0,0,0,22"/>
                     </StackPanel>
-                    <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" Grid.Row="3" Margin="-5,0,0,25"/>
+                    <StackPanel Grid.Row="3" Margin="-5,0,0,25">
+                        <Button x:Name="viewLogsBtn" Style="{DynamicResource WinUIHyperlinkButton}" Content="{x:Static res:Resources.Sidebar_ViewLogs}"  Margin="0,0,0,4" Click="viewLogsBtn_Click"/>
+                        <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" />
+                    </StackPanel>
                 </Grid>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right">
@@ -50,8 +55,8 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Border Background="Transparent" Grid.Column="0" MouseDown="Titlebar_MouseDown" >
-                            <TextBlock x:Name="windowTitle" TextAlignment="Left" Text="" Style="{StaticResource Title}" Margin="28,0,0,-4" VerticalAlignment="Bottom" />
+                        <Border Background="Transparent" Grid.Column="0" MouseDown="Titlebar_MouseDown" MouseRightButtonUp="Titlebar_MouseRightUp" >
+                            <TextBlock x:Name="windowTitle" TextAlignment="Left" Text="" Style="{StaticResource Title}" Margin="28,0,0,4" VerticalAlignment="Bottom" />
                         </Border>
                         <Button Name="Minimise" Content="&#xE921;" Style="{StaticResource TitlebarButton}" Grid.Column="1" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,10,0" Click="Minimise_Click" />
                         <Button Name="Close"    Content="&#xE8BB;" Style="{StaticResource TitlebarButton}" Grid.Column="2" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,33,0" Click="Close_Click" />
@@ -59,8 +64,17 @@
                     <Grid Margin="0,5,0,28" Grid.Row="1" >
                         <ContentControl x:Name="PageView" VerticalAlignment="Stretch" />
                     </Grid>
-                    <Grid Grid.Row="2" Height="60" Margin="0,0,0,26">
-                        <Button x:Name="ActionButtonPrimary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="170" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource WinUIButton}" Margin="0,0,0,2" Click="ActionButtonPrimary_Click" />
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="Transparent" Grid.Column="0"/>
+                        <StackPanel Grid.Column="1" Height="60" Margin="0,0,0,26" Orientation="Horizontal">
+                            <Button x:Name="ActionButtonTertiary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonTertiary_Click" Visibility="Hidden"/>
+                            <Button x:Name="ActionButtonSecondary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonSecondary_Click" Visibility="Hidden" />
+                            <Button x:Name="ActionButtonPrimary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="ActionButtonPrimary_Click" />
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </StackPanel>
