@@ -30,5 +30,16 @@ namespace amethyst_installer_gui
                 System.Diagnostics.Process.Start("rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1");
             }
         }
+
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Logger.Fatal($"Unhandled Exception: {e.Exception.GetType().Name} in {e.Exception.Source}: {e.Exception.Message}\n{e.Exception.StackTrace}");
+            e.Handled = true;
+
+            // TODO: Check if the main window is initialized?
+            // AFAIK the app should always be initialized, so this scenario should be impossible
+            (AppWindow.Instance.Pages[InstallerState.Exception] as PageException).currentException = e.Exception;
+            AppWindow.Instance.OverridePage(InstallerState.Exception);
+        }
     }
 }

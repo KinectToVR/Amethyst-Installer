@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:amethyst_installer_gui"
              StartupUri="MainWindow.xaml"
              Startup="Application_Startup"
+             DispatcherUnhandledException="App_DispatcherUnhandledException">
+ 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
