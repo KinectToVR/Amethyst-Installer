@@ -19,7 +19,7 @@ namespace amethyst_installer_gui
         [DllImport("Kernel32", EntryPoint = "GetCurrentThreadId", ExactSpelling = true)]
         private static extern int GetCurrentWin32ThreadId();
 
-        private static string s_logFilePath;
+        public static string LogFilePath;
 
         #region Log Functions
 
@@ -73,12 +73,12 @@ namespace amethyst_installer_gui
         public static void Init(string filePath = "")
         {
             if (filePath == "")
-                s_logFilePath = $"{Assembly.GetCallingAssembly().GetName()}_{DateTime.Now.ToString("yyyymmdd-hhmmss.ffffff")}.log";
+                LogFilePath = $"{Assembly.GetCallingAssembly().GetName()}_{DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff")}.log";
             else
-                s_logFilePath = filePath;
+                LogFilePath = filePath;
 
-            s_logFilePath = Path.GetFullPath(filePath);
-            string dir = Path.GetFullPath(Path.GetDirectoryName(s_logFilePath));
+            LogFilePath = Path.GetFullPath(filePath);
+            string dir = Path.GetFullPath(Path.GetDirectoryName(LogFilePath));
 
             bool loggingPathDidntExist = false;
             if (!Directory.Exists(dir)) {
@@ -87,37 +87,37 @@ namespace amethyst_installer_gui
             }
 
             // Create the file, rest of the methods will append
-            File.Create(s_logFilePath).Close();
+            File.Create(LogFilePath).Close();
 
             if (loggingPathDidntExist)
                 LogInternal($"Created logging directory at \"{dir}\"");
-            LogInternal($"Log file created at: {DateTime.Now.ToString("yyyy/mm/dd hh:mm:ss")}");
+            LogInternal($"Log file created at: {DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss")}");
             LogInternal($"Running on machine: {Environment.MachineName}");
             LogInternal("Running duration (h:mm:ss): 0:00:00");
-            LogInternal("Log line format: [IWEF]yyyymmdd hh:mm:ss.ffffff threadid file::member:line] msg");
+            LogInternal("Log line format: [IWEF]yyyyMMdd hh:mm:ss.ffffff threadid file::member:line] msg");
         }
 
         private static string FormatToLogMessage(string message, string level, int lineNumber, string filePath, string memberName)
         {
-            return $"{level}{DateTime.Now.ToString("yyyymmdd hh:mm:ss.ffffff")} {GetCurrentWin32ThreadId()} {Path.GetFileName(filePath)}::{memberName}:{lineNumber}] {message}";
+            return $"{level}{DateTime.Now.ToString("yyyyMMdd hh:mm:ss.ffffff")} {GetCurrentWin32ThreadId()} {Path.GetFileName(filePath)}::{memberName}:{lineNumber}] {message}";
         }
 
         private static void LogInternal(string message)
         {
-            if (s_logFilePath == null)
+            if (LogFilePath == null)
                 throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
             Console.ResetColor();
             Console.WriteLine(message);
-            File.AppendAllLines(s_logFilePath, new[] { message });
+            File.AppendAllLines(LogFilePath, new[] { message });
         }
 
         private static void LogInternal(string message, ConsoleColor color)
         {
-            if (s_logFilePath == null)
+            if (LogFilePath == null)
                 throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
             Console.ForegroundColor = color;
             Console.WriteLine(message);
-            File.AppendAllLines(s_logFilePath, new[] { message });
+            File.AppendAllLines(LogFilePath, new[] { message });
         }
         
         #endregion
