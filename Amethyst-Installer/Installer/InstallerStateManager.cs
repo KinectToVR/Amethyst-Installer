@@ -67,5 +67,17 @@ namespace amethyst_installer_gui.Installer
         /// Install completed
         /// </summary>
         Done = 6,
+        /// <summary>
+        /// Logs viewer
+        /// </summary>
+        Logs = 7,
+        /// <summary>
+        /// EULA agreement
+        /// </summary>
+        EULA = 8,
+        /// <summary>
+        /// Exception handling
+        /// </summary>
+        Exception = 9,
     }
 }
