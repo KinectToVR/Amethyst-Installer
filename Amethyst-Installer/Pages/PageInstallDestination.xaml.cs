@@ -36,9 +36,27 @@ namespace amethyst_installer_gui.Pages
             return Properties.Resources.Page_Location_Title;
         }
 
+        public void OnButtonPrimary(object sender, RoutedEventArgs e)
+        {
+            // Advance to next page
+            MainWindow.Instance.SetPage(InstallerState.SystemRequirements);
+        }
+
         public void OnSelected()
         {
-            
+
         }
+
+        // Force only the first button to have focus
+        public void OnFocus()
+        {
+            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+            MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
+            MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
+        }
+
+        public void OnButtonSecondary(object sender, RoutedEventArgs e) {}
+        public void OnButtonTertiary(object sender, RoutedEventArgs e) {}
     }
 }
