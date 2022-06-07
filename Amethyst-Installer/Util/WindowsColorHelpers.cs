@@ -16,7 +16,10 @@ namespace amethyst_installer_gui
     {
         public static Brush BorderAccent { get { return SystemParameters.WindowGlassBrush; } }
         public static Brush Accent { get { return new SolidColorBrush(GetAccentColor()); } }
+        public static Brush AccentLight { get { return new SolidColorBrush(Lighten(GetAccentColor(), 0.1f)); } }
         public static Brush AccentText { get { return new SolidColorBrush(GetContrastingColor(GetAccentColor())); } }
+        public static Brush AccentHighlightBackground { get { return new SolidColorBrush(GetAccentColor()); } }
+        public static Brush AccentHighlightForeground { get { return new SolidColorBrush(GetContrastingColor(GetAccentColor())); } }
 
         // Extended from
         // https://stackoverflow.com/a/50848113
