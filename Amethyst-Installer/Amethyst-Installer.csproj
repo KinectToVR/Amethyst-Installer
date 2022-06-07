@@ -80,9 +80,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ItemTask.xaml.cs">
+      <DependentUpon>ItemTask.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SidebarTask.xaml.cs">
       <DependentUpon>SidebarTask.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TaskState.cs" />
     <Compile Include="Installer\InstallerStateManager.cs" />
     <Compile Include="Installer\KinectUtil.cs" />
     <Compile Include="Installer\OpenVRUtil.cs" />
@@ -148,6 +152,10 @@
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\Util.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
+    <Page Include="Controls\ItemTask.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SidebarTask.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

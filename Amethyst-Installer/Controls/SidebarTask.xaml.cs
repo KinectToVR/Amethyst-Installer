@@ -15,14 +15,14 @@ namespace amethyst_installer_gui.Controls
             InitializeComponent();
         }
 
-        public SiderbarTaskState State
+        public TaskState State
         {
-            get { return (SiderbarTaskState)GetValue(StateProperty); }
+            get { return (TaskState)GetValue(StateProperty); }
             set { SetValue(StateProperty, value); }
         }
 
         public static readonly DependencyProperty StateProperty =
-            DependencyProperty.Register("State", typeof(SiderbarTaskState), typeof(SidebarTask), new PropertyMetadata(SiderbarTaskState.Default, new PropertyChangedCallback(StateChanged)));
+            DependencyProperty.Register("State", typeof(TaskState), typeof(SidebarTask), new PropertyMetadata(TaskState.Default, new PropertyChangedCallback(StateChanged)));
 
         public string Text
         {
@@ -37,15 +37,12 @@ namespace amethyst_installer_gui.Controls
         private static void StateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             string stateString = "Default";
-            switch ( (SiderbarTaskState)e.NewValue )
+            switch ( (TaskState)e.NewValue )
             {
-                case SiderbarTaskState.Default:
-                    stateString = "Default";
-                    break;
-                case SiderbarTaskState.Checkmark:
+                case TaskState.Checkmark:
                     stateString = "Checkmark";
                     break;
-                case SiderbarTaskState.Question:
+                case TaskState.Question:
                     stateString = "Question";
                     break;
 
@@ -59,11 +56,4 @@ namespace amethyst_installer_gui.Controls
             (d as SidebarTask).taskDescription.Content = (string)e.NewValue;
         }
     }
-
-    public enum SiderbarTaskState
-	{
-        Default = 0,
-        Checkmark = 1,
-        Question = 2,
-	}
 }

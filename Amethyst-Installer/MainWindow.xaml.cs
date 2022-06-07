@@ -124,13 +124,13 @@ namespace amethyst_installer_gui
             pageStack.Add(destinatonTab);
 
             // Update checkmarks in sidebar
-            sidebar_welcome.State = destinatonTab < InstallerState.Welcome ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_installOptions.State = destinatonTab < InstallerState.InstallOptions ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_location.State = destinatonTab < InstallerState.InstallDestination ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_sysreq.State = destinatonTab < InstallerState.SystemRequirements ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_download.State = destinatonTab < InstallerState.Downloading ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_install.State = destinatonTab < InstallerState.Installation ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
-            sidebar_done.State = destinatonTab < InstallerState.Done ? SiderbarTaskState.Default : SiderbarTaskState.Checkmark;
+            sidebar_welcome.State =         destinatonTab < InstallerState.Welcome ?                TaskState.Default : TaskState.Checkmark;
+            sidebar_installOptions.State =  destinatonTab < InstallerState.InstallOptions ?         TaskState.Default : TaskState.Checkmark;
+            sidebar_location.State =        destinatonTab < InstallerState.InstallDestination ?     TaskState.Default : TaskState.Checkmark;
+            sidebar_sysreq.State =          destinatonTab < InstallerState.SystemRequirements ?     TaskState.Default : TaskState.Checkmark;
+            sidebar_download.State =        destinatonTab < InstallerState.Downloading ?            TaskState.Default : TaskState.Checkmark;
+            sidebar_install.State =         destinatonTab < InstallerState.Installation ?           TaskState.Default : TaskState.Checkmark;
+            sidebar_done.State =            destinatonTab < InstallerState.Done ?                   TaskState.Default : TaskState.Checkmark;
         }
 
         // Used to take flow from current to some other page
