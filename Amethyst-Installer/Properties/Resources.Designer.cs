@@ -61,11 +61,74 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I agree.
+        /// </summary>
+        public static string EULA_Agree {
+            get {
+                return ResourceManager.GetString("EULA_Agree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I do not agree.
+        /// </summary>
+        public static string EULA_DontAgree {
+            get {
+                return ResourceManager.GetString("EULA_DontAgree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string Installer_Action_Back {
+            get {
+                return ResourceManager.GetString("Installer_Action_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy error.
+        /// </summary>
+        public static string Installer_Action_CopyError {
+            get {
+                return ResourceManager.GetString("Installer_Action_CopyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get help on Discord.
+        /// </summary>
+        public static string Installer_Action_Discord {
+            get {
+                return ResourceManager.GetString("Installer_Action_Discord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        public static string Installer_Action_Exit {
+            get {
+                return ResourceManager.GetString("Installer_Action_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string Installer_Action_Next {
             get {
                 return ResourceManager.GetString("Installer_Action_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The log file is stored here:.
+        /// </summary>
+        public static string Logs_DirectoryIsLocatedHere {
+            get {
+                return ResourceManager.GetString("Logs_DirectoryIsLocatedHere", resourceCulture);
             }
         }
         
@@ -84,6 +147,15 @@ namespace amethyst_installer_gui.Properties {
         public static string Page_Download_Title {
             get {
                 return ResourceManager.GetString("Page_Download_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error happened.
+        /// </summary>
+        public static string Page_Exception_Title {
+            get {
+                return ResourceManager.GetString("Page_Exception_Title", resourceCulture);
             }
         }
         
@@ -111,6 +183,15 @@ namespace amethyst_installer_gui.Properties {
         public static string Page_Location_Title {
             get {
                 return ResourceManager.GetString("Page_Location_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logs.
+        /// </summary>
+        public static string Page_Logs_Title {
+            get {
+                return ResourceManager.GetString("Page_Logs_Title", resourceCulture);
             }
         }
         
@@ -183,6 +264,15 @@ namespace amethyst_installer_gui.Properties {
         public static string Sidebar_Task_Welcome {
             get {
                 return ResourceManager.GetString("Sidebar_Task_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View logs.
+        /// </summary>
+        public static string Sidebar_ViewLogs {
+            get {
+                return ResourceManager.GetString("Sidebar_ViewLogs", resourceCulture);
             }
         }
     }

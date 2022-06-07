@@ -117,14 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EULA_Agree" xml:space="preserve">
+    <value>I agree</value>
+  </data>
+  <data name="EULA_DontAgree" xml:space="preserve">
+    <value>I do not agree</value>
+  </data>
+  <data name="Installer_Action_Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Installer_Action_CopyError" xml:space="preserve">
+    <value>Copy error</value>
+  </data>
+  <data name="Installer_Action_Discord" xml:space="preserve">
+    <value>Get help on Discord</value>
+  </data>
+  <data name="Installer_Action_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
   <data name="Installer_Action_Next" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="Logs_DirectoryIsLocatedHere" xml:space="preserve">
+    <value>The log file is stored here:</value>
   </data>
   <data name="Page_Done_Title" xml:space="preserve">
     <value>Install completed</value>
   </data>
   <data name="Page_Download_Title" xml:space="preserve">
     <value>Downloading</value>
+  </data>
+  <data name="Page_Exception_Title" xml:space="preserve">
+    <value>An error happened</value>
   </data>
   <data name="Page_InstallOptions_Title" xml:space="preserve">
     <value>What to install</value>
@@ -134,6 +158,9 @@
   </data>
   <data name="Page_Location_Title" xml:space="preserve">
     <value>Choose destination</value>
+  </data>
+  <data name="Page_Logs_Title" xml:space="preserve">
+    <value>Logs</value>
   </data>
   <data name="Page_Sysreq_Title" xml:space="preserve">
     <value>System requirements</value>
@@ -159,5 +186,8 @@
   <data name="Sidebar_Task_Welcome" xml:space="preserve">
     <value>Welcome</value>
     <comment>Sidebar tasks are the list of "stages" of the installer on the left hand side, with checkmarks</comment>
+  </data>
+  <data name="Sidebar_ViewLogs" xml:space="preserve">
+    <value>View logs</value>
   </data>
 </root>
