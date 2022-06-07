@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="amethyst_installer_gui.Pages.PageEULA"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:res = "clr-namespace:amethyst_installer_gui.Properties"
+             xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="328" d:DesignWidth="508">
+    <Grid x:Name="eulaPageContainerRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="eulaBoxContainer" Grid.Row="0" IsReadOnly="True" Style="{DynamicResource WinUIScrollTextbox}" MaxWidth="{Binding ElementName=eulaPageContainerRoot, Path=ActualWidth}"
+Text="By clicking I agree you consent towards selling your soul to the GPL." />
+        <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,15,0,0">
+            <RadioButton x:Name="eulaDeny" Content="{x:Static res:Resources.EULA_DontAgree}" Margin="0,0,0,20" IsChecked="True" Checked="eulaRadioButton_Checked"/>
+            <RadioButton x:Name="eulaAgree" Content="{x:Static res:Resources.EULA_Agree}" Checked="eulaRadioButton_Checked" />
+        </StackPanel>
+    </Grid>
+</UserControl>
