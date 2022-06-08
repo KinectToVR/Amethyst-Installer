@@ -5,15 +5,17 @@
     <Style x:Key="WinUIButton" TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#FFFFFFFF"/>
         <Setter Property="Background" Value="#0FFFFFFF"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="12 4">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="12 4" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="White">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
@@ -51,12 +53,16 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="BorderThickness" Value="2"/>
+            </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="WinUIHyperlinkButton" TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="{Binding Source={x:Static local:WindowsColorHelpers.AccentLight}}"/>
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Regular" />
@@ -64,10 +70,11 @@
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="3" Padding="5 4">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="3" Padding="5 4" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="White">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
@@ -83,12 +90,16 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="BorderThickness" Value="2"/>
+            </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type Hyperlink}">
         <Setter Property="Foreground" Value="{Binding Source={x:Static local:WindowsColorHelpers.AccentLight}}" />
         <Setter Property="BaselineAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource WinUIButton}" />
