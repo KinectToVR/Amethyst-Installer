@@ -275,5 +275,41 @@ namespace amethyst_installer_gui.Properties {
                 return ResourceManager.GetString("Sidebar_ViewLogs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compatible devices.
+        /// </summary>
+        public static string SystemRequirement_Category_Compatibility {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Category_Compatibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disk space.
+        /// </summary>
+        public static string SystemRequirement_Category_Storage {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Category_Storage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USB controllers.
+        /// </summary>
+        public static string SystemRequirement_Category_UsbControllers {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Category_UsbControllers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VR headset.
+        /// </summary>
+        public static string SystemRequirement_Category_VrSystem {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Category_VrSystem", resourceCulture);
+            }
+        }
     }
 }

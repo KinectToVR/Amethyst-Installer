@@ -190,4 +190,16 @@
   <data name="Sidebar_ViewLogs" xml:space="preserve">
     <value>View logs</value>
   </data>
+  <data name="SystemRequirement_Category_Compatibility" xml:space="preserve">
+    <value>Compatible devices</value>
+  </data>
+  <data name="SystemRequirement_Category_Storage" xml:space="preserve">
+    <value>Disk space</value>
+  </data>
+  <data name="SystemRequirement_Category_UsbControllers" xml:space="preserve">
+    <value>USB controllers</value>
+  </data>
+  <data name="SystemRequirement_Category_VrSystem" xml:space="preserve">
+    <value>VR headset</value>
+  </data>
 </root>
