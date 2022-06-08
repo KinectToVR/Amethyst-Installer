@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Styles/Colours.xaml" />
                 
                 <ResourceDictionary Source="Styles/Titlebar.xaml" />
+                <ResourceDictionary Source="Styles/ItemTask.xaml" />
                 
                 <ResourceDictionary Source="Styles/Button.xaml" />
                 <ResourceDictionary Source="Styles/Textbox.xaml" />
