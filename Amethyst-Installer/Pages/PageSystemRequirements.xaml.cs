@@ -44,7 +44,31 @@ namespace amethyst_installer_gui.Pages
 
         public void OnSelected()
         {
+            // Compute minimum requirements
 
+            // TODO: Check storage
+            diskSpaceDescription.Text = "among us";
+
+            // TODO: Check USB controllers
+            usbControllersDescription.Text = "among us";
+
+            // TODO: Check VR headset
+            vrSystemDescription.Text = "among us";
+
+            vrSystemFootnote.Inlines.Clear();
+            vrSystemFootnote.Inlines.Add("Some text ");
+            Hyperlink hyperLink3 = new Hyperlink()
+            {
+                NavigateUri = new Uri("http://somesite.com"),
+                Foreground = WindowsColorHelpers.Accent
+            };
+            hyperLink3.Inlines.Add("some site");
+            hyperLink3.RequestNavigate += Hyperlink_RequestNavigate;
+            vrSystemFootnote.Inlines.Add(hyperLink3);
+            vrSystemFootnote.Inlines.Add(" Some more text");
+
+            // TODO: Check target device
+            compatDevicesDescription.Text = "among us";
         }
 
         // Force only the first button to have focus
@@ -58,5 +82,10 @@ namespace amethyst_installer_gui.Pages
 
         public void OnButtonSecondary(object sender, RoutedEventArgs e) {}
         public void OnButtonTertiary(object sender, RoutedEventArgs e) {}
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+
+        }
     }
 }
