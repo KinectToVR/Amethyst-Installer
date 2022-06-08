@@ -18,6 +18,7 @@
     Height="502" Width="822"
     Background="#FF282828" Foreground="White">
     
+    <Border Name="ContentRoot" BorderThickness="1" BorderBrush="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" MouseDown="ContentRoot_MouseDown">
         <DockPanel>
             <StackPanel DockPanel.Dock="Left" Width="251" Background="{StaticResource BrushBackgroundAlt}">
                 <Grid x:Name="SidebarGridContainer" Grid.Row="0" Margin="34,0,0,0" Height="{Binding ElementName=ContentRoot, Path=ActualHeight}">
@@ -30,17 +31,17 @@
                     </Grid.RowDefinitions>
                     <Border Background="Transparent" Grid.Row="0" MouseDown="Titlebar_MouseDown" Margin="-34,0,0,0" Height="25" />
                     <StackPanel Grid.Row="1" Orientation="Vertical">
-                        <Controls:SidebarTask x:Name="sidebar_welcome" State="Checkmark" Text="{x:Static res:Resources.Sidebar_Task_Welcome}" Margin="0,0,0,22" />
-                        <Controls:SidebarTask x:Name="sidebar_installOptions" State="Default" Text="{x:Static res:Resources.Sidebar_Task_InstallOptions}" Margin="0,0,0,22" />
-                        <Controls:SidebarTask x:Name="sidebar_location" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Location}" Margin="0,0,0,22"/>
-                        <Controls:SidebarTask x:Name="sidebar_sysreq" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Sysreq}" Margin="0,0,0,22"/>
-                        <Controls:SidebarTask x:Name="sidebar_download" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Download}" Margin="0,0,0,22"/>
-                        <Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Install}" Margin="0,0,0,22"/>
-                        <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Done}" Margin="0,0,0,22"/>
+                        <Controls:SidebarTask x:Name="sidebar_welcome" State="Checkmark" Text="{x:Static res:Resources.Sidebar_Task_Welcome}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_installOptions" State="Default" Text="{x:Static res:Resources.Sidebar_Task_InstallOptions}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_location" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Location}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_sysreq" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Sysreq}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_download" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Download}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Install}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Done}" Margin="0,0,0,22" IsTabStop="False"/>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Margin="-5,0,0,25">
                         <Button x:Name="viewLogsBtn" Style="{DynamicResource WinUIHyperlinkButton}" Content="{x:Static res:Resources.Sidebar_ViewLogs}"  Margin="0,0,0,4" Click="viewLogsBtn_Click"/>
-                        <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" />
+                        <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" IsTabStop="False" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -60,13 +61,13 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Border Background="Transparent" Grid.Column="0" MouseDown="Titlebar_MouseDown" MouseRightButtonUp="Titlebar_MouseRightUp" >
-                            <TextBlock x:Name="windowTitle" TextAlignment="Left" Text="" Style="{StaticResource Title}" Margin="28,0,0,4" VerticalAlignment="Bottom" />
+                            <TextBlock x:Name="windowTitle" TextAlignment="Left" Text="" Style="{StaticResource Title}" Margin="28,0,0,4" VerticalAlignment="Bottom"/>
                         </Border>
-                        <Button Name="Minimise" Content="&#xE921;" Style="{StaticResource TitlebarButton}" Grid.Column="1" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,10,0" Click="Minimise_Click" />
-                        <Button Name="Close"    Content="&#xE8BB;" Style="{StaticResource TitlebarButton}" Grid.Column="2" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,33,0" Click="Close_Click" />
+                        <Button Name="Minimise" Content="&#xE921;" Style="{StaticResource TitlebarButton}" Grid.Column="1" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,10,0" Click="Minimise_Click" IsTabStop="False"/>
+                        <Button Name="Close"    Content="&#xE8BB;" Style="{StaticResource TitlebarButton}" Grid.Column="2" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,33,0" Click="Close_Click" IsTabStop="False"/>
                     </Grid>
                     <Grid Margin="0,5,0,28" Grid.Row="1" >
-                        <ContentControl x:Name="PageView" VerticalAlignment="Stretch" />
+                        <ContentControl x:Name="PageView" VerticalAlignment="Stretch" IsTabStop="False" />
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -75,9 +76,9 @@
                         </Grid.ColumnDefinitions>
                         <Border Background="Transparent" Grid.Column="0"/>
                         <StackPanel Grid.Column="1" Height="60" Margin="0,0,0,26" Orientation="Horizontal">
-                            <Button x:Name="ActionButtonTertiary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonTertiary_Click" Visibility="Hidden"/>
-                            <Button x:Name="ActionButtonSecondary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonSecondary_Click" Visibility="Hidden" />
-                            <Button x:Name="ActionButtonPrimary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="ActionButtonPrimary_Click" />
+                            <Button x:Name="ActionButtonTertiary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonTertiary_Click" Visibility="Hidden" TabIndex="0"/>
+                            <Button x:Name="ActionButtonSecondary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonSecondary_Click" Visibility="Hidden" TabIndex="1"/>
+                            <Button x:Name="ActionButtonPrimary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="ActionButtonPrimary_Click" TabIndex="2"/>
                         </StackPanel>
                     </Grid>
                 </Grid>

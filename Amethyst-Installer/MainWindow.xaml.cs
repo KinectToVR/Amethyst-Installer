@@ -169,11 +169,11 @@ namespace amethyst_installer_gui
         int viewBntCount = 0;
 
         string[] altLogsBtnStrings = new string[]
-                {
-                    "Chungus Bungus",
-                    "Among Us",
-                    "LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS",
-                };
+        {
+            "Chungus Bungus",
+            "Among Us",
+            "LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS LOGS",
+        };
         bool altLogsBtnTxtActive = false;
 
         private void viewLogsBtn_Click(object sender, RoutedEventArgs e)
@@ -185,6 +185,12 @@ namespace amethyst_installer_gui
             }
             viewBntCount++;
             OverridePage(InstallerState.Logs);
+        }
+
+        // Clear focus of the currently tabbed item, mimicing WinUI3's behavior
+        private void ContentRoot_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.ClearFocus();
         }
     }
 }
