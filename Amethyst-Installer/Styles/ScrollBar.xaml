@@ -20,9 +20,11 @@
         <Setter Property="Height" Value="12"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="8"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -30,7 +32,9 @@
                         <Border.Background>
                             <SolidColorBrush Opacity="0" Color="#FF2E2E2E"/>
                         </Border.Background>
-                        <TextBlock FontFamily="{TemplateBinding FontFamily}" Foreground="{TemplateBinding Foreground}"  Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Margin="{TemplateBinding Margin}" />
+                        <TextBlock FontFamily="{TemplateBinding FontFamily}" Foreground="{TemplateBinding Foreground}"  Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Margin="{TemplateBinding Margin}" Padding="2,3,2,1">
+                            <ContentPresenter/>
+                        </TextBlock>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -66,6 +70,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
@@ -80,6 +85,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
