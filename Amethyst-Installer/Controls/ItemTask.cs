@@ -1,30 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace amethyst_installer_gui.Controls
 {
-    /// <summary>
-    /// Interaction logic for ItemTask.xaml
-    /// </summary>
     [TemplatePart(Name = "taskStateIcon", Type = typeof(Image))]
     [TemplatePart(Name = "taskTitle", Type = typeof(Label))]
-    public partial class ItemTask : UserControl
+    public class ItemTask : ContentControl
     {
-        public ItemTask()
+        static ItemTask()
         {
-            InitializeComponent();
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ItemTask), new FrameworkPropertyMetadata(typeof(ItemTask)));
         }
 
         private Image taskStateIcon;
@@ -37,7 +24,7 @@ namespace amethyst_installer_gui.Controls
         }
 
         public static readonly DependencyProperty StateProperty =
-            DependencyProperty.Register("State", typeof(TaskState), typeof(ItemTask), new PropertyMetadata(TaskState.Default, new PropertyChangedCallback(StateChanged)));
+            DependencyProperty.Register("State", typeof(TaskState), typeof(ItemTask), new UIPropertyMetadata(TaskState.Default, new PropertyChangedCallback(StateChanged)));
 
         public string Title
         {
@@ -46,7 +33,7 @@ namespace amethyst_installer_gui.Controls
         }
 
         public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(ItemTask), new PropertyMetadata("Task", new PropertyChangedCallback(TitleChanged)));
+            DependencyProperty.Register("Title", typeof(string), typeof(ItemTask), new UIPropertyMetadata("Task", new PropertyChangedCallback(TitleChanged)));
 
 
         private static void StateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -64,7 +51,7 @@ namespace amethyst_installer_gui.Controls
 
             }
 
-            (d as ItemTask).taskStateIcon.Source = new BitmapImage(new Uri($"/Resources/Icons/4x/{stateString}.png", UriKind.Relative)); ;
+            (d as ItemTask).taskStateIcon.Source = new BitmapImage(new Uri($"/Resources/Icons/4x/{stateString}.png", UriKind.Relative));
         }
 
         private static void TitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -92,7 +79,7 @@ namespace amethyst_installer_gui.Controls
                     break;
 
             }
-            taskStateIcon.Source = new BitmapImage(new Uri($"/Resources/Icons/4x/{stateString}.png", UriKind.Relative)); ;
+            taskStateIcon.Source = new BitmapImage(new Uri($"/Resources/Icons/4x/{stateString}.png", UriKind.Relative));
             taskTitle.Content = Title;
         }
     }
