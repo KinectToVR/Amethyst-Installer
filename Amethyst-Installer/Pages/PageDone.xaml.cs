@@ -1,4 +1,4 @@
-﻿using amethyst_installer_gui.Installer;
+using amethyst_installer_gui.Installer;
 using System;
 using System.Windows;
 using System.Windows.Controls;

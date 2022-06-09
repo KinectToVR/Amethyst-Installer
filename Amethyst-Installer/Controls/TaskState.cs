@@ -1,4 +1,4 @@
-﻿namespace amethyst_installer_gui.Controls
+namespace amethyst_installer_gui.Controls
 {
     public enum TaskState
     {

@@ -1,4 +1,4 @@
-﻿using amethyst_installer_gui.Pages;
+using amethyst_installer_gui.Pages;
 using System;
 using System.IO;
 using System.Reflection;

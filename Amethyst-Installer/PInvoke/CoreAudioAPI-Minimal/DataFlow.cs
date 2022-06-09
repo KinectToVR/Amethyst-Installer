@@ -1,4 +1,4 @@
-﻿namespace NAudio.CoreAudioApi
+namespace NAudio.CoreAudioApi
 {
     /// <summary>
     /// The EDataFlow enumeration defines constants that indicate the direction 

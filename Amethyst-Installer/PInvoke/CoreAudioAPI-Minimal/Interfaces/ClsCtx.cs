@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 // ReSharper disable InconsistentNaming
 
 namespace NAudio.CoreAudioApi.Interfaces

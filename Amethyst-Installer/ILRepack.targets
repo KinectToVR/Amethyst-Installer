@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- ILRepack -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- https://github.com/ravibpatel/ILRepack.Lib.MSBuild.Task/blob/d727d38bca0d7470343a01a0f88d23af43e492e6/ILRepack.Lib.MSBuild.Task/ILRepack.Lib.MSBuild.Task.targets -->

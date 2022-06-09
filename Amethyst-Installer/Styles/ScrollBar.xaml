@@ -58,7 +58,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="WinUIScrollBarThumb" TargetType="{x:Type Thumb}">
         <Setter Property="Background">
             <Setter.Value>
