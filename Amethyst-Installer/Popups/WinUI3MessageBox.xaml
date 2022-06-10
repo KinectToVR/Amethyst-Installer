@@ -1,0 +1,44 @@
+<Window x:Class="amethyst_installer_gui.Popups.WinUI3MessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:amethyst_installer_gui"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        WindowStyle="None"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Background="#FF2B2B2B" Foreground="#FFFFFFFF"
+        Title="WinUI3MessageBox" Height="450" Width="800">
+    <Border BorderThickness="1" BorderBrush="#FF3F3F3F" SnapsToDevicePixels="True" MouseDown="Border_MouseDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="66"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" MouseDown="TitlebarDragArea_MouseDown" MouseRightButtonUp="TitlebarDragArea_MouseRightButtonUp">
+                    <TextBlock x:Name="titleContainer" TextOptions.TextRenderingMode="Grayscale" SnapsToDevicePixels="True" Style="{StaticResource Title}" Margin="28,0,0,4" VerticalAlignment="Bottom" TextAlignment="Left" FontSize="22">Save your work?</TextBlock>
+                </Border>
+                <Button x:Name="Close" Grid.Column="1" Width="33" Height="33" IsTabStop="False" Content="&#xE8BB;" Style="{StaticResource TitlebarButton}" Margin="0,0,33,0" VerticalAlignment="Bottom" Click="Close_Click"/>
+            </Grid>
+            <StackPanel Grid.Row="1" Orientation="Vertical" Margin="24,0,24,30" SnapsToDevicePixels="True">
+                <Label x:Name="message" TextOptions.TextRenderingMode="Grayscale" SnapsToDevicePixels="True" FontFamily="Segoe UI" FontSize="14">Lorem ipsum dolor sit amet, adispicing elit.</Label>
+            </StackPanel>
+            <Border Grid.Row="2" Background="#FF202020" Padding="24" BorderBrush="#FF1D1D1D" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
+                <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True">
+                    <Button x:Name="dialogButton_Primary" SnapsToDevicePixels="True" Height="32" Margin="0,0,8,0" Click="dialogButton_Primary_Click" TabIndex="0">Save your work</Button>
+                    <Button x:Name="dialogButton_Secondary" SnapsToDevicePixels="True" Height="32" Margin="0,0,8,0" Click="dialogButton_Secondary_Click" TabIndex="1">Don't Save</Button>
+                    <Button x:Name="dialogButton_Tertiary" SnapsToDevicePixels="True" Height="32" Margin="0" Click="dialogButton_Tertiary_Click" TabIndex="1">Cancel</Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
