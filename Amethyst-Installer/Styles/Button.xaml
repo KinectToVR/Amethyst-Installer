@@ -11,52 +11,49 @@
         <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource WinUI3FocusVisualStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="12 4" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="White">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
+                    <Grid Name="Grid">
+                        <Border Name="Border" Background="{TemplateBinding Background}" CornerRadius="4" Padding="12 4" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="White">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="4" BlurRadius="4" Opacity="0.6" />
+                            </Border.Effect>
+                        </Border>
+                        <ContentPresenter TextOptions.TextRenderingMode="Grayscale" Margin="12 4" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#28FFFFFF"/>
+                        <Setter TargetName="Border" Property="Border.Effect">
+                            <Setter.Value>
+                                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="6" BlurRadius="4" Opacity="0.7" />
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Foreground" Value="#F0FFFFFF"/>
+                        <Setter Property="Background" Value="#14FFFFFF"/>
+                        <Setter TargetName="Border" Property="Border.Effect">
+                            <Setter.Value>
+                                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="6" BlurRadius="4" Opacity="0.7" />
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#65FFFFFF"/>
+                            <Setter Property="Background" Value="#09FFFFFF"/>
+                            <Setter TargetName="Border" Property="Border.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="Black" Direction="270" ShadowDepth="4" BlurRadius="4" Opacity="0.19" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Button.Effect">
-            <Setter.Value>
-                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="4" BlurRadius="4" Opacity="0.6" />
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#28FFFFFF"/>
-                <Setter Property="Button.Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="Black" Direction="270" ShadowDepth="6" BlurRadius="4" Opacity="0.7" />
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Foreground" Value="#F0FFFFFF"/>
-                <Setter Property="Background" Value="#14FFFFFF"/>
-                <Setter Property="Button.Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="Black" Direction="270" ShadowDepth="6" BlurRadius="4" Opacity="0.7" />
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="#65FFFFFF"/>
-                <Setter Property="Background" Value="#09FFFFFF"/>
-                <Setter Property="Button.Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="Black" Direction="270" ShadowDepth="4" BlurRadius="4" Opacity="0.19" />
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter Property="BorderThickness" Value="2"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <Style x:Key="WinUIHyperlinkButton" TargetType="{x:Type Button}">
@@ -70,7 +67,7 @@
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource WinUI3FocusVisualStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -90,16 +87,13 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-            <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter Property="BorderThickness" Value="2"/>
-            </Trigger>
         </Style.Triggers>
     </Style>
-
+    
     <Style TargetType="{x:Type Hyperlink}">
         <Setter Property="Foreground" Value="{Binding Source={x:Static local:WindowsColorHelpers.AccentLight}}" />
         <Setter Property="BaselineAlignment" Value="Center" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource WinUI3FocusVisualStyle}" />
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource WinUIButton}" />
