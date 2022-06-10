@@ -19,9 +19,6 @@ namespace amethyst_installer_gui
             string logFileDate = DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff");
             Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
 
-            // TODO: Replace with WinUI3-esque custom dialog box
-            MessageBox.Show("big chungus", "no way");
-
             // TODO: Move to sysreq
             // Check if the Kinect microphone is muted, and if so, prompt the user to enable it.
             if (KinectUtil.KinectMicrophoneDisabled())
