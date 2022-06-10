@@ -58,5 +58,12 @@ namespace amethyst_installer_gui.Pages
 
         public void OnButtonSecondary(object sender, RoutedEventArgs e) {}
         public void OnButtonTertiary(object sender, RoutedEventArgs e) {}
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Replace with WinUI3-esque custom dialog box
+            MessageBox.Show("big chungus", "no way");
+            Util.ShowMessageBox("big chungus", "no way");
+        }
     }
 }

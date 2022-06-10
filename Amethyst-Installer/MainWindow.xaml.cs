@@ -69,12 +69,14 @@ namespace amethyst_installer_gui
         // Titlebar buttons
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            Util.HandleKeyboardFocus(e);
             Logger.Info($"User closed installer!");
             Close();
         }
 
         private void Minimise_Click(object sender, RoutedEventArgs e)
         {
+            Util.HandleKeyboardFocus(e);
             WindowState = WindowState.Minimized;
         }
 
@@ -123,6 +125,8 @@ namespace amethyst_installer_gui
             pageStackPointer = 0;
             pageStack.Add(destinatonTab);
 
+#pragma warning disable IDE0055
+
             // Update checkmarks in sidebar
             sidebar_welcome.State =         destinatonTab < InstallerState.Welcome ?                TaskState.Default : TaskState.Checkmark;
             sidebar_installOptions.State =  destinatonTab < InstallerState.InstallOptions ?         TaskState.Default : TaskState.Checkmark;
@@ -131,6 +135,9 @@ namespace amethyst_installer_gui
             sidebar_download.State =        destinatonTab < InstallerState.Downloading ?            TaskState.Default : TaskState.Checkmark;
             sidebar_install.State =         destinatonTab < InstallerState.Installation ?           TaskState.Default : TaskState.Checkmark;
             sidebar_done.State =            destinatonTab < InstallerState.Done ?                   TaskState.Default : TaskState.Checkmark;
+
+#pragma warning restore IDE0055
+
         }
 
         // Used to take flow from current to some other page
@@ -153,22 +160,24 @@ namespace amethyst_installer_gui
 
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e)
         {
+            Util.HandleKeyboardFocus(e);
             CurrentInstallerPage.OnButtonPrimary(sender, e);
         }
         private void ActionButtonSecondary_Click(object sender, RoutedEventArgs e)
         {
+            Util.HandleKeyboardFocus(e);
             CurrentInstallerPage.OnButtonSecondary(sender, e);
         }
         private void ActionButtonTertiary_Click(object sender, RoutedEventArgs e)
         {
+            Util.HandleKeyboardFocus(e);
             CurrentInstallerPage.OnButtonTertiary(sender, e);
         }
 
         #endregion
 
         int viewBntCount = 0;
-
-        string[] altLogsBtnStrings = new string[]
+        readonly string[] altLogsBtnStrings = new string[]
         {
             "Chungus Bungus",
             "Among Us",
@@ -178,6 +187,8 @@ namespace amethyst_installer_gui
 
         private void viewLogsBtn_Click(object sender, RoutedEventArgs e)
         {
+            Util.HandleKeyboardFocus(e);
+
             if (altLogsBtnTxtActive == false && viewBntCount > 2 && pageStack[pageStackPointer] == InstallerState.Logs)
             {
                 altLogsBtnTxtActive = true;

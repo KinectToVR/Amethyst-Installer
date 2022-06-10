@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid>
-            
+        <Button x:Name="button" Content="DialogTest" HorizontalAlignment="Left" Margin="51,57,0,0" VerticalAlignment="Top" Click="button_Click"/>
+
     </Grid>
 </UserControl>

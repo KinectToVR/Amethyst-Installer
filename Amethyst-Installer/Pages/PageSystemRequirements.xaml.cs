@@ -60,7 +60,7 @@ namespace amethyst_installer_gui.Pages
             Hyperlink hyperLink3 = new Hyperlink()
             {
                 NavigateUri = new Uri("http://somesite.com"),
-                Foreground = WindowsColorHelpers.Accent
+                // Foreground = WindowsColorHelpers.Accent
             };
             hyperLink3.Inlines.Add("some site");
             hyperLink3.RequestNavigate += Hyperlink_RequestNavigate;
