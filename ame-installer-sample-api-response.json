@@ -1,0 +1,51 @@
+{
+	"modules": [
+		{
+			"id": "wix",
+			"display_name": "WiX Toolset",
+			"description": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
+			"filesize": 0,
+			"downloadsize": 0,
+			"required": false,
+			"visible": false,
+			"depends": [],
+			"remote": {
+				"main_url": "https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip",
+				"mirror_url": "amogus"
+			},
+			"install": {
+				"type": "temp"
+			}
+		},
+		{
+			"id": "kinect-v1",
+			"display_name": "Kinect for Windows SDK v1.8",
+			"description": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1. This is required to use those devices with Amethyst.",
+			"filesize": 0,
+			"downloadsize": 0,
+			"required": false,
+			"visible": true,
+			"depends": [
+				"wix"
+			],
+			"remote": {
+				"main_url": "amogus",
+				"mirror_url": "amogus"
+			},
+			"install": {
+				"type": "dark-extract",
+				"items": [
+					"KinectDrivers.msi",
+					"KinectRuntime.msi",
+					"KinectSDK.msi"
+				],
+				"post": "kinectv1"
+			}
+		}
+	],
+	"splashes": [
+		"amoggus",
+		"big chungus",
+		"deez nuts"
+	]
+}
