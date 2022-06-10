@@ -141,6 +141,9 @@
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\PropVariant.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\PropVariantNative.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Role.cs" />
+    <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
+      <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -206,6 +209,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Popups\WinUI3MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -257,6 +264,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include=".editorconfig" />
     <None Include="app.config" />
     <None Include="ILRepack.targets" />
     <None Include="packages.config" />
