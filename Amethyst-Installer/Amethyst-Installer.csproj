@@ -150,6 +150,7 @@
       <DependentUpon>Resources.en.resx</DependentUpon>
     </Compile>
     <Compile Include="Util\Constants.cs" />
+    <Compile Include="Util\Download.cs" />
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\Util.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
