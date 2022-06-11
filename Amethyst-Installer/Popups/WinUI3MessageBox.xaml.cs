@@ -1,3 +1,4 @@
+using amethyst_installer_gui.PInvoke;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,9 @@ namespace amethyst_installer_gui.Popups
             dialogButton_Tertiary.Content = buttonTertiaryText;
 
             // Handle visibility
+
+            // Fix corners on Win11
+            DWM.SetWindowCorners(this, CornerPreference.Round);
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

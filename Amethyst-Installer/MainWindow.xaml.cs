@@ -1,6 +1,7 @@
 using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
+using amethyst_installer_gui.PInvoke;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,10 @@ namespace amethyst_installer_gui
 
             // Set default page to welcome
             SetPage(InstallerState.Welcome);
+
+            // Fix corners on Win11
+            DWM.SetWindowCorners(this, CornerPreference.Round);
+            DWM.SetWindowAccentColor(this, WindowsColorHelpers.GetAccentColor());
         }
 
         #region Win UI 3 Window Functionality
