@@ -25,6 +25,10 @@ namespace amethyst_installer_gui {
             }
 
             Logger.Info($"GetCurrentlyLoggedInUsername:: {CurrentUser.GetCurrentlyLoggedInUsername()}");
+
+            OpenVRUtil.InitOpenVR();
+
+            Logger.Info(OpenVRUtil.RuntimePath());
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {

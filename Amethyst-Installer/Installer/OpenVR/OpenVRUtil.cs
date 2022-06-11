@@ -50,5 +50,35 @@ namespace amethyst_installer_gui.Installer {
 
             Logger.Info("Successfully loaded openvr_api.dll!");
         }
+
+        public static string RuntimePath() {
+            if ( !s_initialized )
+                throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
+            if ( s_failedToInit ) {
+                // TODO: OPENVRPATHS.VRPATH HELL
+
+                throw new NotImplementedException();
+
+                return "";
+            } else
+                return Valve.VR.OpenVR.RuntimePath();
+        }
+
+        /// <summary>
+        /// Registers an OpenVR driver
+        /// </summary>
+        /// <param name="driverPath">The path to the driver</param>
+        public static void RegisterSteamVrDriver(string driverPath) {
+            if ( !s_initialized )
+                throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
+
+            if (!s_failedToInit) {
+
+            }
+
+            // TODO: vrpathreg now returns error codes! use it for driver handling
+
+            throw new NotImplementedException();
+        }
     }
 }
