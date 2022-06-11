@@ -16,19 +16,9 @@ namespace amethyst_installer_gui {
             // Initialize logger
             string logFileDate = DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff");
             Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
-
-            // TODO: Move to sysreq
-            // Check if the Kinect microphone is muted, and if so, prompt the user to enable it.
-            if ( KinectUtil.KinectMicrophoneDisabled() ) {
-                // Open sound control panel on the recording tab
-                System.Diagnostics.Process.Start("rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1");
-            }
-
-            Logger.Info($"GetCurrentlyLoggedInUsername:: {CurrentUser.GetCurrentlyLoggedInUsername()}");
-
+            
+            // Init OpenVR
             OpenVRUtil.InitOpenVR();
-
-            Logger.Info(OpenVRUtil.RuntimePath());
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
