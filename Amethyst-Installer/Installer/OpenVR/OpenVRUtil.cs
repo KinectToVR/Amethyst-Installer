@@ -1,7 +1,9 @@
 using amethyst_installer_gui.PInvoke;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -41,25 +43,43 @@ namespace amethyst_installer_gui.Installer {
             // Load the openvr_api.dll unmanaged library using P/Invoke :D
             var result = Kernel.LoadLibrary(ovrDll);
             if ( result == IntPtr.Zero ) {
-                // Exception e = new Win32Exception();
-                // throw new DllNotFoundException("Unable to load openvr_api.dll", e);
                 Logger.Fatal("Failed to load openvr_api.dll");
                 Logger.Warn("Falling back to openvrpaths.vrpath...");
                 s_failedToInit = true;
             }
 
+            s_initialized = true;
             Logger.Info("Successfully loaded openvr_api.dll!");
         }
 
+        /// <summary>
+        /// Returns whether SteamVR is currently running or not
+        /// </summary>
+        public static bool IsSteamVrRunning() {
+            // Checks if vrserver is running
+            return Process.GetProcessesByName("vrserver").Length > 0;
+        }
+
+        /// <summary>
+        /// Returns the SteamVR installation directory
+        /// </summary>
+        /// <returns>null if it fails to find a suitable directory</returns>
         public static string RuntimePath() {
             if ( !s_initialized )
                 throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
             if ( s_failedToInit ) {
-                // TODO: OPENVRPATHS.VRPATH HELL
 
-                throw new NotImplementedException();
+                // Try reading openvrpaths, and grab the runtime field.
+                // From there: for each entry, try checking if the directory exists, and, if so, return it
+                var vrpaths = TryGetOpenVrPaths();
+                if ( vrpaths != null ) {
+                    for (int i = 0; i < vrpaths.runtime.Count; i++ ) {
+                        if ( Directory.Exists(vrpaths.runtime[i]) )
+                            return vrpaths.runtime[i];
+                    }
+                }
 
-                return "";
+                return null;
             } else
                 return Valve.VR.OpenVR.RuntimePath();
         }
@@ -80,5 +100,24 @@ namespace amethyst_installer_gui.Installer {
 
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns a deserialized instance of openvrpaths.vrpath
+        /// </summary>
+        private static OpenVrPaths TryGetOpenVrPaths() {
+
+            string vrpathsFile = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "openvr", "openvrpaths.vrpath"));
+            if ( !File.Exists(vrpathsFile) ) {
+                Logger.Warn("openvrpaths.vrpath doesn't exist on the current system... Is SteamVR installed and has it been run once?");
+                return null;
+            }
+
+            string vrpathsTxt = File.ReadAllText(vrpathsFile);
+
+            return JsonConvert.DeserializeObject<OpenVrPaths>(vrpathsTxt);
+        }
+
+        // TODO: steamvr.vrsettings check
+        // If it doesn't exist ask the user to run SteamVR ONCE
     }
 }

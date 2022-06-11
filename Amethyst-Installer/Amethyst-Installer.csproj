@@ -97,6 +97,7 @@
     <Compile Include="Installer\Modules\DarkModule.cs" />
     <Compile Include="Installer\Modules\IModule.cs" />
     <Compile Include="Installer\Modules\MsiModule.cs" />
+    <Compile Include="Installer\OpenVR\OpenVrPaths.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.cs" />
     <Compile Include="Installer\ShadowPCUtil.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
