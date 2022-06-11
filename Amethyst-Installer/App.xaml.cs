@@ -1,5 +1,6 @@
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
+using amethyst_installer_gui.PInvoke;
 using System;
 using System.IO;
 using System.Windows;
@@ -22,6 +23,8 @@ namespace amethyst_installer_gui {
                 // Open sound control panel on the recording tab
                 System.Diagnostics.Process.Start("rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1");
             }
+
+            Logger.Info($"GetCurrentlyLoggedInUsername:: {CurrentUser.GetCurrentlyLoggedInUsername()}");
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
