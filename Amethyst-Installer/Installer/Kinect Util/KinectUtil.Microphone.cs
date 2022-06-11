@@ -9,7 +9,7 @@ namespace amethyst_installer_gui.Installer {
     /// <summary>
     /// Helper class responsible for handling Kinect related tasks, such as ensuring presence of the drivers, checking software things, etc.
     /// </summary>
-    public static class KinectUtil {
+    public static partial class KinectUtil {
 
         #region Microphone
 
@@ -119,7 +119,5 @@ namespace amethyst_installer_gui.Installer {
         }
 
         #endregion
-
-        // TODO: Detect SDKs
     }
 }
