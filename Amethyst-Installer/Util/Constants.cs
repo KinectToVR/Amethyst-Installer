@@ -1,38 +1,41 @@
 using System;
 using System.IO;
 
-namespace amethyst_installer_gui
-{
+namespace amethyst_installer_gui {
     /// <summary>
     /// A static class containing constants such as directories
     /// </summary>
-    public static class Constants
-    {
+    public static class Constants {
         /// <summary>
         /// Returns the logging directory for Amethyst
         /// </summary>
-        public static string AmethystLogsDirectory
-        {
-            get
-            {
+        public static string AmethystLogsDirectory {
+            get {
                 return Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Amethyst", "logs"));
             }
         }
 
         /// <summary>
-        /// Returns a temporary directory which is 
+        /// Returns a temporary directory, in %TEMP% in Release mode, and in ./temp in Debug mode (to make troubleshooting easier)
         /// </summary>
-        public static string AmethystTempDirectory
-        {
-            get
-            {
-                if (m_ameTmpDir == null || m_ameTmpDir == "")
-                    m_ameTmpDir = Path.GetTempPath();
+        public static string AmethystTempDirectory {
+            get {
+                if ( m_ameTmpDir == null || m_ameTmpDir == "" ) {
+#if DEBUG
+                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "temp"));
+#else
+                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Path.GetTempPath(), "amethyst-installer"));
+#endif
+                    if ( !Directory.Exists(m_ameTmpDir) ) {
+                        Directory.CreateDirectory(m_ameTmpDir);
+                        Logger.Info($"Created temp directory at \"{m_ameTmpDir}\"...");
+                    }
+                }
                 return m_ameTmpDir;
             }
         }
         // use a static variable to not pollute the tmp dir
-        private static string m_ameTmpDir = Path.GetTempPath();
+        private static string m_ameTmpDir = null;
 
         /// <summary>
         /// An invite to the K2VR Community Discord server

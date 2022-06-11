@@ -94,7 +94,7 @@
     <Compile Include="Installer\Modules\DarkModule.cs" />
     <Compile Include="Installer\Modules\IModule.cs" />
     <Compile Include="Installer\Modules\MsiModule.cs" />
-    <Compile Include="Installer\OpenVRUtil.cs" />
+    <Compile Include="Installer\OpenVR\OpenVRUtil.cs" />
     <Compile Include="Installer\ShadowPCUtil.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
     <Compile Include="Pages\PageDone.xaml.cs">
@@ -150,6 +150,8 @@
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Role.cs" />
     <Compile Include="PInvoke\CurrentUser.cs" />
     <Compile Include="PInvoke\DWM.cs" />
+    <Compile Include="PInvoke\Kernel.cs" />
+    <Compile Include="PInvoke\openvr_api.cs" />
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
     </Compile>
@@ -301,6 +303,9 @@
     <Resource Include="Resources\Icons\4x\Checkmark.png" />
     <Resource Include="Resources\Icons\4x\Default.png" />
     <Resource Include="Resources\Icons\4x\Question.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Binaries\openvr_api.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
