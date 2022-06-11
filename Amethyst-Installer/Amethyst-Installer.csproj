@@ -86,7 +86,14 @@
     </Compile>
     <Compile Include="Controls\TaskState.cs" />
     <Compile Include="Installer\InstallerStateManager.cs" />
-    <Compile Include="Installer\KinectUtil.cs" />
+    <Compile Include="Installer\Kinect Util\KinectUtil.Drivers.cs" />
+    <Compile Include="Installer\Kinect Util\KinectUtil.Install.cs" />
+    <Compile Include="Installer\Kinect Util\KinectUtil.Microphone.cs" />
+    <Compile Include="Installer\Kinect Util\KinectUtil.NotPowered.cs" />
+    <Compile Include="Installer\Kinect Util\KinectUtil.SDK.cs" />
+    <Compile Include="Installer\Modules\DarkModule.cs" />
+    <Compile Include="Installer\Modules\IModule.cs" />
+    <Compile Include="Installer\Modules\MsiModule.cs" />
     <Compile Include="Installer\OpenVRUtil.cs" />
     <Compile Include="Installer\ShadowPCUtil.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
@@ -141,6 +148,8 @@
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\PropVariant.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\PropVariantNative.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Role.cs" />
+    <Compile Include="PInvoke\CurrentUser.cs" />
+    <Compile Include="PInvoke\DWM.cs" />
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
     </Compile>
