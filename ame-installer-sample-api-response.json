@@ -15,6 +15,9 @@
 			},
 			"install": {
 				"type": "temp"
+			},
+			"detect": {
+				"type":  "none"
 			}
 		},
 		{
@@ -40,6 +43,9 @@
 					"KinectSDK.msi"
 				],
 				"post": "kinectv1"
+			},
+			"detect": {
+				"type": "path?"
 			}
 		}
 	],
