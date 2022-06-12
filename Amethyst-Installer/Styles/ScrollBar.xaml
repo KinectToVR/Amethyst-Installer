@@ -148,6 +148,59 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="WinUIHorizontalScrollBar">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="14" />
+                <ColumnDefinition Width="0.00001*" />
+                <ColumnDefinition MaxWidth="14" />
+            </Grid.ColumnDefinitions>
+            <Border x:Name="PART_Border" Grid.ColumnSpan="3" Width="12" HorizontalAlignment="Center" CornerRadius="6">
+                <Border.Background>
+                    <SolidColorBrush Opacity="0.0" Color="#FF2D2D2D" />
+                </Border.Background>
+            </Border>
+
+            <RepeatButton x:Name="PART_ButtonScrollLeft" Grid.Column="0" Command="ScrollBar.LineLeftCommand" Opacity="0" Content="&#xE938;" Style="{StaticResource WinUIScrollBarLineButton}"/>
+            <Track x:Name="PART_Track" Grid.Column="1" Height="{StaticResource ScrollbarInitialWidth}" VerticalAlignment="Center" IsDirectionReversed="False">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource WinUIScrollBarPageButton}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Margin="0" Padding="0" Style="{StaticResource WinUIScrollBarThumb}" />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource WinUIScrollBarPageButton}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+            <RepeatButton x:Name="PART_ButtonScrollRight" Grid.Column="2" Command="ScrollBar.LineRightCommand" Opacity="0" Content="&#xE937;" Style="{StaticResource WinUIScrollBarLineButton}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PART_Track" Storyboard.TargetProperty="Width" From="{StaticResource ScrollbarInitialWidth}" To="{StaticResource ScrollbarHoverWidth}" Duration="{StaticResource ScrollAnimationDuration}" BeginTime="{StaticResource ScrollAnimationDelay}"/>
+                            <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Opacity)" From="0.0" To="1.0" Duration="{StaticResource ScrollAnimationDuration}" BeginTime="{StaticResource ScrollAnimationDelay}"/>
+                            <DoubleAnimation Storyboard.TargetName="PART_ButtonScrollLeft" Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="{StaticResource ScrollAnimationDuration}" BeginTime="{StaticResource ScrollAnimationDelay}"/>
+                            <DoubleAnimation Storyboard.TargetName="PART_ButtonScrollRight" Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="{StaticResource ScrollAnimationDuration}" BeginTime="{StaticResource ScrollAnimationDelay}"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PART_Track" Storyboard.TargetProperty="Width" From="{StaticResource ScrollbarHoverWidth}" To="{StaticResource ScrollbarInitialWidth}" Duration="{StaticResource ScrollAnimationDuration}" BeginTime="{StaticResource ScrollAnimationDelay}"/>
+                            <DoubleAnimation Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Opacity)" From="1.0" To="0.0" Duration="{StaticResource ScrollAnimationDuration}" BeginTime="{StaticResource ScrollAnimationDelay}"/>
+                            <DoubleAnimation Storyboard.TargetName="PART_ButtonScrollLeft" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="{StaticResource ScrollAnimationDuration}" BeginTime="{StaticResource ScrollAnimationDelay}"/>
+                            <DoubleAnimation Storyboard.TargetName="PART_ButtonScrollRight" Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="{StaticResource ScrollAnimationDuration}" BeginTime="{StaticResource ScrollAnimationDelay}"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <Style x:Key="WinUIScrollBar" TargetType="{x:Type ScrollBar}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0" />
@@ -155,13 +208,11 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Style.Triggers>
-            <!--
-                <Trigger Property="Orientation" Value="Horizontal">
-                    <Setter Property="Width" Value="Auto" />
-                    <Setter Property="Height" Value="14" />
-                    <Setter Property="Template" Value="{StaticResource WinUIHorizontalScrollBar}" />
-                </Trigger>
-                -->
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Height" Value="14" />
+                <Setter Property="Template" Value="{StaticResource WinUIHorizontalScrollBar}" />
+            </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Width" Value="14" />
                 <Setter Property="Height" Value="Auto" />
