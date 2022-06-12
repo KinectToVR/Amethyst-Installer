@@ -1,3 +1,4 @@
+using amethyst_installer_gui.PInvoke;
 using System;
 using System.IO;
 
@@ -11,7 +12,7 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static string AmethystLogsDirectory {
             get {
-                return Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Amethyst", "logs"));
+                return Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", CurrentUser.GetCurrentlyLoggedInUsername(), "AppData", "Roaming", "Amethyst", "logs"));
             }
         }
 
@@ -24,7 +25,7 @@ namespace amethyst_installer_gui {
 #if DEBUG
                     m_ameTmpDir = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "temp"));
 #else
-                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Path.GetTempPath(), "amethyst-installer"));
+                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", CurrentUser.GetCurrentlyLoggedInUsername(), "AppData", "Local", "Temp", "amethyst-installer"));
 #endif
                     if ( !Directory.Exists(m_ameTmpDir) ) {
                         Directory.CreateDirectory(m_ameTmpDir);
