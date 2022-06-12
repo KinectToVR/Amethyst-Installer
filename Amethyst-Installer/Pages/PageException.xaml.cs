@@ -1,4 +1,5 @@
 using amethyst_installer_gui.Installer;
+using amethyst_installer_gui.PInvoke;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -69,7 +70,7 @@ namespace amethyst_installer_gui.Pages
         private void logsPathLink_Click(object sender, RoutedEventArgs e)
         {
             // open logs dir with the current log file selected
-            Process.Start("explorer.exe", $"/select,{Logger.LogFilePath}");
+            Shell.OpenFolderAndSelectItem(Logger.LogFilePath);
         }
     }
 }
