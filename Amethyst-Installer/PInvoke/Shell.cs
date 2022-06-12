@@ -27,7 +27,7 @@ namespace amethyst_installer_gui.PInvoke {
             SHParseDisplayName(folderPath, IntPtr.Zero, out nativeFolder, 0, out psfgaoOut);
 
             if ( nativeFolder == IntPtr.Zero ) {
-                // Log error, can't find folder
+                Logger.Fatal($"Failed to find directory {filePath}!");
                 return;
             }
 
