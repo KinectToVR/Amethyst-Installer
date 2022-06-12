@@ -81,6 +81,8 @@ namespace amethyst_installer_gui.Pages
         {
             if (MainWindow.Instance != null && s_queuedConsoleMessages.Count > 0)
             {
+                // Clear the textbox first, getting rid of the first newline
+                ( MainWindow.Instance.Pages[InstallerState.Logs] as PageLogs ).logMessagesBox.Document.Blocks.Clear();
                 while (s_queuedConsoleMessages.Count > 0)
                 {
                     var currMessage = s_queuedConsoleMessages.Dequeue();
