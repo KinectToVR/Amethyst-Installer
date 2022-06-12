@@ -8,11 +8,20 @@ namespace amethyst_installer_gui {
     /// </summary>
     public static class Constants {
         /// <summary>
+        /// Returns the equivalent of %USERPROFILE%, except smarter as it behaves properly with Admin
+        /// </summary>
+        public static string Userprofile {
+            get {
+                return Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", CurrentUser.GetCurrentlyLoggedInUsername()));
+            }
+        }
+
+        /// <summary>
         /// Returns the logging directory for Amethyst
         /// </summary>
         public static string AmethystLogsDirectory {
             get {
-                return Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", CurrentUser.GetCurrentlyLoggedInUsername(), "AppData", "Roaming", "Amethyst", "logs"));
+                return Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Roaming", "Amethyst", "logs"));
             }
         }
 
@@ -25,7 +34,7 @@ namespace amethyst_installer_gui {
 #if DEBUG
                     m_ameTmpDir = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "temp"));
 #else
-                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", CurrentUser.GetCurrentlyLoggedInUsername(), "AppData", "Local", "Temp", "amethyst-installer"));
+                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Local", "Temp", "amethyst-installer"));
 #endif
                     if ( !Directory.Exists(m_ameTmpDir) ) {
                         Directory.CreateDirectory(m_ameTmpDir);
