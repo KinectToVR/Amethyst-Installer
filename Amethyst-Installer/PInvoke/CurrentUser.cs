@@ -47,8 +47,8 @@ namespace amethyst_installer_gui.PInvoke {
 
         public static string GetCurrentlyLoggedInUsername() {
             try {
-                return GetUsername((int) GetCurrentSessionID(), false);
-            } catch ( InvalidOperationException e ) {
+                return GetUsername(( int ) GetCurrentSessionID(), false);
+            } catch ( InvalidOperationException ) {
                 return Environment.UserName;
             }
         }

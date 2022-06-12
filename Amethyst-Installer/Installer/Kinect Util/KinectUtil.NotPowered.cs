@@ -13,8 +13,9 @@ namespace amethyst_installer_gui.Installer {
         #region Not Powered Fix
 
         // An automagic fix for E_NUI_NOTPOWERED
-        // This fix involes practically uninstalling all Kinect Drivers, using P/Invoke, then forcing a scan for hardware changes to trigger the drivers to re-scan
+        // This fix involves practically uninstalling all Kinect Drivers, using P/Invoke, then forcing a scan for hardware changes to trigger the drivers to re-scan
         // The method involved with fixing this is subject to change at this point
+
 
 
         #endregion

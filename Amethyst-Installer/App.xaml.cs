@@ -1,6 +1,5 @@
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
-using amethyst_installer_gui.PInvoke;
 using System;
 using System.IO;
 using System.Windows;
