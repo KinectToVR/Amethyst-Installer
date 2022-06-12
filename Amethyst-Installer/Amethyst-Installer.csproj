@@ -101,6 +101,9 @@
     <Compile Include="Installer\OpenVR\OpenVRUtil.cs" />
     <Compile Include="Installer\ShadowPCUtil.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
+    <Compile Include="Pages\PageDebug.xaml.cs">
+      <DependentUpon>PageDebug.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PageDone.xaml.cs">
       <DependentUpon>PageDone.xaml</DependentUpon>
     </Compile>
@@ -186,6 +189,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\PageDebug.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\PageDone.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
