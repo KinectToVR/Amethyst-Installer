@@ -1,0 +1,253 @@
+{
+	"modules": [
+		{
+			"id": "amethyst",
+			"display_name": "Amethyst",
+			"description": "The Amethyst application itself.",
+			"filesize": 296,
+			"downloadsize": 86,
+			"required": true,
+			"visible": true,
+			"depends": [
+				"wasdk",
+				"dotnet6",
+				"vcredist2022"
+			],
+			"remote": {
+				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/KTVR1.0.2.1/Amethyst-Release-9ea9886.zip",
+				"mirror_url": "https://api.k2vr.tech/mirrors/amethyst-latest.zip",
+				"filename":  "amethyst-latest.zip"
+			},
+			"install": {
+				"type": "amethyst"
+			},
+			"detect": {
+				"type": "amethyst",
+				"removes":  "k2ex"
+			},
+			"uninstall": {
+				"type":  "amethyst"
+			}
+		},
+		{
+			"id": "wasdk",
+			"display_name": "Windows App Runtime",
+			"description": "Libraries to run apps created with the Windows App SDK.",
+			"filesize": 78,
+			"downloadsize": 57,
+			"required": true,
+			"visible": false,
+			"depends": [],
+			"remote": {
+				"main_url": "https://aka.ms/windowsappsdk/1.1/latest/windowsappruntimeinstall-1.1-x64.exe",
+				"mirror_url": "https://api.k2vr.tech/mirrors/windowsappruntimeinstall-1.1-x64.exe"
+			},
+			"install": {
+				"type": "exe",
+				"items": [
+					{
+						"executable": "windowsappruntimeinstall-1.1-x64.exe"
+					}
+				]
+			},
+			"detect": {
+				"type": "wasdk"
+			}
+		},
+		{
+			"id": "vcredist2022",
+			"display_name": "Visual C++ Redistributable 2022",
+			"description": "Visual C++ runtime libraries.",
+			"filesize": 20,
+			"downloadsize": 24,
+			"required": true,
+			"visible": false,
+			"depends": [],
+			"remote": {
+				"main_url": "https://aka.ms/vs/17/release/vc_redist.x64.exe",
+				"mirror_url": "https://api.k2vr.tech/mirrors/vc_redist.x64.exe"
+			},
+			"install": {
+				"type": "exe",
+				"items": [
+					{
+						"executable": "vc_redist.x64.exe",
+						"arguments": "/install /quiet /norestart"
+					}
+				]
+			}
+		},
+		{
+			"id": "dotnet6",
+			"display_name": ".NET 6.0 Desktop Runtime",
+			"description": ".NET (v6.0.4) Runtime Installer",
+			"filesize": 90,
+			"downloadsize": 55,
+			"required": true,
+			"visible": false,
+			"depends": [],
+			"remote": {
+				"main_url": "https://download.visualstudio.microsoft.com/download/pr/f13d7b5c-608f-432b-b7ec-8fe84f4030a1/5e06998f9ce23c620b9d6bac2dae6c1d/windowsdesktop-runtime-6.0.4-win-x64.exe",
+				"mirror_url": "https://api.k2vr.tech/mirrors/windowsdesktop-runtime-6.0.4-win-x64.exe"
+			},
+			"install": {
+				"type": "exe",
+				"items": [
+					{
+						"executable": "windowsdesktop-runtime-6.0.4-win-x64.exe",
+						"arguments": "/install /quiet /norestart"
+					}
+				]
+			}
+		},
+		{
+			"id": "wix",
+			"display_name": "WiX Toolset",
+			"description": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
+			"filesize": 0,
+			"downloadsize": 0,
+			"required": false,
+			"visible": false,
+			"depends": [],
+			"remote": {
+				"main_url": "https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip",
+				"mirror_url": "https://api.k2vr.tech/mirrors/wix311-binaries.zip"
+			},
+			"install": {
+				"type": "temp"
+			}
+		},
+		{
+			"id": "kinect-v1-sdk",
+			"display_name": "Kinect for Windows SDK v1.8",
+			"description": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1. This is required to use those devices with Amethyst.",
+			"filesize": 167,
+			"downloadsize": 222,
+			"required": false,
+			"visible": true,
+			"depends": [
+				"wix"
+			],
+			"remote": {
+				"main_url": "https://download.microsoft.com/download/E/1/D/E1DEC243-0389-4A23-87BF-F47DE869FC1A/KinectSDK-v1.8-Setup.exe",
+				"mirror_url": "https://api.k2vr.tech/mirrors/KinectSDK-v1.8-Setup.exe"
+			},
+			"install": {
+				"type": "dark-extract",
+				"items": [
+					"KinectDrivers-v1.8-x64.WHQL.msi",
+					"KinectRuntime-v1.8-x64.msi",
+					"KinectSDK-v1.8-x64.msi"
+				],
+				"showEula": true,
+				"post": "kinectv1"
+			},
+			"eula": {
+				"remote_url": ""
+			}
+		},
+		{
+			"id": "kinect-v1-toolkit",
+			"display_name": "Kinect for Windows Developer Toolkit v1.8",
+			"description": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1. Contains useful tools like Kinect Explorer that can help diagnose issues with your Kinect.",
+			"filesize": 410,
+			"downloadsize": 384,
+			"required": false,
+			"visible": true,
+			"depends": [
+				"wix",
+				"kinect-v1-sdk"
+			],
+			"remote": {
+				"main_url": "https://download.microsoft.com/download/D/0/6/D061A21C-3AF3-4571-8560-4010E96F0BC8/KinectDeveloperToolkit-v1.8.0-Setup.exe",
+				"mirror_url": "https://api.k2vr.tech/mirrors/KinectDeveloperToolkit-v1.8.0-Setup.exe"
+			},
+			"install": {
+				"type": "dark-extract",
+				"items": [
+					"KinectToolkit-v1.8.0-x64.msi"
+				],
+				"showEula": true
+			}
+		}
+	],
+	"splashes": [
+		"🎵 I'M HAN SOLO! I'M HAN SOLO! I'M HAN SOLO SOLO! 🎵",
+		"Welcome to the bone zone.",
+		"Unlike Facebook, we don't track your life. Rather, your legs.",
+		"Cross your fingers!",
+		"Ruining your ERP sessions since 2018!",
+		"Connect your Kinect to start the connection.",
+		"Rehoming abandoned Kinects",
+		"Auto-bribing soccer moms on Facebook Marketplace...",
+		"Developers were harmed in the creation of this software...",
+		"Did you know, NUI means Natural User Interface and was coined by Steve Mann.",
+		"LOOK AT MY LEGS!!! LOOK!!!",
+		"LOOK MORTY! I'M KINECT RIIIICK!",
+		"Foot do a spinny",
+		"Haha Kinect go SPEEN!",
+		"The Kinect V2 hates you, and you'll just have to accept that",
+		"Bandwidth? You won't be needing that where we're going!",
+		"The K2EX Enrichment Center would like to remind you, that the Kinect, cannot speak... Yet.",
+		"Laptops beware, you're in for a scare",
+		"ASMedia.",
+		"Renesas Renaissance",
+		"Legs and hips ONLY!",
+		"Only available at Walmart!",
+		"not Kinect2VR, not Kinect4VR, not Kinect 2 VR, not kinnect2vr and certainly not Driver4VR.",
+		"no. it does not work on oculus games",
+		"Its Kinect! Not connect!",
+		"Now works on Commodore 64!",
+		"Trans Rights!",
+		"The user is always at fault!",
+		"No keyboard found, press any key to continue!",
+		"[insert clever splash text here]",
+		"Imagine using a 2010 kids' toy a decade later for VR.",
+		"Fortunately, we have a product for people who aren't able to get some form of connectivity. It's called Xbox 360.",
+		"John Madden!",
+		"TV, TV, TV, TV, sports, sports, Call of Duty",
+		"exclamation point, question mark, exclamation point, question mark!",
+		"C'mon Cranky, take it to the fridge!",
+		"The kinect was first invented in 1895 when Nikola tesla started throwing lightbulbs at horses to track their position",
+		"Discounted from it's original price of $19,97",
+		"Hi! I'm Scott from Domino's Pizza. Have you heard about Hatsune Miku?",
+		"After 9 years in development, hopefully it'll have been worth the wait.",
+		"But the human eye can only see 30fps!1",
+		"Now in HD!",
+		"Number 15: Burger King Foot Rotation...",
+		"Due to the limitations of our software, we are unable to provide support to fourth-dimensional entities.",
+		"Try not to release the magic smoke.",
+		"*xbox noises*",
+		"Xbox One X Pro Max Mini Ultra Edge Active Cosmos Product Red with Deluxe Audio Strap.",
+		"Arguing over mechanical keyboards...",
+		"Needs more purple.",
+		"Plotting the downfall of the Western Roman Empire...",
+		"feet",
+		"legs",
+		"Made possible with the power of caffeine.",
+		"Have a great day!",
+		"Procedurally Generated!",
+		"Intentionally making spelling mistakes...",
+		"Do a 360!",
+		"Gaining Sentience...",
+		"Kinecting...",
+		"Giving people feet, one step at a time.",
+		"Hello, World!",
+		"Azure Kinect is magic.",
+		"It's Alive!",
+		"Debugging and Rebugging.",
+		"Ever wonder what the bottom of an avatar's shoe looks like?",
+		"Mom said it's my turn on the Xbox",
+		"Talk to us on Discord!",
+		"Gameing",
+		"Searching for spare USB ports...",
+		"Check out the 360 Kinect through an IR camera, it's pretty neat!",
+		"Insert Funny Text Here.",
+		"Woooo! Yeah baby, that's what I've been waiting for.",
+		"Ollie stole Tyler McVicker's free Vive!",
+		"Don't knock the fan method!",
+		"That's never happened before.",
+		"Just give us Wii Sports, but with Kinect.",
+		"Presented in 4K HDR at the Chungus Bungus Spectacular."
+	]
+}
