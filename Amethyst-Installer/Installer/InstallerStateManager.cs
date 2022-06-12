@@ -79,5 +79,10 @@ namespace amethyst_installer_gui.Installer
         /// Exception handling
         /// </summary>
         Exception = 9,
+
+        /// <summary>
+        /// DEBUG
+        /// </summary>
+        Debug = 1000,
     }
 }

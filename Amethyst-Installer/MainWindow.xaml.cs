@@ -49,6 +49,7 @@ namespace amethyst_installer_gui
             Pages.Add(InstallerState.Logs, new PageLogs());
             Pages.Add(InstallerState.EULA, new PageEULA());
             Pages.Add(InstallerState.Exception, new PageException());
+            Pages.Add(InstallerState.Debug, new PageDebug());
 
             // Set default page to welcome
             SetPage(InstallerState.Welcome);
@@ -207,6 +208,13 @@ namespace amethyst_installer_gui
         private void ContentRoot_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Keyboard.ClearFocus();
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e) {
+#if DEBUG
+            if (e.Key == Key.F12)
+                OverridePage(InstallerState.Debug);
+#endif
         }
     }
 }

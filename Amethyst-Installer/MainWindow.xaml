@@ -16,7 +16,7 @@
     Title="Amethyst Installer"
     MinHeight="502" MinWidth="822"
     Height="502" Width="822"
-    Background="#FF282828" Foreground="White">
+    Background="#FF282828" Foreground="White" KeyUp="Window_KeyUp">
     
     <Border Name="ContentRoot" BorderThickness="1" BorderBrush="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" MouseDown="ContentRoot_MouseDown">
         <DockPanel>
