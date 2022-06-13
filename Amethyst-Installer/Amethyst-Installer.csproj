@@ -86,19 +86,25 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\ItemTask.cs" />
+    <Compile Include="Controls\SidebarExtensions.cs" />
     <Compile Include="Controls\SidebarTask.xaml.cs">
       <DependentUpon>SidebarTask.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TaskState.cs" />
+    <Compile Include="Installer\Installer.Enums.cs" />
     <Compile Include="Installer\InstallerStateManager.cs" />
+    <Compile Include="Installer\JSON.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Drivers.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Install.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Microphone.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.NotPowered.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.SDK.cs" />
+    <Compile Include="Installer\Modules\AmethystModule.cs" />
     <Compile Include="Installer\Modules\DarkModule.cs" />
-    <Compile Include="Installer\Modules\IModule.cs" />
+    <Compile Include="Installer\Modules\ExeModule.cs" />
+    <Compile Include="Installer\Modules\ModuleBase.cs" />
     <Compile Include="Installer\Modules\MsiModule.cs" />
+    <Compile Include="Installer\Modules\TempArchiveModule.cs" />
     <Compile Include="Installer\OpenVR\OpenVrPaths.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.cs" />
     <Compile Include="Installer\ShadowPCUtil.cs" />
@@ -321,6 +327,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Binaries\openvr_api.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\1x\DiskDrive.png" />
+    <Resource Include="Resources\Icons\2x\DiskDrive.png" />
+    <Resource Include="Resources\Icons\4x\DiskDrive.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

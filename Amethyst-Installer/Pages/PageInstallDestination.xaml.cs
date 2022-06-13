@@ -1,6 +1,8 @@
 using amethyst_installer_gui.Installer;
+using amethyst_installer_gui.PInvoke;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace amethyst_installer_gui.Pages
 {
@@ -44,7 +45,16 @@ namespace amethyst_installer_gui.Pages
 
         public void OnSelected()
         {
+            // Fetch drive info
+            var drives = DriveInfo.GetDrives();
+            for ( int i = 0; i < drives.Length; i++ ) {
+                var letter = drives[i].RootDirectory.ToString().Replace(Path.DirectorySeparatorChar.ToString(), string.Empty).Replace(Path.AltDirectorySeparatorChar.ToString(), string.Empty);
+                var driveName = Shell.GetDriveLabel(drives[i].RootDirectory.ToString());
+                var freeSpace = drives[i].AvailableFreeSpace;
+                var totalSize = drives[i].TotalSize;
 
+                Logger.Info($"Drive [{i}] :: Letter {letter} :: Free {Util.SizeSuffix(freeSpace)} :: Total {Util.SizeSuffix(totalSize)} :: Name {driveName}");
+            }
         }
 
         // Force only the first button to have focus
