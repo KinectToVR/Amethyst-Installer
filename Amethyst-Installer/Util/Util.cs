@@ -45,5 +45,93 @@ namespace amethyst_installer_gui
         {
             if (((Control)e.Source).IsMouseOver && ((Control)e.Source).IsKeyboardFocused) Keyboard.ClearFocus();
         }
+
+        private static readonly string[] SizeSuffixes =
+                   { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+        /// <summary>
+        /// Converts bytes to the largest format which makes sense
+        /// </summary>
+        public static string SizeSuffix(long value, int decimalPlaces = 3) {
+            if ( decimalPlaces < 0 ) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
+            if ( value < 0 ) { return "-" + SizeSuffix(-value, decimalPlaces); }
+            if ( value == 0 ) { return string.Format("{0:n" + decimalPlaces + "} bytes", 0); }
+
+            // mag is 0 for bytes, 1 for KB, 2, for MB, etc.
+            int mag = (int)Math.Log(value, 1024);
+
+            // 1L << (mag * 10) == 2 ^ (10 * mag) 
+            // [i.e. the number of bytes in the unit corresponding to mag]
+            decimal adjustedSize = (decimal)value / (1L << (mag * 10));
+
+            // make adjustment when the value is large enough that
+            // it would round up to 1000 or more
+            if ( Math.Round(adjustedSize, decimalPlaces) >= 1000 ) {
+                mag += 1;
+                adjustedSize /= 1024;
+            }
+
+            return string.Format("{0} {1}",
+                Truncate(adjustedSize, decimalPlaces),
+                SizeSuffixes[mag]);
+        }
+
+        /// <summary>
+        /// Rounds a number to N digits and returns it as a string
+        /// </summary>
+        public static string Truncate(decimal value, int N) {
+            int integerPart = (int)value;
+            int size = integerPart.Digits();
+            if ( size < N )
+                return value.ToString($"n{N - size}");
+            return value.ToString($"n{0}");
+        }
+
+        /// <summary>
+        /// Returns how many digits there are in a given 32-bit integer
+        /// </summary>
+        public static int Digits(this int n) {
+            if ( n >= 0 ) {
+                if ( n < 10 )
+                    return 1;
+                if ( n < 100 )
+                    return 2;
+                if ( n < 1000 )
+                    return 3;
+                if ( n < 10000 )
+                    return 4;
+                if ( n < 100000 )
+                    return 5;
+                if ( n < 1000000 )
+                    return 6;
+                if ( n < 10000000 )
+                    return 7;
+                if ( n < 100000000 )
+                    return 8;
+                if ( n < 1000000000 )
+                    return 9;
+                return 10;
+            } else {
+                if ( n > -10 )
+                    return 2;
+                if ( n > -100 )
+                    return 3;
+                if ( n > -1000 )
+                    return 4;
+                if ( n > -10000 )
+                    return 5;
+                if ( n > -100000 )
+                    return 6;
+                if ( n > -1000000 )
+                    return 7;
+                if ( n > -10000000 )
+                    return 8;
+                if ( n > -100000000 )
+                    return 9;
+                if ( n > -1000000000 )
+                    return 10;
+                return 11;
+            }
+        }
     }
 }
