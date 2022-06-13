@@ -89,11 +89,11 @@
     </Compile>
     <Compile Include="Controls\TaskState.cs" />
     <Compile Include="Installer\InstallerStateManager.cs" />
-    <Compile Include="Installer\Kinect Util\KinectUtil.Drivers.cs" />
-    <Compile Include="Installer\Kinect Util\KinectUtil.Install.cs" />
-    <Compile Include="Installer\Kinect Util\KinectUtil.Microphone.cs" />
-    <Compile Include="Installer\Kinect Util\KinectUtil.NotPowered.cs" />
-    <Compile Include="Installer\Kinect Util\KinectUtil.SDK.cs" />
+    <Compile Include="Installer\KinectUtil\KinectUtil.Drivers.cs" />
+    <Compile Include="Installer\KinectUtil\KinectUtil.Install.cs" />
+    <Compile Include="Installer\KinectUtil\KinectUtil.Microphone.cs" />
+    <Compile Include="Installer\KinectUtil\KinectUtil.NotPowered.cs" />
+    <Compile Include="Installer\KinectUtil\KinectUtil.SDK.cs" />
     <Compile Include="Installer\Modules\DarkModule.cs" />
     <Compile Include="Installer\Modules\IModule.cs" />
     <Compile Include="Installer\Modules\MsiModule.cs" />
