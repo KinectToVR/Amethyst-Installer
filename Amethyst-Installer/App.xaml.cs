@@ -18,6 +18,8 @@ namespace amethyst_installer_gui {
             
             // Init OpenVR
             OpenVRUtil.InitOpenVR();
+
+            InstallerStateManager.Initialize();
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {

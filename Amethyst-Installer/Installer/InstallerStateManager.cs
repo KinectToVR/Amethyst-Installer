@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace amethyst_installer_gui.Installer
 {
@@ -18,71 +20,14 @@ namespace amethyst_installer_gui.Installer
         // TODO: Detect if using Shadow, prevent an install because Ame doesn't support networked environments
         public static bool IsSystemSupported = true;
 
+        public static AmeInstallApiResponse API_Response { get; private set; }
 
-    }
+        public static void Initialize() {
 
-    public enum SystemSupported
-    {
-        /// <summary>
-        /// Refers to setups which are completely unsupported, such as Shadow Cloud PC
-        /// </summary>
-        Unsupported = 0,
-        /// <summary>
-        /// Refers to setups where the user has all the hardware necessary setup, along-side all the software components such as drivers and WASDK
-        /// </summary>
-        Supported = 1,
-        /// <summary>
-        /// Refers to setups where the user has all the hardware necessary setup and ready to go, but is missing at least one component such as drivers or WASDK
-        /// </summary>
-        RequiresSetup = 2,
-    }
+            // Fetch JSON Response
+            var txtResponse = File.ReadAllText(Path.GetFullPath("ame-installer-sample-api-response.json"));
+            API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
+        }
 
-    public enum InstallerState
-    {
-        /// <summary>
-        /// Welcome
-        /// </summary>
-        Welcome = 0,
-        /// <summary>
-        /// What to install
-        /// </summary>
-        InstallOptions = 1,
-        /// <summary>
-        /// Destination
-        /// </summary>
-        InstallDestination = 2,
-        /// <summary>
-        /// System requirements
-        /// </summary>
-        SystemRequirements = 3,
-        /// <summary>
-        /// Downloading
-        /// </summary>
-        Downloading = 4,
-        /// <summary>
-        /// Installation
-        /// </summary>
-        Installation = 5,
-        /// <summary>
-        /// Install completed
-        /// </summary>
-        Done = 6,
-        /// <summary>
-        /// Logs viewer
-        /// </summary>
-        Logs = 7,
-        /// <summary>
-        /// EULA agreement
-        /// </summary>
-        EULA = 8,
-        /// <summary>
-        /// Exception handling
-        /// </summary>
-        Exception = 9,
-
-        /// <summary>
-        /// DEBUG
-        /// </summary>
-        Debug = 1000,
     }
 }
