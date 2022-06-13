@@ -20,14 +20,12 @@
 // updated to be in line with http://msdn.microsoft.com/en-us/library/dd370823%28v=vs.85%29.aspx
 using System;
 
-namespace NAudio.CoreAudioApi
-{
+namespace NAudio.CoreAudioApi {
     /// <summary>
     /// Device State
     /// </summary>
     [Flags]
-    public enum DeviceState
-    {
+    public enum DeviceState {
         /// <summary>
         /// DEVICE_STATE_ACTIVE
         /// </summary>

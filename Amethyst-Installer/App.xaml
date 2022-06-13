@@ -5,16 +5,16 @@
     StartupUri="MainWindow.xaml"
     Startup="Application_Startup"
     DispatcherUnhandledException="App_DispatcherUnhandledException">
- 
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Globals.xaml" />
                 <ResourceDictionary Source="Styles/Colours.xaml" />
-                
+
                 <ResourceDictionary Source="Styles/Titlebar.xaml" />
                 <ResourceDictionary Source="Styles/ItemTask.xaml" />
-                
+
                 <ResourceDictionary Source="Styles/Button.xaml" />
                 <ResourceDictionary Source="Styles/Textbox.xaml" />
                 <ResourceDictionary Source="Styles/ScrollBar.xaml" />

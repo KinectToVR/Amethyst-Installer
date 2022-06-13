@@ -1,12 +1,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace NAudio.CoreAudioApi.Interfaces
-{
+namespace NAudio.CoreAudioApi.Interfaces {
     [Guid("A95664D2-9614-4F35-A746-DE8DB63617E6"),
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    interface IMMDeviceEnumerator
-    {
+    interface IMMDeviceEnumerator {
         int EnumAudioEndpoints(DataFlow dataFlow, DeviceState stateMask,
             out IMMDeviceCollection devices);
 

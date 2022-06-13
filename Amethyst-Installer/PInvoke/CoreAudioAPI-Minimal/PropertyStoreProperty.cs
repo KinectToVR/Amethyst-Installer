@@ -23,17 +23,14 @@
 
 using NAudio.CoreAudioApi.Interfaces;
 
-namespace NAudio.CoreAudioApi
-{
+namespace NAudio.CoreAudioApi {
     /// <summary>
     /// Property Store Property
     /// </summary>
-    public class PropertyStoreProperty
-    {
+    public class PropertyStoreProperty {
         private PropVariant propertyValue;
 
-        internal PropertyStoreProperty(PropertyKey key, PropVariant value)
-        {
+        internal PropertyStoreProperty(PropertyKey key, PropVariant value) {
             Key = key;
             propertyValue = value;
         }
@@ -49,4 +46,3 @@ namespace NAudio.CoreAudioApi
         public object Value => propertyValue.Value;
     }
 }
-

@@ -23,13 +23,11 @@ using System;
 using NAudio.CoreAudioApi.Interfaces;
 using System.Runtime.InteropServices;
 
-namespace NAudio.CoreAudioApi
-{
+namespace NAudio.CoreAudioApi {
     /// <summary>
     /// MM Device
     /// </summary>
-    public class MMDevice : IDisposable
-    {
+    public class MMDevice : IDisposable {
         #region Variables
         private readonly IMMDevice deviceInterface;
         private PropertyStore propertyStore;
@@ -51,8 +49,7 @@ namespace NAudio.CoreAudioApi
         /// </summary>
         /// <param name="stgmAccess">The storage-access mode to open store for.</param>
         /// <remarks>Administrative client is required for Write and ReadWrite modes.</remarks>
-        public void GetPropertyInformation(StorageAccessMode stgmAccess = StorageAccessMode.Read)
-        {
+        public void GetPropertyInformation(StorageAccessMode stgmAccess = StorageAccessMode.Read) {
             Marshal.ThrowExceptionForHR(deviceInterface.OpenPropertyStore(stgmAccess, out var propstore));
             propertyStore = new PropertyStore(propstore);
         }
@@ -64,11 +61,9 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// Properties
         /// </summary>
-        public PropertyStore Properties
-        {
-            get
-            {
-                if (propertyStore == null)
+        public PropertyStore Properties {
+            get {
+                if ( propertyStore == null )
                     GetPropertyInformation();
                 return propertyStore;
             }
@@ -77,19 +72,14 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// Friendly name for the endpoint
         /// </summary>
-        public string FriendlyName
-        {
-            get
-            {
-                if (propertyStore == null)
-                {
+        public string FriendlyName {
+            get {
+                if ( propertyStore == null ) {
                     GetPropertyInformation();
                 }
-                if (propertyStore.Contains(PropertyKeys.PKEY_Device_FriendlyName))
-                {
-                    return (string)propertyStore[PropertyKeys.PKEY_Device_FriendlyName].Value;
-                }
-                else
+                if ( propertyStore.Contains(PropertyKeys.PKEY_Device_FriendlyName) ) {
+                    return ( string ) propertyStore[PropertyKeys.PKEY_Device_FriendlyName].Value;
+                } else
                     return "Unknown";
             }
         }
@@ -97,20 +87,14 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// Friendly name of device
         /// </summary>
-        public string DeviceFriendlyName
-        {
-            get
-            {
-                if (propertyStore == null)
-                {
+        public string DeviceFriendlyName {
+            get {
+                if ( propertyStore == null ) {
                     GetPropertyInformation();
                 }
-                if (propertyStore.Contains(PropertyKeys.PKEY_DeviceInterface_FriendlyName))
-                {
-                    return (string)propertyStore[PropertyKeys.PKEY_DeviceInterface_FriendlyName].Value;
-                }
-                else
-                {
+                if ( propertyStore.Contains(PropertyKeys.PKEY_DeviceInterface_FriendlyName) ) {
+                    return ( string ) propertyStore[PropertyKeys.PKEY_DeviceInterface_FriendlyName].Value;
+                } else {
                     return "Unknown";
                 }
             }
@@ -119,17 +103,13 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// Icon path of device
         /// </summary>
-        public string IconPath
-        {
-            get
-            {
-                if (propertyStore == null)
-                {
+        public string IconPath {
+            get {
+                if ( propertyStore == null ) {
                     GetPropertyInformation();
                 }
-                if (propertyStore.Contains(PropertyKeys.PKEY_Device_IconPath))
-                {
-                    return (string)propertyStore[PropertyKeys.PKEY_Device_IconPath].Value;
+                if ( propertyStore.Contains(PropertyKeys.PKEY_Device_IconPath) ) {
+                    return ( string ) propertyStore[PropertyKeys.PKEY_Device_IconPath].Value;
                 }
 
                 return "Unknown";
@@ -139,17 +119,13 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// Device Instance Id of Device
         /// </summary>
-        public string InstanceId
-        {
-            get
-            {
-                if (propertyStore == null)
-                {
+        public string InstanceId {
+            get {
+                if ( propertyStore == null ) {
                     GetPropertyInformation();
                 }
-                if (propertyStore.Contains(PropertyKeys.PKEY_Device_InstanceId))
-                {
-                    return (string)propertyStore[PropertyKeys.PKEY_Device_InstanceId].Value;
+                if ( propertyStore.Contains(PropertyKeys.PKEY_Device_InstanceId) ) {
+                    return ( string ) propertyStore[PropertyKeys.PKEY_Device_InstanceId].Value;
                 }
 
                 return "Unknown";
@@ -159,10 +135,8 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// Device ID
         /// </summary>
-        public string ID
-        {
-            get
-            {
+        public string ID {
+            get {
                 Marshal.ThrowExceptionForHR(deviceInterface.GetId(out var result));
                 return result;
             }
@@ -171,10 +145,8 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// Data Flow
         /// </summary>
-        public DataFlow DataFlow
-        {
-            get
-            {
+        public DataFlow DataFlow {
+            get {
                 var ep = deviceInterface as IMMEndpoint;
                 ep.GetDataFlow(out var result);
                 return result;
@@ -184,10 +156,8 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// Device State
         /// </summary>
-        public DeviceState State
-        {
-            get
-            {
+        public DeviceState State {
+            get {
                 Marshal.ThrowExceptionForHR(deviceInterface.GetState(out var result));
                 return result;
             }
@@ -196,8 +166,7 @@ namespace NAudio.CoreAudioApi
         #endregion
 
         #region Constructor
-        internal MMDevice(IMMDevice realDevice)
-        {
+        internal MMDevice(IMMDevice realDevice) {
             deviceInterface = realDevice;
         }
         #endregion
@@ -205,24 +174,21 @@ namespace NAudio.CoreAudioApi
         /// <summary>
         /// To string
         /// </summary>
-        public override string ToString()
-        {
+        public override string ToString() {
             return FriendlyName;
         }
 
         /// <summary>
         /// Dispose
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             GC.SuppressFinalize(this);
         }
 
         /// <summary>
         /// Finalizer
         /// </summary>
-        ~MMDevice()
-        {
+        ~MMDevice() {
             Dispose();
         }
     }

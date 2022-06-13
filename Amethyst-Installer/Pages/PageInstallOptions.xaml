@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:amethyst_installer_gui.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
-	<Grid>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="16"/>

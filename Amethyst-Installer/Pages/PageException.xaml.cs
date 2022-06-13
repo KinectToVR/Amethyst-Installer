@@ -5,50 +5,41 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace amethyst_installer_gui.Pages
-{
+namespace amethyst_installer_gui.Pages {
     /// <summary>
     /// Interaction logic for PageException.xaml
     /// </summary>
-    public partial class PageException : UserControl, IInstallerPage
-    {
+    public partial class PageException : UserControl, IInstallerPage {
         public Exception currentException;
 
-        public PageException()
-        {
+        public PageException() {
             InitializeComponent();
         }
 
-        public InstallerState GetInstallerState()
-        {
+        public InstallerState GetInstallerState() {
             return InstallerState.Exception;
         }
 
-        public string GetTitle()
-        {
+        public string GetTitle() {
             return Properties.Resources.Page_Exception_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e)
-        {
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Exit
             Application.Current.Shutdown(1);
         }
 
-        public void OnButtonSecondary(object sender, RoutedEventArgs e)
-        {
+        public void OnButtonSecondary(object sender, RoutedEventArgs e) {
             // Open Discord
             Process.Start(Constants.DiscordInvite);
         }
 
-        public void OnButtonTertiary(object sender, RoutedEventArgs e)
-        {
+        public void OnButtonTertiary(object sender, RoutedEventArgs e) {
             // Copy Error
             Clipboard.SetText($"```\nUnhandled Exception: {currentException.GetType().Name} in {currentException.Source}: {currentException.Message}\n```");
         }
 
-        public void OnFocus()
-        {
+        public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Exit;
 
@@ -65,10 +56,9 @@ namespace amethyst_installer_gui.Pages
         }
 
         // Since we never know when we will hit this page (this page is a special case as it's exception handling) we'll handle everything on page focus
-        public void OnSelected() {}
+        public void OnSelected() { }
 
-        private void logsPathLink_Click(object sender, RoutedEventArgs e)
-        {
+        private void logsPathLink_Click(object sender, RoutedEventArgs e) {
             // open logs dir with the current log file selected
             Shell.OpenFolderAndSelectItem(Logger.LogFilePath);
         }

@@ -8,7 +8,7 @@ namespace amethyst_installer_gui.PInvoke {
     public static class DWM {
 
         [DllImport("Dwmapi.dll", SetLastError = true)]
-        private static extern int DwmSetWindowAttribute( IntPtr hwnd, uint dwAttribute, [In] ref uint pvAttribute, uint cbAttribute);
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, uint dwAttribute, [In] ref uint pvAttribute, uint cbAttribute);
 
         private enum DWMWINDOWATTRIBUTE : uint {
             DWMWA_NCRENDERING_ENABLED = 1,

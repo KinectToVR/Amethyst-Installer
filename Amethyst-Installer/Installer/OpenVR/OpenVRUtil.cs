@@ -75,7 +75,7 @@ namespace amethyst_installer_gui.Installer {
                 // From there: for each entry, try checking if the directory exists, and, if so, return it
                 var vrpaths = TryGetOpenVrPaths();
                 if ( vrpaths != null ) {
-                    for (int i = 0; i < vrpaths.runtime.Count; i++ ) {
+                    for ( int i = 0; i < vrpaths.runtime.Count; i++ ) {
                         if ( Directory.Exists(vrpaths.runtime[i]) )
                             return vrpaths.runtime[i];
                     }
@@ -96,7 +96,7 @@ namespace amethyst_installer_gui.Installer {
 
             string driverDirectory = Path.GetDirectoryName(driverPath);
 
-            if (!s_failedToInit) {
+            if ( !s_failedToInit ) {
                 string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
                 if ( File.Exists(vrpathregPath) ) {
                     // TODO: vrpathreg now returns error codes! use it for driver handling
@@ -120,7 +120,7 @@ namespace amethyst_installer_gui.Installer {
                     }
                 }
             }
-            
+
             // TODO: Fallback to openvrpaths
 
             throw new NotImplementedException();
@@ -164,7 +164,7 @@ namespace amethyst_installer_gui.Installer {
 
             // TODO: Fallback to openvrpaths
             var openvrPaths = TryGetOpenVrPaths();
-            if (openvrPaths.external_drivers.Count > 0) {
+            if ( openvrPaths.external_drivers.Count > 0 ) {
 
             }
 

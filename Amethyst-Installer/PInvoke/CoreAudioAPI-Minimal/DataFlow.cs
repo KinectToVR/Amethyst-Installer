@@ -1,11 +1,9 @@
-namespace NAudio.CoreAudioApi
-{
+namespace NAudio.CoreAudioApi {
     /// <summary>
     /// The EDataFlow enumeration defines constants that indicate the direction 
     /// in which audio data flows between an audio endpoint device and an application
     /// </summary>
-    public enum DataFlow
-    {
+    public enum DataFlow {
         /// <summary>
         /// Audio rendering stream. 
         /// Audio data flows from the application to the audio endpoint device, which renders the stream.

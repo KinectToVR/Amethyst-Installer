@@ -17,7 +17,7 @@ namespace amethyst_installer_gui.Installer.Modules {
         /// </summary>
         bool HasDependencies {
             get {
-                return (Module?.Depends?.Count ?? 0) > 0;
+                return ( Module?.Depends?.Count ?? 0 ) > 0;
             }
         }
 

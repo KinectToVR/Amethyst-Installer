@@ -27,16 +27,14 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace NAudio.CoreAudioApi.Interfaces
-{
+namespace NAudio.CoreAudioApi.Interfaces {
     /// <summary>
     /// from Propidl.h.
     /// http://msdn.microsoft.com/en-us/library/aa380072(VS.85).aspx
     /// contains a union so we have to do an explicit layout
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct PropVariant
-    {
+    public struct PropVariant {
         /// <summary>
         /// Value type tag.
         /// </summary>
@@ -182,16 +180,14 @@ namespace NAudio.CoreAudioApi.Interfaces
         /// <summary>
         /// Creates a new PropVariant containing a long value
         /// </summary>
-        public static PropVariant FromLong(long value)
-        {
-            return new PropVariant() { vt = (short)VarEnum.VT_I8, hVal = value };
+        public static PropVariant FromLong(long value) {
+            return new PropVariant() { vt = ( short ) VarEnum.VT_I8, hVal = value };
         }
 
         /// <summary>
         /// Helper method to gets blob data
         /// </summary>
-        private byte[] GetBlob()
-        {
+        private byte[] GetBlob() {
             var blob = new byte[blobVal.Length];
             Marshal.Copy(blobVal.Data, blob, 0, blob.Length);
             return blob;
@@ -200,21 +196,18 @@ namespace NAudio.CoreAudioApi.Interfaces
         /// <summary>
         /// Interprets a blob as an array of structs
         /// </summary>
-        public T[] GetBlobAsArrayOf<T>()
-        {
+        public T[] GetBlobAsArrayOf<T>() {
             var blobByteLength = blobVal.Length;
             var singleInstance = (T)Activator.CreateInstance(typeof(T));
             var structSize = Marshal.SizeOf(singleInstance);
-            if (blobByteLength % structSize != 0)
-            {
+            if ( blobByteLength % structSize != 0 ) {
                 throw new InvalidDataException(String.Format("Blob size {0} not a multiple of struct size {1}", blobByteLength, structSize));
             }
             var items = blobByteLength / structSize;
             var array = new T[items];
-            for (int n = 0; n < items; n++)
-            {
-                array[n] = (T)Activator.CreateInstance(typeof(T));
-                Marshal.PtrToStructure(new IntPtr((long)blobVal.Data + n * structSize), array[n]);
+            for ( int n = 0; n < items; n++ ) {
+                array[n] = ( T ) Activator.CreateInstance(typeof(T));
+                Marshal.PtrToStructure(new IntPtr(( long ) blobVal.Data + n * structSize), array[n]);
             }
             return array;
         }
@@ -222,18 +215,15 @@ namespace NAudio.CoreAudioApi.Interfaces
         /// <summary>
         /// Gets the type of data in this PropVariant
         /// </summary>
-        public VarEnum DataType => (VarEnum)vt;
+        public VarEnum DataType => ( VarEnum ) vt;
 
         /// <summary>
         /// Property value
         /// </summary>
-        public object Value
-        {
-            get
-            {
+        public object Value {
+            get {
                 VarEnum ve = DataType;
-                switch (ve)
-                {
+                switch ( ve ) {
                     case VarEnum.VT_I1:
                         return bVal;
                     case VarEnum.VT_I2:
@@ -256,8 +246,7 @@ namespace NAudio.CoreAudioApi.Interfaces
                     case VarEnum.VT_CLSID:
                         return Marshal.PtrToStructure<Guid>(pointerValue);
                     case VarEnum.VT_BOOL:
-                        switch (boolVal)
-                        {
+                        switch ( boolVal ) {
                             case -1:
                                 return true;
                             case 0:
@@ -266,7 +255,7 @@ namespace NAudio.CoreAudioApi.Interfaces
                                 throw new NotSupportedException("PropVariant VT_BOOL must be either -1 or 0");
                         }
                     case VarEnum.VT_FILETIME:
-                        return DateTime.FromFileTime((((long)filetime.dwHighDateTime) << 32) + filetime.dwLowDateTime);
+                        return DateTime.FromFileTime(( ( ( long ) filetime.dwHighDateTime ) << 32 ) + filetime.dwLowDateTime);
                 }
                 throw new NotImplementedException("PropVariant " + ve);
             }
@@ -275,8 +264,7 @@ namespace NAudio.CoreAudioApi.Interfaces
         /// <summary>
         /// Clears with a known pointer
         /// </summary>
-        public static void Clear(IntPtr ptr)
-        {
+        public static void Clear(IntPtr ptr) {
             PropVariantNative.PropVariantClear(ptr);
         }
     }

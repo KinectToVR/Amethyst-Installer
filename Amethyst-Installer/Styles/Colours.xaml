@@ -4,7 +4,7 @@
     <SolidColorBrush x:Key="BrushBackgroundAlt" Color="#FF202020" />
     <SolidColorBrush x:Key="BrushForeground" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="BrushForegroundAlt" Color="#4CFFFFFF" />
-    
+
     <SolidColorBrush x:Key="BrushLineSeparator" Color="#4CFFFFFF" />
-    
+
 </ResourceDictionary>

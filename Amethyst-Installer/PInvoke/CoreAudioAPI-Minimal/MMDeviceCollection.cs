@@ -22,22 +22,18 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using NAudio.CoreAudioApi.Interfaces;
 
-namespace NAudio.CoreAudioApi
-{
+namespace NAudio.CoreAudioApi {
     /// <summary>
     /// Multimedia Device Collection
     /// </summary>
-    public class MMDeviceCollection : IEnumerable<MMDevice>
-    {
+    public class MMDeviceCollection : IEnumerable<MMDevice> {
         private readonly IMMDeviceCollection mmDeviceCollection;
 
         /// <summary>
         /// Device count
         /// </summary>
-        public int Count
-        {
-            get
-            {
+        public int Count {
+            get {
                 Marshal.ThrowExceptionForHR(mmDeviceCollection.GetCount(out var result));
                 return result;
             }
@@ -48,17 +44,14 @@ namespace NAudio.CoreAudioApi
         /// </summary>
         /// <param name="index">Device index</param>
         /// <returns>Device at the specified index</returns>
-        public MMDevice this[int index]
-        {
-            get
-            {
+        public MMDevice this[int index] {
+            get {
                 mmDeviceCollection.Item(index, out var result);
                 return new MMDevice(result);
             }
         }
 
-        internal MMDeviceCollection(IMMDeviceCollection parent)
-        {
+        internal MMDeviceCollection(IMMDeviceCollection parent) {
             mmDeviceCollection = parent;
         }
 
@@ -68,10 +61,8 @@ namespace NAudio.CoreAudioApi
         /// Get Enumerator
         /// </summary>
         /// <returns>Device enumerator</returns>
-        public IEnumerator<MMDevice> GetEnumerator()
-        {
-            for (int index = 0; index < Count; index++)
-            {
+        public IEnumerator<MMDevice> GetEnumerator() {
+            for ( int index = 0; index < Count; index++ ) {
                 yield return this[index];
             }
         }
@@ -80,8 +71,7 @@ namespace NAudio.CoreAudioApi
 
         #region IEnumerable Members
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
 

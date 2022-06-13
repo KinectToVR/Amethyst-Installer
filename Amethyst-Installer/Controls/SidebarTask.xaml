@@ -6,15 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d"
     d:DesignHeight="23" d:DesignWidth="250">
-    
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="19"/>
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
 
-		<Image x:Name="taskStateIcon" Grid.Column="0" Source="/Resources/Icons/4x/Default.png" RenderOptions.BitmapScalingMode="Fant"/>
-		<Label x:Name="taskDescription" Grid.Column="1" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource BrushForeground}" FontWeight="Normal" FontFamily="Segoe UI Semibold" Margin="5,0,0,0" Padding="5,3,5,5" />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="19"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
-	</Grid>
+        <Image x:Name="taskStateIcon" Grid.Column="0" Source="/Resources/Icons/4x/Default.png" RenderOptions.BitmapScalingMode="Fant"/>
+        <Label x:Name="taskDescription" Grid.Column="1" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource BrushForeground}" FontWeight="Normal" FontFamily="Segoe UI Semibold" Margin="5,0,0,0" Padding="5,3,5,5" />
+
+    </Grid>
 </UserControl>

@@ -17,10 +17,10 @@
         <Border Background="{DynamicResource BrushBackgroundAlt}">
             <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Horizontal">
-                    
+
                 </StackPanel>
             </ScrollViewer>
         </Border>
-        
+
     </Grid>
 </UserControl>

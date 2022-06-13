@@ -22,13 +22,11 @@
 using System;
 // ReSharper disable InconsistentNaming
 
-namespace NAudio.CoreAudioApi
-{
+namespace NAudio.CoreAudioApi {
     /// <summary>
     /// Property Keys
     /// </summary>
-    public static class PropertyKeys
-    {
+    public static class PropertyKeys {
         /// <summary>
         /// PKEY_DeviceInterface_FriendlyName
         /// </summary>

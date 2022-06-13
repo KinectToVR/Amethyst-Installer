@@ -16,13 +16,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace amethyst_installer_gui
-{
+namespace amethyst_installer_gui {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
-    {
+    public partial class MainWindow : Window {
         public Dictionary<InstallerState, IInstallerPage> Pages = new Dictionary<InstallerState, IInstallerPage>();
         // Basically an undo buffer ; max of 5 steps
         private List<InstallerState> pageStack = new List<InstallerState>(5);
@@ -31,10 +29,9 @@ namespace amethyst_installer_gui
         /// <summary>
         /// Returns the current instance of the <see cref="MainWindow"/>
         /// </summary>
-        public static MainWindow Instance { get { return (Application.Current.MainWindow as MainWindow); } }
+        public static MainWindow Instance { get { return ( Application.Current.MainWindow as MainWindow ); } }
 
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
 
             // Init pages
@@ -62,26 +59,22 @@ namespace amethyst_installer_gui
         #region Win UI 3 Window Functionality
 
         // Dragging
-        private void Titlebar_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
+        private void Titlebar_MouseDown(object sender, MouseButtonEventArgs e) {
+            if ( e.ChangedButton == MouseButton.Left )
                 this.DragMove();
         }
-        private void Titlebar_MouseRightUp(object sender, MouseButtonEventArgs e)
-        {
+        private void Titlebar_MouseRightUp(object sender, MouseButtonEventArgs e) {
             SystemCommands.ShowSystemMenu(this, PointToScreen(Mouse.GetPosition(this)));
         }
 
         // Titlebar buttons
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
+        private void Close_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             Logger.Info($"User closed installer!");
             Close();
         }
 
-        private void Minimise_Click(object sender, RoutedEventArgs e)
-        {
+        private void Minimise_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             WindowState = WindowState.Minimized;
         }
@@ -90,9 +83,8 @@ namespace amethyst_installer_gui
 
         #region Installer pages
 
-        public IInstallerPage CurrentInstallerPage
-        {
-            get { return (IInstallerPage)GetValue(CurrentInstallerPageProperty); }
+        public IInstallerPage CurrentInstallerPage {
+            get { return ( IInstallerPage ) GetValue(CurrentInstallerPageProperty); }
             set { SetValue(CurrentInstallerPageProperty, value); }
         }
 
@@ -100,8 +92,7 @@ namespace amethyst_installer_gui
             DependencyProperty.Register("CurrentInstallerPage", typeof(IInstallerPage), typeof(MainWindow), new PropertyMetadata(null, new PropertyChangedCallback(CurrentInstallerPageChanged)));
 
 
-        private static void CurrentInstallerPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
+        private static void CurrentInstallerPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             var mainWindowInstance = (d as MainWindow);
             var newPage = (IInstallerPage)e.NewValue;
 
@@ -116,12 +107,11 @@ namespace amethyst_installer_gui
             mainWindowInstance.windowTitle.Text = newPage.GetTitle();
 
             // Reset if not logs
-            if (newPage.GetInstallerState() != InstallerState.Logs)
+            if ( newPage.GetInstallerState() != InstallerState.Logs )
                 mainWindowInstance.viewBntCount = 0;
         }
 
-        public void SetPage(InstallerState destinatonTab)
-        {
+        public void SetPage(InstallerState destinatonTab) {
             CurrentInstallerPage = Pages[destinatonTab];
             Logger.Info($"Changing installer page to {destinatonTab}");
             CurrentInstallerPage.OnSelected();
@@ -147,9 +137,8 @@ namespace amethyst_installer_gui
         }
 
         // Used to take flow from current to some other page
-        public void OverridePage(InstallerState target)
-        {
-            if (pageStack.Count > 0 && pageStack[pageStackPointer] == InstallerState.Logs)
+        public void OverridePage(InstallerState target) {
+            if ( pageStack.Count > 0 && pageStack[pageStackPointer] == InstallerState.Logs )
                 return;
             pageStack.Add(target);
             Logger.Info($"Overriding view to page {target}...");
@@ -157,25 +146,21 @@ namespace amethyst_installer_gui
             CurrentInstallerPage = Pages[target];
         }
         // Goes down the page stack
-        public void GoToLastPage()
-        {
+        public void GoToLastPage() {
             pageStackPointer--;
             CurrentInstallerPage = Pages[pageStack[pageStackPointer]];
             Logger.Info($"Changing view to previous page {pageStack[pageStackPointer]}...");
         }
 
-        private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e)
-        {
+        private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             CurrentInstallerPage.OnButtonPrimary(sender, e);
         }
-        private void ActionButtonSecondary_Click(object sender, RoutedEventArgs e)
-        {
+        private void ActionButtonSecondary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             CurrentInstallerPage.OnButtonSecondary(sender, e);
         }
-        private void ActionButtonTertiary_Click(object sender, RoutedEventArgs e)
-        {
+        private void ActionButtonTertiary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             CurrentInstallerPage.OnButtonTertiary(sender, e);
         }
@@ -191,12 +176,10 @@ namespace amethyst_installer_gui
         };
         bool altLogsBtnTxtActive = false;
 
-        private void viewLogsBtn_Click(object sender, RoutedEventArgs e)
-        {
+        private void viewLogsBtn_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
 
-            if (altLogsBtnTxtActive == false && viewBntCount > 2 && pageStack[pageStackPointer] == InstallerState.Logs)
-            {
+            if ( altLogsBtnTxtActive == false && viewBntCount > 2 && pageStack[pageStackPointer] == InstallerState.Logs ) {
                 altLogsBtnTxtActive = true;
                 viewLogsBtn.Content = altLogsBtnStrings[new Random().Next(0, altLogsBtnStrings.Length)];
             }
@@ -205,14 +188,13 @@ namespace amethyst_installer_gui
         }
 
         // Clear focus of the currently tabbed item, mimicing WinUI3's behavior
-        private void ContentRoot_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+        private void ContentRoot_MouseDown(object sender, MouseButtonEventArgs e) {
             Keyboard.ClearFocus();
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e) {
 #if DEBUG
-            if (e.Key == Key.F12)
+            if ( e.Key == Key.F12 )
                 OverridePage(InstallerState.Debug);
 #endif
         }

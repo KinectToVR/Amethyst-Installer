@@ -21,23 +21,19 @@ using System;
 using System.Runtime.InteropServices;
 using NAudio.CoreAudioApi.Interfaces;
 
-namespace NAudio.CoreAudioApi
-{
+namespace NAudio.CoreAudioApi {
 
     /// <summary>
     /// MM Device Enumerator
     /// </summary>
-    public class MMDeviceEnumerator : IDisposable
-    {
+    public class MMDeviceEnumerator : IDisposable {
         private IMMDeviceEnumerator realEnumerator;
 
         /// <summary>
         /// Creates a new MM Device Enumerator
         /// </summary>
-        public MMDeviceEnumerator()
-        {
-            if (System.Environment.OSVersion.Version.Major < 6)
-            {
+        public MMDeviceEnumerator() {
+            if ( System.Environment.OSVersion.Version.Major < 6 ) {
                 throw new NotSupportedException("This functionality is only supported on Windows Vista or newer.");
             }
             realEnumerator = new MMDeviceEnumeratorComObject() as IMMDeviceEnumerator;
@@ -49,15 +45,13 @@ namespace NAudio.CoreAudioApi
         /// <param name="dataFlow">Desired DataFlow</param>
         /// <param name="dwStateMask">State Mask</param>
         /// <returns>Device Collection</returns>
-        public MMDeviceCollection EnumerateAudioEndPoints(DataFlow dataFlow, DeviceState dwStateMask)
-        {
+        public MMDeviceCollection EnumerateAudioEndPoints(DataFlow dataFlow, DeviceState dwStateMask) {
             Marshal.ThrowExceptionForHR(realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out var result));
             return new MMDeviceCollection(result);
         }
 
         /// <inheritdoc/>
-        public void Dispose()
-        {
+        public void Dispose() {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -66,12 +60,9 @@ namespace NAudio.CoreAudioApi
         /// Called to dispose/finalize contained objects.
         /// </summary>
         /// <param name="disposing">True if disposing, false if called from a finalizer.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (realEnumerator != null)
-                {
+        protected virtual void Dispose(bool disposing) {
+            if ( disposing ) {
+                if ( realEnumerator != null ) {
                     // although GC would do this for us, we want it done now
                     Marshal.ReleaseComObject(realEnumerator);
                     realEnumerator = null;

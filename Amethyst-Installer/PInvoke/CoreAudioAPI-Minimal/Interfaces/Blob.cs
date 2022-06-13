@@ -19,13 +19,11 @@
 // Adapted for NAudio
 using System;
 
-namespace NAudio.CoreAudioApi.Interfaces
-{
+namespace NAudio.CoreAudioApi.Interfaces {
     /// <summary>
     /// Representation of binary large object container.
     /// </summary>
-    public struct Blob
-    {
+    public struct Blob {
         /// <summary>
         /// Length of binary object.
         /// </summary>

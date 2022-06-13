@@ -5,7 +5,7 @@
     <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
-    
+
     <Style x:Key="WinUIScrollTextbox" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource BrushBackgroundAlt}"/>
         <Setter Property="Foreground" Value="{StaticResource BrushForeground}"/>
@@ -83,5 +83,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

@@ -34,7 +34,7 @@ namespace amethyst_installer_gui.PInvoke {
             filePath = Path.GetFullPath(filePath); // Resolve absolute path
             string folderPath = Path.GetDirectoryName(filePath);
             string file = Path.GetFileName(filePath);
-            
+
             IntPtr nativeFolder;
             uint psfgaoOut;
 

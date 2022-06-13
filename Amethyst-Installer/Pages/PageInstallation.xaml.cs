@@ -14,49 +14,41 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace amethyst_installer_gui.Pages
-{
+namespace amethyst_installer_gui.Pages {
     /// <summary>
     /// Interaction logic for PageInstallation.xaml
     /// </summary>
-    public partial class PageInstallation : UserControl, IInstallerPage
-    {
-        public PageInstallation()
-        {
+    public partial class PageInstallation : UserControl, IInstallerPage {
+        public PageInstallation() {
             InitializeComponent();
         }
 
-        public InstallerState GetInstallerState()
-        {
+        public InstallerState GetInstallerState() {
             return InstallerState.Installation;
         }
 
-        public string GetTitle()
-        {
+        public string GetTitle() {
             return Properties.Resources.Page_Install_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e)
-        {
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
             MainWindow.Instance.SetPage(InstallerState.Done);
         }
 
-        public void OnSelected()
-        {
+        public void OnSelected() {
 
         }
 
         // Force only the first button to have focus
-        public void OnFocus()
-        {
+        public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
         }
 
-        public void OnButtonSecondary(object sender, RoutedEventArgs e) {}
-        public void OnButtonTertiary(object sender, RoutedEventArgs e) {}
+        public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
+        public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
     }
 }

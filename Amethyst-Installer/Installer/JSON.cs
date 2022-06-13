@@ -84,5 +84,4 @@ namespace amethyst_installer_gui.Installer {
         [JsonProperty("splashes")]
         public List<string> Splashes;
     }
-
 }

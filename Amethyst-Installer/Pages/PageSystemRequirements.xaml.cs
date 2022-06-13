@@ -14,36 +14,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace amethyst_installer_gui.Pages
-{
+namespace amethyst_installer_gui.Pages {
     /// <summary>
     /// Interaction logic for PageSystemRequirements.xaml
     /// </summary>
-    public partial class PageSystemRequirements : UserControl, IInstallerPage
-    {
-        public PageSystemRequirements()
-        {
+    public partial class PageSystemRequirements : UserControl, IInstallerPage {
+        public PageSystemRequirements() {
             InitializeComponent();
         }
 
-        public InstallerState GetInstallerState()
-        {
+        public InstallerState GetInstallerState() {
             return InstallerState.SystemRequirements;
         }
 
-        public string GetTitle()
-        {
+        public string GetTitle() {
             return Properties.Resources.Page_Sysreq_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e)
-        {
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
             MainWindow.Instance.SetPage(InstallerState.Downloading);
         }
 
-        public void OnSelected()
-        {
+        public void OnSelected() {
             // Compute minimum requirements
 
             // TODO: Check storage
@@ -72,19 +65,17 @@ namespace amethyst_installer_gui.Pages
         }
 
         // Force only the first button to have focus
-        public void OnFocus()
-        {
+        public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
         }
 
-        public void OnButtonSecondary(object sender, RoutedEventArgs e) {}
-        public void OnButtonTertiary(object sender, RoutedEventArgs e) {}
+        public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
+        public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
 
         }
     }

@@ -1,10 +1,8 @@
-namespace NAudio.CoreAudioApi.Interfaces
-{
+namespace NAudio.CoreAudioApi.Interfaces {
     /// <summary>
     /// MMDevice STGM enumeration
     /// </summary>
-    public enum StorageAccessMode
-    {
+    public enum StorageAccessMode {
         /// <summary>
         /// Read-only access mode.
         /// </summary>
