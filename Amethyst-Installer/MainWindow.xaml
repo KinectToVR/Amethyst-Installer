@@ -41,7 +41,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="3" Margin="-5,0,0,25">
                         <Button x:Name="viewLogsBtn" Style="{DynamicResource WinUIHyperlinkButton}" Content="{x:Static res:Resources.Sidebar_ViewLogs}"  Margin="0,0,0,4" Click="viewLogsBtn_Click"/>
-                        <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="#4CFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" IsTabStop="False" />
+                        <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" IsTabStop="False" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
