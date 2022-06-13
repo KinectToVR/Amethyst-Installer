@@ -3,10 +3,92 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
+             xmlns:local="clr-namespace:amethyst_installer_gui.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
 	<Grid>
-        
-	</Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="{StaticResource BrushBackgroundAlt}" SnapsToDevicePixels="True" CornerRadius="4" x:Name="installOptionsListContainerRoot">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" BlurRadius="4" Opacity="0.3" />
+            </Border.Effect>
+            <ScrollViewer Focusable="false" HorizontalScrollBarVisibility="Hidden">
+                <StackPanel Width="Auto">
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" x:Name="fullTitle" FontSize="16" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="#FFFFFFFF">Kinect for Windows SDK v2.0_1409</TextBlock>
+            <ScrollViewer Grid.Row="1" Margin="0,16" FocusVisualStyle="{x:Null}">
+                <TextBlock x:Name="fullDescription" FontSize="12" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="{DynamicResource BrushForegroundAlt}">big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus.</TextBlock>
+            </ScrollViewer>
+            <StackPanel Grid.Row="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left">
+                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold">Download Size:</Label>
+                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold">Installed Size:</Label>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right">
+                        <Label x:Name="downloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>
+                        <Label x:Name="installSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">420 TeraShits</Label>
+                    </StackPanel>
+                    <Rectangle Fill="{DynamicResource BrushLineSeparator}" Grid.Row="1" Grid.ColumnSpan="2" Height="1" Margin="0,4"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Row="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold">Total Download Size:</Label>
+                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold">Total Installed Size:</Label>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                        <Label x:Name="totalDownloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>
+                        <Label x:Name="totalInstallSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">420 TeraShits</Label>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
 </UserControl>
