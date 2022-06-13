@@ -34,12 +34,14 @@ namespace amethyst_installer_gui {
 #if DEBUG
                     m_ameTmpDir = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "temp"));
 #else
-                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Local", "Temp", "amethyst-installer"));
+                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Local", "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
 #endif
-                    if ( !Directory.Exists(m_ameTmpDir) ) {
-                        Directory.CreateDirectory(m_ameTmpDir);
-                        Logger.Info($"Created temp directory at \"{m_ameTmpDir}\"...");
+                    if ( Directory.Exists(m_ameTmpDir) ) {
+                        Directory.Delete(m_ameTmpDir, true); // Clear previous temp dir if it exists
                     }
+
+                    Directory.CreateDirectory(m_ameTmpDir);
+                    Logger.Info($"Created temp directory at \"{m_ameTmpDir}\"...");
                 }
                 return m_ameTmpDir;
             }
