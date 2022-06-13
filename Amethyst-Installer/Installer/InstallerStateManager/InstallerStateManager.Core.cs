@@ -6,14 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace amethyst_installer_gui.Installer
-{
+namespace amethyst_installer_gui.Installer {
     /// <summary>
     /// Class that handles the installer's global state.
     /// UI updates this class' state, then this class calls all the actual logic.
     /// </summary>
-    public static class InstallerStateManager
-    {
+    public static partial class InstallerStateManager {
         public static bool CanInstall = false;
 
 
