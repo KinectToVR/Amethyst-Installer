@@ -16,17 +16,17 @@
 			"remote": {
 				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/KTVR1.0.2.1/Amethyst-Release-9ea9886.zip",
 				"mirror_url": "https://api.k2vr.tech/mirrors/amethyst-latest.zip",
-				"filename":  "amethyst-latest.zip"
+				"filename": "amethyst-latest.zip"
 			},
 			"install": {
 				"type": "amethyst"
 			},
 			"detect": {
 				"type": "amethyst",
-				"removes":  "k2ex"
+				"removes": "k2ex"
 			},
 			"uninstall": {
-				"type":  "amethyst"
+				"type": "amethyst"
 			}
 		},
 		{
@@ -75,6 +75,10 @@
 						"arguments": "/install /quiet /norestart"
 					}
 				]
+			},
+			"detect": {
+				"type": "vcredist",
+				"version": "2022"
 			}
 		},
 		{
@@ -98,8 +102,13 @@
 						"arguments": "/install /quiet /norestart"
 					}
 				]
+			},
+			"detect": {
+				"type": "dotnet",
+				"version": "6"
 			}
 		},
+
 		{
 			"id": "wix",
 			"display_name": "WiX Toolset",
@@ -114,7 +123,7 @@
 				"mirror_url": "https://api.k2vr.tech/mirrors/wix311-binaries.zip"
 			},
 			"install": {
-				"type": "temp"
+				"type": "temp-archive"
 			}
 		},
 		{
@@ -142,8 +151,9 @@
 				"showEula": true,
 				"post": "kinectv1"
 			},
-			"eula": {
-				"remote_url": ""
+			"detect": {
+				"type": "env-var",
+				"variable": "KINECTSDK10_DIR"
 			}
 		},
 		{
@@ -168,6 +178,10 @@
 					"KinectToolkit-v1.8.0-x64.msi"
 				],
 				"showEula": true
+			},
+			"detect": {
+				"type": "env-var",
+				"variable": "KINECT_TOOLKIT_DIR"
 			}
 		}
 	],
