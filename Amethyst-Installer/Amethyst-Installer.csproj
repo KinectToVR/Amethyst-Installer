@@ -92,7 +92,8 @@
     </Compile>
     <Compile Include="Controls\TaskState.cs" />
     <Compile Include="Installer\Installer.Enums.cs" />
-    <Compile Include="Installer\InstallerStateManager.cs" />
+    <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Core.cs" />
+    <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Requirements.cs" />
     <Compile Include="Installer\JSON.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Drivers.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Install.cs" />
@@ -297,7 +298,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include=".editorconfig" />
-    <None Include="ame-installer-sample-api-response.json" />
+    <None Include="ame-installer-sample-api-response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
     <None Include="ILRepack.targets" />
     <None Include="packages.config" />

@@ -79,6 +79,15 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only Amethyst will be installed to this folder. Other items will install to their default locations..
+        /// </summary>
+        public static string InstallDestination_AmethystInstallLocationFootnote {
+            get {
+                return ResourceManager.GetString("InstallDestination_AmethystInstallLocationFootnote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string Installer_Action_Back {

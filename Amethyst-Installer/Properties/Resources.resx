@@ -123,6 +123,9 @@
   <data name="EULA_DontAgree" xml:space="preserve">
     <value>I do not agree</value>
   </data>
+  <data name="InstallDestination_AmethystInstallLocationFootnote" xml:space="preserve">
+    <value>Only Amethyst will be installed to this folder. Other items will install to their default locations.</value>
+  </data>
   <data name="Installer_Action_Back" xml:space="preserve">
     <value>Back</value>
   </data>

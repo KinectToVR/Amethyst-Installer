@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
+             xmlns:local="clr-namespace:amethyst_installer_gui.Properties"
              mc:Ignorable="d"
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid>
@@ -14,13 +14,45 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Border Background="{DynamicResource BrushBackgroundAlt}">
-            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+        <Border Background="{DynamicResource BrushBackgroundAlt}" Grid.Row="0">
+            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" FocusVisualStyle="{x:Null}">
                 <StackPanel Orientation="Horizontal">
-
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
+                    <Button Content="AAAAA" Margin="4,0"/>
                 </StackPanel>
             </ScrollViewer>
         </Border>
+
+        <Grid Grid.Row="1" Margin="0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Style="{DynamicResource WinUITextbox}" Tag="Among us" Grid.Column="0" Margin="0,0,12,0" />
+            <Button Content="Open Folder" Grid.Column="1" />
+        </Grid>
+
+        <Label Grid.Row="2" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Padding="0" Content="{x:Static local:Resources.InstallDestination_AmethystInstallLocationFootnote}" />
+
+        <Border Background="Transparent" Grid.Row="3" />
 
     </Grid>
 </UserControl>
