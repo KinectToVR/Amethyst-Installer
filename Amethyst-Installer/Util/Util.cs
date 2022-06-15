@@ -11,6 +11,9 @@ using amethyst_installer_gui.Popups;
 
 namespace amethyst_installer_gui {
     public static class Util {
+
+        public static Random Rng = new Random();
+
         /// <summary>
         /// Returns the version number of Amethyst Installer
         /// </summary>
