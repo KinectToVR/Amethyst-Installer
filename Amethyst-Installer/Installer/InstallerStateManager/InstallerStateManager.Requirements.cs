@@ -13,7 +13,17 @@ namespace amethyst_installer_gui.Installer {
     /// </summary>
     public static partial class InstallerStateManager {
 
+        /// <summary>
+        /// Whether the user can install Amethyst on this system at all.
+        /// </summary>
+        public static bool CanInstall = false;
+
+        // TODO: Detect if using Shadow, prevent an install because Ame doesn't support networked environments
+        public static bool IsSystemSupported = true;
+
         private static void ComputeRequirements() {
+
+            // TODO: 
 
         }
 
