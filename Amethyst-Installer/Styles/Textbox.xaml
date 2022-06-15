@@ -84,4 +84,54 @@
         </Setter>
     </Style>
 
+    <Style x:Key="WinUITextbox" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="#10FFFFFF" />
+        <Setter Property="Foreground" Value="#C9FFFFFF" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="BorderBrush" Value="#FF9A9A9A"/>
+        <Setter Property="Padding" Value="12,8,8,8" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+        
+        <Setter Property="SelectionBrush" Value="{Binding Source={x:Static local:WindowsColorHelpers.Accent}}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource BrushForeground}"/>
+        <Setter Property="Tag" Value=""/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                        <Grid x:Name="container">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" />
+                            <TextBlock x:Name="placeholder" Margin="{TemplateBinding Padding}" IsHitTestVisible="False" Text="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{TemplateBinding Foreground}"  Visibility="Collapsed" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{x:Static local:WindowsColorHelpers.AccentLight}" />
+                            <Setter Property="Background" TargetName="border" Value="#FF1F1F1F" />
+                            <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsFocused}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter Property="Visibility" TargetName="placeholder"  Value="Visible"/>
+                            <Setter Property="Foreground" Value="#FFCFCFCF" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
