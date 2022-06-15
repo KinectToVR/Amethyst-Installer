@@ -46,6 +46,12 @@ namespace amethyst_installer_gui.Installer {
 
         [JsonProperty("removes")]
         public string Removes;
+
+        [JsonProperty("version")]
+        public string Version;
+
+        [JsonProperty("variable")]
+        public string Variable;
     }
 
     public class ModuleInstallConfig {
