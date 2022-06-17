@@ -75,5 +75,9 @@ namespace amethyst_installer_gui.Pages {
         private void currentuser_Click(object sender, RoutedEventArgs e) {
             Util.ShowMessageBox(CurrentUser.GetCurrentlyLoggedInUsername(), "Current user");
         }
+
+        private void shadowTest_Click(object sender, RoutedEventArgs e) {
+            Util.ShowMessageBox($"IsOnShadow: {ShadowPCUtil.IsRunningOnShadow()}", "Shadow Status");
+        }
     }
 }

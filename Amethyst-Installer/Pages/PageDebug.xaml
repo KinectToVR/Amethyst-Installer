@@ -11,6 +11,7 @@
         <Button x:Name="openvrbtn" Content="OpenVRTest" HorizontalAlignment="Left" Margin="96,10,0,0" VerticalAlignment="Top" Click="openvrbtn_Click"/>
         <Button x:Name="kinectMicTest" Content="KinectMicTest" HorizontalAlignment="Left" Margin="194,10,0,0" VerticalAlignment="Top" Click="kinectmic_Click"/>
         <Button x:Name="currentUserTest" Content="CurrUserTest" HorizontalAlignment="Left" Margin="297,10,0,0" VerticalAlignment="Top" Click="currentuser_Click"/>
+        <Button x:Name="shadowTest" Content="ShadowTest" HorizontalAlignment="Left" Margin="395,10,0,0" VerticalAlignment="Top" Click="shadowTest_Click"/>
 
     </Grid>
 </UserControl>
