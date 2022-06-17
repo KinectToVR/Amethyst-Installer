@@ -12,6 +12,19 @@ namespace amethyst_installer_gui {
     /// </summary>
     public partial class App : Application {
         private void Application_Startup(object sender, StartupEventArgs e) {
+
+            /*
+             
+            COMMAND LINE ARGUMENTS:
+
+            --help, -h :: Shows help
+            --update -u :: Attempts to update Amethyst
+            --uninstall -x :: Attempts to uninstall Amethyst
+            --silent -s :: Executes the installer silently
+            --install-dir :: Sets the install directory, 
+             
+             */
+
             // Initialize logger
             string logFileDate = DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff");
             Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
