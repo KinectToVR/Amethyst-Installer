@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,8 +25,36 @@ namespace amethyst_installer_gui {
             }
         }
 
-        public static void ShowMessageBox(string title, string caption = "", MessageBoxButton button = MessageBoxButton.OK) {
-            var modalWindow = new WinUI3MessageBox(caption, title, "Save", "Don't Save", "Cancel");
+        public static MessageBoxResult ShowMessageBox(string title, string caption = "", MessageBoxButton button = MessageBoxButton.OK) {
+
+            string btnPrimary = string.Empty;
+            string btnSecondary = string.Empty;
+            string btnTertiary = string.Empty;
+
+            switch ( button ) {
+                case MessageBoxButton.OK:
+                    btnPrimary = string.Empty;
+                    btnSecondary = string.Empty;
+                    btnTertiary = Properties.Resources.Modal_OK;
+                    break;
+                case MessageBoxButton.OKCancel:
+                    btnPrimary = string.Empty;
+                    btnSecondary = Properties.Resources.Modal_OK;
+                    btnTertiary = Properties.Resources.Modal_Cancel;
+                    break;
+                case MessageBoxButton.YesNo:
+                    btnPrimary = string.Empty;
+                    btnSecondary = Properties.Resources.Modal_Yes;
+                    btnTertiary = Properties.Resources.Modal_No;
+                    break;
+                case MessageBoxButton.YesNoCancel:
+                    btnPrimary = Properties.Resources.Modal_Yes;
+                    btnSecondary = Properties.Resources.Modal_No;
+                    btnTertiary = Properties.Resources.Modal_Cancel;
+                    break;
+            }
+
+            var modalWindow = new WinUI3MessageBox(caption, title, btnPrimary, btnSecondary, btnTertiary);
 
             // If the window type is a WinUI3MessageBox we'll get an exception
             if ( Application.Current.MainWindow.GetType() == typeof(MainWindow) )
@@ -33,7 +62,42 @@ namespace amethyst_installer_gui {
 
             modalWindow.ShowDialog();
 
-            // TODO: Return
+
+            switch ( button ) {
+                case MessageBoxButton.OK:
+                    switch ( modalWindow.Result ) {
+                        case ResultState.Tertiary:
+                            return MessageBoxResult.OK;
+                    }
+                    break;
+                case MessageBoxButton.OKCancel:
+                    switch ( modalWindow.Result ) {
+                        case ResultState.Secondary:
+                            return MessageBoxResult.OK;
+                        case ResultState.Tertiary:
+                            return MessageBoxResult.Cancel;
+                    }
+                    break;
+                case MessageBoxButton.YesNo:
+                    switch ( modalWindow.Result ) {
+                        case ResultState.Secondary:
+                            return MessageBoxResult.Yes;
+                        case ResultState.Tertiary:
+                            return MessageBoxResult.No;
+                    }
+                    break;
+                case MessageBoxButton.YesNoCancel:
+                    switch ( modalWindow.Result ) {
+                        case ResultState.Primary:
+                            return MessageBoxResult.Yes;
+                        case ResultState.Secondary:
+                            return MessageBoxResult.No;
+                        case ResultState.Tertiary:
+                            return MessageBoxResult.Cancel;
+                    }
+                    break;
+            }
+            return MessageBoxResult.None;
         }
 
         /// <summary>
@@ -77,6 +141,7 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// Rounds a number to N digits and returns it as a string
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string Truncate(decimal value, int N) {
             int integerPart = (int)value;
             int size = integerPart.Digits();
@@ -88,6 +153,7 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// Returns how many digits there are in a given 32-bit integer
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Digits(this int n) {
             if ( n >= 0 ) {
                 if ( n < 10 )
