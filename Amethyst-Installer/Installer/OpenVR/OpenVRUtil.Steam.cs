@@ -28,6 +28,7 @@ namespace amethyst_installer_gui.Installer {
                     return steamInstallDirectory;
             }
 
+            Logger.Warn($"Failed to locate Steam Install directory. Is Steam installed on this system?");
             return string.Empty;
         }
 

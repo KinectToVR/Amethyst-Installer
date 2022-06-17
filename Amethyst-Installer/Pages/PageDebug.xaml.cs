@@ -79,5 +79,9 @@ namespace amethyst_installer_gui.Pages {
         private void shadowTest_Click(object sender, RoutedEventArgs e) {
             Util.ShowMessageBox($"IsOnShadow: {ShadowPCUtil.IsRunningOnShadow()}", "Shadow Status");
         }
+
+        private void steamVRSettingsDetails_Click(object sender, RoutedEventArgs e) {
+            Util.ShowMessageBox($"HMDModel: {OpenVRUtil.GetSteamVRHmdModel()}\nHMDManufacturer: {OpenVRUtil.GetSteamVRHmdManufacturer()}", "OpenVR HMD");
+        }
     }
 }

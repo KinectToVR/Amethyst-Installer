@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -61,7 +63,7 @@ namespace amethyst_installer_gui.Installer {
                 // Try getting SteamVR Settings from OpenVR Paths
                 for ( int i = 0; i < s_openvrpaths.config.Count; i++ ) {
                     if ( Directory.Exists(s_openvrpaths.config[i]) ) {
-                        s_steamvrSettingsPath = s_openvrpaths.config[i];
+                        s_steamvrSettingsPath = Path.Combine(s_openvrpaths.config[i], "steamvr.vrsettings");
                         s_steamvrSettingsExists = File.Exists(s_steamvrSettingsPath);
                         return;
                     }
@@ -83,6 +85,7 @@ namespace amethyst_installer_gui.Installer {
 
                 if ( s_steamvrSettingsExists ) {
                     var steamVRSettingsTxt = File.ReadAllText(s_steamvrSettingsPath);
+                    s_steamvrSettings = JObject.Parse(steamVRSettingsTxt);
                 }
             }
         }

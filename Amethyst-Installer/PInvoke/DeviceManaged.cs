@@ -176,7 +176,7 @@ namespace amethyst_installer_gui.PInvoke {
         public void UninstallDevice() {
             var result = CM_Uninstall_DevNode(_deviceHandle, 0);
             if ( result != 0 )
-                Console.Error.WriteLine("Failed to uninstall device!");
+                Logger.Fatal("Failed to uninstall device!");
         }
 
         private void EnumerateDeviceProperties() {
