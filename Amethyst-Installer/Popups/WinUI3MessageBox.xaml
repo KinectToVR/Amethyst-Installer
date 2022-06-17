@@ -11,6 +11,7 @@
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
         Background="#FF2B2B2B" Foreground="#FFFFFFFF"
+        MinWidth="256"
         Title="WinUI3MessageBox" Height="450" Width="800">
     <Border BorderThickness="1" BorderBrush="#FF3F3F3F" SnapsToDevicePixels="True" MouseDown="Border_MouseDown">
         <Grid>
@@ -33,11 +34,17 @@
                 <Label x:Name="message" TextOptions.TextRenderingMode="Grayscale" SnapsToDevicePixels="True" FontFamily="Segoe UI" FontSize="14">Lorem ipsum dolor sit amet, adispicing elit.</Label>
             </StackPanel>
             <Border Grid.Row="2" Background="#FF202020" Padding="24" BorderBrush="#FF1D1D1D" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
-                <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True">
-                    <Button x:Name="dialogButton_Primary" SnapsToDevicePixels="True" Height="32" Margin="0,0,8,0" Click="dialogButton_Primary_Click" TabIndex="0">Save your work</Button>
-                    <Button x:Name="dialogButton_Secondary" SnapsToDevicePixels="True" Height="32" Margin="0,0,8,0" Click="dialogButton_Secondary_Click" TabIndex="1">Don't Save</Button>
-                    <Button x:Name="dialogButton_Tertiary" SnapsToDevicePixels="True" Height="32" Margin="0" Click="dialogButton_Tertiary_Click" TabIndex="1">Cancel</Button>
-                </StackPanel>
+                <Grid SnapsToDevicePixels="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="dialogButton_Primary" SnapsToDevicePixels="True" Height="32" Margin="0,0,8,0" Click="dialogButton_Primary_Click" TabIndex="0" Grid.Column="1">Save your work</Button>
+                    <Button x:Name="dialogButton_Secondary" SnapsToDevicePixels="True" Height="32" Margin="0,0,8,0" Click="dialogButton_Secondary_Click" TabIndex="1" Grid.Column="2">Don't Save</Button>
+                    <Button x:Name="dialogButton_Tertiary" SnapsToDevicePixels="True" Height="32" Margin="0" Click="dialogButton_Tertiary_Click" TabIndex="1" Grid.Column="3">Cancel</Button>
+                </Grid>
             </Border>
         </Grid>
     </Border>
