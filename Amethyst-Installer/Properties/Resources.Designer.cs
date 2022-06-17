@@ -88,6 +88,60 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} ({1}).
+        /// </summary>
+        public static string InstallDestination_DiskLabelFormat {
+            get {
+                return ResourceManager.GetString("InstallDestination_DiskLabelFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The path you&apos;ve entered is invalid. Please enter a valid path to continue..
+        /// </summary>
+        public static string InstallDestination_InvalidPathDescription {
+            get {
+                return ResourceManager.GetString("InstallDestination_InvalidPathDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Path.
+        /// </summary>
+        public static string InstallDestination_InvalidPathTitle {
+            get {
+                return ResourceManager.GetString("InstallDestination_InvalidPathTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Folder.
+        /// </summary>
+        public static string InstallDestination_OpenFolder {
+            get {
+                return ResourceManager.GetString("InstallDestination_OpenFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a valid install folder.
+        /// </summary>
+        public static string InstallDestination_PathPlaceholder {
+            get {
+                return ResourceManager.GetString("InstallDestination_PathPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} free.
+        /// </summary>
+        public static string InstallDestination_StorageFormatFree {
+            get {
+                return ResourceManager.GetString("InstallDestination_StorageFormatFree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string Installer_Action_Back {
@@ -138,6 +192,42 @@ namespace amethyst_installer_gui.Properties {
         public static string Logs_DirectoryIsLocatedHere {
             get {
                 return ResourceManager.GetString("Logs_DirectoryIsLocatedHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Modal_Cancel {
+            get {
+                return ResourceManager.GetString("Modal_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string Modal_No {
+            get {
+                return ResourceManager.GetString("Modal_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string Modal_OK {
+            get {
+                return ResourceManager.GetString("Modal_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Modal_Yes {
+            get {
+                return ResourceManager.GetString("Modal_Yes", resourceCulture);
             }
         }
         

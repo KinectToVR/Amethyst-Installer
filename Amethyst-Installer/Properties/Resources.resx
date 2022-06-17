@@ -126,6 +126,26 @@
   <data name="InstallDestination_AmethystInstallLocationFootnote" xml:space="preserve">
     <value>Only Amethyst will be installed to this folder. Other items will install to their default locations.</value>
   </data>
+  <data name="InstallDestination_DiskLabelFormat" xml:space="preserve">
+    <value>{0} ({1})</value>
+    <comment>{0} gets replaced with the disk label (eg "Local Disk") and {1} gets replaced with the drive letter {eg "C:" )</comment>
+  </data>
+  <data name="InstallDestination_InvalidPathDescription" xml:space="preserve">
+    <value>The path you've entered is invalid. Please enter a valid path to continue.</value>
+  </data>
+  <data name="InstallDestination_InvalidPathTitle" xml:space="preserve">
+    <value>Invalid Path</value>
+  </data>
+  <data name="InstallDestination_OpenFolder" xml:space="preserve">
+    <value>Open Folder</value>
+  </data>
+  <data name="InstallDestination_PathPlaceholder" xml:space="preserve">
+    <value>Please select a valid install folder</value>
+  </data>
+  <data name="InstallDestination_StorageFormatFree" xml:space="preserve">
+    <value>{0} free</value>
+    <comment>{0} is required (it's going to get replaced with 420GB for example)</comment>
+  </data>
   <data name="Installer_Action_Back" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -143,6 +163,18 @@
   </data>
   <data name="Logs_DirectoryIsLocatedHere" xml:space="preserve">
     <value>The log file is stored here:</value>
+  </data>
+  <data name="Modal_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Modal_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Modal_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Modal_Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
   <data name="Page_Done_Title" xml:space="preserve">
     <value>Install completed</value>

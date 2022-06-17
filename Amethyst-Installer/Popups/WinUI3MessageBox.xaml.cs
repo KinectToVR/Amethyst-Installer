@@ -1,23 +1,14 @@
 using amethyst_installer_gui.PInvoke;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace amethyst_installer_gui.Popups {
     /// <summary>
     /// Interaction logic for WinUI3MessageBox.xaml
     /// </summary>
     public partial class WinUI3MessageBox : Window {
+
+        public ResultState Result = ResultState.None;
 
         public WinUI3MessageBox(string title, string caption, string buttonPrimaryText, string buttonSecondaryText, string buttonTertiaryText) {
             InitializeComponent();
@@ -31,6 +22,10 @@ namespace amethyst_installer_gui.Popups {
             dialogButton_Primary.Content = buttonPrimaryText;
             dialogButton_Secondary.Content = buttonSecondaryText;
             dialogButton_Tertiary.Content = buttonTertiaryText;
+
+            dialogButton_Primary.Visibility = buttonPrimaryText.Length == 0 ? Visibility.Hidden : Visibility.Visible;
+            dialogButton_Secondary.Visibility = buttonSecondaryText.Length == 0 ? Visibility.Hidden : Visibility.Visible;
+            dialogButton_Tertiary.Visibility = buttonTertiaryText.Length == 0 ? Visibility.Hidden : Visibility.Visible;
 
             // Handle visibility
 
@@ -57,15 +52,25 @@ namespace amethyst_installer_gui.Popups {
         }
 
         private void dialogButton_Primary_Click(object sender, RoutedEventArgs e) {
-
+            Result = ResultState.Primary;
+            Close();
         }
 
         private void dialogButton_Secondary_Click(object sender, RoutedEventArgs e) {
-
+            Result = ResultState.Secondary;
+            Close();
         }
 
         private void dialogButton_Tertiary_Click(object sender, RoutedEventArgs e) {
-
+            Result = ResultState.Tertiary;
+            Close();
         }
+    }
+
+    public enum ResultState {
+        None = 0,
+        Primary = 1,
+        Secondary = 2,
+        Tertiary = 3,
     }
 }
