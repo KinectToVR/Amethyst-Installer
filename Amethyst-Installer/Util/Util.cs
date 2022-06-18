@@ -103,6 +103,7 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// A shorthand for clearing the keyboard focus style of a button if the user used their mouse to click it
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void HandleKeyboardFocus(RoutedEventArgs e) {
             if ( ( ( Control ) e.Source ).IsMouseOver && ( ( Control ) e.Source ).IsKeyboardFocused )
                 Keyboard.ClearFocus();
@@ -196,6 +197,11 @@ namespace amethyst_installer_gui {
                     return 10;
                 return 11;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string FormatException(Exception ex) {
+            return $"Unhandled Exception: {ex.GetType().Name} in {ex.Source}: {ex.Message}\n{ex.StackTrace}";
         }
     }
 }

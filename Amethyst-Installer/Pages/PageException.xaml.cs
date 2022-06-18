@@ -49,7 +49,7 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonTertiary.Content = Properties.Resources.Installer_Action_CopyError;
 
-            exceptionTraceBox.Text = $"Unhandled Exception: {currentException.GetType().Name} in {currentException.Source}: {currentException.Message}\n{currentException.StackTrace}";
+            exceptionTraceBox.Text = Util.FormatException(currentException);
 
             logsPathTextPre.Content = Properties.Resources.Logs_DirectoryIsLocatedHere + " ";
             logsPathLink.Text = Constants.AmethystLogsDirectory;

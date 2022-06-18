@@ -36,7 +36,7 @@ namespace amethyst_installer_gui {
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            Logger.Fatal($"Unhandled Exception: {e.Exception.GetType().Name} in {e.Exception.Source}: {e.Exception.Message}\n{e.Exception.StackTrace}");
+            Logger.Fatal(Util.FormatException(e.Exception));
             e.Handled = true;
 
             // TODO: Check if the main window is initialized?
