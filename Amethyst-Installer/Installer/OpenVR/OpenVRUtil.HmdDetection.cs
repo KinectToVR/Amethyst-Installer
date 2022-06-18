@@ -35,20 +35,24 @@ namespace amethyst_installer_gui.Installer {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsPhoneVR() {
-            var hmdModel = GetSteamVRHmdManufacturer();
-            var hmdManufacturer = GetSteamVRHmdManufacturer();
+            var hmdModel = GetSteamVRHmdManufacturer().ToLowerInvariant();
+            var hmdManufacturer = GetSteamVRHmdManufacturer().ToLowerInvariant();
 
-            if ( hmdModel.Contains("LHR-00000000") ) { // TrinusVR
+            if ( hmdModel.Contains("lhr-00000000") ) { // TrinusVR
                 return true;
-            } else if ( hmdModel == "Mobile Headset" && hmdManufacturer == "iVRy" ) { // iVRy
+            } else if ( hmdModel == "mobile headset" && hmdManufacturer == "ivry" ) { // iVRy
                 return true;
-            } else if ( hmdModel == "Driver4VR" || hmdManufacturer == "Driver4VR" ) { // Bonjour, this is Greg Driver
+            } else if ( hmdModel == "driver4vr" || hmdManufacturer == "driver4vr" ) { // Bonjour, this is Greg Driver
                 return true;
-            } else if ( hmdModel == "Vridge" || hmdManufacturer == "Riftcat" ) { // Riftcat
+            } else if ( hmdModel == "vridge" || hmdManufacturer == "riftcat" ) { // Riftcat
                 return true;
             } // TODO: More hell AAAAAAAAAAAAAAAAAAAAA
 
             return false;
+        }
+
+        public static void DetectHeadset() {
+
         }
     }
 }
