@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -18,6 +19,7 @@ namespace amethyst_installer_gui.Installer {
         /// Registers an OpenVR driver
         /// </summary>
         /// <param name="driverPath">The path to the driver</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RegisterSteamVrDriver(string driverPath) {
             if ( !s_initialized )
                 throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
@@ -98,6 +100,40 @@ namespace amethyst_installer_gui.Installer {
             }
 
             return "";
+        }
+
+        /// <summary>
+        /// Forces a SteamVR driver to be enabled
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ForceEnableDriver(string driverId) {
+
+            try {
+                // Try loading steam vr settings in case
+                LoadSteamVRSettings();
+                if ( s_steamvrSettings == null ) {
+                    if ( s_steamvrSettings == null ) {
+                        Logger.Warn("SteamVR Settings doesn't exist! Has SteamVR been run at least once?");
+                        return false;
+                    }
+                }
+
+                // Now try force enabling the driver
+                if ( s_steamvrSettings[driverId] == null )
+                    s_steamvrSettings[driverId] = new JObject();
+
+                s_steamvrSettings[driverId]["enable"] = true;
+                s_steamvrSettings[driverId]["blocked_by_safe_mode"] = false;
+                SaveSteamVrSettings();
+                return true;
+
+            } catch ( Exception ex ) {
+                // Oh no, the user has an antivirus probably
+                // This isn't a critical exception, so we catch it
+                Logger.Error(Util.FormatException(ex));
+                Logger.Warn("The user might have to enable the driver manually in SteamVR.");
+                return false;
+            }
         }
     }
 }

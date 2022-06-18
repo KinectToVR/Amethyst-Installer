@@ -17,7 +17,7 @@ namespace amethyst_installer_gui.Installer {
 
         // If it doesn't exist ask the user to run SteamVR ONCE
         private static dynamic s_steamvrSettings;
-        private static bool s_steamvrSettingsExists;
+        private static bool s_steamvrSettingsExists = false;
         private static string s_steamvrSettingsPath;
 
         /// <summary>
@@ -25,7 +25,6 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsSteamVrRunning() {
-            // Checks if vrserver is running
             return Process.GetProcessesByName("vrserver").Length > 0 || Process.GetProcessesByName("vrmonitor").Length > 0;
         }
 
@@ -87,6 +86,14 @@ namespace amethyst_installer_gui.Installer {
                     var steamVRSettingsTxt = File.ReadAllText(s_steamvrSettingsPath);
                     s_steamvrSettings = JObject.Parse(steamVRSettingsTxt);
                 }
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void SaveSteamVrSettings() {
+            if ( s_steamvrSettings != null ) {
+                string newSteamVrSettingsContents = JsonConvert.SerializeObject(s_steamvrSettings, Formatting.Indented);
+                File.WriteAllText(s_steamvrSettingsPath, newSteamVrSettingsContents);
             }
         }
     }
