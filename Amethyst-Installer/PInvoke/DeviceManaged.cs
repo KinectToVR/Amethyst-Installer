@@ -74,12 +74,31 @@ namespace amethyst_installer_gui.PInvoke {
             }
         }
 
+        /// <summary>
+        /// Equivalent functionality to "Scan for Hardware Changes" in device manager
+        /// </summary>
+        public bool RescanDevices() {
+            if ( CM_Locate_DevNode_Ex(ref _rootDeviceHandle, 0, 0, _machineHandle) != 0 )
+                return false;
+            if ( CM_Reenumerate_DevNode_Ex(ref _rootDeviceHandle, 0, IntPtr.Zero) != 0 )
+                return false;
+
+            return true;
+        }
+
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Connect_Machine([MarshalAs(UnmanagedType.LPStr)] string uncServerName, ref IntPtr machineHandle);
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Disconnect_Machine(IntPtr machineHandle);
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Locate_DevNode_Ex(ref IntPtr deviceHandle, int deviceId, uint flags, IntPtr machineHandle);
+        [DllImport("setupapi.dll")]
+        private static extern UInt32 CM_Reenumerate_DevNode_Ex(ref IntPtr deviceHandle, UInt32 flags, IntPtr machineHandle);
+
+        const uint CM_REENUMERATE_NORMAL                = 0x00000000;
+        const uint CM_REENUMERATE_SYNCHRONOUS           = 0x00000001;
+        const uint CM_REENUMERATE_RETRY_INSTALLATION    = 0x00000002;
+        const uint CM_REENUMERATE_ASYNCHRONOUS          = 0x00000004;
     }
 
     public class DeviceNode : IDisposable {
