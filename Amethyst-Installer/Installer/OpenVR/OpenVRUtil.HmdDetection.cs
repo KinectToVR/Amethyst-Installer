@@ -11,14 +11,9 @@ using System.Threading.Tasks;
 namespace amethyst_installer_gui.Installer {
     public static partial class OpenVRUtil {
 
-        private static string[] s_ModelBlackList = new string[] {
-            "PVRServer",
-            "Vridge",
-        };
-        private static string[] s_ManufacturerBlackList = new string[] {
-            "PVRServer",
-            "Riftcat",
-        };
+        public static VRConnectionType ConnectionType = VRConnectionType.Unknown;
+        public static VRHmdType HmdType = VRHmdType.Unknown;
+        public static VRTrackingType TrackingType = VRTrackingType.Unknown;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetSteamVRHmdModel() {
@@ -34,9 +29,7 @@ namespace amethyst_installer_gui.Installer {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsPhoneVR() {
-            var hmdModel = GetSteamVRHmdManufacturer().ToLowerInvariant();
-            var hmdManufacturer = GetSteamVRHmdManufacturer().ToLowerInvariant();
+        public static bool IsPhoneVR(string hmdModel, string hmdManufacturer) {
 
             if ( hmdModel.Contains("lhr-00000000") ) { // TrinusVR
                 return true;
@@ -46,13 +39,54 @@ namespace amethyst_installer_gui.Installer {
                 return true;
             } else if ( hmdModel == "vridge" || hmdManufacturer == "riftcat" ) { // Riftcat
                 return true;
+            } else if ( hmdModel == "pvrserver" || hmdManufacturer == "viritualis res" ) { // PhoneVR
+                return true;
             } // TODO: More hell AAAAAAAAAAAAAAAAAAAAA
 
             return false;
         }
 
+        /// <summary>
+        /// Attempts to detect the user's SteamVR headset
+        /// </summary>
         public static void DetectHeadset() {
+            var hmdModel = GetSteamVRHmdManufacturer().ToLowerInvariant();
+            var hmdManufacturer = GetSteamVRHmdManufacturer().ToLowerInvariant();
 
+            // PhoneVR
+            if ( IsPhoneVR(hmdModel, hmdManufacturer) ) {
+                HmdType = VRHmdType.Phone;
+                ConnectionType = VRConnectionType.Unknown;
+                TrackingType = VRTrackingType.Unknown;
+                return;
+            }
+
+            // Detect proper headsets
+
+            // WMR
+            if ( hmdManufacturer == "windowsmr" ) {
+                HmdType = VRHmdType.WMR;
+                ConnectionType = VRConnectionType.Tethered;
+                // Reverb G2 users using konkles moment:
+                TrackingType = s_steamvrSettings["driver_lighthouse"] == null ? VRTrackingType.MixedReality : VRTrackingType.Lighthouse;
+                return;
+            }
+
+            // Lighthouse
+            if ( hmdManufacturer == "valve" || hmdManufacturer == "htc" ) {
+                ConnectionType = VRConnectionType.Tethered;
+                TrackingType = VRTrackingType.Lighthouse;
+                HmdType = VRHmdType.WMR;
+                return;
+            }
+
+            // Hell (Oculus)
+            if ( hmdManufacturer == "oculus" ) {
+                HmdType = VRHmdType.WMR;
+                ConnectionType = VRConnectionType.Tethered;
+                TrackingType = VRTrackingType.MixedReality;
+                return;
+            }
         }
     }
 }

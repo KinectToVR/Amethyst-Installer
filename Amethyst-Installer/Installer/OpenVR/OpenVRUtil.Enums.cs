@@ -35,6 +35,10 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         Deckard,
         /// <summary>
+        /// Windows Mixed Reality.
+        /// </summary>
+        WMR,
+        /// <summary>
         /// RGB VR!
         /// </summary>
         PSVR,
@@ -42,6 +46,10 @@ namespace amethyst_installer_gui.Installer {
         /// My condolences.
         /// </summary>
         Phone,
+        /// <summary>
+        /// What are you using?!
+        /// </summary>
+        Unknown,
     }
 
     /// <summary>
