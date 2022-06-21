@@ -53,7 +53,6 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
         private void button_Click(object sender, RoutedEventArgs e) {
-            // TODO: Replace with WinUI3-esque custom dialog box
             MessageBox.Show("big chungus", "no way");
             Util.ShowMessageBox("big chungus", "no way");
         }
@@ -63,7 +62,6 @@ namespace amethyst_installer_gui.Pages {
         }
         private void kinectmic_Click(object sender, RoutedEventArgs e) {
 
-            // TODO: Move to sysreq
             // Check if the Kinect microphone is muted, and if so, prompt the user to enable it.
             if ( KinectUtil.KinectMicrophoneDisabled() ) {
                 // Open sound control panel on the recording tab
@@ -77,11 +75,24 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void shadowTest_Click(object sender, RoutedEventArgs e) {
-            Util.ShowMessageBox($"IsOnShadow: {ShadowPCUtil.IsRunningOnShadow()}", "Shadow Status");
+            Util.ShowMessageBox($"IsOnShadow: {CloudPCUtil.IsRunningOnShadow()}", "Shadow Status");
         }
 
         private void steamVRSettingsDetails_Click(object sender, RoutedEventArgs e) {
             Util.ShowMessageBox($"HMDModel: {OpenVRUtil.GetSteamVRHmdModel()}\nHMDManufacturer: {OpenVRUtil.GetSteamVRHmdManufacturer()}", "OpenVR HMD");
+        }
+
+        private void steamVRPlayspace_Click(object sender, RoutedEventArgs e) {
+            var playspaceBounds = OpenVRUtil.GetPlayspaceBounds();
+            Util.ShowMessageBox($"Size: {playspaceBounds.x}, {playspaceBounds.y}", "SteamVR playspace bounds");
+        }
+
+        private void plutosphereTest_Click(object sender, RoutedEventArgs e) {
+            Util.ShowMessageBox($"PlutoSphere: {CloudPCUtil.IsOnPlutoSphere()}", "PlutoSphere Status");
+        }
+
+        private void driverSearch_Click(object sender, RoutedEventArgs e) {
+            Util.ShowMessageBox($"Driver Search: {OpenVRUtil.GetDriverPath(driverSearchBox.Text)}", "Driver search");
         }
     }
 }

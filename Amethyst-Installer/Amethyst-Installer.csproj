@@ -60,6 +60,9 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
@@ -110,14 +113,16 @@
     <Compile Include="Installer\Modules\ModuleBase.cs" />
     <Compile Include="Installer\Modules\MsiModule.cs" />
     <Compile Include="Installer\Modules\TempArchiveModule.cs" />
+    <Compile Include="Installer\OpenVR\OpenVrDriverManifest.cs" />
     <Compile Include="Installer\OpenVR\OpenVrPaths.cs" />
+    <Compile Include="Installer\OpenVR\OpenVrPlayspace.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.Core.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.Drivers.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.Enums.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.HmdDetection.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.Steam.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.SteamVR.cs" />
-    <Compile Include="Installer\ShadowPCUtil.cs" />
+    <Compile Include="Installer\CloudPCUtil.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
     <Compile Include="Pages\PageDebug.xaml.cs">
       <DependentUpon>PageDebug.xaml</DependentUpon>
@@ -193,6 +198,7 @@
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\UninstallUtil.cs" />
     <Compile Include="Util\Util.cs" />
+    <Compile Include="Util\Vectors.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
     <Page Include="Controls\SidebarTask.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -325,6 +331,7 @@
       <LastGenOutput>Resources.en.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
