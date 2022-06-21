@@ -23,7 +23,7 @@ namespace amethyst_installer_gui.Installer {
 
         private static void ComputeRequirements() {
 
-            // TODO: 
+            // TODO: actually compute the requirements for installing amethyst
 
         }
 

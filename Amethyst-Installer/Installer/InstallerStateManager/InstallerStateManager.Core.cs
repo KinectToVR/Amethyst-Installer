@@ -24,5 +24,7 @@ namespace amethyst_installer_gui.Installer {
             ComputeRequirements();
         }
 
+
+        // TODO: System to allow selecting modules to install / update, etc
     }
 }
