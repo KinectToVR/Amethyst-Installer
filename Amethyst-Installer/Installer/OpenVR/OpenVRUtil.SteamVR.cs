@@ -108,7 +108,7 @@ namespace amethyst_installer_gui.Installer {
             // Valve.VR.OpenVR.Chaperone.GetPlayAreaSize(ref sizeX, ref sizeY);
 
             // However, we are using SteamVR, so instead WE DO THIS:
-            double sizeX = , sizeY = 0.0;
+            double sizeX = 0.0, sizeY = 0.0;
 
             // TODO: not be a lazy piece of shit
             // Oculus => config/oculus/driver_oculus.vrchap
