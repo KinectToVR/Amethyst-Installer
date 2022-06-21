@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -52,6 +53,9 @@ namespace amethyst_installer_gui.Installer {
             }
 
             // TODO: Fallback to openvrpaths
+            if ( s_openvrpaths != null ) {
+
+            }
 
             throw new NotImplementedException();
         }
@@ -74,10 +78,12 @@ namespace amethyst_installer_gui.Installer {
                         FileName = vrpathregPath,
                         Arguments = args,
                         RedirectStandardError = true,
-                        RedirectStandardOutput = true
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false
                     });
                     var output = vrpathregProc.StandardOutput.ReadToEnd();
                     vrpathregProc.WaitForExit();
+                    output = output.Split(Environment.NewLine[0])[0];
                     switch ( vrpathregProc.ExitCode ) {
                         case 0: // Success
                             return output;
@@ -93,10 +99,32 @@ namespace amethyst_installer_gui.Installer {
                 }
             }
 
-            // TODO: Fallback to openvrpaths
-            var openvrPaths = s_openvrpaths;
-            if ( openvrPaths.external_drivers.Count > 0 ) {
+            if ( s_openvrpaths != null && s_openvrpaths.external_drivers.Count > 0 ) {
+                for ( int i = 0; i < s_openvrpaths.external_drivers.Count; i++ ) {
+                    // Make sure the driver directory even exists
+                    if ( Directory.Exists(s_openvrpaths.external_drivers[i]) ) {
 
+                        // Attempt to load the driver manifest
+                        var driverManifestPath = Path.GetFullPath(Path.Combine(s_openvrpaths.external_drivers[i], "driver.vrdrivermanifest"));
+                        try {
+                            var driverManifest = JsonConvert.DeserializeObject<OpenVrDriverManifest>(File.ReadAllText(driverManifestPath));
+                            // JSON safety checks
+                            if ( driverManifest == null || driverManifest.Name == null) {
+                                Logger.Error($"Invalid OpenVR driver manifest at \"{driverManifestPath}\"! The manifest may be corrupt or invalid...");
+                                continue;
+                            }
+                            if ( driverManifest.Name.ToLowerInvariant() == drivername.ToLowerInvariant() ) {
+                                return s_openvrpaths.external_drivers[i];
+                            }
+                        } catch ( JsonReaderException e ) {
+                            Logger.Error($"Invalid OpenVR driver manifest at \"{driverManifestPath}\"! The manifest may be corrupt or invalid...");
+                            Logger.Error(Util.FormatException(e));
+                        } catch ( Exception e ) {
+                            Logger.Error($"Invalid OpenVR driver manifest at \"{driverManifestPath}\"! The manifest may be corrupt or invalid...");
+                            Logger.Error(Util.FormatException(e));
+                        }
+                    }
+                }
             }
 
             return "";

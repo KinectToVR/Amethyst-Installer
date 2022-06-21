@@ -31,6 +31,7 @@ namespace amethyst_installer_gui.Installer {
                 LoadOpenVRAPI();
                 LoadOpenVrPaths(true);
                 LoadSteamVRSettings(true);
+                DetectHeadset();
             } else
                 Logger.Warn("Attempted to initialize OpenVR, but OpenVR was already initialized!");
         }
