@@ -59,7 +59,7 @@ namespace amethyst_installer_gui.Installer {
         /// Attempts to detect the user's SteamVR headset
         /// </summary>
         public static void DetectHeadset() {
-            var hmdModel = GetSteamVRHmdManufacturer().ToLowerInvariant();
+            var hmdModel = GetSteamVRHmdModel().ToLowerInvariant();
             var hmdManufacturer = GetSteamVRHmdManufacturer().ToLowerInvariant();
 
             // PhoneVR
