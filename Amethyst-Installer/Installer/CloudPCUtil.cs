@@ -10,7 +10,7 @@ namespace amethyst_installer_gui.Installer {
     /// <summary>
     /// A utility class containing functions to determine if the user is running on a Shadow PC
     /// </summary>
-    public static class ShadowPCUtil {
+    public static class CloudPCUtil {
         /// <summary>
         /// Returns whether the current machine is a Shadow PC
         /// </summary>
@@ -53,6 +53,15 @@ namespace amethyst_installer_gui.Installer {
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Returns whether the current machine is running on PlutoSphere
+        /// </summary>
+        public static bool IsOnPlutoSphere() {
+            // According to the PlutoSphere FAQ, "CloudXRRemoteHMD" is a necessary driver for PlutoSphere
+            var plutosphereDriverPath = OpenVRUtil.GetDriverPath("CloudXRRemoteHMD");
+            return plutosphereDriverPath.Length > 0 && Directory.Exists(plutosphereDriverPath);
         }
     }
 }
