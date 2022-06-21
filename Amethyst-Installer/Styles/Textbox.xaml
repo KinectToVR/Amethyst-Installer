@@ -100,6 +100,7 @@
         <Setter Property="SelectionBrush" Value="{Binding Source={x:Static local:WindowsColorHelpers.Accent}}"/>
         <Setter Property="CaretBrush" Value="{DynamicResource BrushForeground}"/>
         <Setter Property="Tag" Value=""/>
+        <Setter Property="OverridesDefaultStyle" Value="True" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -133,5 +134,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource WinUITextbox}" />
 
 </ResourceDictionary>
