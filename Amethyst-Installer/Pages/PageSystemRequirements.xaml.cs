@@ -37,16 +37,16 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void OnSelected() {
-            // Compute minimum requirements
+            // Compute install requirements
 
             // TODO: Check storage
-            diskSpaceDescription.Text = "among us";
+            diskSpaceDescription.Text = Properties.Resources.SystemRequirement_Description_Storage; // TODO: String format
 
             // TODO: Check USB controllers
-            usbControllersDescription.Text = "among us";
+            usbControllersDescription.Text = Properties.Resources.SystemRequirement_Description_UsbControllers; // TODO: String format
 
             // TODO: Check VR headset
-            vrSystemDescription.Text = "among us";
+            vrSystemDescription.Text = $"{OpenVRUtil.HmdType} ({OpenVRUtil.ConnectionType}) [{OpenVRUtil.TrackingType}]"; // TODO: ToFriendlyString method
 
             vrSystemFootnote.Inlines.Clear();
             vrSystemFootnote.Inlines.Add("Some text ");
@@ -76,7 +76,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
-
+            // TODO: link click handler
         }
     }
 }

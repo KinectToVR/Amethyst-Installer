@@ -237,4 +237,15 @@
   <data name="SystemRequirement_Category_VrSystem" xml:space="preserve">
     <value>VR headset</value>
   </data>
+  <data name="SystemRequirement_Description_NoDriversFound" xml:space="preserve">
+    <value>No drivers installed yet</value>
+  </data>
+  <data name="SystemRequirement_Description_Storage" xml:space="preserve">
+    <value>{0} of disk space based on the components selected.</value>
+    <comment>{0} gets replaced with the storage string (eg "400MB")</comment>
+  </data>
+  <data name="SystemRequirement_Description_UsbControllers" xml:space="preserve">
+    <value>{0} compatible USB controllers found ({1})</value>
+    <comment>{0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202")</comment>
+  </data>
 </root>

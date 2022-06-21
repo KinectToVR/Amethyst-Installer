@@ -410,5 +410,32 @@ namespace amethyst_installer_gui.Properties {
                 return ResourceManager.GetString("SystemRequirement_Category_VrSystem", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No drivers installed yet.
+        /// </summary>
+        public static string SystemRequirement_Description_NoDriversFound {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_NoDriversFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} of disk space based on the components selected..
+        /// </summary>
+        public static string SystemRequirement_Description_Storage {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_Storage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} compatible USB controllers found ({1}).
+        /// </summary>
+        public static string SystemRequirement_Description_UsbControllers {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_UsbControllers", resourceCulture);
+            }
+        }
     }
 }
