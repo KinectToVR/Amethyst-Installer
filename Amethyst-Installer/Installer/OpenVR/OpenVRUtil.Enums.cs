@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace amethyst_installer_gui.Installer {
+﻿namespace amethyst_installer_gui.Installer {
 
     /// <summary>
     /// Used to identify supported HMDs.
     /// </summary>
     public enum VRHmdType {
         /// <summary>
-        /// An Oculus PCVR Headset. Doesn't include the Quest family of headsets.
+        /// Oculus Rift (CV1).
         /// </summary>
-        Oculus,
+        Rift,
         /// <summary>
-        /// Oculus Quest family of headsets. Doesn't include PCVR Headsets such as the CV1.
+        /// Oculus Rift S
+        /// </summary>
+        RiftS,
+        /// <summary>
+        /// Oculus Quest.
         /// </summary>
         Quest,
+        /// <summary>
+        /// Oculus Quest 2.
+        /// </summary>
+        Quest2,
         /// <summary>
         /// HTC Vive.
         /// </summary>
@@ -27,6 +29,10 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         VivePro,
         /// <summary>
+        /// HTC Vive Cosmos.
+        /// </summary>
+        ViveCosmos,
+        /// <summary>
         /// The ThrillSeeker headset.
         /// </summary>
         Index,
@@ -34,6 +40,10 @@ namespace amethyst_installer_gui.Installer {
         /// Hi Brad.
         /// </summary>
         Deckard,
+        /// <summary>
+        /// Pimax VR Headsets.
+        /// </summary>
+        Pimax,
         /// <summary>
         /// Windows Mixed Reality.
         /// </summary>
