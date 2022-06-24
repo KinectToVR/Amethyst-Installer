@@ -160,6 +160,10 @@ namespace amethyst_installer_gui.Installer {
             if ( !File.Exists(vrchapPath) && isSteamVrDefaultChaperoneFile == false ) {
                 vrchapPath = Path.Combine(vrchapPath, "chaperone_info.vrchap");
             }
+            // If the file still doesn't exist, assume the user has never run SteamVR on their system
+            if ( !File.Exists(vrchapPath) ) {
+                return new Vec2(0.0, 0.0);
+            }
             OpenVrPlayspace steamVrChaperone = JsonConvert.DeserializeObject<OpenVrPlayspace>(File.ReadAllText(vrchapPath));
             if ( steamVrChaperone != null && steamVrChaperone.Universes != null ) {
                 int latestChaperoneIndex = 0;

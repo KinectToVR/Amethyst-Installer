@@ -99,7 +99,7 @@ namespace amethyst_installer_gui.Installer {
                 }
             }
 
-            if ( s_openvrpaths != null && s_openvrpaths.external_drivers.Count > 0 ) {
+            if ( s_openvrpaths != null && s_openvrpaths.external_drivers != null && s_openvrpaths.external_drivers.Count > 0 ) {
                 for ( int i = 0; i < s_openvrpaths.external_drivers.Count; i++ ) {
                     // Make sure the driver directory even exists
                     if ( Directory.Exists(s_openvrpaths.external_drivers[i]) ) {

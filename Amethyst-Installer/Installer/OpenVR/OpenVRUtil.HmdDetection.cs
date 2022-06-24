@@ -20,11 +20,17 @@ namespace amethyst_installer_gui.Installer {
             if ( s_steamvrSettings == null ) {
                 return "";
             }
+            if ( s_steamvrSettings["LastKnown"] == null ) {
+                return "";
+            }
             return s_steamvrSettings["LastKnown"]["HMDModel"];
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetSteamVRHmdManufacturer() {
             if ( s_steamvrSettings == null ) {
+                return "";
+            }
+            if ( s_steamvrSettings["LastKnown"] == null ) {
                 return "";
             }
             return s_steamvrSettings["LastKnown"]["HMDManufacturer"];

@@ -27,7 +27,6 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         private static bool ShadowVROpenVRDriverExists() {
             string ShadowVRPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Blade Group", "ShadowVR");
-            Logger.Info(ShadowVRPath);
             return Directory.Exists(ShadowVRPath);
         }
 

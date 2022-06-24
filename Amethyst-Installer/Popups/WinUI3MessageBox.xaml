@@ -43,7 +43,7 @@
                     </Grid.ColumnDefinitions>
                     <Button x:Name="dialogButton_Primary" SnapsToDevicePixels="True" Height="32" Margin="0,0,8,0" Click="dialogButton_Primary_Click" TabIndex="0" Grid.Column="1">Save your work</Button>
                     <Button x:Name="dialogButton_Secondary" SnapsToDevicePixels="True" Height="32" Margin="0,0,8,0" Click="dialogButton_Secondary_Click" TabIndex="1" Grid.Column="2">Don't Save</Button>
-                    <Button x:Name="dialogButton_Tertiary" SnapsToDevicePixels="True" Height="32" Margin="0" Click="dialogButton_Tertiary_Click" TabIndex="1" Grid.Column="3">Cancel</Button>
+					<Button x:Name="dialogButton_Tertiary" SnapsToDevicePixels="True" Height="32" Margin="0" Click="dialogButton_Tertiary_Click" TabIndex="1" Grid.Column="3" IsDefault="True">Cancel</Button>
                 </Grid>
             </Border>
         </Grid>
