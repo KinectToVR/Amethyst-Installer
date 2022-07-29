@@ -32,6 +32,7 @@ namespace amethyst_installer_gui {
             // Init OpenVR
             OpenVRUtil.InitOpenVR();
 
+            // Fetch installer API response from server
             InstallerStateManager.Initialize();
         }
 
@@ -39,7 +40,12 @@ namespace amethyst_installer_gui {
             Logger.Fatal(Util.FormatException(e.Exception));
             e.Handled = true;
 
-            // TODO: Check if the main window is initialized?
+            if ( AppWindow.Instance == null ) {
+                // uhhhhhhhhhh how the fuck did you get here
+                MessageBox.Show($"An unknown error has occured, please join the Discord server for help at {Constants.DiscordInvite}", "Critical Failure");
+                Current.Shutdown();
+                return;
+            }
             // AFAIK the app should always be initialized, so this scenario should be impossible
             ( AppWindow.Instance.Pages[InstallerState.Exception] as PageException ).currentException = e.Exception;
             AppWindow.Instance.OverridePage(InstallerState.Exception);

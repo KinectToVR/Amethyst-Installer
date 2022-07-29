@@ -10,14 +10,17 @@ namespace amethyst_installer_gui.Installer {
         [JsonProperty("display_name")]
         public string DisplayName;
 
+        [JsonProperty("summary")]
+        public string Summary;
+
         [JsonProperty("description")]
         public string Description;
 
         [JsonProperty("filesize")]
-        public int Filesize;
+        public int FileSize;
 
         [JsonProperty("downloadsize")]
-        public int Downloadsize;
+        public int DownloadSize;
 
         [JsonProperty("required")]
         public bool Required;

@@ -1,3 +1,4 @@
+using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,12 @@ namespace amethyst_installer_gui.Pages {
     /// Interaction logic for PageInstallOptions.xaml
     /// </summary>
     public partial class PageInstallOptions : UserControl, IInstallerPage {
+
+        private List<InstallableItem> installableItemControls;
+
         public PageInstallOptions() {
             InitializeComponent();
+            installableItemControls = new List<InstallableItem>();
         }
 
         public InstallerState GetInstallerState() {
@@ -34,10 +39,62 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
             MainWindow.Instance.SetPage(InstallerState.InstallDestination);
+            // Clear memory
+            for (int i = 0; i < installableItemControls.Count; i++ ) {
+                installOptionsContainer.Children.Remove(installableItemControls[i]);
+            }
+            installableItemControls.Clear();
         }
 
         public void OnSelected() {
 
+            // TODO: Loop through JSON
+            for (int i = 0; i < InstallerStateManager.API_Response.Modules.Count; i++ ) {
+
+                var currentModule = InstallerStateManager.API_Response.Modules[i];
+                if ( !currentModule.Visible ) {
+                    continue;
+                }
+
+                var currentControl = new InstallableItem();
+                currentControl.Title = currentModule.DisplayName;
+                currentControl.Description = currentModule.Summary;
+                currentControl.Checked = currentModule.Required;
+                currentControl.Disabled = currentModule.Required;
+                currentControl.Margin = new Thickness(0, 0, 0, 8);
+                currentControl.OnMouseClickReleased += InstallOptionMouseReleaseHandler;
+                currentControl.Tag = currentModule;
+
+                installOptionsContainer.Children.Add(currentControl);
+                installableItemControls.Add(currentControl);
+            }
+        }
+        private void InstallOptionMouseReleaseHandler(object sender, MouseButtonEventArgs e) {
+            
+            InstallableItem selectedItem = sender as InstallableItem;
+
+            // Handle background
+            for ( int i = 0; i < installableItemControls.Count; i++ ) {
+                if ( installableItemControls[i] != selectedItem ) {
+                    installableItemControls[i].Background = new SolidColorBrush(Colors.Transparent);
+                }
+            }
+
+            // Update right hand side
+            CalculateInstallSize();
+
+            Module currentModule = selectedItem.Tag as Module;
+
+            fullTitle.Text = currentModule.DisplayName;
+            fullDescription.Text = currentModule.Description;
+
+            // TODO: Better calculation, check dependency chain, proper storage units
+            downloadSize.Content = currentModule.DownloadSize + " MegaFarts";
+            installSize.Content = currentModule.FileSize + " MegaFarts";
+        }
+
+        private void CalculateInstallSize() {
+            // TODO: Also calculate total install size here
         }
 
         // Force only the first button to have focus

@@ -17,24 +17,9 @@
             <Border.Effect>
                 <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" BlurRadius="4" Opacity="0.3" />
             </Border.Effect>
-            <ScrollViewer Focusable="false" HorizontalScrollBarVisibility="Hidden">
-                <StackPanel Width="Auto">
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
-                    <Button Height="24" Content="Among us" Margin="0,0,0,8"/>
+            <ScrollViewer x:Name="installableScroller" Focusable="false" HorizontalScrollBarVisibility="Hidden" Padding="6,8,0,8">
+                <StackPanel x:Name="installOptionsContainer" Width="{Binding ElementName=installableScroller, Path=ViewportWidth}" Margin="0,0,0,-8">
+
                 </StackPanel>
             </ScrollViewer>
         </Border>

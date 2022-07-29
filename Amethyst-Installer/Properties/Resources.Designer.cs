@@ -437,5 +437,32 @@ namespace amethyst_installer_gui.Properties {
                 return ResourceManager.GetString("SystemRequirement_Description_UsbControllers", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opt in to anonymous analytics and crash reports..
+        /// </summary>
+        public static string Welcome_OptIn {
+            get {
+                return ResourceManager.GetString("Welcome_OptIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy Policy.
+        /// </summary>
+        public static string Welcome_PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("Welcome_PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read our %s% to see what we send..
+        /// </summary>
+        public static string Welcome_ReadPrivacyPolicy {
+            get {
+                return ResourceManager.GetString("Welcome_ReadPrivacyPolicy", resourceCulture);
+            }
+        }
     }
 }
