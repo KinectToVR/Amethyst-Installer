@@ -92,16 +92,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\DriveSelectionControl.cs" />
+    <Compile Include="Controls\InstallableItem.cs" />
     <Compile Include="Controls\ItemTask.cs" />
     <Compile Include="Controls\SidebarExtensions.cs" />
     <Compile Include="Controls\SidebarTask.xaml.cs">
       <DependentUpon>SidebarTask.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TaskState.cs" />
+    <Compile Include="Installer\AnalyticsData.cs" />
     <Compile Include="Installer\Installer.Enums.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Core.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Requirements.cs" />
     <Compile Include="Installer\JSON.cs" />
+    <Compile Include="Installer\K2EXUtil.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Drivers.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Install.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Microphone.cs" />
@@ -268,6 +271,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\Checkbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Colours.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -277,6 +284,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Globals.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\InstallableItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

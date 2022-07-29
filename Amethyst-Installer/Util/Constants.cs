@@ -30,7 +30,7 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static string AmethystTempDirectory {
             get {
-                if ( m_ameTmpDir == null || m_ameTmpDir == "" ) {
+                if ( m_ameTmpDir == null || m_ameTmpDir.Length == 0 ) {
 #if DEBUG
                     m_ameTmpDir = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "temp"));
 #else

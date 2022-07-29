@@ -3,6 +3,7 @@
 		{
 			"id": "amethyst",
 			"display_name": "Amethyst",
+			"summary": "The Amethyst application itself.",
 			"description": "The Amethyst application itself.",
 			"filesize": 296,
 			"downloadsize": 86,
@@ -32,6 +33,7 @@
 		{
 			"id": "wasdk",
 			"display_name": "Windows App Runtime",
+			"summary": "Libraries to run apps created with the Windows App SDK.",
 			"description": "Libraries to run apps created with the Windows App SDK.",
 			"filesize": 78,
 			"downloadsize": 57,
@@ -57,6 +59,7 @@
 		{
 			"id": "vcredist2022",
 			"display_name": "Visual C++ Redistributable 2022",
+			"summary": "Visual C++ runtime libraries.",
 			"description": "Visual C++ runtime libraries.",
 			"filesize": 20,
 			"downloadsize": 24,
@@ -84,6 +87,7 @@
 		{
 			"id": "dotnet6",
 			"display_name": ".NET 6.0 Desktop Runtime",
+			"summary": ".NET (v6.0.4) Runtime Installer",
 			"description": ".NET (v6.0.4) Runtime Installer",
 			"filesize": 90,
 			"downloadsize": 55,
@@ -112,6 +116,7 @@
 		{
 			"id": "wix",
 			"display_name": "WiX Toolset",
+			"summary": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
 			"description": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
 			"filesize": 0,
 			"downloadsize": 0,
@@ -129,6 +134,7 @@
 		{
 			"id": "kinect-v1-sdk",
 			"display_name": "Kinect for Windows SDK v1.8",
+			"summary": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1.",
 			"description": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1. This is required to use those devices with Amethyst.",
 			"filesize": 167,
 			"downloadsize": 222,
@@ -159,6 +165,7 @@
 		{
 			"id": "kinect-v1-toolkit",
 			"display_name": "Kinect for Windows Developer Toolkit v1.8",
+			"summary": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1.",
 			"description": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1. Contains useful tools like Kinect Explorer that can help diagnose issues with your Kinect.",
 			"filesize": 410,
 			"downloadsize": 384,
@@ -261,6 +268,7 @@
 		"That's never happened before.",
 		"Just give us Wii Sports, but with Kinect.",
 		"Presented in 4K HDR at the Chungus Bungus Spectacular.",
-		"Sending phone users to Android Hell."
+		"Sending phone users to Android Hell.",
+		"What's with these homies dissin' my girl?"
 	]
 }
