@@ -248,4 +248,15 @@
     <value>{0} compatible USB controllers found ({1})</value>
     <comment>{0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202")</comment>
   </data>
+  <data name="Welcome_OptIn" xml:space="preserve">
+    <value>Opt in to anonymous analytics and crash reports.</value>
+  </data>
+  <data name="Welcome_PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+    <comment>The text for the link</comment>
+  </data>
+  <data name="Welcome_ReadPrivacyPolicy" xml:space="preserve">
+    <value>Read our %s% to see what we send.</value>
+    <comment>%s% gets replaced with the link</comment>
+  </data>
 </root>
