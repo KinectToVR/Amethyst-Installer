@@ -26,10 +26,17 @@ namespace amethyst_installer_gui {
         private List<InstallerState> pageStack = new List<InstallerState>(5);
         private int pageStackPointer = 0;
 
+        public static AnalyticsData Analytics = new AnalyticsData();
+
         /// <summary>
         /// Returns the current instance of the <see cref="MainWindow"/>
         /// </summary>
         public static MainWindow Instance { get { return ( Application.Current.MainWindow as MainWindow ); } }
+        /// <summary>
+        /// The current locale string
+        /// </summary>
+        public static string LocaleCode = "en";
+        // TODO: actually get the locale
 
         public MainWindow() {
             InitializeComponent();
@@ -54,6 +61,16 @@ namespace amethyst_installer_gui {
             // Fix corners on Win11
             DWM.SetWindowCorners(this, CornerPreference.Round);
             DWM.SetWindowAccentColor(this, WindowsColorHelpers.GetAccentColor());
+
+            PrepareAnalytics();
+        }
+
+        private void PrepareAnalytics() {
+            Analytics.Devices           = DeviceFlags.None;
+            Analytics.HeadsetModel      = OpenVRUtil.HmdType;
+            Analytics.TrackingUniverse  = OpenVRUtil.TrackingType;
+            Analytics.ConnectionType    = OpenVRUtil.ConnectionType;
+            Analytics.WindowsBuild      = "UNIMPLEMENTED"; // TODO: Windows build
         }
 
         #region Win UI 3 Window Functionality
