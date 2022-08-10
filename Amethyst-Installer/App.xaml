@@ -9,19 +9,28 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                
+                <!-- Globals -->
                 <ResourceDictionary Source="Styles/Globals.xaml" />
                 <ResourceDictionary Source="Styles/Colours.xaml" />
 
+                <!-- Custom Controls -->
                 <ResourceDictionary Source="Styles/Titlebar.xaml" />
                 <ResourceDictionary Source="Styles/ItemTask.xaml" />
                 <ResourceDictionary Source="Styles/DriveSelectionControl.xaml" />
                 <ResourceDictionary Source="Styles/InstallableItem.xaml" />
+                <ResourceDictionary Source="Styles/DownloadItem.xaml" />
 
+                <!-- Custom WinUI Theming -->
                 <ResourceDictionary Source="Styles/Button.xaml" />
                 <ResourceDictionary Source="Styles/Checkbox.xaml" />
                 <ResourceDictionary Source="Styles/Textbox.xaml" />
                 <ResourceDictionary Source="Styles/ScrollBar.xaml" />
                 <ResourceDictionary Source="Styles/RadioButton.xaml" />
+
+                <!-- Custom "Core" Controls -->
+                <ResourceDictionary Source="Styles/ProgressSpinner.xaml" />
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
