@@ -3,33 +3,6 @@
     xmlns:root="clr-namespace:amethyst_installer_gui"
     xmlns:local="clr-namespace:amethyst_installer_gui.Controls">
 
-    <Style x:Key="WinUIDriveProgressBar" TargetType="{x:Type ProgressBar}">
-        <Setter Property="Background" Value="#FF808080" />
-        <Setter Property="BorderBrush" Value="#FF808080" />
-        <Setter Property="Foreground" Value="{x:Static root:WindowsColorHelpers.AccentLight}" />
-        <Setter Property="Height" Value="8" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ProgressBar}">
-                    <Grid Name="TemplateRoot" SnapsToDevicePixels="True" >
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4" />
-                        <Rectangle Name="PART_Track" />
-                        <Border
-                            Name="PART_Indicator"
-                            HorizontalAlignment="Left"
-                            Background="{TemplateBinding Foreground}"
-                            CornerRadius="4" />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type local:DriveSelectionControl}">
 
         <Setter Property="Background" Value="#FF474444" />
@@ -52,7 +25,7 @@
                             </Grid.RowDefinitions>
                             <Image Width="48" Height="48" Source="/Resources/Icons/4x/DiskDrive.png" RenderOptions.BitmapScalingMode="Fant" Grid.Row="0" />
                             <TextBlock x:Name="diskText" FontFamily="Segoe UI Semibold" TextAlignment="Center" Grid.Row="1" Margin="0,0,0,8"/>
-                            <ProgressBar x:Name="progressBar" Style="{StaticResource WinUIDriveProgressBar}" Height="8" Width="{Binding ElementName=contentRoot, Path=ActualWidth}" Minimum="0" Maximum="1" Grid.Row="2" />
+                            <ProgressBar x:Name="progressBar" Height="8" Width="{Binding ElementName=contentRoot, Path=ActualWidth}" Minimum="0" Maximum="1" Grid.Row="2" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
