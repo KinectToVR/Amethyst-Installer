@@ -14,6 +14,10 @@ namespace amethyst_installer_gui.PInvoke {
         [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
         private static extern uint SHGetNameFromIDList(IntPtr pidl, SIGDN sigdnName, [Out] out IntPtr ppszName);
 
+        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool DeleteFile(string name);
+
         private enum SIGDN : uint {
             NORMALDISPLAY = 0x00000000,
             PARENTRELATIVEPARSING = 0x80018001,
@@ -78,6 +82,14 @@ namespace amethyst_installer_gui.PInvoke {
                 return tmp;
             }
             return null;
+        }
+
+        /// <summary>
+        /// Unblocks a file from smartscreen
+        /// </summary>
+        /// <param name="fileName"></param>
+        public static bool Unblock(string fileName) {
+            return DeleteFile(fileName + ":Zone.Identifier");
         }
     }
 }
