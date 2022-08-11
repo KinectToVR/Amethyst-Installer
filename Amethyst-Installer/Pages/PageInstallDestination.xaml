@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -34,7 +35,12 @@
 
         <Label Grid.Row="2" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Padding="0" Content="{x:Static local:Resources.InstallDestination_AmethystInstallLocationFootnote}" />
 
-        <Border Background="Transparent" Grid.Row="3" />
+        <!-- TODO: Better UI for this card ; also hide it! -->
+        <Border Background="{StaticResource BrushBackgroundAlt}" Grid.Row="3" Padding="8" CornerRadius="4" Margin="0,8,0,0">
+            <TextBlock Foreground="White">This folder already contains an installation of Amethyst, it will be overwritten.</TextBlock>
+        </Border>
+        
+        <Border Background="Transparent" Grid.Row="4" />
 
     </Grid>
 </UserControl>

@@ -41,6 +41,7 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.SetPage(InstallerState.InstallDestination);
             // Clear memory
             for (int i = 0; i < installableItemControls.Count; i++ ) {
+                Module a = (Module)installableItemControls[i].Tag;
                 installOptionsContainer.Children.Remove(installableItemControls[i]);
             }
             installableItemControls.Clear();
@@ -67,6 +68,11 @@ namespace amethyst_installer_gui.Pages {
 
                 installOptionsContainer.Children.Add(currentControl);
                 installableItemControls.Add(currentControl);
+
+                // Select the first item, Amethyst
+                if ( i == 0 ) {
+                    InstallOptionMouseReleaseHandler(currentControl, null);
+                }
             }
         }
         private void InstallOptionMouseReleaseHandler(object sender, MouseButtonEventArgs e) {
