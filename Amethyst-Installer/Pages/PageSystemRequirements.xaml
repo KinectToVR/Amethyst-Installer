@@ -13,23 +13,23 @@
         <StackPanel Orientation="Vertical">
             <controls:ItemTask x:Name="diskSpace" State="Default" Title="{x:Static res:Resources.SystemRequirement_Category_Storage}" Margin="0,0,0,16">
                 <StackPanel Margin="10,0,0,0" Orientation="Vertical">
-                    <TextBlock x:Name="diskSpaceDescription" Foreground="#FFFFFFFF">AAAA</TextBlock>
+                    <TextBlock x:Name="diskSpaceDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                 </StackPanel>
             </controls:ItemTask>
             <controls:ItemTask x:Name="usbControllers" State="Default" Title="{x:Static res:Resources.SystemRequirement_Category_UsbControllers}" Margin="0,0,0,16">
                 <StackPanel Margin="10,0,0,0" Orientation="Vertical">
-                    <TextBlock x:Name="usbControllersDescription" Foreground="#FFFFFFFF">AAAA</TextBlock>
+                    <TextBlock x:Name="usbControllersDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                 </StackPanel>
             </controls:ItemTask>
             <controls:ItemTask x:Name="vrSystem" State="Default" Title="{x:Static res:Resources.SystemRequirement_Category_VrSystem}" Margin="0,0,0,16">
                 <StackPanel Margin="10,0,0,0" Orientation="Vertical">
-                    <TextBlock x:Name="vrSystemDescription" FontFamily="Segoe UI Semibold" Foreground="#FFFFFFFF">AAAA weeeeeeeeeee</TextBlock>
-                    <TextBlock x:Name="vrSystemFootnote" Foreground="#4CFFFFFF">AAAA <Hyperlink Foreground="{x:Static global:WindowsColorHelpers.AccentLight}">bbbbbbbbbbbbbbbbb</Hyperlink> weeeeeeeeeee</TextBlock>
+                    <TextBlock x:Name="vrSystemDescription" FontFamily="Segoe UI Semibold" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA weeeeeeeeeee</TextBlock>
+                    <TextBlock x:Name="vrSystemFootnote" Foreground="#4CFFFFFF" TextWrapping="WrapWithOverflow">AAAA <Hyperlink Foreground="{x:Static global:WindowsColorHelpers.AccentLight}">bbbbbbbbbbbbbbbbb</Hyperlink> weeeeeeeeeee</TextBlock>
                 </StackPanel>
             </controls:ItemTask>
             <controls:ItemTask x:Name="compatDevices" State="Default" Title="{x:Static res:Resources.SystemRequirement_Category_Compatibility}" Margin="0,0,0,16">
                 <StackPanel Margin="10,0,0,0" Orientation="Vertical">
-                    <TextBlock x:Name="compatDevicesDescription" Foreground="#FFFFFFFF">AAAA</TextBlock>
+                    <TextBlock x:Name="compatDevicesDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                 </StackPanel>
             </controls:ItemTask>
         </StackPanel>

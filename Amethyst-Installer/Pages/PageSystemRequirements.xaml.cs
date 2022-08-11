@@ -1,6 +1,7 @@
 using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,9 @@ namespace amethyst_installer_gui.Pages {
     /// Interaction logic for PageSystemRequirements.xaml
     /// </summary>
     public partial class PageSystemRequirements : UserControl, IInstallerPage {
+
+        bool canContinue = true;
+
         public PageSystemRequirements() {
             InitializeComponent();
         }
@@ -32,21 +36,50 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
-            // Advance to next page
-            MainWindow.Instance.SetPage(InstallerState.Downloading);
+
+            if ( canContinue ) {
+                // Advance to next page
+                MainWindow.Instance.SetPage(InstallerState.Downloading);
+            } else {
+                // TODO: Ella pls tell me how to handle the UX part of this I'm not sure if straight up exiting is a good idea
+                MainWindow.Instance.Close();
+            }
         }
 
         public void OnSelected() {
+
             // Compute install requirements
+            canContinue = InstallerStateManager.CanInstall;
 
             // TODO: Check storage
             diskSpaceDescription.Text = Properties.Resources.SystemRequirement_Description_Storage; // TODO: String format
+            diskSpace.State = Controls.TaskState.Question;
 
             // TODO: Check USB controllers
-            usbControllersDescription.Text = Properties.Resources.SystemRequirement_Description_UsbControllers; // TODO: String format
+            int goodControllerCount = 0;
+            StringBuilder controllerStringBuffer = new StringBuilder();
 
-            // TODO: Check VR headset
-            vrSystemDescription.Text = $"{OpenVRUtil.HmdType} ({OpenVRUtil.ConnectionType}) [{OpenVRUtil.TrackingType}]"; // TODO: ToFriendlyString method
+            foreach ( var usbController in InstallerStateManager.UsbControllers ) {
+                if ( controllerStringBuffer.Length > 0 )
+                    controllerStringBuffer.Append(", ");
+                controllerStringBuffer.Append(usbController.FriendlyString);
+                goodControllerCount++;
+            }
+
+            usbControllersDescription.Text = string.Format(Properties.Resources.SystemRequirement_Description_UsbControllers,
+                goodControllerCount, controllerStringBuffer.ToString());
+            usbControllers.State = Controls.TaskState.Question;
+
+            // Check VR headset
+            vrSystemDescription.Text = GetVRHeadsetString();
+            vrSystem.State =
+                (( OpenVRUtil.ConnectionType == VRConnectionType.Tethered || OpenVRUtil.ConnectionType == VRConnectionType.OculusLink) &&
+                    (OpenVRUtil.HmdType == VRHmdType.Quest || OpenVRUtil.HmdType == VRHmdType.Quest2)   // If it's a Quest
+                ) ? Controls.TaskState.Question : Controls.TaskState.Checkmark;
+
+            // TODO: Change depending on connection type
+            string vrSystemFootnoteStringSrc = Properties.Resources.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
+
 
             vrSystemFootnote.Inlines.Clear();
             vrSystemFootnote.Inlines.Add("Some text ");
@@ -61,7 +94,41 @@ namespace amethyst_installer_gui.Pages {
             vrSystemFootnote.Inlines.Add(" Some more text");
 
             // TODO: Check target device
-            compatDevicesDescription.Text = "among us";
+
+            StringBuilder compatibilityString = new StringBuilder();
+            if ( InstallerStateManager.IsWindowsAncient ) {
+                if ( compatibilityString.Length > 0 )
+                    compatibilityString.Append(Environment.NewLine);
+                compatibilityString.Append(Properties.Resources.SystemRequirement_Description_WindowsVersionIsOld);
+            }
+            if ( !InstallerStateManager.SteamVRInstalled ) {
+                if ( compatibilityString.Length > 0 )
+                    compatibilityString.Append(Environment.NewLine);
+                compatibilityString.Append(Properties.Resources.SystemRequirement_Description_SteamVRNotFound);
+            }
+            if ( InstallerStateManager.IsCloudPC ) {
+                if ( compatibilityString.Length > 0 )
+                    compatibilityString.Append(Environment.NewLine);
+                compatibilityString.Append(Properties.Resources.SystemRequirement_Description_CloudPC);
+            }
+
+            if ( compatibilityString.Length == 0 )
+                compatibilityString.Append("Amogus (OK)");
+
+            compatDevicesDescription.Text = compatibilityString.ToString();
+            // compatDevices.State = Controls.TaskState.Question;
+            compatDevices.State = canContinue ? Controls.TaskState.Checkmark : Controls.TaskState.Error;
+        }
+
+        private string GetVRHeadsetString() {
+
+            switch ( OpenVRUtil.HmdType ) {
+                case VRHmdType.Quest:
+                case VRHmdType.Quest2:
+                    return $"{OpenVRUtil.HmdType} ({OpenVRUtil.ConnectionType})";
+            }
+
+            return $"{OpenVRUtil.HmdType} ({OpenVRUtil.ConnectionType}) [{OpenVRUtil.TrackingType}]";
         }
 
         // Force only the first button to have focus
@@ -76,7 +143,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
-            // TODO: link click handler
+            Process.Start(e.Uri.ToString());
         }
     }
 }
