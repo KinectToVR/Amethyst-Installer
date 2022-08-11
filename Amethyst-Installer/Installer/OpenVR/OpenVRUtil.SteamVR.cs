@@ -20,6 +20,7 @@ namespace amethyst_installer_gui.Installer {
         private static dynamic s_steamvrSettings;
         private static bool s_steamvrSettingsExists = false;
         private static string s_steamvrSettingsPath;
+        private static string s_openvrPathsPath;
 
         /// <summary>
         /// Returns whether SteamVR is currently running or not
@@ -95,6 +96,14 @@ namespace amethyst_installer_gui.Installer {
             if ( s_steamvrSettings != null ) {
                 string newSteamVrSettingsContents = JsonConvert.SerializeObject(s_steamvrSettings, Formatting.Indented);
                 File.WriteAllText(s_steamvrSettingsPath, newSteamVrSettingsContents);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void SaveOpenVrPaths() {
+            if ( s_openvrpaths != null ) {
+                string newOpenVrVrPathsContents = JsonConvert.SerializeObject(s_openvrpaths, Formatting.Indented);
+                File.WriteAllText(s_openvrPathsPath, newOpenVrVrPathsContents);
             }
         }
 

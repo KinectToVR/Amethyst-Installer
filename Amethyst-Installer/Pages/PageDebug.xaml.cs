@@ -2,6 +2,7 @@
 using amethyst_installer_gui.PInvoke;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace amethyst_installer_gui.Pages {
     /// <summary>
@@ -93,6 +93,11 @@ namespace amethyst_installer_gui.Pages {
 
         private void driverSearch_Click(object sender, RoutedEventArgs e) {
             Util.ShowMessageBox($"Driver Search: {OpenVRUtil.GetDriverPath(driverSearchBox.Text)}", "Driver search");
+        }
+        private void driverAdd_Click(object sender, RoutedEventArgs e) {
+            OpenVRUtil.RegisterSteamVrDriver(driverAddBox.Text);
+            Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "openvr", "openvrpaths.vrpath")));
+            Util.ShowMessageBox($"Driver Registered!", "Driver search");
         }
     }
 }

@@ -42,11 +42,12 @@ namespace amethyst_installer_gui.Installer {
             var ovrDll = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, "openvr_api.dll"));
 
             // Extract the openvr_api.dll binary to our temp directory
-            using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("amethyst_installer_gui.Resources.Binaries.openvr_api.dll") ) {
-                using ( var file = new FileStream(ovrDll, FileMode.Create, FileAccess.Write) ) {
-                    resource.CopyTo(file);
-                }
-            }
+            // using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("amethyst_installer_gui.Resources.Binaries.openvr_api.dll") ) {
+            //     using ( var file = new FileStream(ovrDll, FileMode.Create, FileAccess.Write) ) {
+            //         resource.CopyTo(file);
+            //     }
+            // }
+            Util.ExtractResource("Binaries.openvr_api.dll", ovrDll);
 
             // Load the openvr_api.dll unmanaged library using P/Invoke :D
             var result = Kernel.LoadLibrary(ovrDll);
@@ -55,9 +56,9 @@ namespace amethyst_installer_gui.Installer {
                 Logger.Warn("Falling back to openvrpaths.vrpath...");
                 s_failedToInit = true;
             } else {
-                s_initialized = true;
                 Logger.Info("Successfully loaded openvr_api.dll!");
             }
+            s_initialized = true;
         }
 
         /// <summary>
@@ -67,14 +68,14 @@ namespace amethyst_installer_gui.Installer {
         private static void LoadOpenVrPaths(bool force = false) {
 
             if ( s_openvrpaths == null || force == true ) {
-                string vrpathsFile = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "openvr", "openvrpaths.vrpath"));
-                if ( !File.Exists(vrpathsFile) ) {
+                s_openvrPathsPath = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "openvr", "openvrpaths.vrpath"));
+                if ( !File.Exists(s_openvrPathsPath) ) {
                     Logger.Warn("openvrpaths.vrpath doesn't exist on the current system... Is SteamVR installed, and has it been run at least once?");
                     s_openvrpaths = null;
                     return;
                 }
 
-                string vrpathsTxt = File.ReadAllText(vrpathsFile);
+                string vrpathsTxt = File.ReadAllText(s_openvrPathsPath);
                 s_openvrpaths = JsonConvert.DeserializeObject<OpenVrPaths>(vrpathsTxt);
             }
         }

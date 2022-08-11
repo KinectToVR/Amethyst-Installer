@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using amethyst_installer_gui.PInvoke;
 using amethyst_installer_gui.Popups;
 
 namespace amethyst_installer_gui {
@@ -61,7 +63,6 @@ namespace amethyst_installer_gui {
                 modalWindow.Owner = Application.Current.MainWindow;
 
             modalWindow.ShowDialog();
-
 
             switch ( button ) {
                 case MessageBoxButton.OK:
@@ -202,6 +203,19 @@ namespace amethyst_installer_gui {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string FormatException(Exception ex) {
             return $"Unhandled Exception: {ex.GetType().Name} in {ex.Source}: {ex.Message}\n{ex.StackTrace}";
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ExtractResource(string resourcePath, string filePath) {
+            using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream($"amethyst_installer_gui.Resources.{resourcePath}") ) {
+                using ( var file = new FileStream(filePath, FileMode.Create, FileAccess.Write) ) {
+                    resource.CopyTo(file);
+                }
+            }
+        }
+
+        public static bool IsLaptop() {
+            return PowerProvider.SystemPowerCapabilites.LidPresent;
         }
     }
 }

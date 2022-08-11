@@ -31,7 +31,7 @@ namespace amethyst_installer_gui.Installer {
                 string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
                 if ( File.Exists(vrpathregPath) ) {
                     // TODO: vrpathreg now returns error codes! use it for driver handling
-                    var args = "";
+                    var args = $"adddriver {driverPath}";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
                         FileName = vrpathregPath,
                         Arguments = args,
@@ -52,12 +52,13 @@ namespace amethyst_installer_gui.Installer {
                 }
             }
 
-            // TODO: Fallback to openvrpaths
             if ( s_openvrpaths != null ) {
-
+                if ( !s_openvrpaths.external_drivers.Contains(driverPath) ) {
+                    // Driver is not registered!
+                    s_openvrpaths.external_drivers.Add(driverPath);
+                    SaveOpenVrPaths();
+                }
             }
-
-            throw new NotImplementedException();
         }
 
 
