@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Download_Failure" xml:space="preserve">
+    <value>An error occured when trying to download this item. Try disabling any VPNs or firewalls.</value>
+    <comment>Error message that gets displayed to the user whenever a download fails</comment>
+  </data>
+  <data name="Download_FailureCritical" xml:space="preserve">
+    <value>An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue.</value>
+    <comment>Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue.</comment>
+  </data>
   <data name="EULA_Agree" xml:space="preserve">
     <value>I agree</value>
   </data>
@@ -225,6 +233,16 @@
   <data name="Sidebar_ViewLogs" xml:space="preserve">
     <value>View logs</value>
   </data>
+  <data name="Speedrunner_Description" xml:space="preserve">
+    <value>Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?
+
+Be careful where you click!</value>
+    <comment>this dialog gets shown when the user spams through the installer</comment>
+  </data>
+  <data name="Speedrunner_Title" xml:space="preserve">
+    <value>Slow down!</value>
+    <comment>this dialog gets shown when the user spams through the installer</comment>
+  </data>
   <data name="SystemRequirement_Category_Compatibility" xml:space="preserve">
     <value>Compatible devices</value>
   </data>
@@ -237,8 +255,16 @@
   <data name="SystemRequirement_Category_VrSystem" xml:space="preserve">
     <value>VR headset</value>
   </data>
+  <data name="SystemRequirement_Description_CloudPC" xml:space="preserve">
+    <value>Cloud PC detected. Amethyst does not support networked environments.</value>
+    <comment>The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere</comment>
+  </data>
   <data name="SystemRequirement_Description_NoDriversFound" xml:space="preserve">
     <value>No drivers installed yet</value>
+  </data>
+  <data name="SystemRequirement_Description_SteamVRNotFound" xml:space="preserve">
+    <value>Couldn't find SteamVR! Is it installed, and have you run it at least once?</value>
+    <comment>The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once.</comment>
   </data>
   <data name="SystemRequirement_Description_Storage" xml:space="preserve">
     <value>{0} of disk space based on the components selected.</value>
@@ -247,6 +273,18 @@
   <data name="SystemRequirement_Description_UsbControllers" xml:space="preserve">
     <value>{0} compatible USB controllers found ({1})</value>
     <comment>{0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202")</comment>
+  </data>
+  <data name="SystemRequirement_Description_UsbControllers_One" xml:space="preserve">
+    <value>{0} compatible USB controller found ({1})</value>
+    <comment>{0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202")</comment>
+  </data>
+  <data name="SystemRequirement_Description_WindowsVersionIsOld" xml:space="preserve">
+    <value>Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst.</value>
+    <comment>The message shown to a user when they have an old version of Windows that is not supported by Amethyst</comment>
+  </data>
+  <data name="SystemRequirement_Footnote_StageTracking_VirtualDesktop" xml:space="preserve">
+    <value>We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.</value>
+    <comment>The first string of text surrounded by []s will get turned into the hyperlink</comment>
   </data>
   <data name="Welcome_OptIn" xml:space="preserve">
     <value>Opt in to anonymous analytics and crash reports.</value>

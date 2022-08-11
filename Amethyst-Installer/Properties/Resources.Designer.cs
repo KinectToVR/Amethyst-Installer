@@ -61,6 +61,24 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occured when trying to download this item. Try disabling any VPNs or firewalls..
+        /// </summary>
+        public static string Download_Failure {
+            get {
+                return ResourceManager.GetString("Download_Failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue..
+        /// </summary>
+        public static string Download_FailureCritical {
+            get {
+                return ResourceManager.GetString("Download_FailureCritical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I agree.
         /// </summary>
         public static string EULA_Agree {
@@ -376,6 +394,26 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?
+        ///
+        ///Be careful where you click!.
+        /// </summary>
+        public static string Speedrunner_Description {
+            get {
+                return ResourceManager.GetString("Speedrunner_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slow down!.
+        /// </summary>
+        public static string Speedrunner_Title {
+            get {
+                return ResourceManager.GetString("Speedrunner_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compatible devices.
         /// </summary>
         public static string SystemRequirement_Category_Compatibility {
@@ -412,11 +450,29 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cloud PC detected. Amethyst does not support networked environments..
+        /// </summary>
+        public static string SystemRequirement_Description_CloudPC {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_CloudPC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No drivers installed yet.
         /// </summary>
         public static string SystemRequirement_Description_NoDriversFound {
             get {
                 return ResourceManager.GetString("SystemRequirement_Description_NoDriversFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t find SteamVR! Is it installed, and have you run it at least once?.
+        /// </summary>
+        public static string SystemRequirement_Description_SteamVRNotFound {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_SteamVRNotFound", resourceCulture);
             }
         }
         
@@ -435,6 +491,33 @@ namespace amethyst_installer_gui.Properties {
         public static string SystemRequirement_Description_UsbControllers {
             get {
                 return ResourceManager.GetString("SystemRequirement_Description_UsbControllers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} compatible USB controller found ({1}).
+        /// </summary>
+        public static string SystemRequirement_Description_UsbControllers_One {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_UsbControllers_One", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst..
+        /// </summary>
+        public static string SystemRequirement_Description_WindowsVersionIsOld {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_WindowsVersionIsOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session..
+        /// </summary>
+        public static string SystemRequirement_Footnote_StageTracking_VirtualDesktop {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Footnote_StageTracking_VirtualDesktop", resourceCulture);
             }
         }
         
