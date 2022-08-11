@@ -40,6 +40,14 @@
                         <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Done}" Margin="0,0,0,22" IsTabStop="False"/>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Margin="-5,0,0,25">
+                        <Label x:Name="speedrunTimer" FontWeight="SemiBold" Content="00:00:00" FontSize="22" Visibility="Hidden">
+                            <Label.Foreground>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF74C19A"/>
+                                    <GradientStop Color="#FF2A8D59" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Foreground>
+                        </Label>
                         <Button x:Name="viewLogsBtn" Style="{DynamicResource WinUIHyperlinkButton}" Content="{x:Static res:Resources.Sidebar_ViewLogs}"  Margin="0,0,0,4" Click="viewLogsBtn_Click"/>
                         <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" IsTabStop="False" />
                     </StackPanel>

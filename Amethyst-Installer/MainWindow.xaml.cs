@@ -4,6 +4,8 @@ using amethyst_installer_gui.Pages;
 using amethyst_installer_gui.PInvoke;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -14,7 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace amethyst_installer_gui {
     /// <summary>
@@ -37,6 +39,14 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static string LocaleCode = "en";
         // TODO: actually get the locale
+
+        // Please read the shit
+        private const int NextButtonCooldownMillis  = 1000;
+        private long TimeSinceLastCooldown          = 0;
+        private bool m_speedrunnerModeActive        = false;
+        private DispatcherTimer m_dispatcherTimer   = new DispatcherTimer();
+        private Stopwatch m_stopwatch               = new Stopwatch();
+        private string m_currentTime                = "00:00.00";
 
         public MainWindow() {
             InitializeComponent();
@@ -172,8 +182,34 @@ namespace amethyst_installer_gui {
 
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
-            CurrentInstallerPage.OnButtonPrimary(sender, e);
+#if !DEBUG
+            if ( DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - TimeSinceLastCooldown < NextButtonCooldownMillis ) {
+                if ( !m_speedrunnerModeActive ) {
+                    m_speedrunnerModeActive = true;
+
+                    // Show prompt
+                    Util.ShowMessageBox(Properties.Resources.Speedrunner_Description, Properties.Resources.Speedrunner_Title, MessageBoxButton.OK);
+
+                    // In a perfect world, we would play Dream music here, but unfortunately, licensing is a thing, so oh no!
+
+                    // Speedrun timer
+                    m_dispatcherTimer.Tick += new EventHandler(speedunTimer_Tick);
+                    m_dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                    m_stopwatch.Start();
+                    m_dispatcherTimer.Start();
+                    speedrunTimer.Visibility = Visibility.Visible;
+
+                    // TODO: On install complete victory royale ??
+                }
+            } else {
+#endif
+                CurrentInstallerPage.OnButtonPrimary(sender, e);
+                TimeSinceLastCooldown = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+#if !DEBUG
         }
+#endif
+    }
+
         private void ActionButtonSecondary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             CurrentInstallerPage.OnButtonSecondary(sender, e);
@@ -215,6 +251,20 @@ namespace amethyst_installer_gui {
             if ( e.Key == Key.F12 )
                 OverridePage(InstallerState.Debug);
 #endif
+        }
+
+        void speedunTimer_Tick(object sender, EventArgs e) {
+            if ( m_stopwatch.IsRunning ) {
+                TimeSpan ts = m_stopwatch.Elapsed;
+                m_currentTime = string.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+                speedrunTimer.Content = m_currentTime;
+            }
+        }
+
+        public void StopSpeedrunTimer() {
+            if ( m_stopwatch.IsRunning && m_speedrunnerModeActive ) {
+                m_stopwatch.Stop();
+            }
         }
     }
 }
