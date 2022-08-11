@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:Controls="clr-namespace:amethyst_installer_gui.Controls"
     mc:Ignorable="d"
     d:DesignHeight="23" d:DesignWidth="250">
 
@@ -13,7 +14,8 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Image x:Name="taskStateIcon" Grid.Column="0" Source="/Resources/Icons/4x/Default.png" RenderOptions.BitmapScalingMode="Fant"/>
+        <Image x:Name="taskStateIcon" Grid.Column="0" Source="/Resources/Icons/4x/Default.png" RenderOptions.BitmapScalingMode="Fant" Visibility="Visible"/>
+        <Controls:ProgressSpinner x:Name="taskStateSpinner" Grid.Column="0" Foreground="#FF67BDE6" Width="19" Height="19" Visibility="Collapsed"/>
         <Label x:Name="taskDescription" Grid.Column="1" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource BrushForeground}" FontWeight="Normal" FontFamily="Segoe UI Semibold" Margin="5,0,0,0" Padding="5,3,5,5" />
 
     </Grid>

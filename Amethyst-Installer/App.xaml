@@ -27,6 +27,7 @@
                 <ResourceDictionary Source="Styles/Textbox.xaml" />
                 <ResourceDictionary Source="Styles/ScrollBar.xaml" />
                 <ResourceDictionary Source="Styles/RadioButton.xaml" />
+                <ResourceDictionary Source="Styles/ProgressBar.xaml" />
 
                 <!-- Custom "Core" Controls -->
                 <ResourceDictionary Source="Styles/ProgressSpinner.xaml" />

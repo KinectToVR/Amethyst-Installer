@@ -33,6 +33,7 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
+            MainWindow.Instance.sidebar_install.State = Controls.TaskState.Checkmark;
             MainWindow.Instance.SetPage(InstallerState.Done);
         }
 
@@ -46,6 +47,7 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
+            MainWindow.Instance.sidebar_install.State = Controls.TaskState.Busy;
         }
 
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }

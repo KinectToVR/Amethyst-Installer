@@ -38,11 +38,16 @@ namespace amethyst_installer_gui.Controls {
                 case TaskState.Question:
                     stateString = "Question";
                     break;
+                case TaskState.Error:
+                    stateString = "Error";
+                    break;
 
             }
 
             ( d as SidebarTask ).taskStateIcon.Source = new BitmapImage(new Uri($"/Resources/Icons/4x/{stateString}.png", UriKind.Relative));
-            ;
+
+            ( d as SidebarTask ).taskStateIcon.Visibility       = ( TaskState ) e.NewValue == TaskState.Busy ? Visibility.Collapsed : Visibility.Visible;
+            ( d as SidebarTask ).taskStateSpinner.Visibility    = ( TaskState ) e.NewValue == TaskState.Busy ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private static void TextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {

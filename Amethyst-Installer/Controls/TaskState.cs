@@ -3,5 +3,7 @@ namespace amethyst_installer_gui.Controls {
         Default = 0,
         Checkmark = 1,
         Question = 2,
+        Error = 3,
+        Busy = 4,
     }
 }

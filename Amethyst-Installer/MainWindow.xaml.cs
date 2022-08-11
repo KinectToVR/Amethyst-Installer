@@ -129,14 +129,6 @@ namespace amethyst_installer_gui {
         }
 
         public void SetPage(InstallerState destinatonTab) {
-            CurrentInstallerPage = Pages[destinatonTab];
-            Logger.Info($"Changing installer page to {destinatonTab}");
-            CurrentInstallerPage.OnSelected();
-
-            // Reset the stack
-            pageStack.Clear();
-            pageStackPointer = 0;
-            pageStack.Add(destinatonTab);
 
 #pragma warning disable IDE0055
 
@@ -150,6 +142,15 @@ namespace amethyst_installer_gui {
             sidebar_done.State =            destinatonTab < InstallerState.Done ?                   TaskState.Default : TaskState.Checkmark;
 
 #pragma warning restore IDE0055
+
+            CurrentInstallerPage = Pages[destinatonTab];
+            Logger.Info($"Changing installer page to {destinatonTab}");
+            CurrentInstallerPage.OnSelected();
+
+            // Reset the stack
+            pageStack.Clear();
+            pageStackPointer = 0;
+            pageStack.Add(destinatonTab);
 
         }
 
@@ -182,7 +183,7 @@ namespace amethyst_installer_gui {
             CurrentInstallerPage.OnButtonTertiary(sender, e);
         }
 
-        #endregion
+#endregion
 
         int viewBntCount = 0;
         readonly string[] altLogsBtnStrings = new string[]

@@ -59,6 +59,11 @@ namespace amethyst_installer_gui.Pages {
             var drives = DriveInfo.GetDrives();
             var systemDriveLetter = Path.GetPathRoot( Environment.GetFolderPath( Environment.SpecialFolder.Windows ));
             for ( int i = 0; i < drives.Length; i++ ) {
+
+                // Make sure the drive is in a read / write state before doing anything with it
+                if ( !drives[i].IsReady )
+                    continue;
+
                 var letter = drives[i].RootDirectory.ToString().Replace(Path.DirectorySeparatorChar.ToString(), string.Empty).Replace(Path.AltDirectorySeparatorChar.ToString(), string.Empty);
                 var driveName = Shell.GetDriveLabel(drives[i].RootDirectory.ToString());
                 var freeSpace = drives[i].AvailableFreeSpace;

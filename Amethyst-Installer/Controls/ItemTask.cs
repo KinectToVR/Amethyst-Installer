@@ -42,7 +42,9 @@ namespace amethyst_installer_gui.Controls {
                 case TaskState.Question:
                     stateString = "Question";
                     break;
-
+                case TaskState.Error:
+                    stateString = "Error";
+                    break;
             }
 
             ( d as ItemTask ).taskStateIcon.Source = new BitmapImage(new Uri($"/Resources/Icons/4x/{stateString}.png", UriKind.Relative));
@@ -68,6 +70,9 @@ namespace amethyst_installer_gui.Controls {
                     break;
                 case TaskState.Question:
                     stateString = "Question";
+                    break;
+                case TaskState.Error:
+                    stateString = "Error";
                     break;
 
             }
