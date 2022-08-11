@@ -24,7 +24,9 @@ namespace amethyst_installer_gui.Pages {
             throw new InvalidOperationException("AMONG US IS AN AWEOSME VIDEOGAME I FUCKING LOVE AMONGUS");
         }
 
-        public void OnSelected() { }
+        public void OnSelected() {
+            MainWindow.Instance.StopSpeedrunTimer();
+        }
 
         // Force only the first button to have focus
         public void OnFocus() {
