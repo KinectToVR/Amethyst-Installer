@@ -91,9 +91,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ProgressSpinner\Arc.cs" />
+    <Compile Include="Controls\DownloadItem.cs" />
     <Compile Include="Controls\DriveSelectionControl.cs" />
     <Compile Include="Controls\InstallableItem.cs" />
     <Compile Include="Controls\ItemTask.cs" />
+    <Compile Include="Controls\ProgressSpinner\ProgressSpinner.cs" />
     <Compile Include="Controls\SidebarExtensions.cs" />
     <Compile Include="Controls\SidebarTask.xaml.cs">
       <DependentUpon>SidebarTask.xaml</DependentUpon>
@@ -186,6 +189,7 @@
     <Compile Include="PInvoke\DWM.cs" />
     <Compile Include="PInvoke\Kernel.cs" />
     <Compile Include="PInvoke\openvr_api.cs" />
+    <Compile Include="PInvoke\PowerProvider.cs" />
     <Compile Include="PInvoke\Shell.cs" />
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
@@ -197,12 +201,14 @@
     </Compile>
     <Compile Include="Util\Constants.cs" />
     <Compile Include="Util\Download.cs" />
+    <Compile Include="Util\ExitCodes.cs" />
     <Compile Include="Util\LinqExtensions.cs" />
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\UninstallUtil.cs" />
     <Compile Include="Util\Util.cs" />
     <Compile Include="Util\Vectors.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
+    <Compile Include="Util\WindowsUtils.cs" />
     <Page Include="Controls\SidebarTask.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -279,6 +285,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\DownloadItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\DriveSelectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -292,6 +302,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ItemTask.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ProgressSpinner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -381,6 +399,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\1x\Error.png" />
+    <Resource Include="Resources\Icons\2x\Error.png" />
+    <Resource Include="Resources\Icons\4x\Error.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

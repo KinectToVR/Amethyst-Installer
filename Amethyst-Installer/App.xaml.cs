@@ -2,6 +2,7 @@ using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
 using System;
 using System.IO;
+using System.Media;
 using System.Windows;
 
 using AppWindow = amethyst_installer_gui.MainWindow;
@@ -34,6 +35,12 @@ namespace amethyst_installer_gui {
 
             // Fetch installer API response from server
             InstallerStateManager.Initialize();
+
+            if (!InstallerStateManager.CanInstall) {
+                SystemSounds.Exclamation.Play();
+                Util.ShowMessageBox("Oh no! The table! It's broken!", "bababoi.mp3", MessageBoxButton.OK);
+                Current.Shutdown(( int ) ExitCodes.IncompatibleSetup);
+            }
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
