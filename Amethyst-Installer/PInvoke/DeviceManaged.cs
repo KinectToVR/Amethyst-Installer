@@ -2,10 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.PInvoke {
+
+    public static class DeviceClasses {
+        public static readonly Guid AudioEndpoint       = new Guid("{c166523c-fe0c-4a94-a586-f1a80cfbbf3e}");
+        public static readonly Guid Bluetooth           = new Guid("{e0cbf06c-cd8b-4647-bb8a-263b43f0f974}");
+        public static readonly Guid BTW                 = new Guid("{95c7a0a0-3094-11d7-a202-00508b9d7d5a}");
+        public static readonly Guid Camera              = new Guid("{ca3e7ab9-b4c3-4ae6-8251-579ef933890f}");
+        public static readonly Guid Computer            = new Guid("{4d36e966-e325-11ce-bfc1-08002be10318}");
+        public static readonly Guid DiskDrive           = new Guid("{4d36e967-e325-11ce-bfc1-08002be10318}");
+        public static readonly Guid Display             = new Guid("{4d36e968-e325-11ce-bfc1-08002be10318}");
+        public static readonly Guid Keyboards           = new Guid("{4d36e96b-e325-11ce-bfc1-08002be10318}");
+        public static readonly Guid KinectForWindows    = new Guid("{3a0339cd-b5f0-421c-8661-f243eef1528c}");
+        public static readonly Guid Mouse               = new Guid("{4d36e96f-e325-11ce-bfc1-08002be10318}");
+        public static readonly Guid USB                 = new Guid("{36fc9e60-c465-11cf-8056-444553540000}");
+        public static readonly Guid Unknown             = new Guid("{00000000-0000-0000-0000-000000000000}");
+    }
+
     public class DeviceTree : IDisposable {
         private IntPtr _machineHandle = IntPtr.Zero;
         private IntPtr _rootDeviceHandle = IntPtr.Zero;
