@@ -68,6 +68,10 @@ namespace amethyst_installer_gui.Installer {
             var hmdModel = GetSteamVRHmdModel().ToLowerInvariant();
             var hmdManufacturer = GetSteamVRHmdManufacturer().ToLowerInvariant();
 
+            // For debugging purposes
+            Logger.Info($"Steam VR Last HMD Model: {hmdModel}");
+            Logger.Info($"Steam VR Last HMD Manufacturer: {hmdManufacturer}");
+
             // PhoneVR
             if ( IsPhoneVR(hmdModel, hmdManufacturer) ) {
                 HmdType = VRHmdType.Phone;
@@ -90,7 +94,7 @@ namespace amethyst_installer_gui.Installer {
                     HmdType = VRHmdType.WMR;
                     ConnectionType = VRConnectionType.Tethered;
                     // Reverb G2 users using konkles moment:
-                    TrackingType = UsesLighthouseTracking() ? VRTrackingType.MixedReality : VRTrackingType.Lighthouse;
+                    TrackingType = UsesLighthouseTracking() ? VRTrackingType.Lighthouse : VRTrackingType.MixedReality;
                     return;
 
                 // Lighthouse Headsets
@@ -148,10 +152,30 @@ namespace amethyst_installer_gui.Installer {
                             TrackingType = VRTrackingType.Quest;
                             DetectQuestConnectionMethod();
                             return;
+                        case "miramar": // TODO: Test if this is ALVR or other devices ; patterns are currently unclear
+                        case "oculus quest2":
                         case "oculus quest 2":
                             HmdType = VRHmdType.Quest2;
                             TrackingType = VRTrackingType.Quest;
                             DetectQuestConnectionMethod();
+                            return;
+                    }
+                    return;
+
+                // Pico Neo
+                case "pico":
+                    // TODO: Revise further because yeahhhhh
+                    ConnectionType = VRConnectionType.Tethered;
+                    TrackingType = VRTrackingType.Oculus;
+                    switch ( hmdModel ) {
+                        case "pico neo":
+                            HmdType = VRHmdType.PicoNeo;
+                            return;
+                        case "pico neo 2":
+                            HmdType = VRHmdType.PicoNeo2;
+                            return;
+                        case "pico neo 3":
+                            HmdType = VRHmdType.PicoNeo3;
                             return;
                     }
                     return;

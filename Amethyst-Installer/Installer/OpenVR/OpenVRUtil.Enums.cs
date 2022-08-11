@@ -53,6 +53,18 @@
         /// </summary>
         PSVR,
         /// <summary>
+        /// Pico Neo
+        /// </summary>
+        PicoNeo,
+        /// <summary>
+        /// Pico Neo 2
+        /// </summary>
+        PicoNeo2,
+        /// <summary>
+        /// Pico Neo 3
+        /// </summary>
+        PicoNeo3,
+        /// <summary>
         /// My condolences.
         /// </summary>
         Phone,
