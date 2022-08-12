@@ -1,6 +1,7 @@
 using amethyst_installer_gui.PInvoke;
 using System;
 using System.IO;
+using System.Windows.Media;
 
 namespace amethyst_installer_gui {
     /// <summary>
@@ -53,5 +54,28 @@ namespace amethyst_installer_gui {
         /// An invite to the K2VR Community Discord server
         /// </summary>
         public static readonly string DiscordInvite = "https://discord.gg/YBQCRDG";
+
+        /// <summary>
+        /// A mapping from <see cref="ConsoleColor"/> to <see cref="SolidColorBrush"/>
+        /// </summary>
+        public static SolidColorBrush[] ConsoleBrushColors = new[]
+        {
+            new SolidColorBrush(Colors.Black),
+            new SolidColorBrush(Colors.DarkBlue),
+            new SolidColorBrush(Colors.DarkGreen),
+            new SolidColorBrush(Colors.DarkCyan),
+            new SolidColorBrush(Color.FromArgb(255,255,132,132)), // Fatal
+            new SolidColorBrush(Colors.DarkMagenta),
+            new SolidColorBrush(Colors.DarkOliveGreen),
+            new SolidColorBrush(Colors.Gray),
+            new SolidColorBrush(Colors.DarkGray),
+            new SolidColorBrush(Colors.Blue),
+            new SolidColorBrush(Colors.Green),
+            new SolidColorBrush(Colors.Cyan),
+            new SolidColorBrush(Color.FromArgb(255,255,120,0)),    // Error
+            new SolidColorBrush(Colors.Magenta),
+            new SolidColorBrush(Color.FromArgb(255, 255, 255, 86)), // Warn
+            new SolidColorBrush(Colors.White)   // Info
+        };
     }
 }

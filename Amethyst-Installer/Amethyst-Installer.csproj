@@ -91,6 +91,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\InstallModuleProgress.xaml.cs">
+      <DependentUpon>InstallModuleProgress.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProgressSpinner\Arc.cs" />
     <Compile Include="Controls\DownloadItem.cs" />
     <Compile Include="Controls\DriveSelectionControl.cs" />
@@ -209,6 +212,10 @@
     <Compile Include="Util\Vectors.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
     <Compile Include="Util\WindowsUtils.cs" />
+    <Page Include="Controls\InstallModuleProgress.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\SidebarTask.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

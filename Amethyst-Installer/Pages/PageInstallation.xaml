@@ -8,10 +8,12 @@
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid>
 
-        <StackPanel Orientation="Vertical" x:Name="installationListContainer">
+		<ScrollViewer x:Name="scrollContainer" Focusable="false" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
+			<StackPanel Orientation="Vertical" x:Name="installationListContainer" Margin="0,0,8,0">
 
-            <Controls:ProgressSpinner />
 
-        </StackPanel>
-    </Grid>
+
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
 </UserControl>

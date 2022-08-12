@@ -13,25 +13,6 @@ namespace amethyst_installer_gui.Pages {
     /// Interaction logic for PageLogs.xaml
     /// </summary>
     public partial class PageLogs : UserControl, IInstallerPage {
-        private static SolidColorBrush[] ConsoleBrushColors = new[]
-        {
-            new SolidColorBrush(Colors.Black),
-            new SolidColorBrush(Colors.DarkBlue),
-            new SolidColorBrush(Colors.DarkGreen),
-            new SolidColorBrush(Colors.DarkCyan),
-            new SolidColorBrush(Color.FromArgb(255,255,132,132)), // Fatal
-            new SolidColorBrush(Colors.DarkMagenta),
-            new SolidColorBrush(Colors.DarkOliveGreen),
-            new SolidColorBrush(Colors.Gray),
-            new SolidColorBrush(Colors.DarkGray),
-            new SolidColorBrush(Colors.Blue),
-            new SolidColorBrush(Colors.Green),
-            new SolidColorBrush(Colors.Cyan),
-            new SolidColorBrush(Color.FromArgb(255,255,120,0)),    // Error
-            new SolidColorBrush(Colors.Magenta),
-            new SolidColorBrush(Color.FromArgb(255, 255, 255, 86)), // Warn
-            new SolidColorBrush(Colors.White)   // Info
-        };
 
         private static Queue<UILogMessage> s_queuedConsoleMessages = new Queue<UILogMessage>();
         private bool scrollToBottomQueued = false;
@@ -89,7 +70,7 @@ namespace amethyst_installer_gui.Pages {
         private static void LogLineInternal(string msg, ConsoleColor color) {
             Paragraph paragraph = new Paragraph();
             Run run = new Run(msg);
-            run.Foreground = ConsoleBrushColors[( int ) color];
+            run.Foreground = Constants.ConsoleBrushColors[( int ) color];
             paragraph.Inlines.Add(run);
             ( MainWindow.Instance.Pages[InstallerState.Logs] as PageLogs ).logMessagesBox.Document.Blocks.Add(paragraph);
         }

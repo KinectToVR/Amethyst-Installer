@@ -1,3 +1,4 @@
+using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,20 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnSelected() {
 
+            for (int i = 0; i < 10; i++ ) {
+
+                InstallModuleProgress installControl = new InstallModuleProgress();
+                installControl.Title = "amogus";
+                installControl.State = ( TaskState ) (i % 5);
+                if ( i != 10 )
+                    installControl.Margin = new Thickness(0, 0, 0, 8);
+
+                installControl.LogInfo("FUCK");
+                installControl.LogWarning("SHIT");
+                installControl.LogError("AAAA");
+
+                installationListContainer.Children.Add(installControl);
+            }
         }
 
         // Force only the first button to have focus

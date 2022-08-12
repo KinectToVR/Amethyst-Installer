@@ -4,21 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:amethyst_installer_gui.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Border Background="{StaticResource BrushBackground}" CornerRadius="4">
-        <StackPanel Orientation="Vertical">
-            <Grid x:Name="heading">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+             mc:Ignorable="d" d:DesignWidth="508" Height="180">
+	<Border x:Name="installableRootContainer" Background="{StaticResource BrushBackground}" CornerRadius="4" Padding="8">
+		<Grid x:Name="installableContainer">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			
+			<Grid x:Name="heading" MouseUp="heading_MouseUp" Grid.Row="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="19"/>
+				</Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="moduleTitle" Foreground="White" FontFamily="Segoe UI Semibold" FontWeight="SemiBold" Text="When the impostor is among us" Grid.Column="0" />
-                <local:ProgressSpinner Grid.Column="1" />
-            </Grid>
+				<TextBlock x:Name="moduleTitle" Style="{StaticResource Title}" Text="When the impostor is among us" Grid.Column="0" FontSize="16" />
 
-            <RichTextBox x:Name="detailedLog"></RichTextBox>
-        </StackPanel>
-    </Border>
+				<Image x:Name="taskStateIcon" Grid.Column="1" Source="/Resources/Icons/4x/Default.png" RenderOptions.BitmapScalingMode="Fant" Visibility="Visible"/>
+				<local:ProgressSpinner x:Name="taskStateSpinner" Grid.Column="1" Foreground="#FF67BDE6" Width="19" Height="19" Visibility="Collapsed"/>
+			</Grid>
+
+			<Grid Grid.Row="1" x:Name="logContainer">
+				<RichTextBox x:Name="detailedLog" Margin="0,16,0,0" MinHeight="120" IsReadOnly="True" Style="{DynamicResource WinUIScrollRichTextBox}" FontFamily="Consolas" VerticalScrollBarVisibility="Auto" MaxWidth="{Binding ElementName=installableContainer,Path=ActualWidth}" ScrollViewer.CanContentScroll="False" />
+			</Grid>
+		</Grid>
+	</Border>
 </UserControl>
