@@ -8,7 +8,10 @@
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid>
 
-        <Controls:ProgressSpinner />
+        <StackPanel Orientation="Vertical" x:Name="installationListContainer">
 
+            <Controls:ProgressSpinner />
+
+        </StackPanel>
     </Grid>
 </UserControl>

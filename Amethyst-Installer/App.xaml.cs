@@ -6,6 +6,7 @@ using System.Media;
 using System.Windows;
 
 using AppWindow = amethyst_installer_gui.MainWindow;
+using LocaleStrings = amethyst_installer_gui.Properties.Resources;
 
 namespace amethyst_installer_gui {
     /// <summary>
@@ -38,7 +39,7 @@ namespace amethyst_installer_gui {
 
             if (!InstallerStateManager.CanInstall) {
                 SystemSounds.Exclamation.Play();
-                Util.ShowMessageBox("Oh no! The table! It's broken!", "bababoi.mp3", MessageBoxButton.OK);
+                Util.ShowMessageBox("Oh no! The table! It's broken!", LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
                 Current.Shutdown(( int ) ExitCodes.IncompatibleSetup);
             }
         }

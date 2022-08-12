@@ -99,17 +99,17 @@ namespace amethyst_installer_gui.Pages {
             if ( InstallerStateManager.IsWindowsAncient ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.SystemRequirement_Description_WindowsVersionIsOld);
+                compatibilityString.Append(Properties.Resources.InstallError_WindowsVersionIsOld);
             }
             if ( !InstallerStateManager.SteamVRInstalled ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.SystemRequirement_Description_SteamVRNotFound);
+                compatibilityString.Append(Properties.Resources.InstallError_SteamVRNotFound);
             }
             if ( InstallerStateManager.IsCloudPC ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.SystemRequirement_Description_CloudPC);
+                compatibilityString.Append(Properties.Resources.InstallError_CloudPC);
             }
 
             if ( compatibilityString.Length == 0 )
