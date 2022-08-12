@@ -50,7 +50,7 @@ namespace amethyst_installer_gui.Installer {
                 // Determine SteamVR playspace bounds
                 PlayspaceBounds = OpenVRUtil.GetPlayspaceBounds();
 
-                Logger.Info($"Detected VR headset type {OpenVRUtil.HmdType.ToString()}, connected using {OpenVRUtil.ConnectionType}; tracking type: {OpenVRUtil.TrackingType}");
+                Logger.Info($"Detected VR headset type {OpenVRUtil.HmdType}, connected using {OpenVRUtil.ConnectionType}; tracking type: {OpenVRUtil.TrackingType}");
                 Logger.Info($"Playspace bounds: {PlayspaceBounds}");
             }
 
@@ -162,6 +162,78 @@ namespace amethyst_installer_gui.Installer {
             // TODO: Regex :D
             this.FriendlyString = this.Name;
 
+            /*
+
+RAW DATA:
+            
+Found USB Controller: Name: AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft);         Location: PCI bus 2, device 0, function 0;      Description: USB xHCI Compliant Host Controller
+Found USB Controller: Name: Fresco Logic USB 3.0 eXtensible Host Controller - 1.0 (Microsoft);  Location: PCI bus 5, device 0, function 0;      Description: USB xHCI Compliant Host Controller
+Found USB Controller: Name: Renesas USB 3.0 eXtensible Host Controller - 1.0 (Microsoft);       Location: PCI bus 9, device 0, function 0;      Description: USB xHCI Compliant Host Controller
+Found USB Controller: Name: Renesas USB 3.0 eXtensible Host Controller - 1.0 (Microsoft);       Location: PCI bus 11, device 0, function 0;     Description: USB xHCI Compliant Host Controller
+Found USB Controller: Name: AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft);         Location: PCI bus 16, device 0, function 3;     Description: USB xHCI Compliant Host Controller
+
+Found USB Controller: Name: Intel(R) USB 3.0 eXtensible Host Controller - 1.0 (Microsoft);      Location: PCI bus 0, device 20, function 0;     Description: USB xHCI Compliant Host Controller
+Found USB Controller: Name: ;                                                                   Location: PCI bus 0, device 26, function 0;     Description: Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E2D
+Found USB Controller: Name: Renesas USB 3.0 eXtensible Host Controller - 1.0 (Microsoft);       Location: PCI bus 4, device 0, function 0;      Description: USB xHCI Compliant Host Controller
+Found USB Controller: Name: ;                                                                   Location: PCI bus 0, device 29, function 0;     Description: Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E26
+
+Found USB Controller: Name: AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft);         Location: PCI bus 2, device 0, function 0;      Description: Controlador Host Compatível com USB xHCI
+Found USB Controller: Name: VIA USB 3.0 eXtensible Host Controller - 1.0 (Microsoft);           Location: PCI bus 4, device 0, function 0;      Description: Controlador Host Compatível com USB xHCI
+Found USB Controller: Name: AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft);         Location: PCI bus 45, device 0, function 3;     Description: Controlador Host Compatível com USB xHCI
+
+Found USB Controller: Name: NVIDIA USB 3.10 eXtensible Host Controller - 1.10 (Microsoft);      Location: PCI bus 7, device 0, function 2;      Description: USB xHCI Compliant Host Controller
+Found USB Controller: Name: NVIDIA USB Type-C Port Policy Controller;                           Location: PCI bus 7, device 0, function 3;      Description: NVIDIA USB Type-C Port Policy Controller
+
+Found USB Controller: Name: Intel(R) USB 3.0 eXtensible-Hostcontroller - 1.0 (Microsoft);       Location: PCI-Bus 0, Gerät 20, Funktion 0;      Description: USB-xHCI-kompatibler Hostcontroller
+Found USB Controller: Name: ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft);       Location: PCI-Bus 4, Gerät 0, Funktion 0;       Description: USB-xHCI-kompatibler Hostcontroller
+
+             */
+
+            /*
+            
+CLEANED-UP:
+
+AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)                  #
+Fresco Logic USB 3.0 eXtensible Host Controller - 1.0 (Microsoft)           #
+Renesas USB 3.0 eXtensible Host Controller - 1.0 (Microsoft)                #
+Intel(R) USB 3.0 eXtensible Host Controller - 1.0 (Microsoft)               #
+Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E2D   
+Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E26   
+VIA USB 3.0 eXtensible Host Controller - 1.0 (Microsoft)                    #
+NVIDIA USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)               #
+NVIDIA USB Type-C Port Policy Controller                                    
+Intel(R) USB 3.0 eXtensible-Hostcontroller - 1.0 (Microsoft)                #
+ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
+
+             */
+
+            // Most USB Controllers have the string "(Microsoft)" in their name, handle those first
+            if ( this.FriendlyString.Contains("(Microsoft)") ) {
+                this.FriendlyString = this.FriendlyString.Substring(0, this.FriendlyString.IndexOf("eXtensible"));
+            } else {
+                // Oh god oh fuck
+                // Try being "smart" and cut till we find USB, and include any numerics if the next "word" is a number (i.e. version)
+                int lastChar = this.FriendlyString.IndexOf("USB") + 3;
+                int indexBuffer = this.FriendlyString.IndexOf(' ', lastChar + 1);
+                if ( indexBuffer == -1 )
+                    indexBuffer = lastChar;
+                else {
+                    // Try checking if the word is a number
+                    string tmp = this.FriendlyString.Substring(lastChar, indexBuffer - lastChar);
+                    int ind = indexBuffer;
+                    indexBuffer = lastChar;
+                    if (double.TryParse(tmp.Trim(), out _) ) {
+                        indexBuffer = ind;
+                    } else if (tmp.ToLowerInvariant().Contains("type") && tmp.ToLowerInvariant().Contains('c')) {
+                        // Type-C
+                        indexBuffer = ind;
+                    }
+                }
+                this.FriendlyString = this.FriendlyString.Substring(0, indexBuffer);
+
+            }
+
+            this.FriendlyString = this.FriendlyString.Trim();
 
             // this.IsGoodController = false;
             KinectV1_Compatible = false;
