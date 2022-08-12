@@ -205,6 +205,42 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cloud PC detected. Amethyst does not support networked environments..
+        /// </summary>
+        public static string InstallError_CloudPC {
+            get {
+                return ResourceManager.GetString("InstallError_CloudPC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t find SteamVR! Is it installed, and have you run it at least once?.
+        /// </summary>
+        public static string InstallError_SteamVRNotFound {
+            get {
+                return ResourceManager.GetString("InstallError_SteamVRNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst..
+        /// </summary>
+        public static string InstallError_WindowsVersionIsOld {
+            get {
+                return ResourceManager.GetString("InstallError_WindowsVersionIsOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot install Amethyst.
+        /// </summary>
+        public static string InstallProhibited_Title {
+            get {
+                return ResourceManager.GetString("InstallProhibited_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The log file is stored here:.
         /// </summary>
         public static string Logs_DirectoryIsLocatedHere {
@@ -450,29 +486,11 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cloud PC detected. Amethyst does not support networked environments..
-        /// </summary>
-        public static string SystemRequirement_Description_CloudPC {
-            get {
-                return ResourceManager.GetString("SystemRequirement_Description_CloudPC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No drivers installed yet.
         /// </summary>
         public static string SystemRequirement_Description_NoDriversFound {
             get {
                 return ResourceManager.GetString("SystemRequirement_Description_NoDriversFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Couldn&apos;t find SteamVR! Is it installed, and have you run it at least once?.
-        /// </summary>
-        public static string SystemRequirement_Description_SteamVRNotFound {
-            get {
-                return ResourceManager.GetString("SystemRequirement_Description_SteamVRNotFound", resourceCulture);
             }
         }
         
@@ -500,15 +518,6 @@ namespace amethyst_installer_gui.Properties {
         public static string SystemRequirement_Description_UsbControllers_One {
             get {
                 return ResourceManager.GetString("SystemRequirement_Description_UsbControllers_One", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst..
-        /// </summary>
-        public static string SystemRequirement_Description_WindowsVersionIsOld {
-            get {
-                return ResourceManager.GetString("SystemRequirement_Description_WindowsVersionIsOld", resourceCulture);
             }
         }
         

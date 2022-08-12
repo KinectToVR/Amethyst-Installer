@@ -154,6 +154,18 @@
     <value>{0} free</value>
     <comment>{0} is required (it's going to get replaced with 420GB for example)</comment>
   </data>
+  <data name="InstallError_CloudPC" xml:space="preserve">
+    <value>Cloud PC detected. Amethyst does not support networked environments.</value>
+    <comment>The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere</comment>
+  </data>
+  <data name="InstallError_SteamVRNotFound" xml:space="preserve">
+    <value>Couldn't find SteamVR! Is it installed, and have you run it at least once?</value>
+    <comment>The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once.</comment>
+  </data>
+  <data name="InstallError_WindowsVersionIsOld" xml:space="preserve">
+    <value>Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst.</value>
+    <comment>The message shown to a user when they have an old version of Windows that is not supported by Amethyst</comment>
+  </data>
   <data name="Installer_Action_Back" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -168,6 +180,10 @@
   </data>
   <data name="Installer_Action_Next" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="InstallProhibited_Title" xml:space="preserve">
+    <value>Cannot install Amethyst</value>
+    <comment>The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window.</comment>
   </data>
   <data name="Logs_DirectoryIsLocatedHere" xml:space="preserve">
     <value>The log file is stored here:</value>
@@ -255,16 +271,8 @@ Be careful where you click!</value>
   <data name="SystemRequirement_Category_VrSystem" xml:space="preserve">
     <value>VR headset</value>
   </data>
-  <data name="SystemRequirement_Description_CloudPC" xml:space="preserve">
-    <value>Cloud PC detected. Amethyst does not support networked environments.</value>
-    <comment>The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere</comment>
-  </data>
   <data name="SystemRequirement_Description_NoDriversFound" xml:space="preserve">
     <value>No drivers installed yet</value>
-  </data>
-  <data name="SystemRequirement_Description_SteamVRNotFound" xml:space="preserve">
-    <value>Couldn't find SteamVR! Is it installed, and have you run it at least once?</value>
-    <comment>The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once.</comment>
   </data>
   <data name="SystemRequirement_Description_Storage" xml:space="preserve">
     <value>{0} of disk space based on the components selected.</value>
@@ -277,10 +285,6 @@ Be careful where you click!</value>
   <data name="SystemRequirement_Description_UsbControllers_One" xml:space="preserve">
     <value>{0} compatible USB controller found ({1})</value>
     <comment>{0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202")</comment>
-  </data>
-  <data name="SystemRequirement_Description_WindowsVersionIsOld" xml:space="preserve">
-    <value>Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst.</value>
-    <comment>The message shown to a user when they have an old version of Windows that is not supported by Amethyst</comment>
   </data>
   <data name="SystemRequirement_Footnote_StageTracking_VirtualDesktop" xml:space="preserve">
     <value>We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.</value>
