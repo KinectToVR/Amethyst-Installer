@@ -80,18 +80,21 @@ namespace amethyst_installer_gui.Pages {
             // TODO: Change depending on connection type
             string vrSystemFootnoteStringSrc = Properties.Resources.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
 
+            string vrSystemFootnoteStringFirstPart = vrSystemFootnoteStringSrc.Substring(0, vrSystemFootnoteStringSrc.IndexOf('['));
+            string vrSystemFootnoteStringHyperlink = vrSystemFootnoteStringSrc.Substring(vrSystemFootnoteStringSrc.IndexOf('[') + 1, vrSystemFootnoteStringSrc.IndexOf(']') - vrSystemFootnoteStringSrc.IndexOf('[') - 1);
+            string vrSystemFootnoteStringLastPart = vrSystemFootnoteStringSrc.Substring(vrSystemFootnoteStringSrc.IndexOf(']') + 1);
 
             vrSystemFootnote.Inlines.Clear();
-            vrSystemFootnote.Inlines.Add("Some text ");
+            vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringFirstPart);
             Hyperlink hyperLink3 = new Hyperlink()
             {
                 NavigateUri = new Uri("http://somesite.com"),
                 // Foreground = WindowsColorHelpers.Accent
             };
-            hyperLink3.Inlines.Add("some site");
+            hyperLink3.Inlines.Add(vrSystemFootnoteStringHyperlink);
             hyperLink3.RequestNavigate += Hyperlink_RequestNavigate;
             vrSystemFootnote.Inlines.Add(hyperLink3);
-            vrSystemFootnote.Inlines.Add(" Some more text");
+            vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringLastPart);
 
             // TODO: Check target device
 
