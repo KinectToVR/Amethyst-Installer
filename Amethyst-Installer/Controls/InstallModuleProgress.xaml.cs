@@ -70,10 +70,7 @@ namespace amethyst_installer_gui.Controls {
         }
 
         private void heading_MouseUp(object sender, MouseButtonEventArgs e) {
-            logContainer.Visibility = logContainer.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            // installableRootContainer.MaxHeight = installableRootContainer.MaxHeight == double.PositiveInfinity ?
-            //     installableContainer.RowDefinitions[0].ActualHeight :
-            //     double.PositiveInfinity;
+            // logContainer.Visibility = logContainer.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public void LogInfo(string message) {
@@ -85,7 +82,7 @@ namespace amethyst_installer_gui.Controls {
         }
 
         public void LogError(string message) {
-            LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.Red]);
+            LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.DarkRed]);
         }
 
         private void LogLineInternal(string msg, SolidColorBrush color) {
