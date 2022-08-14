@@ -2,6 +2,7 @@ using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,14 @@ namespace amethyst_installer_gui.Pages {
     /// Interaction logic for PageDownloading.xaml
     /// </summary>
     public partial class PageDownloading : UserControl, IInstallerPage {
+
+        private DownloadItem m_currentProgressControl;
+
+        private Stopwatch m_st = new Stopwatch();
+        private long m_lastTotalBytesDownloaded = 0;
+        private long m_totalBytesDownloaded = 0;
+        private long m_transferSpeed = 0;
+
         public PageDownloading() {
             InitializeComponent();
         }
@@ -37,7 +46,9 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.SetPage(InstallerState.Installation);
         }
 
-        public void OnSelected() {
+        public async void OnSelected() {
+
+            /*
 
             Random rng = new Random();
 
@@ -49,7 +60,7 @@ namespace amethyst_installer_gui.Pages {
                 downloadItem.Title = $"Module {i}";
                 downloadItem.DownloadedBytes = rng.Next(0, 1024 * 1024 * 499);
                 downloadItem.TotalBytes = rng.Next(20, 1024 * 1024 * 500) + downloadItem.DownloadedBytes;
-                
+
                 // TODO: Replace with the struct that we'll use to generate this
                 downloadItem.Tag = downloadItem.Title;
                 downloadItem.OnRetry += downloadModule_Retry;
@@ -73,12 +84,71 @@ namespace amethyst_installer_gui.Pages {
                 downloadContent.Children.Add(downloadItem);
             }
 
+            */
+
+
+            // Populate install shit
+            for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
+
+                var moduleToInstall = InstallerStateManager.ModulesToInstall[i];
+
+                DownloadItem downloadItem = new DownloadItem();
+                downloadItem.Margin = new Thickness(0, 0, 0, 12);
+                downloadItem.Title = moduleToInstall.DisplayName;
+                downloadItem.DownloadedBytes = 0;
+                downloadItem.TotalBytes = moduleToInstall.DownloadSize;
+                
+                downloadItem.Tag = moduleToInstall;
+                downloadItem.OnRetry += downloadModule_Retry;
+
+                downloadContent.Children.Add(downloadItem);
+            }
+
+            // DownloadModule(0).GetAwaiter().GetResult();
+            await DownloadModule(0);
+
         }
 
-        private void downloadModule_Retry(object sender, RoutedEventArgs e) {
+		private async Task DownloadModule(int index) {
 
-            Logger.Info(( ( DownloadItem ) sender ).Title);
+            var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
+            m_currentProgressControl = ( DownloadItem ) downloadContent.Children[index];
+            m_currentProgressControl.IsPending = false;
+            m_currentProgressControl.DownloadFailed = false;
+            m_currentProgressControl.IsErrorCritical = false;
+            m_currentProgressControl.Completed = false;
+            m_currentProgressControl.DownloadedBytes = 0;
 
+            m_st.Stop();
+            m_st.Start();
+
+            await Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, 10.0f);
+		}
+
+		private void downloadModule_Retry(object sender, RoutedEventArgs e) {
+
+            // Logger.Info(( ( DownloadItem ) sender ).Title);
+
+        }
+
+        // Progress update
+        public void DownloadModule_ProgressCallback(long value) {
+            if ( m_currentProgressControl != null ) {
+                m_currentProgressControl.DownloadedBytes = value;
+
+
+                // Calculate transfer speed every second
+                if ( m_st.ElapsedMilliseconds >= 1000 ) {
+                    m_st.Reset();
+                    m_st.Start();
+
+                    m_totalBytesDownloaded = value;
+                    m_transferSpeed = m_totalBytesDownloaded - m_lastTotalBytesDownloaded;
+                    m_lastTotalBytesDownloaded = m_totalBytesDownloaded;
+                }
+
+                m_currentProgressControl.TransferSpeed = m_transferSpeed;
+            }
         }
 
         // Force only the first button to have focus
@@ -101,5 +171,5 @@ namespace amethyst_installer_gui.Pages {
         private void button_Click(object sender, RoutedEventArgs e) {
             MainWindow.Instance.SetPage(InstallerState.Installation);
         }
-    }
+	}
 }

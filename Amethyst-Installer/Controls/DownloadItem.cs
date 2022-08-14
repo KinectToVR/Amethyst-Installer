@@ -45,9 +45,10 @@ namespace amethyst_installer_gui.Controls {
             DependencyProperty.Register("Title", typeof(string), typeof(DownloadItem), new UIPropertyMetadata("Amethyst Module", new PropertyChangedCallback(TitleChanged)));
 
         private static void TitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            if ( ( d as DownloadItem ).itemTitle == null )
+            var thisControl = d as DownloadItem;
+            if ( thisControl.itemTitle == null )
                 return;
-            ( d as DownloadItem ).itemTitle.Text = ( string ) e.NewValue;
+            thisControl.itemTitle.Text = ( string ) e.NewValue;
         }
 
         public long DownloadedBytes {
@@ -59,14 +60,15 @@ namespace amethyst_installer_gui.Controls {
             DependencyProperty.Register("DownloadedBytes", typeof(long), typeof(DownloadItem), new UIPropertyMetadata(0L, new PropertyChangedCallback(DownloadedBytesChanged)));
 
         private static void DownloadedBytesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            if ( ( d as DownloadItem ).downloadedSizeText == null || ( d as DownloadItem ).percentageText == null || ( d as DownloadItem ).progressBar == null )
+            var thisControl = d as DownloadItem;
+            if ( thisControl.downloadedSizeText == null || thisControl.percentageText == null || thisControl.progressBar == null )
                 return;
-            ( d as DownloadItem ).downloadedSizeText.Text = Util.SizeSuffix(( long ) e.NewValue) + " / ";
-            double percentage = ( ( long ) e.NewValue / 1000000.0 ) / ( ( d as DownloadItem ).TotalBytes / 1000000.0 );
+            thisControl.downloadedSizeText.Text = Util.SizeSuffix(( long ) e.NewValue) + " / ";
+            double percentage = ( ( long ) e.NewValue / 1000000.0 ) / ( thisControl.TotalBytes / 1000000.0 );
             if ( double.IsNaN(percentage) )
                 percentage = 0;
-            ( d as DownloadItem ).percentageText.Text = ( int ) Math.Round(percentage * 100, MidpointRounding.AwayFromZero) + "%";
-            ( d as DownloadItem ).progressBar.Value = percentage;
+            thisControl.percentageText.Text = ( int ) Math.Round(percentage * 100, MidpointRounding.AwayFromZero) + "%";
+            thisControl.progressBar.Value = Math.Max(Math.Min(percentage, 1.0), 0.0);
         }
 
         public long TotalBytes {
@@ -78,14 +80,38 @@ namespace amethyst_installer_gui.Controls {
             DependencyProperty.Register("TotalBytes", typeof(long), typeof(DownloadItem), new UIPropertyMetadata(0L, new PropertyChangedCallback(TotalBytesChanged)));
 
         private static void TotalBytesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            if ( ( d as DownloadItem ).totalSizeText == null || ( d as DownloadItem ).percentageText == null || ( d as DownloadItem ).progressBar == null )
+            var thisControl = d as DownloadItem;
+            if ( thisControl.totalSizeText == null || thisControl.percentageText == null || thisControl.progressBar == null )
                 return;
-            ( d as DownloadItem ).totalSizeText.Text = Util.SizeSuffix(( long ) e.NewValue);
-            double percentage = ( ( d as DownloadItem ).DownloadedBytes / 1000000.0 ) / ( ( long ) e.NewValue / 1000000.0 );
+            thisControl.totalSizeText.Text = Util.SizeSuffix(( long ) e.NewValue);
+            double percentage = ( thisControl.DownloadedBytes / 1000000.0 ) / ( ( long ) e.NewValue / 1000000.0 );
             if ( double.IsNaN(percentage) )
                 percentage = 0;
-            ( d as DownloadItem ).percentageText.Text = (int) Math.Round( percentage * 100, MidpointRounding.AwayFromZero) + "%";
-            ( d as DownloadItem ).progressBar.Value = percentage;
+            thisControl.percentageText.Text = ( int ) Math.Round(percentage * 100, MidpointRounding.AwayFromZero) + "%";
+            thisControl.progressBar.Value = Math.Max(Math.Min(percentage, 1.0), 0.0);
+
+            if ( !thisControl.Completed && !thisControl.IsPending ) {
+                thisControl.totalSizeText.Text += $" ({Util.SizeSuffix(thisControl.TransferSpeed)}/s)";
+            }
+        }
+
+        public long TransferSpeed {
+            get { return ( long ) GetValue(TransferSpeedProperty); }
+            set { SetValue(TransferSpeedProperty, value); }
+        }
+
+        public static readonly DependencyProperty TransferSpeedProperty =
+            DependencyProperty.Register("TransferSpeed", typeof(long), typeof(DownloadItem), new UIPropertyMetadata(0L, new PropertyChangedCallback(TransferSpeedChanged)));
+
+        private static void TransferSpeedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var thisControl = d as DownloadItem;
+            if ( thisControl.totalSizeText == null || thisControl.percentageText == null || thisControl.progressBar == null )
+                return;
+            thisControl.totalSizeText.Text = Util.SizeSuffix(thisControl.TotalBytes);
+
+            if ( !thisControl.Completed && !thisControl.IsPending) {
+                thisControl.totalSizeText.Text += $" ({Util.SizeSuffix(( long ) e.NewValue)}/s)";
+            }
         }
 
         public bool IsPending {
@@ -95,7 +121,15 @@ namespace amethyst_installer_gui.Controls {
 
         public static readonly DependencyProperty IsPendingProperty =
             DependencyProperty.Register("IsPending", typeof(bool), typeof(DownloadItem), new UIPropertyMetadata(true));
+        
 
+        public bool Completed {
+            get { return ( bool ) GetValue(CompletedProperty); }
+            set { SetValue(CompletedProperty, value); }
+        }
+
+        public static readonly DependencyProperty CompletedProperty =
+            DependencyProperty.Register("Completed", typeof(bool), typeof(DownloadItem), new UIPropertyMetadata(false));
 
         public string ErrorMessage {
             get { return ( string ) GetValue(ErrorMessageProperty); }
@@ -106,9 +140,10 @@ namespace amethyst_installer_gui.Controls {
             DependencyProperty.Register("ErrorMessage", typeof(string), typeof(DownloadItem), new UIPropertyMetadata("Ooopsy! We did a fucky wucky oh noes!", new PropertyChangedCallback(ErrorMessageChanged)));
 
         private static void ErrorMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            if ( ( d as DownloadItem ).errorMessage == null )
+            var thisControl = d as DownloadItem;
+            if ( thisControl.errorMessage == null )
                 return;
-            ( d as DownloadItem ).errorMessage.Text = ( string ) e.NewValue;
+            thisControl.errorMessage.Text = ( string ) e.NewValue;
         }
 
         public bool DownloadFailed {
@@ -148,7 +183,11 @@ namespace amethyst_installer_gui.Controls {
                 percentage = 0;
 
             percentageText.Text = ( int ) Math.Round(percentage * 100, MidpointRounding.AwayFromZero) + "%";
-            progressBar.Value = percentage;
+            progressBar.Value = Math.Max(Math.Min(percentage, 1.0), 0.0);
+
+            if ( !Completed && !IsPending ) {
+                totalSizeText.Text += $" ({Util.SizeSuffix(TransferSpeed)}/s)";
+            }
 
             retryButton.Click += retryButton_Click;
         }

@@ -6,7 +6,7 @@
 			"summary": "The Amethyst application itself.",
 			"description": "The Amethyst application itself.",
 			"filesize": 296,
-			"downloadsize": 86,
+			"downloadsize": 89694591,
 			"required": true,
 			"visible": true,
 			"depends": [
@@ -42,7 +42,8 @@
 			"depends": [],
 			"remote": {
 				"main_url": "https://aka.ms/windowsappsdk/1.1/latest/windowsappruntimeinstall-1.1-x64.exe",
-				"mirror_url": "https://api.k2vr.tech/mirrors/windowsappruntimeinstall-1.1-x64.exe"
+				"mirror_url": "https://api.k2vr.tech/mirrors/windowsappruntimeinstall-1.1-x64.exe",
+				"filename":  "windowsappruntimeinstall-1.1-x64.exe"
 			},
 			"install": {
 				"type": "exe",
@@ -68,7 +69,8 @@
 			"depends": [],
 			"remote": {
 				"main_url": "https://aka.ms/vs/17/release/vc_redist.x64.exe",
-				"mirror_url": "https://api.k2vr.tech/mirrors/vc_redist.x64.exe"
+				"mirror_url": "https://api.k2vr.tech/mirrors/vc_redist.x64.exe",
+				"filename":  "vc_redist.x64.exe"
 			},
 			"install": {
 				"type": "exe",
@@ -96,7 +98,8 @@
 			"depends": [],
 			"remote": {
 				"main_url": "https://download.visualstudio.microsoft.com/download/pr/f13d7b5c-608f-432b-b7ec-8fe84f4030a1/5e06998f9ce23c620b9d6bac2dae6c1d/windowsdesktop-runtime-6.0.4-win-x64.exe",
-				"mirror_url": "https://api.k2vr.tech/mirrors/windowsdesktop-runtime-6.0.4-win-x64.exe"
+				"mirror_url": "https://api.k2vr.tech/mirrors/windowsdesktop-runtime-6.0.4-win-x64.exe",
+				"filename": "windowsdesktop-runtime-6.0.4-win-x64.exe"
 			},
 			"install": {
 				"type": "exe",
@@ -125,7 +128,8 @@
 			"depends": [],
 			"remote": {
 				"main_url": "https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip",
-				"mirror_url": "https://api.k2vr.tech/mirrors/wix311-binaries.zip"
+				"mirror_url": "https://api.k2vr.tech/mirrors/wix311-binaries.zip",
+				"filename": "wix311-binaries.zip"
 			},
 			"install": {
 				"type": "temp-archive"
@@ -145,7 +149,8 @@
 			],
 			"remote": {
 				"main_url": "https://download.microsoft.com/download/E/1/D/E1DEC243-0389-4A23-87BF-F47DE869FC1A/KinectSDK-v1.8-Setup.exe",
-				"mirror_url": "https://api.k2vr.tech/mirrors/KinectSDK-v1.8-Setup.exe"
+				"mirror_url": "https://api.k2vr.tech/mirrors/KinectSDK-v1.8-Setup.exe",
+				"filename":	"KinectSDK-v1.8-Setup.exe"
 			},
 			"install": {
 				"type": "dark-extract",
@@ -177,7 +182,8 @@
 			],
 			"remote": {
 				"main_url": "https://download.microsoft.com/download/D/0/6/D061A21C-3AF3-4571-8560-4010E96F0BC8/KinectDeveloperToolkit-v1.8.0-Setup.exe",
-				"mirror_url": "https://api.k2vr.tech/mirrors/KinectDeveloperToolkit-v1.8.0-Setup.exe"
+				"mirror_url": "https://api.k2vr.tech/mirrors/KinectDeveloperToolkit-v1.8.0-Setup.exe",
+				"filename": "KinectDeveloperToolkit-v1.8.0-Setup.exe"
 			},
 			"install": {
 				"type": "dark-extract",
