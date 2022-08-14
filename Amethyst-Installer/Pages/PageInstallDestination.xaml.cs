@@ -48,7 +48,7 @@ namespace amethyst_installer_gui.Pages {
                 // Advance to next page
                 MainWindow.Instance.SetPage(InstallerState.SystemRequirements);
             }
-            catch (Exception) {
+            catch (System.IO.IOException) {
                 // If we reach here the directory is invalid
                 Util.ShowMessageBox(Properties.Resources.InstallDestination_InvalidPathDescription, Properties.Resources.InstallDestination_InvalidPathTitle, MessageBoxButton.OK);
             }
