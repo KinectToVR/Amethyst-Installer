@@ -12,6 +12,9 @@ namespace amethyst_installer_gui {
     /// Utility class to fetch accent colors from Windows without having access to modern features
     /// </summary>
     public static class WindowsColorHelpers {
+
+        private static readonly Color s_defaultColor = Color.FromRgb(24, 131, 215);
+
         public static Brush BorderAccent { get { return SystemParameters.WindowGlassBrush; } }
         public static Brush Accent { get { return new SolidColorBrush(GetAccentColor()); } }
         public static Brush AccentLight { get { return new SolidColorBrush(Lighten(GetAccentColor(), 0.1f)); } }
@@ -29,12 +32,41 @@ namespace amethyst_installer_gui {
                     // throw new InvalidOperationException(KEY_EX_MSG);
 
                     // Fallback to default accent color: teal blue
-                    return Color.FromRgb(24, 131, 215);
+                    return s_defaultColor;
                 }
 
                 object accentColorObj = dwmKey.GetValue("AccentColor");
                 if ( accentColorObj is int accentColorDword ) {
-                    return ParseDWordColor(accentColorDword);
+                    Color col = ParseDWordColor(accentColorDword);
+
+                    // Ensure the colour meets minimum contrast requirements
+                    float luminosity = Luminosity(col); // 0.277641565
+                    float bgColorLuminosity = 0.203921556f;
+
+                    var brightest = Math.Max(luminosity, bgColorLuminosity);
+                    var darkest = Math.Min(luminosity, bgColorLuminosity);
+                    float contrast = ( brightest + 0.05f ) / ( darkest + 0.05f );
+
+                    if ( contrast < 3.1f) {
+                        // Calcualte the amount of additional luminosity required to achieve minimum contrast
+
+                        /*
+                        The formula for contrast assuming x is our colour and more luminous than bgColor is defined as:
+
+                        y = (x + 0.05) / (0.203921556 + 0.5)
+
+                        The recommended minimum contrast values for a colour are 3 or 4.5. Here, I target a contrast of 3.1 to be closer to 
+                        the user's chosen colour.
+
+                         */
+
+                        float deltaLuminosity = 0.4f - luminosity;
+                        float H, S, L;
+                        ColorToHSL(col, out H, out S, out L);
+                        L = Math.Max(0.02f, Math.Min(0.98f, L + deltaLuminosity)); // clamp between 0.02 and 0.98
+                        return ColorFromHSL(H, S, L);
+                    }
+                    return col;
                 } else {
                     // const string VALUE_EX_MSG = "The \"HKCU\\" + DWM_KEY + "\\AccentColor\" registry key value could not be parsed as an ABGR color.";
                     // throw new InvalidOperationException(VALUE_EX_MSG);
@@ -42,7 +74,7 @@ namespace amethyst_installer_gui {
             }
 
             // Fallback to default accent color: teal blue
-            return Color.FromRgb(24, 131, 215);
+            return s_defaultColor;
         }
 
         public static Color Lighten(Color color, float amount = 0f) {
