@@ -262,6 +262,9 @@ Be careful where you click!</value>
   <data name="SystemRequirement_Category_Compatibility" xml:space="preserve">
     <value>Compatible devices</value>
   </data>
+  <data name="SystemRequirement_Category_Playspace" xml:space="preserve">
+    <value>Play Area</value>
+  </data>
   <data name="SystemRequirement_Category_Storage" xml:space="preserve">
     <value>Disk space</value>
   </data>
@@ -273,6 +276,20 @@ Be careful where you click!</value>
   </data>
   <data name="SystemRequirement_Description_NoDriversFound" xml:space="preserve">
     <value>No drivers installed yet</value>
+  </data>
+  <data name="SystemRequirement_Description_Playspace_Good" xml:space="preserve">
+    <value>Your VR play area is large enough for tracking.
+{0}m by {1}m</value>
+    <comment>Shown if the playspace is large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively</comment>
+  </data>
+  <data name="SystemRequirement_Description_Playspace_Small" xml:space="preserve">
+    <value>The size of your VR play area could cause issues with tracking. [Refer to the documentation for physical space requirements.]
+{0}m by {1}m</value>
+    <comment>Shown if the playspace is not large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively. Everything in between [] will turn into a hyperlink leading to the relevant documentation page.</comment>
+  </data>
+  <data name="SystemRequirement_Description_Playspace_Unknown" xml:space="preserve">
+    <value>Your play area size could not be detected. [Refer to the documentation for physical space requirements.]</value>
+    <comment>Shown if the playspace size couldn't be determined. Everything in between [] will turn into a hyperlink leading to the relevant documentation page.</comment>
   </data>
   <data name="SystemRequirement_Description_Storage" xml:space="preserve">
     <value>{0} of disk space based on the components selected.</value>

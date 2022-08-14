@@ -459,6 +459,15 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Play Area.
+        /// </summary>
+        public static string SystemRequirement_Category_Playspace {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Category_Playspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disk space.
         /// </summary>
         public static string SystemRequirement_Category_Storage {
@@ -491,6 +500,35 @@ namespace amethyst_installer_gui.Properties {
         public static string SystemRequirement_Description_NoDriversFound {
             get {
                 return ResourceManager.GetString("SystemRequirement_Description_NoDriversFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your VR play area is large enough for tracking.
+        ///{0}m by {1}m.
+        /// </summary>
+        public static string SystemRequirement_Description_Playspace_Good {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_Playspace_Good", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The size of your VR play area could cause issues with tracking. [Refer to the documentation for physical space requirements.]
+        ///{0}m by {1}m.
+        /// </summary>
+        public static string SystemRequirement_Description_Playspace_Small {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_Playspace_Small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your play area size could not be detected. [Refer to the documentation for physical space requirements.].
+        /// </summary>
+        public static string SystemRequirement_Description_Playspace_Unknown {
+            get {
+                return ResourceManager.GetString("SystemRequirement_Description_Playspace_Unknown", resourceCulture);
             }
         }
         

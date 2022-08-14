@@ -56,6 +56,16 @@ namespace amethyst_installer_gui {
         public static readonly string DiscordInvite = "https://discord.gg/YBQCRDG";
 
         /// <summary>
+        /// The domain the documentation will be hosted at
+        /// </summary>
+        public static readonly string DocsDomain = "https://docs.k2vr.tech";
+
+        /// <summary>
+        /// The minimum size a playspace should have
+        /// </summary>
+        public const float MINIMUM_PLAYSPACE_SIZE = 1.6f;
+
+        /// <summary>
         /// A mapping from <see cref="ConsoleColor"/> to <see cref="SolidColorBrush"/>
         /// </summary>
         public static SolidColorBrush[] ConsoleBrushColors = new[]

@@ -51,76 +51,127 @@ namespace amethyst_installer_gui.Pages {
             // Compute install requirements
             canContinue = InstallerStateManager.CanInstall;
 
-            // TODO: Check storage
-            diskSpaceDescription.Text = Properties.Resources.SystemRequirement_Description_Storage; // TODO: String format
-            diskSpace.State = Controls.TaskState.Question;
-
-            // TODO: Check USB controllers
-            int goodControllerCount = 0;
-            StringBuilder controllerStringBuffer = new StringBuilder();
-
-            foreach ( var usbController in InstallerStateManager.UsbControllers ) {
-                if ( controllerStringBuffer.Length > 0 )
-                    controllerStringBuffer.Append(", ");
-                controllerStringBuffer.Append(usbController.FriendlyString);
-                goodControllerCount++;
-            }
-
-            usbControllersDescription.Text = string.Format(Properties.Resources.SystemRequirement_Description_UsbControllers,
-                goodControllerCount, controllerStringBuffer.ToString());
-            usbControllers.State = Controls.TaskState.Question;
-
-            // Check VR headset
-            vrSystemDescription.Text = GetVRHeadsetString();
-            vrSystem.State =
-                (( OpenVRUtil.ConnectionType == VRConnectionType.Tethered || OpenVRUtil.ConnectionType == VRConnectionType.OculusLink) &&
-                    (OpenVRUtil.HmdType == VRHmdType.Quest || OpenVRUtil.HmdType == VRHmdType.Quest2)   // If it's a Quest
-                ) ? Controls.TaskState.Question : Controls.TaskState.Checkmark;
-
-            // TODO: Change depending on connection type
-            string vrSystemFootnoteStringSrc = Properties.Resources.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
-
-            string vrSystemFootnoteStringFirstPart = vrSystemFootnoteStringSrc.Substring(0, vrSystemFootnoteStringSrc.IndexOf('['));
-            string vrSystemFootnoteStringHyperlink = vrSystemFootnoteStringSrc.Substring(vrSystemFootnoteStringSrc.IndexOf('[') + 1, vrSystemFootnoteStringSrc.IndexOf(']') - vrSystemFootnoteStringSrc.IndexOf('[') - 1);
-            string vrSystemFootnoteStringLastPart = vrSystemFootnoteStringSrc.Substring(vrSystemFootnoteStringSrc.IndexOf(']') + 1);
-
-            vrSystemFootnote.Inlines.Clear();
-            vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringFirstPart);
-            Hyperlink hyperLink3 = new Hyperlink()
+            // STORAGE CHECK
             {
-                NavigateUri = new Uri("http://somesite.com"),
-                // Foreground = WindowsColorHelpers.Accent
-            };
-            hyperLink3.Inlines.Add(vrSystemFootnoteStringHyperlink);
-            hyperLink3.RequestNavigate += Hyperlink_RequestNavigate;
-            vrSystemFootnote.Inlines.Add(hyperLink3);
-            vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringLastPart);
-
-            // TODO: Check target device
-
-            StringBuilder compatibilityString = new StringBuilder();
-            if ( InstallerStateManager.IsWindowsAncient ) {
-                if ( compatibilityString.Length > 0 )
-                    compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.InstallError_WindowsVersionIsOld);
-            }
-            if ( !InstallerStateManager.SteamVRInstalled ) {
-                if ( compatibilityString.Length > 0 )
-                    compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.InstallError_SteamVRNotFound);
-            }
-            if ( InstallerStateManager.IsCloudPC ) {
-                if ( compatibilityString.Length > 0 )
-                    compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.InstallError_CloudPC);
+                // TODO: Check storage
+                diskSpaceDescription.Text = Properties.Resources.SystemRequirement_Description_Storage; // TODO: String format
+                diskSpace.State = Controls.TaskState.Question;
             }
 
-            if ( compatibilityString.Length == 0 )
-                compatibilityString.Append("Amogus (OK)");
+            // USB CONTROLLERS
+            {
+                // TODO: Check USB controllers
+                int goodControllerCount = 0;
+                StringBuilder controllerStringBuffer = new StringBuilder();
 
-            compatDevicesDescription.Text = compatibilityString.ToString();
-            // compatDevices.State = Controls.TaskState.Question;
-            compatDevices.State = canContinue ? Controls.TaskState.Checkmark : Controls.TaskState.Error;
+                foreach ( var usbController in InstallerStateManager.UsbControllers ) {
+                    if ( controllerStringBuffer.Length > 0 )
+                        controllerStringBuffer.Append(", ");
+                    controllerStringBuffer.Append(usbController.FriendlyString);
+                    goodControllerCount++;
+                }
+
+                usbControllersDescription.Text = string.Format(Properties.Resources.SystemRequirement_Description_UsbControllers,
+                    goodControllerCount, controllerStringBuffer.ToString());
+
+                usbControllers.State = Controls.TaskState.Question;
+            }
+
+
+            // VR SYSTEM
+            {
+                // Check VR headset
+                vrSystemDescription.Text = GetVRHeadsetString();
+                vrSystem.State =
+                    ( ( OpenVRUtil.ConnectionType == VRConnectionType.Tethered || OpenVRUtil.ConnectionType == VRConnectionType.OculusLink ) &&
+                        ( OpenVRUtil.HmdType == VRHmdType.Quest || OpenVRUtil.HmdType == VRHmdType.Quest2 )   // If it's a Quest
+                    ) ? Controls.TaskState.Question : Controls.TaskState.Checkmark;
+
+                // TODO: Change depending on connection type
+                string vrSystemFootnoteStringSrc = Properties.Resources.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
+
+                string vrSystemFootnoteStringFirstPart = vrSystemFootnoteStringSrc.Substring(0, vrSystemFootnoteStringSrc.IndexOf('['));
+                string vrSystemFootnoteStringHyperlink = vrSystemFootnoteStringSrc.Substring(vrSystemFootnoteStringSrc.IndexOf('[') + 1, vrSystemFootnoteStringSrc.IndexOf(']') - vrSystemFootnoteStringSrc.IndexOf('[') - 1);
+                string vrSystemFootnoteStringLastPart = vrSystemFootnoteStringSrc.Substring(vrSystemFootnoteStringSrc.IndexOf(']') + 1);
+
+                vrSystemFootnote.Inlines.Clear();
+                vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringFirstPart);
+                Hyperlink vrSystemFootnoteHyperlink = new Hyperlink()
+                {
+                    NavigateUri = new Uri(Util.GenerateDocsURL("alvr")),
+                    // Foreground = WindowsColorHelpers.Accent
+                };
+                vrSystemFootnoteHyperlink.Inlines.Add(vrSystemFootnoteStringHyperlink);
+                vrSystemFootnoteHyperlink.RequestNavigate += Hyperlink_RequestNavigate;
+                vrSystemFootnote.Inlines.Add(vrSystemFootnoteHyperlink);
+                vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringLastPart);
+            }
+
+            // COMPATIBLE DEVICES
+            {
+
+                // TODO: Check target device
+                StringBuilder compatibilityString = new StringBuilder();
+                if ( InstallerStateManager.IsWindowsAncient ) {
+                    if ( compatibilityString.Length > 0 )
+                        compatibilityString.Append(Environment.NewLine);
+                    compatibilityString.Append(Properties.Resources.InstallError_WindowsVersionIsOld);
+                }
+                if ( !InstallerStateManager.SteamVRInstalled ) {
+                    if ( compatibilityString.Length > 0 )
+                        compatibilityString.Append(Environment.NewLine);
+                    compatibilityString.Append(Properties.Resources.InstallError_SteamVRNotFound);
+                }
+                if ( InstallerStateManager.IsCloudPC ) {
+                    if ( compatibilityString.Length > 0 )
+                        compatibilityString.Append(Environment.NewLine);
+                    compatibilityString.Append(Properties.Resources.InstallError_CloudPC);
+                }
+
+                if ( compatibilityString.Length == 0 )
+                    compatibilityString.Append("Amogus (OK)");
+
+                compatDevicesDescription.Text = compatibilityString.ToString();
+                // compatDevices.State = Controls.TaskState.Question;
+                compatDevices.State = canContinue ? Controls.TaskState.Checkmark : Controls.TaskState.Error;
+            }
+
+            // PLAYSPACE SIZE
+            {
+                double minAxis = Math.Min(InstallerStateManager.PlayspaceBounds.x, InstallerStateManager.PlayspaceBounds.y);
+                string compatibleDeviceDescriptionStringSrc =
+                    minAxis == 0 ? Properties.Resources.SystemRequirement_Description_Playspace_Unknown :
+                    (minAxis < Constants.MINIMUM_PLAYSPACE_SIZE ? Properties.Resources.SystemRequirement_Description_Playspace_Small : Properties.Resources.SystemRequirement_Description_Playspace_Good);
+
+
+                // Subtitute playspace bounds into string
+                compatibleDeviceDescriptionStringSrc = string.Format(compatibleDeviceDescriptionStringSrc,
+                    InstallerStateManager.PlayspaceBounds.x.ToString("n1"),
+                    InstallerStateManager.PlayspaceBounds.y.ToString("n1")
+                );
+
+                // Add a "link" if not present
+                if ( compatibleDeviceDescriptionStringSrc.IndexOf('[') == -1 ) {
+                    compatibleDeviceDescriptionStringSrc += "[]";
+                }
+                string compatibleDeviceDescriptionStringFirstPart = compatibleDeviceDescriptionStringSrc.Substring(0, compatibleDeviceDescriptionStringSrc.IndexOf('['));
+                string compatibleDeviceDescriptionStringHyperlink = compatibleDeviceDescriptionStringSrc.Substring(compatibleDeviceDescriptionStringSrc.IndexOf('[') + 1, compatibleDeviceDescriptionStringSrc.IndexOf(']') - compatibleDeviceDescriptionStringSrc.IndexOf('[') - 1);
+                string compatibleDeviceDescriptionStringLastPart = compatibleDeviceDescriptionStringSrc.Substring(compatibleDeviceDescriptionStringSrc.IndexOf(']') + 1);
+
+                minPlayspaceSizeDescription.Inlines.Clear();
+                minPlayspaceSizeDescription.Inlines.Add(compatibleDeviceDescriptionStringFirstPart);
+                Hyperlink minPlayspaceSizeHyperLink = new Hyperlink()
+                {
+                    NavigateUri = new Uri(Util.GenerateDocsURL("playspace"))
+                };
+                minPlayspaceSizeHyperLink.Inlines.Add(compatibleDeviceDescriptionStringHyperlink);
+                minPlayspaceSizeHyperLink.RequestNavigate += Hyperlink_RequestNavigate;
+                minPlayspaceSizeDescription.Inlines.Add(minPlayspaceSizeHyperLink);
+                minPlayspaceSizeDescription.Inlines.Add(compatibleDeviceDescriptionStringLastPart);
+
+                minPlayspaceSize.State = minAxis == 0 ? Controls.TaskState.Question :
+                    ( minAxis < Constants.MINIMUM_PLAYSPACE_SIZE ? Controls.TaskState.Error : Controls.TaskState.Checkmark );
+            }
         }
 
         private string GetVRHeadsetString() {
