@@ -217,5 +217,10 @@ namespace amethyst_installer_gui {
         public static bool IsLaptop() {
             return PowerProvider.SystemPowerCapabilites.LidPresent;
         }
+
+        public static string GenerateDocsURL(string relative) {
+            string LOCALE = "en"; // TODO: LOCALE
+            return Constants.DocsDomain + $"/{LOCALE}/" + relative;
+        }
     }
 }
