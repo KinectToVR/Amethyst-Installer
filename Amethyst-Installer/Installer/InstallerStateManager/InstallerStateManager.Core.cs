@@ -15,11 +15,14 @@ namespace amethyst_installer_gui.Installer {
 
         public static AmeInstallApiResponse API_Response { get; private set; }
 
+        public static List<Module> ModulesToInstall;
+
         public static void Initialize() {
 
             // Fetch JSON Response, and load it
             var txtResponse = File.ReadAllText(Path.GetFullPath("ame-installer-sample-api-response.json"));
             API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
+            InstallerStateManager.ModulesToInstall = new List<Module>();
 
             ComputeRequirements();
         }

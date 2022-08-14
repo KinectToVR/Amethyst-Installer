@@ -39,9 +39,15 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
             MainWindow.Instance.SetPage(InstallerState.InstallDestination);
+            InstallerStateManager.ModulesToInstall.Clear();
             // Clear memory
             for (int i = 0; i < installableItemControls.Count; i++ ) {
                 Module a = (Module)installableItemControls[i].Tag;
+                // TODO: Queue everything that has been selected into a buffer somewhere
+                if ( installableItemControls[i].Checked ) {
+                    InstallerStateManager.ModulesToInstall.Add(a);
+                }
+
                 installOptionsContainer.Children.Remove(installableItemControls[i]);
             }
             installableItemControls.Clear();
