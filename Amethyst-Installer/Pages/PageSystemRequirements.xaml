@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid x:Name="pageContainer">
-        <ScrollViewer x:Name="scrollContainer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="scrollContainer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" Focusable="False">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
