@@ -102,6 +102,9 @@ namespace amethyst_installer_gui.Pages {
                     // Foreground = WindowsColorHelpers.Accent
                 };
                 vrSystemFootnoteHyperlink.Inlines.Add(vrSystemFootnoteStringHyperlink);
+                // Disable tabbing if not link
+                if ( vrSystemFootnoteStringHyperlink.Length == 0 )
+                    vrSystemFootnoteHyperlink.Focusable = false;
                 vrSystemFootnoteHyperlink.RequestNavigate += Hyperlink_RequestNavigate;
                 vrSystemFootnote.Inlines.Add(vrSystemFootnoteHyperlink);
                 vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringLastPart);
@@ -165,6 +168,9 @@ namespace amethyst_installer_gui.Pages {
                     NavigateUri = new Uri(Util.GenerateDocsURL("playspace"))
                 };
                 minPlayspaceSizeHyperLink.Inlines.Add(compatibleDeviceDescriptionStringHyperlink);
+                // Disable tabbing if not link
+                if ( compatibleDeviceDescriptionStringHyperlink.Length == 0 )
+                    minPlayspaceSizeHyperLink.Focusable = false;
                 minPlayspaceSizeHyperLink.RequestNavigate += Hyperlink_RequestNavigate;
                 minPlayspaceSizeDescription.Inlines.Add(minPlayspaceSizeHyperLink);
                 minPlayspaceSizeDescription.Inlines.Add(compatibleDeviceDescriptionStringLastPart);
