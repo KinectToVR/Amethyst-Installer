@@ -63,6 +63,9 @@
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
@@ -419,6 +422,9 @@
     <Resource Include="Resources\Icons\1x\Warning.png" />
     <Resource Include="Resources\Icons\2x\Warning.png" />
     <Resource Include="Resources\Icons\4x\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\welcome-amethyst-icon.png" />
