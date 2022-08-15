@@ -12,6 +12,7 @@ namespace amethyst_installer_gui {
         public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, Action<long> progress = null, CancellationToken cancellationToken = default) {
             // Get the http headers first to examine the content length
             using ( var response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead) ) {
+                response.EnsureSuccessStatusCode();
                 var contentLength = response.Content.Headers.ContentLength;
                 Logger.Info($"Received file size ({contentLength} bytes)!");
 
