@@ -111,12 +111,18 @@ namespace amethyst_installer_gui {
         }
 
         private static readonly string[] SizeSuffixes =
-                   { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+            { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+        private static readonly string[] ShitpostSizeSuffixes =
+            { "bites", "K-Marts", "MegaFarts", "GigaShits", "TeraShits", "PeanutButters", "ExtraBoats", "ZigoBoats", "YellowBees" };
 
         /// <summary>
         /// Converts bytes to the largest format which makes sense
         /// </summary>
         public static string SizeSuffix(long value, int decimalPlaces = 3) {
+            return SizeSuffix(value, SizeSuffixes, decimalPlaces);
+        }
+        public static string SizeSuffix(long value, string[] sizeSuffixes, int decimalPlaces = 3) {
             if ( decimalPlaces < 0 ) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
             if ( value < 0 ) { return "-" + SizeSuffix(-value, decimalPlaces); }
             if ( value == 0 ) { return string.Format("{0:n" + decimalPlaces + "} bytes", 0); }
@@ -137,7 +143,7 @@ namespace amethyst_installer_gui {
 
             return string.Format("{0} {1}",
                 Truncate(adjustedSize, decimalPlaces),
-                SizeSuffixes[mag]);
+                sizeSuffixes[mag]);
         }
 
         /// <summary>
