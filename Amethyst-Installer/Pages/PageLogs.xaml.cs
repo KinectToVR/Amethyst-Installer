@@ -29,17 +29,13 @@ namespace amethyst_installer_gui.Pages {
             return Properties.Resources.Page_Logs_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
-            MainWindow.Instance.GoToLastPage();
-        }
-
         // Force only the first button to have focus
         public void OnFocus() {
             MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
-            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Back;
+            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
-            MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
+            MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
+            MainWindow.Instance.ActionButtonTertiary.Content = Properties.Resources.Installer_Action_Back;
 
             logsPathTextPre.Content = Properties.Resources.Logs_DirectoryIsLocatedHere + " ";
             logsPathLink.Text = Constants.AmethystLogsDirectory;
@@ -79,8 +75,13 @@ namespace amethyst_installer_gui.Pages {
         public void OnSelected() {
             MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
         }
+
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) { }
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
-        public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
+        public void OnButtonTertiary(object sender, RoutedEventArgs e) {
+            MainWindow.Instance.GoToLastPage();
+            SoundPlayer.PlaySound(SoundEffect.MovePrevious);
+        }
 
         private struct UILogMessage {
             public string message;

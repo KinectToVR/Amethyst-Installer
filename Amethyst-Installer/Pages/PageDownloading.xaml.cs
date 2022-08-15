@@ -43,10 +43,13 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
+            MainWindow.Instance.sidebar_download.State = Controls.TaskState.Checkmark;
             MainWindow.Instance.SetPage(InstallerState.Installation);
         }
 
         public async void OnSelected() {
+
+            MainWindow.Instance.sidebar_download.State = Controls.TaskState.Busy;
 
             /*
 

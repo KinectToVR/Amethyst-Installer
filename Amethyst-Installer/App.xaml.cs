@@ -57,6 +57,7 @@ namespace amethyst_installer_gui {
             // AFAIK the app should always be initialized, so this scenario should be impossible
             ( AppWindow.Instance.Pages[InstallerState.Exception] as PageException ).currentException = e.Exception;
             AppWindow.Instance.OverridePage(InstallerState.Exception);
+            AppWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
         }
     }
 }

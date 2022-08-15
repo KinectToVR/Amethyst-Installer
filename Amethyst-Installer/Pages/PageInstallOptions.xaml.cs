@@ -45,6 +45,7 @@ namespace amethyst_installer_gui.Pages {
                 Module a = (Module)installableItemControls[i].Tag;
                 // TODO: Queue everything that has been selected into a buffer somewhere
                 if ( installableItemControls[i].Checked ) {
+                    // TODO: Handle dependency chains
                     InstallerStateManager.ModulesToInstall.Add(a);
                 }
 
@@ -101,7 +102,7 @@ namespace amethyst_installer_gui.Pages {
             fullDescription.Text = currentModule.Description;
 
             // TODO: Better calculation, check dependency chain, proper storage units
-            downloadSize.Content = currentModule.DownloadSize + " MegaFarts";
+            downloadSize.Content = Util.SizeSuffix(currentModule.DownloadSize);
             installSize.Content = currentModule.FileSize + " MegaFarts";
         }
 

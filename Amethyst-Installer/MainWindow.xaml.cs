@@ -248,8 +248,9 @@ namespace amethyst_installer_gui {
 
         private void Window_KeyUp(object sender, KeyEventArgs e) {
 #if DEBUG
-            if ( e.Key == Key.F12 )
+            if ( e.Key == Key.F12 ) {
                 OverridePage(InstallerState.Debug);
+            }
 #endif
         }
 
