@@ -53,6 +53,9 @@ namespace amethyst_installer_gui.Controls {
                 case TaskState.Question:
                     stateString = "Question";
                     break;
+                case TaskState.Warning:
+                    stateString = "Warning";
+                    break;
                 case TaskState.Error:
                     stateString = "Error";
                     break;

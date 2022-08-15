@@ -203,7 +203,7 @@ namespace amethyst_installer_gui {
                 }
             } else {
 #endif
-                CurrentInstallerPage.OnButtonPrimary(sender, e);
+            CurrentInstallerPage.OnButtonPrimary(sender, e);
                 TimeSinceLastCooldown = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 #if !DEBUG
         }
