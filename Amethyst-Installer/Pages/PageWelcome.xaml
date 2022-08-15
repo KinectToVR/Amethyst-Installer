@@ -9,9 +9,13 @@
     <Grid>
         <Border CornerRadius="8">
             <Border.Background>
-                <ImageBrush Stretch="Fill" ImageSource="/Resources/welcome-splash.png"/>
+                <ImageBrush Stretch="Fill" ImageSource="/Resources/welcome-splash-bg.png"/>
             </Border.Background>
         </Border>
+        <Image x:Name="splashWordmark" Source="/Resources/welcome-amethyst-wordmark.png" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5" Opacity="0">
 
+        </Image>
+        <Image x:Name="splashIcon" Source="/Resources/welcome-amethyst-icon.png" Opacity="0">
+        </Image>
     </Grid>
 </UserControl>
