@@ -60,7 +60,7 @@ namespace amethyst_installer_gui {
                                 // Use a 1MB buffer for download operations
                                 await download.CopyToAsync(destination, 1024 * 1024, relativeProgress, cancellationToken);
                                 timer.Stop();
-                                progress.Invoke(contentLength ?? long.MaxValue);
+                                progress.Invoke(contentLength.Value);
                             }
                         }
                     }
