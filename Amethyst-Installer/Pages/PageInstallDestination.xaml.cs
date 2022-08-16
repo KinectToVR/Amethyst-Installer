@@ -43,6 +43,7 @@ namespace amethyst_installer_gui.Pages {
 
             // Ensure the directory is valid first
             try {
+                CheckPath();
                 var finalPath = Path.GetFullPath(pathTextbox.Text);
                 DirectoryInfo dirInfo = new DirectoryInfo(finalPath);
                 // Advance to next page
@@ -100,6 +101,7 @@ namespace amethyst_installer_gui.Pages {
                 currentlySelectedDriveControl.Selected = true;
                 pathTextbox.Text = Path.GetFullPath(Path.Combine(drives[0].RootDirectory.ToString(), "Amethyst"));
             }
+            CheckPath();
         }
 
         // Force only the first button to have focus
@@ -115,6 +117,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void openDirectory_Click(object sender, RoutedEventArgs e) {
 
+            CheckPath();
             // Setup Vista Folder Dialog
             var dialog = new VistaFolderBrowserDialog();
             // 
@@ -153,6 +156,7 @@ namespace amethyst_installer_gui.Pages {
                             Source = thisDrive
                         });
                 }
+                CheckPath();
             }
         }
 
@@ -168,6 +172,18 @@ namespace amethyst_installer_gui.Pages {
 
             // Scroll the control into view
             currentlySelectedDriveControl.BringIntoView();
+            CheckPath();
+        }
+
+        private void CheckPath() {
+            // Check if Amethyst is in the selected drive
+            installFoundCard.Visibility = Visibility.Collapsed;
+            string fullPath = Path.GetFullPath(pathTextbox.Text);
+            if (Directory.Exists(fullPath)) {
+                if (File.Exists(Path.Combine(fullPath, "Amethyst.exe"))) {
+                    installFoundCard.Visibility = Visibility.Visible;
+                }
+            }
         }
     }
 }

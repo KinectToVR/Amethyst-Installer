@@ -21,7 +21,7 @@
                 <TextBlock x:Name="moduleTitle" Style="{StaticResource Title}" Text="When the impostor is among us" Grid.Column="0" FontSize="16" />
 
                 <Image x:Name="taskStateIcon" Grid.Column="1" Source="/Resources/Icons/4x/Default.png" RenderOptions.BitmapScalingMode="Fant" Visibility="Visible"/>
-                <local:ProgressSpinner x:Name="taskStateSpinner" Grid.Column="1" Foreground="#FF67BDE6" Width="19" Height="19" Visibility="Collapsed"/>
+                <local:ProgressSpinner x:Name="taskStateSpinner" Grid.Column="1" Width="19" Height="19" Visibility="Collapsed"/>
             </Grid>
 
             <Grid Grid.Row="1" x:Name="logContainer">
