@@ -97,6 +97,15 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This folder already contains an installation of Amethyst, it will be overwritten..
+        /// </summary>
+        public static string InstallDestination_AmeInstallFound {
+            get {
+                return ResourceManager.GetString("InstallDestination_AmeInstallFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only Amethyst will be installed to this folder. Other items will install to their default locations..
         /// </summary>
         public static string InstallDestination_AmethystInstallLocationFootnote {
