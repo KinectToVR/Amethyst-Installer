@@ -354,3 +354,6 @@ MigrationBackup/
 
 # Jetbrains
 .idea/
+
+# SonarQube Static Analysis
+.sonarqube/
