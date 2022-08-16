@@ -33,7 +33,12 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// Returns the current instance of the <see cref="MainWindow"/>
         /// </summary>
-        public static MainWindow Instance { get { return ( Application.Current.MainWindow as MainWindow ); } }
+        public static MainWindow Instance { get {
+                return
+                    Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow as MainWindow);
+                    // ( Application.Current.MainWindow as MainWindow ); 
+        } }
+
         /// <summary>
         /// The current locale string
         /// </summary>

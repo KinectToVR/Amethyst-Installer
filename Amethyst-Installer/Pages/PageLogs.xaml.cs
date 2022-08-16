@@ -64,11 +64,13 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private static void LogLineInternal(string msg, ConsoleColor color) {
-            Paragraph paragraph = new Paragraph();
-            Run run = new Run(msg);
-            run.Foreground = Constants.ConsoleBrushColors[( int ) color];
-            paragraph.Inlines.Add(run);
-            ( MainWindow.Instance.Pages[InstallerState.Logs] as PageLogs ).logMessagesBox.Document.Blocks.Add(paragraph);
+            ( MainWindow.Instance.Pages[InstallerState.Logs] as PageLogs ).logMessagesBox.Dispatcher.Invoke(() => {
+                Paragraph paragraph = new Paragraph();
+                Run run = new Run(msg);
+                run.Foreground = Constants.ConsoleBrushColors[( int ) color];
+                paragraph.Inlines.Add(run);
+                ( MainWindow.Instance.Pages[InstallerState.Logs] as PageLogs ).logMessagesBox.Document.Blocks.Add(paragraph);
+            });
         }
 
         // Since this page can be opened at any time we can't trust this function
