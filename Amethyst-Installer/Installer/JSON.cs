@@ -28,6 +28,9 @@ namespace amethyst_installer_gui.Installer {
         [JsonProperty("visible")]
         public bool Visible;
 
+        [JsonProperty("critical")]
+        public bool IsCritical;
+
         [JsonProperty("depends")]
         public List<string> Depends;
 

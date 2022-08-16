@@ -54,6 +54,9 @@ namespace amethyst_installer_gui.Pages {
 
                 installationListContainer.Children.Add(installControl);
             }
+
+            // TODO: If installing Kinect 360 SDK, show EULA after extracting
+            // I have no fucking clue how that will even be implemented but that is a problem for future me!
         }
 
         // Force only the first button to have focus
