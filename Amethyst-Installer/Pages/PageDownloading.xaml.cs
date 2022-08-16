@@ -112,15 +112,23 @@ namespace amethyst_installer_gui.Pages {
 
         }
 
-		private async Task DownloadModule(int index) {
+        private async Task DownloadModule(int index) {
 
             var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
             m_currentProgressControl = ( DownloadItem ) downloadContent.Children[index];
             m_currentProgressControl.IsPending = false;
             m_currentProgressControl.DownloadFailed = false;
-            m_currentProgressControl.IsErrorCritical = false;
+            m_currentProgressControl.IsErrorCritical = moduleToInstall.IsCritical;
             m_currentProgressControl.Completed = false;
             m_currentProgressControl.DownloadedBytes = 0;
+            try {
+                await Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, 30.0f);
+            } catch ( OperationCanceledException ) {
+                OnDownloadFailed(index);
+            } catch ( TimeoutException ) {
+                OnDownloadFailed(index);
+            }
+        }
 
             m_st.Stop();
             m_st.Start();
@@ -138,6 +146,7 @@ namespace amethyst_installer_gui.Pages {
         public void DownloadModule_ProgressCallback(long value) {
             if ( m_currentProgressControl != null ) {
                 m_currentProgressControl.DownloadedBytes = value;
+            }
 
 
                 // Calculate transfer speed every second
@@ -151,7 +160,18 @@ namespace amethyst_installer_gui.Pages {
                 }
 
                 m_currentProgressControl.TransferSpeed = m_transferSpeed;
+        private void OnDownloadFailed(int index) {
+
+            var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
+
+            if ( moduleToInstall.IsCritical ) {
+                Logger.Fatal($"Critical download \"{moduleToInstall.Remote.Filename}\" timed out! Halting downloads...");
+            } else {
+                Logger.Error($"Download \"{moduleToInstall.Remote.Filename}\" timed out!");
             }
+
+            m_currentProgressControl.DownloadFailed = true;
+            m_currentProgressControl.IsPending = false;
         }
 
         // Force only the first button to have focus
