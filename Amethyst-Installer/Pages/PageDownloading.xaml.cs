@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TimeoutClock = System.Timers.Timer;
 
 namespace amethyst_installer_gui.Pages {
     /// <summary>
@@ -24,7 +25,7 @@ namespace amethyst_installer_gui.Pages {
 
         private DownloadItem m_currentProgressControl;
 
-        private Stopwatch m_st = new Stopwatch();
+        private TimeoutClock m_timer;
         private long m_lastTotalBytesDownloaded = 0;
         private long m_totalBytesDownloaded = 0;
         private long m_transferSpeed = 0;
@@ -43,6 +44,7 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
+            m_timer.Stop();
             MainWindow.Instance.sidebar_download.State = Controls.TaskState.Checkmark;
             MainWindow.Instance.SetPage(InstallerState.Installation);
         }
@@ -50,6 +52,10 @@ namespace amethyst_installer_gui.Pages {
         public async void OnSelected() {
 
             MainWindow.Instance.sidebar_download.State = Controls.TaskState.Busy;
+
+            m_timer = new TimeoutClock(1000); // Update every second
+            m_timer.Elapsed += Timer_Elapsed;
+            m_timer.Start();
 
             /*
 
@@ -121,6 +127,15 @@ namespace amethyst_installer_gui.Pages {
             m_currentProgressControl.IsErrorCritical = moduleToInstall.IsCritical;
             m_currentProgressControl.Completed = false;
             m_currentProgressControl.DownloadedBytes = 0;
+            m_currentProgressControl.Tag = index;
+
+            // Reset download progress state
+            m_timer.Stop();
+            m_timer.Start();
+            m_lastTotalBytesDownloaded = 0;
+            m_totalBytesDownloaded = 0;
+            m_transferSpeed = 0;
+
             try {
                 await Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, 30.0f);
             } catch ( OperationCanceledException ) {
@@ -130,36 +145,38 @@ namespace amethyst_installer_gui.Pages {
             }
         }
 
-            m_st.Stop();
-            m_st.Start();
+		private async void downloadModule_Retry(object sender, RoutedEventArgs e) {
 
-            await Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, 10.0f);
-		}
+            // Attempt redownload
 
-		private void downloadModule_Retry(object sender, RoutedEventArgs e) {
-
-            // Logger.Info(( ( DownloadItem ) sender ).Title);
+            // TODO: Track retry attempts
+            DownloadItem downloadItem = (DownloadItem) sender;
+            await DownloadModule(( int ) downloadItem.Tag);
 
         }
 
         // Progress update
         public void DownloadModule_ProgressCallback(long value) {
             if ( m_currentProgressControl != null ) {
+
                 m_currentProgressControl.DownloadedBytes = value;
+                m_totalBytesDownloaded = value;
             }
+        }
 
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
 
-                // Calculate transfer speed every second
-                if ( m_st.ElapsedMilliseconds >= 1000 ) {
-                    m_st.Reset();
-                    m_st.Start();
+            Logger.Info("Transfer speed UI tick!");
 
-                    m_totalBytesDownloaded = value;
-                    m_transferSpeed = m_totalBytesDownloaded - m_lastTotalBytesDownloaded;
-                    m_lastTotalBytesDownloaded = m_totalBytesDownloaded;
-                }
+            // Calculate the transfer speed every second
+            m_transferSpeed = m_totalBytesDownloaded - m_lastTotalBytesDownloaded;
+            m_lastTotalBytesDownloaded = m_totalBytesDownloaded;
 
-                m_currentProgressControl.TransferSpeed = m_transferSpeed;
+            // Force update the UI on the UI thread
+            m_currentProgressControl.Dispatcher.Invoke(() => m_currentProgressControl.TransferSpeed = m_transferSpeed);
+
+        }
+
         private void OnDownloadFailed(int index) {
 
             var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
