@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace amethyst_installer_gui {
@@ -35,7 +36,7 @@ namespace amethyst_installer_gui {
 
                 using ( var fileStream = File.OpenWrite(Path.GetFullPath(Path.Combine(path, filename))) ) {
                     // await response.CopyToAsync(fileStream)
-                    await s_httpClient.DownloadAsync(url, fileStream, progress);
+                    await s_httpClient.DownloadAsync(url, fileStream, progress, (long)(timeout * 1000L));
                 }
             // }
 
