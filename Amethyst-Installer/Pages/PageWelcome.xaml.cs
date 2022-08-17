@@ -78,14 +78,22 @@ namespace amethyst_installer_gui.Pages {
             Process.Start(( sender as Hyperlink ).NavigateUri.ToString());
         }
 
-        private void splashText_MouseUp(object sender, MouseButtonEventArgs e) {
-            var mousePos = e.GetPosition(splashText);
-            Size maxSize = new Size( double.PositiveInfinity, double.PositiveInfinity);
-            splashText.Measure(maxSize);
-            if ( mousePos.X >= 0 && mousePos.X <= splashText.DesiredSize.Width &&
-                mousePos.Y >= 0 && mousePos.Y <= splashText.DesiredSize.Height ) {
-                GenerateSplashText();
-            }
+        private void splash_MouseUp(object sender, MouseButtonEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Focus);
+            GenerateSplashText();
+        }
+
+        private void splash_MouseWheel(object sender, MouseWheelEventArgs e) {
+
+#if DEBUG
+            // UP
+            if ( e.Delta > 0 )
+                splashId += 2;
+            // DOWN
+            if ( e.Delta < 0)
+                splashId -= 2;
+            GenerateSplashText();
+#endif
         }
 
 #if DEBUG
@@ -97,6 +105,9 @@ namespace amethyst_installer_gui.Pages {
 #if DEBUG
             splashId++;
             splashId %= InstallerStateManager.API_Response.Splashes.Count;
+            if ( splashId < 0 ) {
+                splashId = (splashId + InstallerStateManager.API_Response.Splashes.Count) % InstallerStateManager.API_Response.Splashes.Count;
+            }
 #else
             Random rng = new Random();
             int splashId = rng.Next(0, InstallerStateManager.API_Response.Splashes.Count);
@@ -108,6 +119,5 @@ namespace amethyst_installer_gui.Pages {
             else
                 splashText.Text = $"\"{splashString}\"";
         }
-
     }
 }

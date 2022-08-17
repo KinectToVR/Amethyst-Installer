@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
-    <Grid ClipToBounds="True">
+    <Grid ClipToBounds="True" MouseUp="splash_MouseUp" MouseWheel="splash_MouseWheel" >
         <Border CornerRadius="8" x:Name="rootContainer">
             <Border.Background>
                 <ImageBrush Stretch="Fill" ImageSource="/Resources/welcome-splash-bg.png"/>
@@ -68,7 +68,7 @@
             </Image.Triggers>
         </Image>
         <TextBlock x:Name="splashText" TextWrapping="WrapWithOverflow" Foreground="#FFFFFF" Text="Lorem ipsum dolor sit amet among us!" Margin="27,204,194,8" FontSize="16"
-                   Opacity="0" MouseUp="splashText_MouseUp" FontStyle="Italic" Height="Auto">
+                   Opacity="0" FontStyle="Italic" Height="Auto">
 
             <TextBlock.RenderTransform>
                 <TranslateTransform Y="0"/>
