@@ -164,7 +164,7 @@ namespace amethyst_installer_gui.Pages {
             var control = e.Source as DriveSelectionControl;
             if ( control != null && control.Selected )
                 return;
-            var drive = (DriveInfo) control.Tag;
+            var drive = (DriveInfo) control?.Tag;
             pathTextbox.Text = Path.GetFullPath(Path.Combine(drive.RootDirectory.ToString(), "Amethyst"));
             control.Selected = true;
             currentlySelectedDriveControl.Selected = false;
