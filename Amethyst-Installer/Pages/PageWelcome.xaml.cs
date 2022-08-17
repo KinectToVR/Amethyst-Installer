@@ -62,7 +62,7 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.readPrivacyPolicy.Inlines.Add(firstPart);
             Hyperlink privacyPolicyLink = new Hyperlink()
             {
-                NavigateUri = new Uri($"http://k2vr.tech/{MainWindow.LocaleCode}/privacy"),
+                NavigateUri = new Uri($"https://k2vr.tech/{MainWindow.LocaleCode}/privacy"),
             };
             privacyPolicyLink.Inlines.Add(Properties.Resources.Welcome_PrivacyPolicy);
             privacyPolicyLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;
@@ -79,7 +79,13 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void splashText_MouseUp(object sender, MouseButtonEventArgs e) {
+            var mousePos = e.GetPosition(splashText);
+            Size maxSize = new Size( double.PositiveInfinity, double.PositiveInfinity);
+            splashText.Measure(maxSize);
+            if ( mousePos.X >= 0 && mousePos.X <= splashText.DesiredSize.Width &&
+                mousePos.Y >= 0 && mousePos.Y <= splashText.DesiredSize.Height ) {
                 GenerateSplashText();
+            }
         }
 
 #if DEBUG
