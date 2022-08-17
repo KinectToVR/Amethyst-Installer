@@ -67,5 +67,38 @@
                 </EventTrigger>
             </Image.Triggers>
         </Image>
+        <TextBlock x:Name="splashText" TextWrapping="WrapWithOverflow" Foreground="#FFFFFF" Text="Lorem ipsum dolor sit amet among us!" Margin="27,204,194,8" FontSize="16"
+                   Opacity="0" MouseUp="splashText_MouseUp" FontStyle="Italic" Height="Auto">
+
+            <TextBlock.RenderTransform>
+                <TranslateTransform Y="0"/>
+            </TextBlock.RenderTransform>
+
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="TextBlock.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(TextBlock.RenderTransform).(TranslateTransform.Y)" From="0" To="0" Duration="0:0:0" BeginTime="0:0:0" />
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0" Duration="0:0:0" BeginTime="0:0:0" />
+                            
+                            <DoubleAnimation Storyboard.TargetProperty="(TextBlock.RenderTransform).(TranslateTransform.Y)" From="-50"
+                            To="0" Duration="0:0:0.75" BeginTime="0:0:0.2">
+
+                                <DoubleAnimation.EasingFunction>
+                                    <PowerEase EasingMode="EaseOut" Power="3" />
+                                </DoubleAnimation.EasingFunction>
+
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"
+                                             BeginTime="0:0:0.2">
+                                <DoubleAnimation.EasingFunction>
+                                    <PowerEase EasingMode="EaseOut" Power="1" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
     </Grid>
 </UserControl>

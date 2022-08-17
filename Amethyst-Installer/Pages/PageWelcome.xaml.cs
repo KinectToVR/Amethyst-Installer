@@ -70,12 +70,38 @@ namespace amethyst_installer_gui.Pages {
             if ( secondPart.Length > 0 )
                 MainWindow.Instance.readPrivacyPolicy.Inlines.Add(secondPart);
 
-            // TODO: Splash screen
+            // Splash screen
+            GenerateSplashText();
         }
-
         private void OpenK2VRPrivacyPolicyURL(object sender, RequestNavigateEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Process.Start(( sender as Hyperlink ).NavigateUri.ToString());
         }
+
+        private void splashText_MouseUp(object sender, MouseButtonEventArgs e) {
+                GenerateSplashText();
+        }
+
+#if DEBUG
+        int splashId = -1;
+#endif
+
+        private void GenerateSplashText() {
+
+#if DEBUG
+            splashId++;
+            splashId %= InstallerStateManager.API_Response.Splashes.Count;
+#else
+            Random rng = new Random();
+            int splashId = rng.Next(0, InstallerStateManager.API_Response.Splashes.Count);
+#endif
+
+            string splashString = InstallerStateManager.API_Response.Splashes[splashId];
+            if ( splashString[0] == '"' )
+                splashText.Text = splashString;
+            else
+                splashText.Text = $"\"{splashString}\"";
+        }
+
     }
 }
