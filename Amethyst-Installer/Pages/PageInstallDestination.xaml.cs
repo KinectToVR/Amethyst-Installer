@@ -48,9 +48,11 @@ namespace amethyst_installer_gui.Pages {
                 DirectoryInfo dirInfo = new DirectoryInfo(finalPath);
                 // Advance to next page
                 MainWindow.Instance.SetPage(InstallerState.SystemRequirements);
+                SoundPlayer.PlaySound(SoundEffect.MoveNext);
             }
             catch (System.IO.IOException) {
                 // If we reach here the directory is invalid
+                SoundPlayer.PlaySound(SoundEffect.Focus);
                 Util.ShowMessageBox(Properties.Resources.InstallDestination_InvalidPathDescription, Properties.Resources.InstallDestination_InvalidPathTitle, MessageBoxButton.OK);
             }
         }
@@ -117,6 +119,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void openDirectory_Click(object sender, RoutedEventArgs e) {
 
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             CheckPath();
             // Setup Vista Folder Dialog
             var dialog = new VistaFolderBrowserDialog();
@@ -161,6 +164,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void driveSelected_Click(object sender, MouseButtonEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             var control = e.Source as DriveSelectionControl;
             if ( control != null && control.Selected )
                 return;

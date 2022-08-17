@@ -36,6 +36,7 @@ namespace amethyst_installer_gui.Pages {
             // Advance to next page
             MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
             MainWindow.Instance.SetPage(InstallerState.InstallOptions);
+            SoundPlayer.PlaySound(SoundEffect.MoveNext);
         }
 
         // Force only the first button to have focus
@@ -73,6 +74,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void OpenK2VRPrivacyPolicyURL(object sender, RequestNavigateEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Process.Start(( sender as Hyperlink ).NavigateUri.ToString());
         }
     }

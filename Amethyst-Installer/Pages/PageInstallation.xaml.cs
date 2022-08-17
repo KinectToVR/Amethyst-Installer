@@ -35,6 +35,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
             MainWindow.Instance.sidebar_install.State = Controls.TaskState.Checkmark;
+            SoundPlayer.PlaySound(SoundEffect.MoveNext);
             MainWindow.Instance.SetPage(InstallerState.Done);
         }
 

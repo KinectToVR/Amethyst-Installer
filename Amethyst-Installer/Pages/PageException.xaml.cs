@@ -32,11 +32,13 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonSecondary(object sender, RoutedEventArgs e) {
             // Open Discord
             Process.Start(Constants.DiscordInvite);
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
         }
 
         public void OnButtonTertiary(object sender, RoutedEventArgs e) {
             // Copy Error
             Clipboard.SetText($"```\nUnhandled Exception: {currentException.GetType().Name} in {currentException.Source}: {currentException.Message}\n```");
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
         }
 
         public void OnFocus() {
@@ -60,6 +62,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void logsPathLink_Click(object sender, RoutedEventArgs e) {
             // open logs dir with the current log file selected
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Shell.OpenFolderAndSelectItem(Logger.LogFilePath);
         }
     }

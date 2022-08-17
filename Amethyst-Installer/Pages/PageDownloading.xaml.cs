@@ -46,6 +46,7 @@ namespace amethyst_installer_gui.Pages {
             // Advance to next page
             m_timer.Stop();
             MainWindow.Instance.sidebar_download.State = Controls.TaskState.Checkmark;
+            SoundPlayer.PlaySound(SoundEffect.MoveNext);
             MainWindow.Instance.SetPage(InstallerState.Installation);
         }
 
@@ -146,6 +147,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
 		private async void downloadModule_Retry(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
 
             // Attempt redownload
 
@@ -165,8 +167,6 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
-
-            Logger.Info("Transfer speed UI tick!");
 
             // Calculate the transfer speed every second
             m_transferSpeed = m_totalBytesDownloaded - m_lastTotalBytesDownloaded;

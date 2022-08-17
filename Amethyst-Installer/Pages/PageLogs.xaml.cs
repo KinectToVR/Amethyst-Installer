@@ -45,6 +45,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void logsPathLink_Click(object sender, RoutedEventArgs e) {
             // open logs dir with the current log file selected
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Shell.OpenFolderAndSelectItem(Logger.LogFilePath);
         }
 

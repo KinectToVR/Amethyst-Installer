@@ -74,7 +74,7 @@
                         <Button Name="Minimise" Content="&#xE921;" Style="{StaticResource TitlebarButton}" Grid.Column="1" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,10,0" Click="Minimise_Click" IsTabStop="False"/>
                         <Button Name="Close"    Content="&#xE8BB;" Style="{StaticResource TitlebarButton}" Grid.Column="2" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,33,0" Click="Close_Click" IsTabStop="False"/>
                     </Grid>
-                    <Grid Margin="0,5,0,28" Grid.Row="1" >
+                    <Grid Margin="0,5,0,28" Grid.Row="1" ClipToBounds="True">
                         <ContentControl x:Name="PageView" VerticalAlignment="Stretch" IsTabStop="False" />
                     </Grid>
                     <Grid Grid.Row="2">
@@ -89,7 +89,7 @@
                             <Button x:Name="ActionButtonPrimary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="ActionButtonPrimary_Click" TabIndex="2" IsDefault="True"/>
                         </StackPanel>
                         <StackPanel Name="privacyPolicyContainer" Grid.Column="1" Margin="0,0,160,28" Orientation="Vertical" VerticalAlignment="Center" >
-                            <CheckBox Content="{x:Static res:Resources.Welcome_OptIn}" Margin="0,0,0,4" IsChecked="True"/>
+                            <CheckBox Content="{x:Static res:Resources.Welcome_OptIn}" Margin="0,0,0,4" IsChecked="True" Unchecked="CheckBox_Checked" Checked="CheckBox_Checked"/>
                             <TextBlock Name="readPrivacyPolicy" LineStackingStrategy="BlockLineHeight">Privacy policy string generated during runtime</TextBlock>
                         </StackPanel>
                     </Grid>

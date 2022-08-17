@@ -38,6 +38,7 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
+            SoundPlayer.PlaySound(SoundEffect.MoveNext);
             MainWindow.Instance.SetPage(InstallerState.InstallDestination);
             InstallerStateManager.ModulesToInstall.Clear();
             // Clear memory
@@ -83,7 +84,9 @@ namespace amethyst_installer_gui.Pages {
             }
         }
         private void InstallOptionMouseReleaseHandler(object sender, MouseButtonEventArgs e) {
-            
+
+            if ( e != null )
+                SoundPlayer.PlaySound(SoundEffect.Invoke);
             InstallableItem selectedItem = sender as InstallableItem;
 
             // Handle background

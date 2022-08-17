@@ -34,6 +34,7 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
+            SoundPlayer.PlaySound(SoundEffect.MovePrevious);
             MainWindow.Instance.GoToLastPage();
         }
 
@@ -53,14 +54,17 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
         private void button_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             MessageBox.Show("big chungus", "no way");
             Util.ShowMessageBox("big chungus", "no way");
         }
 
         private void openvrbtn_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox(OpenVRUtil.RuntimePath(), "SteamVR Runtime Dir");
         }
         private void kinectmic_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
 
             // Check if the Kinect microphone is muted, and if so, prompt the user to enable it.
             if ( KinectUtil.KinectMicrophoneDisabled() ) {
@@ -71,30 +75,37 @@ namespace amethyst_installer_gui.Pages {
             Util.ShowMessageBox($"Disabled: {KinectUtil.KinectMicrophoneDisabled()}", "Kinect Mic Test");
         }
         private void currentuser_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox(CurrentUser.GetCurrentlyLoggedInUsername(), "Current user");
         }
 
         private void shadowTest_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox($"IsOnShadow: {CloudPCUtil.IsRunningOnShadow()}", "Shadow Status");
         }
 
         private void steamVRSettingsDetails_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox($"HMDModel: {OpenVRUtil.GetSteamVRHmdModel()}\nHMDManufacturer: {OpenVRUtil.GetSteamVRHmdManufacturer()}", "OpenVR HMD");
         }
 
         private void steamVRPlayspace_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             var playspaceBounds = OpenVRUtil.GetPlayspaceBounds();
             Util.ShowMessageBox($"Size: {playspaceBounds.x}, {playspaceBounds.y}", "SteamVR playspace bounds");
         }
 
         private void plutosphereTest_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox($"PlutoSphere: {CloudPCUtil.IsOnPlutoSphere()}", "PlutoSphere Status");
         }
 
         private void driverSearch_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox($"Driver Search: {OpenVRUtil.GetDriverPath(driverSearchBox.Text)}", "Driver search");
         }
         private void driverAdd_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             OpenVRUtil.RegisterSteamVrDriver(driverAddBox.Text);
             Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "openvr", "openvrpaths.vrpath")));
             Util.ShowMessageBox($"Driver Registered!", "Driver search");

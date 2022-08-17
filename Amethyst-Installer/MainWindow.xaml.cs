@@ -237,6 +237,7 @@ namespace amethyst_installer_gui {
 
         private void viewLogsBtn_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
+            SoundPlayer.PlaySound(SoundEffect.MoveNext);
 
             if ( altLogsBtnTxtActive == false && viewBntCount > 2 && pageStack[pageStackPointer] == InstallerState.Logs ) {
                 altLogsBtnTxtActive = true;
@@ -254,6 +255,7 @@ namespace amethyst_installer_gui {
         private void Window_KeyUp(object sender, KeyEventArgs e) {
 #if DEBUG
             if ( e.Key == Key.F12 ) {
+                SoundPlayer.PlaySound(SoundEffect.Show);
                 OverridePage(InstallerState.Debug);
             }
 #endif
@@ -271,6 +273,11 @@ namespace amethyst_installer_gui {
             if ( m_stopwatch.IsRunning && m_speedrunnerModeActive ) {
                 m_stopwatch.Stop();
             }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e) {
+            if (Visibility != Visibility.Collapsed)
+                SoundPlayer.PlaySound(SoundEffect.Invoke);
         }
     }
 }

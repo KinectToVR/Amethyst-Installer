@@ -40,6 +40,7 @@ namespace amethyst_installer_gui.Pages {
             if ( canContinue ) {
                 // Advance to next page
                 MainWindow.Instance.SetPage(InstallerState.Downloading);
+                SoundPlayer.PlaySound(SoundEffect.MoveNext);
             } else {
                 // TODO: Ella pls tell me how to handle the UX part of this I'm not sure if straight up exiting is a good idea
                 MainWindow.Instance.Close();
@@ -203,6 +204,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Process.Start(e.Uri.ToString());
         }
     }
