@@ -478,6 +478,9 @@
     <EmbeddedResource Include="Resources\Sounds\MovePrevious.ogg" />
     <EmbeddedResource Include="Resources\Sounds\Show.ogg" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Sounds\Error.ogg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
