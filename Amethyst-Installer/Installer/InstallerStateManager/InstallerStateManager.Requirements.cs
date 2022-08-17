@@ -103,7 +103,7 @@ namespace amethyst_installer_gui.Installer {
                 }
             }
 
-            CanInstall = !IsCloudPC && SteamVRInstalled & !IsWindowsAncient;
+            CanInstall = !IsCloudPC && SteamVRInstalled && !IsWindowsAncient;
 
             // SHIT TO DETECT IF WE'RE USING A LAPTOP
             {
