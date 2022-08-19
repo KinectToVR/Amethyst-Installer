@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:res = "clr-namespace:amethyst_installer_gui.Properties"
-             xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
+             xmlns:local="clr-namespace:amethyst_installer_gui.Pages" xmlns:controls="clr-namespace:amethyst_installer_gui.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid x:Name="eulaPageContainerRoot">
@@ -12,11 +12,36 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="eulaBoxContainer" Grid.Row="0" IsReadOnly="True" Style="{DynamicResource WinUIScrollTextbox}" MaxWidth="{Binding ElementName=eulaPageContainerRoot, Path=ActualWidth}"
-Text="By clicking I agree you consent towards selling your soul to the GPL." />
-        <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,15,0,0">
-            <RadioButton x:Name="eulaDeny" Content="{x:Static res:Resources.EULA_DontAgree}" Margin="0,0,0,20" IsChecked="True" Checked="eulaRadioButton_Checked"/>
-            <RadioButton x:Name="eulaAgree" Content="{x:Static res:Resources.EULA_Agree}" Checked="eulaRadioButton_Checked" />
-        </StackPanel>
+
+        <!-- <RichTextBox x:Name="eulaBoxContainer" Grid.Row="0" IsReadOnly="True" Style="{DynamicResource WinUIScrollRichTextBox}" Foreground="White" FontFamily="Consolas" FontSize="12" MaxWidth="{Binding ElementName=eulaPageContainerRoot, Path=ActualWidth}" VerticalScrollBarVisibility="Auto" /> -->
+
+        <!-- 
+        <Border Grid.Row="0"  x:Name="border" Background="{StaticResource BrushBackgroundAlt}" Padding="12,8,8,8" BorderThickness="0" SnapsToDevicePixels="True">
+            <ScrollViewer x:Name="eulaScroller" Focusable="false" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                <StackPanel x:Name="eulaContentBox" Orientation="Vertical" Width="{Binding ElementName=eulaScroller,Path=ActualWidth}">
+                    
+                </StackPanel>
+            </ScrollViewer>
+            <Border.Effect>
+                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" BlurRadius="4" Opacity="0.3" />
+            </Border.Effect>
+        </Border>
+        -->
+
+        <controls:FastTextContainer Grid.Row="0" Width="{Binding ElementName=eulaPageContainerRoot,Path=ActualWidth}" x:Name="fastTextbox"/>
+
+        <Grid Grid.Row="1" Margin="0,15,0,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <RadioButton x:Name="eulaDeny" Content="{x:Static res:Resources.EULA_DontAgree}" Margin="0,0,0,20" IsChecked="True" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
+                <RadioButton x:Name="eulaAgree" Content="{x:Static res:Resources.EULA_Agree}" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
+            </StackPanel>
+
+            <Button Grid.Column="1" x:Name="proceedButton" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="proceedButton_Click" TabIndex="2" IsDefault="True"/>
+        </Grid>
     </Grid>
 </UserControl>
