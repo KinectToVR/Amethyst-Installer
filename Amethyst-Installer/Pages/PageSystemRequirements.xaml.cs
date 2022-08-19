@@ -197,13 +197,67 @@ namespace amethyst_installer_gui.Pages {
 
         private string GetVRHeadsetString() {
 
-            switch ( OpenVRUtil.HmdType ) {
-                case VRHmdType.Quest:
-                case VRHmdType.Quest2:
-                    return $"{OpenVRUtil.HmdType} ({OpenVRUtil.ConnectionType})";
+            string vrConnectionType = OpenVRUtil.ConnectionType.ToString();
+            vrConnectionType = OpenVRUtil.ConnectionType.ToString();
+
+            switch ( OpenVRUtil.ConnectionType ) {
+                case VRConnectionType.ALVR:
+                    return "ALVR";
+                case VRConnectionType.VirtualDesktop:
+                    vrConnectionType = "Virtual Desktop Streamer";
+                    break;
+                case VRConnectionType.OculusLink:
+                    vrConnectionType = "Oculus Link / Air Link";
+                    break;
             }
 
-            return $"{OpenVRUtil.HmdType} ({OpenVRUtil.ConnectionType}) [{OpenVRUtil.TrackingType}]";
+            switch ( OpenVRUtil.HmdType ) {
+
+                case VRHmdType.Rift:
+                    return $"Oculus Rift CV1";
+                case VRHmdType.RiftS:
+                    return $"Oculus Rift S";
+                case VRHmdType.Quest:
+                    return $"Meta Quest via {vrConnectionType}";
+                case VRHmdType.Quest2:
+                    return $"Meta Quest 2 via {vrConnectionType}";
+
+                case VRHmdType.Vive:
+                    return $"HTC Vive";
+                case VRHmdType.ViveCosmos:
+                    return $"HTC Vive Cosmos";
+                case VRHmdType.VivePro:
+                    return $"HTC Vive Pro";
+
+                case VRHmdType.Pimax:
+                    return $"Pimax";
+
+                case VRHmdType.WMR:
+                    if (OpenVRUtil.TrackingType == VRTrackingType.Lighthouse) {
+                        return $"Windows Mixed Reality using Lighthouse devices";
+                    }
+                    return $"Windows Mixed Reality";
+
+                case VRHmdType.Index:
+                    return $"Valve Index";
+                case VRHmdType.Deckard:
+                    return $"Valve Deckard";
+
+                case VRHmdType.PSVR:
+                    return $"PlayStation VR";
+
+                case VRHmdType.PicoNeo:
+                    return $"Pico Neo";
+                case VRHmdType.PicoNeo2:
+                    return $"Pico Neo 2";
+                case VRHmdType.PicoNeo3:
+                    return $"Pico Neo 3";
+
+                case VRHmdType.Phone:
+                    return $"Mobile Phone";
+            }
+
+            return $"{OpenVRUtil.HmdType} via {OpenVRUtil.ConnectionType} (Tracking under {OpenVRUtil.TrackingType})";
         }
 
         // Force only the first button to have focus
