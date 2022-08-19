@@ -14,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Threading;
@@ -33,11 +34,13 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// Returns the current instance of the <see cref="MainWindow"/>
         /// </summary>
-        public static MainWindow Instance { get {
+        public static MainWindow Instance {
+            get {
                 return
                     Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow as MainWindow);
-                    // ( Application.Current.MainWindow as MainWindow ); 
-        } }
+                // ( Application.Current.MainWindow as MainWindow ); 
+            }
+        }
 
         /// <summary>
         /// The current locale string
@@ -52,6 +55,9 @@ namespace amethyst_installer_gui {
         private DispatcherTimer m_dispatcherTimer   = new DispatcherTimer();
         private Stopwatch m_stopwatch               = new Stopwatch();
         private string m_currentTime                = "00:00.00";
+
+        private DoubleAnimation m_fadeInAnimation;
+        private DoubleAnimation m_fadeOutAnimation;
 
         public MainWindow() {
             InitializeComponent();
@@ -79,14 +85,44 @@ namespace amethyst_installer_gui {
             DWM.SetWindowAccentColor(this, WindowsColorHelpers.GetAccentColor());
 
             PrepareAnalytics();
+
+
+            m_fadeInAnimation = new DoubleAnimation();
+            m_fadeInAnimation.From = 0;
+            m_fadeInAnimation.To = 1;
+            m_fadeInAnimation.Duration = new Duration(Constants.PageTransitionAnimationDuration);
+
+            m_fadeOutAnimation = new DoubleAnimation();
+            m_fadeOutAnimation.From = 1;
+            m_fadeOutAnimation.To = 0;
+            m_fadeOutAnimation.Duration = new Duration(Constants.PageTransitionAnimationDuration);
+
+
+            // ContentRendered += MainWindow_ContentRendered;
+            // LayoutUpdated += MainWindow_LayoutUpdated;
+            
+
+        }
+
+        public Stopwatch m_layoutTimer = new Stopwatch();
+
+        // private void MainWindow_LayoutUpdated(object sender, EventArgs e) {
+        //     m_layoutTimer.Reset();
+        //     m_layoutTimer.Start();
+        // }
+
+        public void MainWindow_ContentRendered(object sender, EventArgs e) {
+            m_layoutTimer.Stop();
+            // if ( m_layoutTimer.ElapsedMilliseconds > 20 )
+                Logger.Error($"Long draw call detected! Spent {m_layoutTimer.ElapsedMilliseconds}ms computing layout and rendering...");
         }
 
         private void PrepareAnalytics() {
-            Analytics.Devices           = DeviceFlags.None;
-            Analytics.HeadsetModel      = OpenVRUtil.HmdType;
-            Analytics.TrackingUniverse  = OpenVRUtil.TrackingType;
-            Analytics.ConnectionType    = OpenVRUtil.ConnectionType;
-            Analytics.WindowsBuild      = "UNIMPLEMENTED"; // TODO: Windows build
+            Analytics.Devices = DeviceFlags.None;
+            Analytics.HeadsetModel = OpenVRUtil.HmdType;
+            Analytics.TrackingUniverse = OpenVRUtil.TrackingType;
+            Analytics.ConnectionType = OpenVRUtil.ConnectionType;
+            Analytics.WindowsBuild = "UNIMPLEMENTED"; // TODO: Windows build
         }
 
         #region Win UI 3 Window Functionality
@@ -144,20 +180,31 @@ namespace amethyst_installer_gui {
                 mainWindowInstance.viewBntCount = 0;
         }
 
-        public void SetPage(InstallerState destinatonTab) {
+        public void SetPage(InstallerState destinatonTab, bool updateSidebar = true) {
 
 #pragma warning disable IDE0055
 
-            // Update checkmarks in sidebar
-            sidebar_welcome.State =         destinatonTab < InstallerState.Welcome ?                TaskState.Default : TaskState.Checkmark;
-            sidebar_installOptions.State =  destinatonTab < InstallerState.InstallOptions ?         TaskState.Default : TaskState.Checkmark;
-            sidebar_location.State =        destinatonTab < InstallerState.InstallDestination ?     TaskState.Default : TaskState.Checkmark;
-            sidebar_sysreq.State =          destinatonTab < InstallerState.SystemRequirements ?     TaskState.Default : TaskState.Checkmark;
-            sidebar_download.State =        destinatonTab < InstallerState.Downloading ?            TaskState.Default : TaskState.Checkmark;
-            sidebar_install.State =         destinatonTab < InstallerState.Installation ?           TaskState.Default : TaskState.Checkmark;
-            sidebar_done.State =            destinatonTab < InstallerState.Done ?                   TaskState.Default : TaskState.Checkmark;
+            if ( updateSidebar ) {
+
+                // Update checkmarks in sidebar
+                sidebar_welcome.State =         destinatonTab < InstallerState.Welcome ?                TaskState.Default : TaskState.Checkmark;
+                sidebar_installOptions.State =  destinatonTab < InstallerState.InstallOptions ?         TaskState.Default : TaskState.Checkmark;
+                sidebar_location.State =        destinatonTab < InstallerState.InstallDestination ?     TaskState.Default : TaskState.Checkmark;
+                sidebar_sysreq.State =          destinatonTab < InstallerState.SystemRequirements ?     TaskState.Default : TaskState.Checkmark;
+                sidebar_download.State =        destinatonTab < InstallerState.Downloading ?            TaskState.Default : TaskState.Checkmark;
+                sidebar_install.State =         destinatonTab < InstallerState.Installation ?           TaskState.Default : TaskState.Checkmark;
+                sidebar_done.State =            destinatonTab < InstallerState.Done ?                   TaskState.Default : TaskState.Checkmark;
+            }
 
 #pragma warning restore IDE0055
+
+            // Set the post one for funny transition
+            if ( PageView.Content != null ) {
+
+                PageViewPost.Visibility = Visibility.Collapsed;
+                PageViewPre.Content = PageView.Content;
+                PageViewPre.Visibility = Visibility.Visible;
+            }
 
             CurrentInstallerPage = Pages[destinatonTab];
             Logger.Info($"Changing installer page to {destinatonTab}");
@@ -168,6 +215,8 @@ namespace amethyst_installer_gui {
             pageStackPointer = 0;
             pageStack.Add(destinatonTab);
 
+
+            AnimateScroller(0, PageViewScroller.ActualWidth);
         }
 
         // Used to take flow from current to some other page
@@ -176,14 +225,37 @@ namespace amethyst_installer_gui {
                 return;
             pageStack.Add(target);
             Logger.Info($"Overriding view to page {target}...");
+
+            // Set the post one for funny transition
+            if ( PageView.Content != null ) {
+
+                PageViewPre.Visibility = Visibility.Collapsed;
+                PageViewPost.Content = PageView.Content;
+                PageViewPost.Visibility = Visibility.Visible;
+            }
+
             pageStackPointer++;
             CurrentInstallerPage = Pages[target];
+
+            AnimateScroller(PageViewScroller.ActualWidth, 0);
         }
+
         // Goes down the page stack
         public void GoToLastPage() {
+
+            pageStack.RemoveAt(pageStackPointer);
             pageStackPointer--;
+
+            if ( PageView.Content != null ) {
+
+                PageViewPre.Content = Pages[pageStack[pageStackPointer]];
+                PageViewPre.Visibility = Visibility.Visible;
+                PageViewPost.Visibility = Visibility.Collapsed;
+            }
             CurrentInstallerPage = Pages[pageStack[pageStackPointer]];
             Logger.Info($"Changing view to previous page {pageStack[pageStackPointer]}...");
+
+            AnimateScroller(0, PageViewScroller.ActualWidth);
         }
 
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
@@ -209,12 +281,12 @@ namespace amethyst_installer_gui {
                 }
             } else {
 #endif
-            CurrentInstallerPage.OnButtonPrimary(sender, e);
+                CurrentInstallerPage.OnButtonPrimary(sender, e);
                 TimeSinceLastCooldown = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 #if !DEBUG
-        }
+            }
 #endif
-    }
+        }
 
         private void ActionButtonSecondary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
@@ -225,7 +297,7 @@ namespace amethyst_installer_gui {
             CurrentInstallerPage.OnButtonTertiary(sender, e);
         }
 
-#endregion
+        #endregion
 
         int viewBntCount = 0;
         readonly string[] altLogsBtnStrings = new string[]
@@ -277,8 +349,39 @@ namespace amethyst_installer_gui {
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e) {
-            if (Visibility != Visibility.Collapsed)
+            if ( Visibility != Visibility.Collapsed )
                 SoundPlayer.PlaySound(SoundEffect.Invoke);
+        }
+
+        public void SetSidebarHidden(bool state) {
+            SidebarContainerRoot.Visibility = state ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        public void SetButtonsHidden(bool state) {
+            InteractiveButtonsContainer.Visibility = state ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        public void AnimateScroller(double from, double to) {
+
+            PageViewScroller.BeginAnimation(AnimatedScrollViewer.HorizontalOffsetProperty, null);
+            DoubleAnimation horizontalAnimation = new DoubleAnimation();
+            horizontalAnimation.From = from;
+            horizontalAnimation.To = to;
+            horizontalAnimation.Duration = new Duration(Constants.PageTransitionAnimationDuration);
+            horizontalAnimation.Completed += HorizontalAnimation_Completed;
+            
+            PageViewScroller.BeginAnimation (AnimatedScrollViewer.HorizontalOffsetProperty, horizontalAnimation);
+
+            PageView.BeginAnimation         ( AnimatedScrollViewer.OpacityProperty, m_fadeInAnimation   );
+            PageViewPre.BeginAnimation      ( AnimatedScrollViewer.OpacityProperty, m_fadeOutAnimation  );
+            PageViewPost.BeginAnimation     ( AnimatedScrollViewer.OpacityProperty, m_fadeOutAnimation  );
+        }
+
+        private void HorizontalAnimation_Completed(object sender, EventArgs e) {
+            PageViewPre.Visibility = Visibility.Collapsed;
+            PageViewPost.Visibility = Visibility.Collapsed;
+            PageViewPre.Content = null;
+            PageViewPost.Content = null;
         }
     }
 }

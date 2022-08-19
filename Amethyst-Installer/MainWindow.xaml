@@ -20,7 +20,7 @@
 
     <Border Name="ContentRoot" BorderThickness="1" BorderBrush="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" MouseDown="ContentRoot_MouseDown">
         <DockPanel>
-            <StackPanel DockPanel.Dock="Left" Width="251" Background="{StaticResource BrushBackgroundAlt}">
+            <StackPanel x:Name="SidebarContainerRoot" DockPanel.Dock="Left" Width="251" Background="{StaticResource BrushBackgroundAlt}">
                 <Grid x:Name="SidebarGridContainer" Grid.Row="0" Margin="34,0,0,0" Height="{Binding ElementName=ContentRoot, Path=ActualHeight}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -75,9 +75,15 @@
                         <Button Name="Close"    Content="&#xE8BB;" Style="{StaticResource TitlebarButton}" Grid.Column="2" Width="33" Height="33" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,33,0" Click="Close_Click" IsTabStop="False"/>
                     </Grid>
                     <Grid Margin="0,5,0,28" Grid.Row="1" ClipToBounds="True">
-                        <ContentControl x:Name="PageView" VerticalAlignment="Stretch" IsTabStop="False" />
+                        <ScrollViewer x:Name="PageViewScroller" VerticalScrollBarVisibility="Disabled" Focusable="False" HorizontalScrollBarVisibility="Hidden">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentControl x:Name="PageViewPre" VerticalAlignment="Stretch" IsTabStop="False" Focusable="False" Width="{Binding ElementName=PageViewScroller, Path=ActualWidth}" Visibility="Collapsed" />
+                                <ContentControl x:Name="PageView" VerticalAlignment="Stretch" IsTabStop="False" Width="{Binding ElementName=PageViewScroller, Path=ActualWidth}" Visibility="Visible" />
+                                <ContentControl x:Name="PageViewPost" VerticalAlignment="Stretch" IsTabStop="False" Focusable="False" Width="{Binding ElementName=PageViewScroller, Path=ActualWidth}" Visibility="Collapsed" />
+                            </StackPanel>
+                        </ScrollViewer>
                     </Grid>
-                    <Grid Grid.Row="2">
+                    <Grid x:Name="InteractiveButtonsContainer" Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto"/>
