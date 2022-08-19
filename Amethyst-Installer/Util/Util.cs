@@ -211,10 +211,19 @@ namespace amethyst_installer_gui {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ExtractResource(string resourcePath, string filePath) {
+        public static void ExtractResourceToFile(string resourcePath, string filePath) {
             using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream($"amethyst_installer_gui.Resources.{resourcePath}") ) {
                 using ( var file = new FileStream(filePath, FileMode.Create, FileAccess.Write) ) {
                     resource.CopyTo(file);
+                }
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string ExtractResourceAsString(string resourcePath) {
+            using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream($"amethyst_installer_gui.Resources.{resourcePath}") ) {
+                using ( StreamReader reader = new StreamReader(resource) ) {
+                    return reader.ReadToEnd();
                 }
             }
         }

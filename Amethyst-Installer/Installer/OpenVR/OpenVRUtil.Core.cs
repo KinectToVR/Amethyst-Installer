@@ -42,7 +42,7 @@ namespace amethyst_installer_gui.Installer {
             var ovrDll = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, "openvr_api.dll"));
 
             // Extract the openvr_api.dll binary to our temp directory
-            Util.ExtractResource("Binaries.openvr_api.dll", ovrDll);
+            Util.ExtractResourceToFile("Binaries.openvr_api.dll", ovrDll);
 
             // Load the openvr_api.dll unmanaged library using P/Invoke :D
             var result = Kernel.LoadLibrary(ovrDll);

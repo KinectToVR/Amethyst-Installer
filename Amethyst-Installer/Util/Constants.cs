@@ -63,7 +63,12 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// The minimum size a playspace should have
         /// </summary>
-        public const float MINIMUM_PLAYSPACE_SIZE = 1.6f;
+        public const float MinimumPlayspaceSize = 1.6f;
+
+        /// <summary>
+        /// The duration of the page transition animation
+        /// </summary>
+        public static readonly TimeSpan PageTransitionAnimationDuration = TimeSpan.FromSeconds(0.25);
 
         /// <summary>
         /// A mapping from <see cref="ConsoleColor"/> to <see cref="SolidColorBrush"/>
