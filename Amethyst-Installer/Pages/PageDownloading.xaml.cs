@@ -173,7 +173,8 @@ namespace amethyst_installer_gui.Pages {
             m_lastTotalBytesDownloaded = m_totalBytesDownloaded;
 
             // Force update the UI on the UI thread
-            m_currentProgressControl.Dispatcher.Invoke(() => m_currentProgressControl.TransferSpeed = m_transferSpeed);
+            if ( m_currentProgressControl != null)
+                m_currentProgressControl.Dispatcher.Invoke(() => m_currentProgressControl.TransferSpeed = m_transferSpeed);
 
         }
 
