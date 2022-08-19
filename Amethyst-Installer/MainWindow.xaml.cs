@@ -68,6 +68,7 @@ namespace amethyst_installer_gui {
             Pages.Add(InstallerState.Logs, new PageLogs());
             Pages.Add(InstallerState.EULA, new PageEULA());
             Pages.Add(InstallerState.Exception, new PageException());
+            Pages.Add(InstallerState.Updating, new PageUpdating());
             Pages.Add(InstallerState.Debug, new PageDebug());
 
             // Set default page to welcome

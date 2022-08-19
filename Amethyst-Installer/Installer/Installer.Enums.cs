@@ -57,6 +57,11 @@
         Exception = 9,
 
         /// <summary>
+        /// Updating Screen
+        /// </summary>
+        Updating = 10,
+
+        /// <summary>
         /// DEBUG
         /// </summary>
         Debug = 1000,
