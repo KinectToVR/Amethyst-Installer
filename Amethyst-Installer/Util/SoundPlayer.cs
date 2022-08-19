@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using NAudio.Wave;
@@ -15,11 +16,19 @@ namespace amethyst_installer_gui {
         private static WaveOutEvent[] m_audioDevices;
         private static bool[] m_voiceAvailability;
 
+        private static bool m_initialisedProperly;
+
         static SoundPlayer() {
-            m_audioDevices = new WaveOutEvent[MAX_VOICES];
-            m_voiceAvailability = new bool[MAX_VOICES];
-            for (int i = 0; i < MAX_VOICES; i++ ) {
-                m_audioDevices[i] = new WaveOutEvent();
+            try {
+                m_audioDevices = new WaveOutEvent[MAX_VOICES];
+                m_voiceAvailability = new bool[MAX_VOICES];
+                for ( int i = 0; i < MAX_VOICES; i++ ) {
+                    m_audioDevices[i] = new WaveOutEvent();
+                }
+                m_initialisedProperly = true;
+            } catch ( Exception e ) {
+                Logger.Error($"An error occured while trying to initialise the Audio Engine. Sounds will be disabled for this session:\n{Util.FormatException(e)}");
+                m_initialisedProperly = false;
             }
         }
 
@@ -35,31 +44,42 @@ namespace amethyst_installer_gui {
         }
 
         public static void PlaySound(string name) {
+
+            // Don't even bother playing the sound if the Audio Engine didn't initialize properly
+            if ( !m_initialisedProperly )
+                return;
+
             Task.Run(() => {
-                using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream($"amethyst_installer_gui.Resources.Sounds.{name}.ogg") ) {
-                    using ( var vorbisStream = new NAudio.Vorbis.VorbisWaveReader(resource) ) {
+                // We don't need audio to 
+                try {
+                    using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream($"amethyst_installer_gui.Resources.Sounds.{name}.ogg") ) {
+                        using ( var vorbisStream = new NAudio.Vorbis.VorbisWaveReader(resource) ) {
 
-                        // The voice dedicated to this sound event
-                        int voice = 0;
+                            // The voice dedicated to this sound event
+                            int voice = 0;
 
-                        // Wait until we have a valid voice
-                        while ( (voice = GetVoice()) == -1 ) {
-                            Thread.Sleep(AUDIO_TIMESTAMP_MILLIS);
+                            // Wait until we have a valid voice
+                            while ( ( voice = GetVoice() ) == -1 ) {
+                                Thread.Sleep(AUDIO_TIMESTAMP_MILLIS);
+                            }
+
+                            // Lock the voice
+                            m_voiceAvailability[voice] = true;
+                            // Play the audio
+                            m_audioDevices[voice].Init(vorbisStream);
+                            m_audioDevices[voice].Play();
+
+                            // Stall the thread so that we can hear the audio
+                            while ( m_audioDevices[voice].PlaybackState == PlaybackState.Playing ) {
+                                Thread.Sleep(AUDIO_TIMESTAMP_MILLIS);
+                            }
+
+                            m_voiceAvailability[voice] = false;
                         }
-
-                        // Lock the voice
-                        m_voiceAvailability[voice] = true;
-                        // Play the audio
-                        m_audioDevices[voice].Init(vorbisStream);
-                        m_audioDevices[voice].Play();
-
-                        // Stall the thread so that we can hear the audio
-                        while ( m_audioDevices[voice].PlaybackState == PlaybackState.Playing ) {
-                            Thread.Sleep(AUDIO_TIMESTAMP_MILLIS);
-                        }
-
-                        m_voiceAvailability[voice] = false;
                     }
+                } catch ( Exception e ) {
+                    // By the power of bit flipping, your audio device shall not init ⚡⚡
+                    Logger.Error($"An error occured while trying to play sound {name}:\n{Util.FormatException(e)}");
                 }
             });
         }
