@@ -55,6 +55,9 @@ namespace amethyst_installer_gui.Pages {
 
             logsPathTextPre.Content = Properties.Resources.Logs_DirectoryIsLocatedHere + " ";
             logsPathLink.Text = Constants.AmethystLogsDirectory;
+
+            MainWindow.Instance.SetSidebarHidden(false);
+            MainWindow.Instance.SetButtonsHidden(false);
         }
 
         // Since we never know when we will hit this page (this page is a special case as it's exception handling) we'll handle everything on page focus

@@ -67,6 +67,9 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
             MainWindow.Instance.sidebar_install.State = Controls.TaskState.Busy;
+
+            MainWindow.Instance.SetSidebarHidden(false);
+            MainWindow.Instance.SetButtonsHidden(false);
         }
 
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }

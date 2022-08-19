@@ -132,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\AnimatedScrollViewer.cs" />
+    <Compile Include="Controls\FastTextContainer.xaml.cs">
+      <DependentUpon>FastTextContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InstallModuleProgress.xaml.cs">
       <DependentUpon>InstallModuleProgress.xaml</DependentUpon>
     </Compile>
@@ -146,6 +150,9 @@
       <DependentUpon>SidebarTask.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TaskState.cs" />
+    <Compile Include="Controls\TextView.xaml.cs">
+      <DependentUpon>TextView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Installer\AnalyticsData.cs" />
     <Compile Include="Installer\Installer.Enums.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Core.cs" />
@@ -204,6 +211,9 @@
     <Compile Include="Pages\PageSystemRequirements.xaml.cs">
       <DependentUpon>PageSystemRequirements.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PageUpdating.xaml.cs">
+      <DependentUpon>PageUpdating.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PageWelcome.xaml.cs">
       <DependentUpon>PageWelcome.xaml</DependentUpon>
     </Compile>
@@ -256,6 +266,10 @@
     <Compile Include="Util\Vectors.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
     <Compile Include="Util\WindowsUtils.cs" />
+    <Page Include="Controls\FastTextContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\InstallModuleProgress.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -263,6 +277,10 @@
     <Page Include="Controls\SidebarTask.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TextView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -313,6 +331,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageSystemRequirements.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageUpdating.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -480,6 +502,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Sounds\Error.ogg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Licenses.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

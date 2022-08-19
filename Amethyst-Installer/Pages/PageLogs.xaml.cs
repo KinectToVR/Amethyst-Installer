@@ -41,6 +41,9 @@ namespace amethyst_installer_gui.Pages {
             logsPathLink.Text = Constants.AmethystLogsDirectory;
 
             scrollToBottomQueued = true;
+
+            MainWindow.Instance.SetSidebarHidden(false);
+            MainWindow.Instance.SetButtonsHidden(false);
         }
 
         private void logsPathLink_Click(object sender, RoutedEventArgs e) {
