@@ -50,7 +50,7 @@ namespace amethyst_installer_gui {
 
             if ( AppWindow.Instance == null ) {
                 // uhhhhhhhhhh how the fuck did you get here
-                MessageBox.Show($"An unknown error has occured, please join the Discord server for help at {Constants.DiscordInvite}", "Critical Failure");
+                Util.ShowMessageBox(LocaleStrings.Dialog_Description_CritError.Replace("[server]", Constants.DiscordInvite), LocaleStrings.Dialog_Title_CritError);
                 Current.Shutdown();
                 return;
             }
