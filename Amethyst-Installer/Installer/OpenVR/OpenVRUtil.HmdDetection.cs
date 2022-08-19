@@ -229,6 +229,7 @@ namespace amethyst_installer_gui.Installer {
                     // Only VD was found on this machine
                     ConnectionType = VRConnectionType.VirtualDesktop;
                 } else {
+                    Logger.Info($"Couldn't find a Virtual Desktop or ALVR install, assuming Oculus Link / Air Link!");
                     ConnectionType = VRConnectionType.OculusLink;
                 }
             } catch ( Exception e ) {
