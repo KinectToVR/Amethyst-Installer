@@ -61,6 +61,24 @@ namespace amethyst_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An unknown error has occured, please join the Discord server for help at [server].
+        /// </summary>
+        public static string Dialog_Description_CritError {
+            get {
+                return ResourceManager.GetString("Dialog_Description_CritError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Critical Error.
+        /// </summary>
+        public static string Dialog_Title_CritError {
+            get {
+                return ResourceManager.GetString("Dialog_Title_CritError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured when trying to download this item. Try disabling any VPNs or firewalls..
         /// </summary>
         public static string Download_Failure {
@@ -93,6 +111,24 @@ namespace amethyst_installer_gui.Properties {
         public static string EULA_DontAgree {
             get {
                 return ResourceManager.GetString("EULA_DontAgree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follows is a long and boring list of licenses for crap, because unfortunately, licenses are a thing, and we have to show them to you..
+        /// </summary>
+        public static string EULA_Licenses {
+            get {
+                return ResourceManager.GetString("EULA_Licenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By continuing with installation, you agree that this software, and every component bundled or installed by it are provided &quot;as-is&quot; and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability..
+        /// </summary>
+        public static string EULA_Warranty {
+            get {
+                return ResourceManager.GetString("EULA_Warranty", resourceCulture);
             }
         }
         
@@ -309,6 +345,15 @@ namespace amethyst_installer_gui.Properties {
         public static string Page_Download_Title {
             get {
                 return ResourceManager.GetString("Page_Download_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Licenses.
+        /// </summary>
+        public static string Page_EULA_Title {
+            get {
+                return ResourceManager.GetString("Page_EULA_Title", resourceCulture);
             }
         }
         

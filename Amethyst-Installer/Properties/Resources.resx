@@ -117,6 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Dialog_Description_CritError" xml:space="preserve">
+    <value>An unknown error has occured, please join the Discord server for help at [server]</value>
+    <comment>[server] gets replaced with the server invite</comment>
+  </data>
+  <data name="Dialog_Title_CritError" xml:space="preserve">
+    <value>Critical Error</value>
+  </data>
   <data name="Download_Failure" xml:space="preserve">
     <value>An error occured when trying to download this item. Try disabling any VPNs or firewalls.</value>
     <comment>Error message that gets displayed to the user whenever a download fails</comment>
@@ -130,6 +137,14 @@
   </data>
   <data name="EULA_DontAgree" xml:space="preserve">
     <value>I do not agree</value>
+  </data>
+  <data name="EULA_Licenses" xml:space="preserve">
+    <value>Follows is a long and boring list of licenses for crap, because unfortunately, licenses are a thing, and we have to show them to you.</value>
+    <comment>We drop a lot of "copy pastas" here</comment>
+  </data>
+  <data name="EULA_Warranty" xml:space="preserve">
+    <value>By continuing with installation, you agree that this software, and every component bundled or installed by it are provided "as-is" and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability.</value>
+    <comment>We are not reponsible for you being braindead</comment>
   </data>
   <data name="InstallDestination_AmeInstallFound" xml:space="preserve">
     <value>This folder already contains an installation of Amethyst, it will be overwritten.</value>
@@ -209,6 +224,9 @@
   </data>
   <data name="Page_Download_Title" xml:space="preserve">
     <value>Downloading</value>
+  </data>
+  <data name="Page_EULA_Title" xml:space="preserve">
+    <value>Licenses</value>
   </data>
   <data name="Page_Exception_Title" xml:space="preserve">
     <value>An error happened</value>
