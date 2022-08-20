@@ -21,7 +21,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
-            Application.Current.Shutdown(( int ) ExitCodes.OK);
+            Util.Quit(ExitCodes.OK);
         }
 
         public void OnSelected() {

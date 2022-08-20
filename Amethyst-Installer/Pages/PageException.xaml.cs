@@ -26,7 +26,7 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Exit
-            Application.Current.Shutdown(( int ) ExitCodes.ExceptionUserClosed);
+            Util.Quit(ExitCodes.ExceptionUserClosed);
         }
 
         public void OnButtonSecondary(object sender, RoutedEventArgs e) {

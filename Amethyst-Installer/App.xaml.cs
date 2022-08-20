@@ -41,7 +41,7 @@ namespace amethyst_installer_gui {
             if (!InstallerStateManager.CanInstall) {
                 SystemSounds.Exclamation.Play();
                 Util.ShowMessageBox("Oh no! The table! It's broken!", LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
-                Current.Shutdown(( int ) ExitCodes.IncompatibleSetup);
+                Util.Quit(ExitCodes.IncompatibleSetup);
             }
         }
 
@@ -52,7 +52,7 @@ namespace amethyst_installer_gui {
             if ( AppWindow.Instance == null ) {
                 // uhhhhhhhhhh how the fuck did you get here
                 Util.ShowMessageBox(LocaleStrings.Dialog_Description_CritError.Replace("[server]", Constants.DiscordInvite), LocaleStrings.Dialog_Title_CritError);
-                Current.Shutdown((int)ExitCodes.ExceptionPreInit);
+                Util.Quit(ExitCodes.ExceptionPreInit);
                 return;
             }
             // AFAIK the app should always be initialized, so this scenario should be impossible

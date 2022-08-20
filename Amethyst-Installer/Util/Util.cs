@@ -162,6 +162,11 @@ namespace amethyst_installer_gui {
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Digits(this int n) {
+
+            // While this amount of nested if statements might seem excessive, it's faster than
+            // alternative methods, hence why I've implemented it (in the rare case of someone
+            // having like 26 drives for instance)
+
             if ( n >= 0 ) {
                 if ( n < 10 )
                     return 1;
@@ -234,6 +239,19 @@ namespace amethyst_installer_gui {
 
         public static string GenerateDocsURL(string relative) {
             return Constants.DocsDomain + $"/{LocaleManager.CurrentLocale}/" + relative;
+        }
+
+        /// <summary>
+        /// Terminates the installer using an exit code. Use this method instead of the standard WPF method due to extra
+        /// code that has to be run on all shutdown events.
+        /// </summary>
+        /// <param name="exitCode">The exitcode for this shutdown</param>
+        public static void Quit(ExitCodes exitCode) {
+
+            // TODO: Launch Ame on shutdown if necessary
+            // This is required in the event of an upgrade for example
+
+            Application.Current.Shutdown(( int ) exitCode);
         }
     }
 }
