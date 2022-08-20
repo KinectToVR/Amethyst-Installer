@@ -37,22 +37,22 @@ namespace amethyst_installer_gui {
                 case MessageBoxButton.OK:
                     btnPrimary = string.Empty;
                     btnSecondary = string.Empty;
-                    btnTertiary = Properties.Resources.Modal_OK;
+                    btnTertiary = Localisation.Modal_OK;
                     break;
                 case MessageBoxButton.OKCancel:
                     btnPrimary = string.Empty;
-                    btnSecondary = Properties.Resources.Modal_OK;
-                    btnTertiary = Properties.Resources.Modal_Cancel;
+                    btnSecondary = Localisation.Modal_OK;
+                    btnTertiary = Localisation.Modal_Cancel;
                     break;
                 case MessageBoxButton.YesNo:
                     btnPrimary = string.Empty;
-                    btnSecondary = Properties.Resources.Modal_Yes;
-                    btnTertiary = Properties.Resources.Modal_No;
+                    btnSecondary = Localisation.Modal_Yes;
+                    btnTertiary = Localisation.Modal_No;
                     break;
                 case MessageBoxButton.YesNoCancel:
-                    btnPrimary = Properties.Resources.Modal_Yes;
-                    btnSecondary = Properties.Resources.Modal_No;
-                    btnTertiary = Properties.Resources.Modal_Cancel;
+                    btnPrimary = Localisation.Modal_Yes;
+                    btnSecondary = Localisation.Modal_No;
+                    btnTertiary = Localisation.Modal_Cancel;
                     break;
             }
 

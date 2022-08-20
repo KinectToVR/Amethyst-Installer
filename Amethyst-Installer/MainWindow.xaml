@@ -31,13 +31,13 @@
                     </Grid.RowDefinitions>
                     <Border Background="Transparent" Grid.Row="0" MouseDown="Titlebar_MouseDown" Margin="-34,0,0,0" Height="25" />
                     <StackPanel Grid.Row="1" Orientation="Vertical">
-                        <Controls:SidebarTask x:Name="sidebar_welcome" State="Checkmark" Text="{x:Static res:Resources.Sidebar_Task_Welcome}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_installOptions" State="Default" Text="{x:Static res:Resources.Sidebar_Task_InstallOptions}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_location" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Location}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_sysreq" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Sysreq}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_download" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Download}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Install}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{x:Static res:Resources.Sidebar_Task_Done}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_welcome" State="Checkmark" Text="{x:Static local:Localisation.Sidebar_Task_Welcome}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_installOptions" State="Default" Text="{x:Static local:Localisation.Sidebar_Task_InstallOptions}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_location" State="Default" Text="{x:Static local:Localisation.Sidebar_Task_Location}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_sysreq" State="Default" Text="{x:Static local:Localisation.Sidebar_Task_Sysreq}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_download" State="Default" Text="{x:Static local:Localisation.Sidebar_Task_Download}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="{x:Static local:Localisation.Sidebar_Task_Install}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{x:Static local:Localisation.Sidebar_Task_Done}" Margin="0,0,0,22" IsTabStop="False"/>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Margin="-5,0,0,25">
                         <Label x:Name="speedrunTimer" FontWeight="SemiBold" Content="00:00:00" FontSize="22" Visibility="Hidden">
@@ -48,7 +48,7 @@
                                 </LinearGradientBrush>
                             </Label.Foreground>
                         </Label>
-                        <Button x:Name="viewLogsBtn" Style="{DynamicResource WinUIHyperlinkButton}" Content="{x:Static res:Resources.Sidebar_ViewLogs}"  Margin="0,0,0,4" Click="viewLogsBtn_Click"/>
+                        <Button x:Name="viewLogsBtn" Style="{DynamicResource WinUIHyperlinkButton}" Content="{x:Static local:Localisation.Sidebar_ViewLogs}"  Margin="0,0,0,4" Click="viewLogsBtn_Click"/>
                         <Label x:Name="versionLabel" Content="{Binding Source={x:Static local:Util.InstallerVersionString}}" Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" IsTabStop="False" />
                     </StackPanel>
                 </Grid>
@@ -90,12 +90,12 @@
                         </Grid.ColumnDefinitions>
                         <Border Background="Transparent" Grid.Column="0"/>
                         <StackPanel Grid.Column="1" Height="60" Margin="0,0,0,26" Orientation="Horizontal">
-                            <Button x:Name="ActionButtonTertiary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonTertiary_Click" Visibility="Hidden" TabIndex="0"/>
-                            <Button x:Name="ActionButtonSecondary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonSecondary_Click" Visibility="Hidden" TabIndex="1"/>
-                            <Button x:Name="ActionButtonPrimary" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="ActionButtonPrimary_Click" TabIndex="2" IsDefault="True"/>
+                            <Button x:Name="ActionButtonTertiary" Content="{x:Static local:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonTertiary_Click" Visibility="Hidden" TabIndex="0"/>
+                            <Button x:Name="ActionButtonSecondary" Content="{x:Static local:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonSecondary_Click" Visibility="Hidden" TabIndex="1"/>
+                            <Button x:Name="ActionButtonPrimary" Content="{x:Static local:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="ActionButtonPrimary_Click" TabIndex="2" IsDefault="True"/>
                         </StackPanel>
                         <StackPanel Name="privacyPolicyContainer" Grid.Column="1" Margin="0,0,160,28" Orientation="Vertical" VerticalAlignment="Center" >
-                            <CheckBox Content="{x:Static res:Resources.Welcome_OptIn}" Margin="0,0,0,4" IsChecked="True" Unchecked="CheckBox_Checked" Checked="CheckBox_Checked"/>
+                            <CheckBox Content="{x:Static local:Localisation.Welcome_OptIn}" Margin="0,0,0,4" IsChecked="True" Unchecked="CheckBox_Checked" Checked="CheckBox_Checked"/>
                             <TextBlock Name="readPrivacyPolicy" LineStackingStrategy="BlockLineHeight">Privacy policy string generated during runtime</TextBlock>
                         </StackPanel>
                     </Grid>

@@ -1,0 +1,87 @@
+﻿{
+  "Dialog_Description_CritError": "An unknown error has occured, please join the Discord server for help at [server]", /* [server] gets replaced with the server invite */
+  "Dialog_Title_CritError": "Critical Error",
+  "Download_Failure": "An error occured when trying to download this item. Try disabling any VPNs or firewalls.", /* Error message that gets displayed to the user whenever a download fails */
+  "Download_FailureCritical": "An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue.", /* Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue. */
+  
+  "EULA_Agree": "I agree",
+  "EULA_DontAgree": "I do not agree",
+  "EULA_Licenses": "Follows is a long and boring list of licenses for crap, because unfortunately, licenses are a thing, and we have to show them to you.", /* We drop a lot of "copy pastas" here */
+  "EULA_Warranty": "By continuing with installation, you agree that this software, and every component bundled or installed by it are provided \"as-is\" and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability.", /* We are not reponsible for you being braindead */
+  
+  "InstallDestination_AmeInstallFound": "This folder already contains an installation of Amethyst, it will be overwritten.", /* Shown if the install folder is detected to have a copy of Amethyst */
+  "InstallDestination_AmethystInstallLocationFootnote": "Only Amethyst will be installed to this folder. Other items will install to their default locations.",
+  "InstallDestination_DiskLabelFormat": "{0} ({1})", /* {0} gets replaced with the disk label (eg "Local Disk") and {1} gets replaced with the drive letter {eg "C:" ) */
+  "InstallDestination_InvalidPathDescription": "The path you've entered is invalid. Please enter a valid path to continue.",
+  "InstallDestination_InvalidPathTitle": "Invalid Path",
+  "InstallDestination_OpenFolder": "Open Folder",
+  "InstallDestination_PathPlaceholder": "Please select a valid install folder",
+  "InstallDestination_StorageFormatFree": "{0} free", /* {0} is required (it's going to get replaced with 420GB for example) */
+
+  "InstallOptions_DownloadSize": "Download Size:",
+  "InstallOptions_InstallSize": "Installed Size:",
+  "InstallOptions_TotalDownloadSize": "Total Download Size:",
+  "InstallOptions_TotalInstallSize": "Total Installed Size:",
+  
+  "InstallError_CloudPC": "Cloud PC detected. Amethyst does not support networked environments.", /* The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere */
+  "InstallError_SteamVRNotFound": "Couldn't find SteamVR! Is it installed, and have you run it at least once?", /* The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once. */
+  "InstallError_WindowsVersionIsOld": "Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst.", /* The message shown to a user when they have an old version of Windows that is not supported by Amethyst */
+  
+  "Installer_Action_Back": "Back",
+  "Installer_Action_CopyError": "Copy error",
+  "Installer_Action_Discord": "Get help on Discord",
+  "Installer_Action_Exit": "Exit",
+  "Installer_Action_Next": "Next",
+  
+  "InstallProhibited_Title": "Cannot install Amethyst", /* The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window. */
+  
+  "Logs_DirectoryIsLocatedHere": "The log file is stored here:",
+  
+  "Modal_Cancel": "Cancel",
+  "Modal_No": "No",
+  "Modal_OK": "OK",
+  "Modal_Yes": "Yes",
+  
+  "Page_Done_Title": "Install completed",
+  "Page_Download_Title": "Downloading",
+  "Page_EULA_Title": "Licenses",
+  "Page_Exception_Title": "An error happened",
+  "Page_InstallOptions_Title": "What to install",
+  "Page_Install_Title": "Installation",
+  "Page_Location_Title": "Choose destination",
+  "Page_Logs_Title": "Logs",
+  "Page_Sysreq_Title": "System requirements",
+  
+  "Sidebar_Task_Done": "Install completed",
+  "Sidebar_Task_Download": "Downloading",
+  "Sidebar_Task_Install": "Installation",
+  "Sidebar_Task_InstallOptions": "What to install",
+  "Sidebar_Task_Location": "Choose destination",
+  "Sidebar_Task_Sysreq": "System requirements",
+  "Sidebar_Task_Welcome": "Welcome", /* Sidebar tasks are the list of "stages" of the installer on the left hand side, with checkmarks */
+  "Sidebar_ViewLogs": "View logs",
+
+  "Speedrunner_Description": "Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?\n\nBe careful where you click!", /* this dialog gets shown when the user spams through the installer */
+  "Speedrunner_Title": "Slow down!", /* this dialog gets shown when the user spams through the installer */
+  
+  "SystemRequirement_Category_Compatibility": "Compatible devices",
+  "SystemRequirement_Category_Playspace": "Play Area",
+  "SystemRequirement_Category_Storage": "Disk space",
+  "SystemRequirement_Category_UsbControllers": "USB controllers",
+  "SystemRequirement_Category_VrSystem": "VR headset",
+  "SystemRequirement_Description_NoDriversFound": "No drivers installed yet",
+  "SystemRequirement_Description_Playspace_Good": "Your VR play area is large enough for tracking.\n{0}m by {1}m", /* Shown if the playspace is large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively */
+  "SystemRequirement_Description_Playspace_Small": "The size of your VR play area could cause issues with tracking. [Refer to the documentation for physical space requirements.]\n{0}m by {1}m", /* Shown if the playspace is not large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively. Everything in between [] will turn into a hyperlink leading to the relevant documentation page. */
+  "SystemRequirement_Description_Playspace_Unknown": "Your play area size could not be detected. [Refer to the documentation for physical space requirements.]", /* Shown if the playspace size couldn't be determined. Everything in between [] will turn into a hyperlink leading to the relevant documentation page. */
+  "SystemRequirement_Description_Storage": "{0} of disk space based on the components selected.", /* {0} gets replaced with the storage string (eg "400MB") */
+  "SystemRequirement_Description_UsbControllers": "{0} compatible USB controllers found ({1})", /* {0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
+  "SystemRequirement_Description_UsbControllers_One": "{0} compatible USB controller found ({1})", /* {0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
+  "SystemRequirement_Footnote_StageTracking_VirtualDesktop": "We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.", /* The first string of text surrounded by []s will get turned into the hyperlink */
+  
+  "Welcome_OptIn": "Opt in to anonymous analytics and crash reports.",
+  "Welcome_PrivacyPolicy": "Privacy Policy", /* The text for the link */
+  "Welcome_ReadPrivacyPolicy": "Read our %s% to see what we send.", /* %s% gets replaced with the link */
+
+  /* TOOD: Add Phone + Lighthouse + English my behated */
+  
+}

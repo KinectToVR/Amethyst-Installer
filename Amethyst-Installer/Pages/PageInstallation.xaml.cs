@@ -29,7 +29,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Properties.Resources.Page_Install_Title;
+            return Localisation.Page_Install_Title;
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
@@ -63,7 +63,7 @@ namespace amethyst_installer_gui.Pages {
         // Force only the first button to have focus
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
             MainWindow.Instance.sidebar_install.State = Controls.TaskState.Busy;

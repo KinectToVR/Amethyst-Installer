@@ -248,17 +248,14 @@
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Resources.en.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.en.resx</DependentUpon>
-    </Compile>
     <Compile Include="Util\Constants.cs" />
     <Compile Include="Util\Download.cs" />
     <Compile Include="Util\ExitCodes.cs" />
     <Compile Include="Util\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Util\Extensions\LinqExtensions.cs" />
     <Compile Include="Util\Extensions\StreamExtensions.cs" />
+    <Compile Include="Util\Localisation\LocaleManager.cs" />
+    <Compile Include="Util\Localisation\Localisation.cs" />
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\SoundPlayer.cs" />
     <Compile Include="Util\UninstallUtil.cs" />
@@ -422,17 +419,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include=".editorconfig" />
-    <None Include="ame-installer-sample-api-response.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="ame-installer-sample-api-response.json" />
     <None Include="app.config" />
     <None Include="ILRepack.targets" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Properties\Resources.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.en.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -440,6 +430,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Lang\en.json" />
     <None Include="Resources\welcome-splash.png" />
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +496,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Licenses.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Sounds\suspicious.ogg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoGenerate\AutoGenerate.csproj">
+      <Project>{3f1750ac-522a-4983-b648-84606bbeb8bb}</Project>
+      <Name>AutoGenerate</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

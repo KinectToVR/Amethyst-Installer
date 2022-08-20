@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:global = "clr-namespace:amethyst_installer_gui"
              xmlns:res = "clr-namespace:amethyst_installer_gui.Properties"
              xmlns:local="clr-namespace:amethyst_installer_gui.Pages" xmlns:controls="clr-namespace:amethyst_installer_gui.Controls"
              mc:Ignorable="d" 
@@ -37,11 +38,11 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Vertical" Grid.Column="0">
-                <RadioButton x:Name="eulaDeny" Content="{x:Static res:Resources.EULA_DontAgree}" Margin="0,0,0,20" IsChecked="True" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
-                <RadioButton x:Name="eulaAgree" Content="{x:Static res:Resources.EULA_Agree}" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
+                <RadioButton x:Name="eulaDeny" Content="{x:Static global:Localisation.EULA_DontAgree}" Margin="0,0,0,20" IsChecked="True" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
+                <RadioButton x:Name="eulaAgree" Content="{x:Static global:Localisation.EULA_Agree}" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
             </StackPanel>
 
-            <Button Grid.Column="1" x:Name="proceedButton" Content="{x:Static res:Resources.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="proceedButton_Click" TabIndex="2" IsDefault="True"/>
+            <Button Grid.Column="1" x:Name="proceedButton" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="proceedButton_Click" TabIndex="2" IsDefault="True"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -36,7 +36,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Properties.Resources.Page_Location_Title;
+            return Localisation.Page_Location_Title;
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
@@ -53,7 +53,7 @@ namespace amethyst_installer_gui.Pages {
             catch (System.IO.IOException) {
                 // If we reach here the directory is invalid
                 SoundPlayer.PlaySound(SoundEffect.Focus);
-                Util.ShowMessageBox(Properties.Resources.InstallDestination_InvalidPathDescription, Properties.Resources.InstallDestination_InvalidPathTitle, MessageBoxButton.OK);
+                Util.ShowMessageBox(Localisation.InstallDestination_InvalidPathDescription, Localisation.InstallDestination_InvalidPathTitle, MessageBoxButton.OK);
             }
         }
 
@@ -75,8 +75,8 @@ namespace amethyst_installer_gui.Pages {
                 // Create control
                 var driveControl = new DriveSelectionControl();
                 driveControl.DiskPercentage = 1.0 - ( ( double ) freeSpace / ( totalSize ) );
-                driveControl.DiskLabel = string.Format(Properties.Resources.InstallDestination_DiskLabelFormat, driveName, letter);
-                driveControl.FreeSpaceLabel = string.Format(Properties.Resources.InstallDestination_StorageFormatFree, Util.SizeSuffix(freeSpace));
+                driveControl.DiskLabel = string.Format(Localisation.InstallDestination_DiskLabelFormat, driveName, letter);
+                driveControl.FreeSpaceLabel = string.Format(Localisation.InstallDestination_StorageFormatFree, Util.SizeSuffix(freeSpace));
 
                 driveControl.Tag = drives[i];
                 driveControl.MouseLeftButtonUp += driveSelected_Click;
@@ -109,7 +109,7 @@ namespace amethyst_installer_gui.Pages {
         // Force only the first button to have focus
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 

@@ -43,7 +43,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnFocus() {
             MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 
@@ -57,7 +57,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnSelected() {
 
             // Localize the privacy policy thing
-            var readPrivacyPolicyRaw = Properties.Resources.Welcome_ReadPrivacyPolicy;
+            var readPrivacyPolicyRaw = Localisation.Welcome_ReadPrivacyPolicy;
             string firstPart = readPrivacyPolicyRaw.Substring(0, readPrivacyPolicyRaw.IndexOf("%s%"));
             string secondPart = readPrivacyPolicyRaw.Substring(readPrivacyPolicyRaw.IndexOf("%s%") + 3);
 
@@ -67,7 +67,7 @@ namespace amethyst_installer_gui.Pages {
             {
                 NavigateUri = new Uri($"https://k2vr.tech/{MainWindow.LocaleCode}/privacy"),
             };
-            privacyPolicyLink.Inlines.Add(Properties.Resources.Welcome_PrivacyPolicy);
+            privacyPolicyLink.Inlines.Add(Localisation.Welcome_PrivacyPolicy);
             privacyPolicyLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;
             MainWindow.Instance.readPrivacyPolicy.Inlines.Add(privacyPolicyLink);
             if ( secondPart.Length > 0 )

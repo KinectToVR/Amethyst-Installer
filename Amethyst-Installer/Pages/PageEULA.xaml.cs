@@ -25,8 +25,8 @@ namespace amethyst_installer_gui.Pages {
             // eulaBoxContainer.Document.Blocks.Clear();
 
             // Render the text
-            // RenderLine(Properties.Resources.EULA_Warranty, ConsoleColor.Yellow, 14);
-            // RenderLine(Properties.Resources.EULA_Licenses + Environment.NewLine, ConsoleColor.White, 14);
+            // RenderLine(Localisation.EULA_Warranty, ConsoleColor.Yellow, 14);
+            // RenderLine(Localisation.EULA_Licenses + Environment.NewLine, ConsoleColor.White, 14);
 
             // Read EULA text
             string LicenseTexts = Util.ExtractResourceAsString("Licenses.txt");
@@ -58,7 +58,7 @@ namespace amethyst_installer_gui.Pages {
 
             // RenderLine(LicenseTexts, ConsoleColor.White);
 
-            string pretext = Properties.Resources.EULA_Warranty + Environment.NewLine + Environment.NewLine + Properties.Resources.EULA_Licenses;
+            string pretext = Localisation.EULA_Warranty + Environment.NewLine + Environment.NewLine + Localisation.EULA_Licenses;
 
             // Use our better control :trol:
             fastTextbox.Text = pretext + Environment.NewLine + LicenseTexts;
@@ -67,7 +67,7 @@ namespace amethyst_installer_gui.Pages {
             // Yellow warning
             fastTextbox.text_view.FontColors.Add(new Controls.FontColorFormatting() {
                 Start = 0,
-                Length = Properties.Resources.EULA_Warranty.Length,
+                Length = Localisation.EULA_Warranty.Length,
                 TargetBrush = Constants.ConsoleBrushColors[14]
             });
             // Font size
@@ -83,7 +83,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Properties.Resources.Page_EULA_Title;
+            return Localisation.Page_EULA_Title;
         }
 
         private void eulaRadioButton_Checked(object sender, RoutedEventArgs e) {
@@ -98,7 +98,7 @@ namespace amethyst_installer_gui.Pages {
         // Force only the first button to have focus
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Hidden;
-            MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
             proceedButton.IsEnabled = eulaAgree != null && eulaAgree.IsChecked.HasValue && eulaAgree.IsChecked.Value == true;
@@ -109,15 +109,7 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnSelected() {
 
-            MainWindow.Instance.m_layoutTimer.Reset();
-            MainWindow.Instance.m_layoutTimer.Start();
-
             MainWindow.Instance.sidebar_welcome.State = Controls.TaskState.Busy;
-        }
-
-        protected override void OnRender(DrawingContext drawingContext) {
-            MainWindow.Instance.MainWindow_ContentRendered(null, null);
-            base.OnRender(drawingContext);
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) { }

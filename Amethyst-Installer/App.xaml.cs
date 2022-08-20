@@ -6,7 +6,8 @@ using System.Media;
 using System.Windows;
 
 using AppWindow = amethyst_installer_gui.MainWindow;
-using LocaleStrings = amethyst_installer_gui.Properties.Resources;
+// using LocaleStrings = amethyst_installer_gui.Properties.Resources;
+using LocaleStrings = amethyst_installer_gui.Localisation;
 
 namespace amethyst_installer_gui {
     /// <summary>

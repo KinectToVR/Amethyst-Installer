@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:global="clr-namespace:amethyst_installer_gui"
              xmlns:local="clr-namespace:amethyst_installer_gui.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
@@ -47,8 +48,8 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left">
-                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold">Download Size:</Label>
-                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold">Installed Size:</Label>
+                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_DownloadSize}" />
+                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_InstallSize}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right">
                         <Label x:Name="downloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>
@@ -64,8 +65,8 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" HorizontalAlignment="Left">
-                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold">Total Download Size:</Label>
-                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold">Total Installed Size:</Label>
+                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_TotalDownloadSize}" />
+                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_TotalInstallSize}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" HorizontalAlignment="Right">
                         <Label x:Name="totalDownloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>

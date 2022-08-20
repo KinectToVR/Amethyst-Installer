@@ -86,7 +86,7 @@ namespace amethyst_installer_gui {
 
             PrepareAnalytics();
 
-
+            // Prepare animations
             m_fadeInAnimation = new DoubleAnimation();
             m_fadeInAnimation.From = 0;
             m_fadeInAnimation.To = 1;
@@ -96,25 +96,6 @@ namespace amethyst_installer_gui {
             m_fadeOutAnimation.From = 1;
             m_fadeOutAnimation.To = 0;
             m_fadeOutAnimation.Duration = new Duration(Constants.PageTransitionAnimationDuration);
-
-
-            // ContentRendered += MainWindow_ContentRendered;
-            // LayoutUpdated += MainWindow_LayoutUpdated;
-            
-
-        }
-
-        public Stopwatch m_layoutTimer = new Stopwatch();
-
-        // private void MainWindow_LayoutUpdated(object sender, EventArgs e) {
-        //     m_layoutTimer.Reset();
-        //     m_layoutTimer.Start();
-        // }
-
-        public void MainWindow_ContentRendered(object sender, EventArgs e) {
-            m_layoutTimer.Stop();
-            // if ( m_layoutTimer.ElapsedMilliseconds > 20 )
-                Logger.Error($"Long draw call detected! Spent {m_layoutTimer.ElapsedMilliseconds}ms computing layout and rendering...");
         }
 
         private void PrepareAnalytics() {
@@ -266,7 +247,7 @@ namespace amethyst_installer_gui {
                     m_speedrunnerModeActive = true;
 
                     // Show prompt
-                    Util.ShowMessageBox(Properties.Resources.Speedrunner_Description, Properties.Resources.Speedrunner_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(Localisation.Speedrunner_Description, Localisation.Speedrunner_Title, MessageBoxButton.OK);
 
                     // In a perfect world, we would play Dream music here, but unfortunately, licensing is a thing, so oh no!
 
@@ -281,7 +262,7 @@ namespace amethyst_installer_gui {
                 }
             } else {
 #endif
-                CurrentInstallerPage.OnButtonPrimary(sender, e);
+            CurrentInstallerPage.OnButtonPrimary(sender, e);
                 TimeSinceLastCooldown = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 #if !DEBUG
             }
@@ -362,6 +343,8 @@ namespace amethyst_installer_gui {
         }
 
         public void AnimateScroller(double from, double to) {
+
+            // TODO: Figure out why the fuck hiding buttons makes logs fucking work??????
 
             PageViewScroller.BeginAnimation(AnimatedScrollViewer.HorizontalOffsetProperty, null);
             DoubleAnimation horizontalAnimation = new DoubleAnimation();

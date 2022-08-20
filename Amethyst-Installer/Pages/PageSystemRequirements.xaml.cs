@@ -32,7 +32,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Properties.Resources.Page_Sysreq_Title;
+            return Localisation.Page_Sysreq_Title;
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
@@ -72,7 +72,7 @@ namespace amethyst_installer_gui.Pages {
         private void DisplayStorage() {
 
             // TODO: Check storage
-            diskSpaceDescription.Text = Properties.Resources.SystemRequirement_Description_Storage; // TODO: String format
+            diskSpaceDescription.Text = Localisation.SystemRequirement_Description_Storage; // TODO: String format
             diskSpace.State = Controls.TaskState.Question;
         }
 
@@ -89,7 +89,7 @@ namespace amethyst_installer_gui.Pages {
                 goodControllerCount++;
             }
 
-            usbControllersDescription.Text = string.Format(Properties.Resources.SystemRequirement_Description_UsbControllers,
+            usbControllersDescription.Text = string.Format(Localisation.SystemRequirement_Description_UsbControllers,
                 goodControllerCount, controllerStringBuffer.ToString());
 
             usbControllers.State = Controls.TaskState.Question;
@@ -105,7 +105,7 @@ namespace amethyst_installer_gui.Pages {
                 ) ? Controls.TaskState.Question : Controls.TaskState.Checkmark;
 
             // TODO: Change depending on connection type
-            string vrSystemFootnoteStringSrc = Properties.Resources.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
+            string vrSystemFootnoteStringSrc = Localisation.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
 
             string vrSystemFootnoteStringFirstPart = vrSystemFootnoteStringSrc.Substring(0, vrSystemFootnoteStringSrc.IndexOf('['));
             string vrSystemFootnoteStringHyperlink = vrSystemFootnoteStringSrc.Substring(vrSystemFootnoteStringSrc.IndexOf('[') + 1, vrSystemFootnoteStringSrc.IndexOf(']') - vrSystemFootnoteStringSrc.IndexOf('[') - 1);
@@ -134,17 +134,17 @@ namespace amethyst_installer_gui.Pages {
             if ( InstallerStateManager.IsWindowsAncient ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.InstallError_WindowsVersionIsOld);
+                compatibilityString.Append(Localisation.InstallError_WindowsVersionIsOld);
             }
             if ( !InstallerStateManager.SteamVRInstalled ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.InstallError_SteamVRNotFound);
+                compatibilityString.Append(Localisation.InstallError_SteamVRNotFound);
             }
             if ( InstallerStateManager.IsCloudPC ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Properties.Resources.InstallError_CloudPC);
+                compatibilityString.Append(Localisation.InstallError_CloudPC);
             }
 
             if ( compatibilityString.Length == 0 )
@@ -159,8 +159,8 @@ namespace amethyst_installer_gui.Pages {
 
             double minAxis = Math.Min(InstallerStateManager.PlayspaceBounds.x, InstallerStateManager.PlayspaceBounds.y);
             string compatibleDeviceDescriptionStringSrc =
-                    minAxis == 0 ? Properties.Resources.SystemRequirement_Description_Playspace_Unknown :
-                    (minAxis < Constants.MinimumPlayspaceSize ? Properties.Resources.SystemRequirement_Description_Playspace_Small : Properties.Resources.SystemRequirement_Description_Playspace_Good);
+                    minAxis == 0 ? Localisation.SystemRequirement_Description_Playspace_Unknown :
+                    (minAxis < Constants.MinimumPlayspaceSize ? Localisation.SystemRequirement_Description_Playspace_Small : Localisation.SystemRequirement_Description_Playspace_Good);
 
 
             // Subtitute playspace bounds into string
@@ -263,7 +263,7 @@ namespace amethyst_installer_gui.Pages {
         // Force only the first button to have focus
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 

@@ -39,7 +39,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Properties.Resources.Page_Download_Title;
+            return Localisation.Page_Download_Title;
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
@@ -84,7 +84,7 @@ namespace amethyst_installer_gui.Pages {
                     bool isCriticalError = true;
 
                     downloadItem.IsPending = false;
-                    downloadItem.ErrorMessage = isCriticalError ? Properties.Resources.Download_FailureCritical : Properties.Resources.Download_Failure;
+                    downloadItem.ErrorMessage = isCriticalError ? Localisation.Download_FailureCritical : Localisation.Download_Failure;
                     downloadItem.IsErrorCritical = isCriticalError;
                     downloadItem.DownloadFailed = true;
                 } else {
@@ -120,6 +120,8 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private async Task DownloadModule(int index) {
+
+            Logger.Info(index);
 
             var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
             m_currentProgressControl = ( DownloadItem ) downloadContent.Children[index];
@@ -201,7 +203,7 @@ namespace amethyst_installer_gui.Pages {
 #else
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Hidden;
 #endif
-            MainWindow.Instance.ActionButtonPrimary.Content = Properties.Resources.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 

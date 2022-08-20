@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:global="clr-namespace:amethyst_installer_gui"
              xmlns:local="clr-namespace:amethyst_installer_gui.Properties"
              xmlns:controls="clr-namespace:amethyst_installer_gui.Controls"
              mc:Ignorable="d"
@@ -29,11 +30,11 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="pathTextbox" Style="{DynamicResource WinUITextbox}" Tag="{x:Static local:Resources.InstallDestination_PathPlaceholder}" Grid.Column="0" Margin="0,0,12,0" />
-            <Button x:Name="openDirectory" Content="{x:Static local:Resources.InstallDestination_OpenFolder}" Grid.Column="1" Click="openDirectory_Click" />
+            <TextBox x:Name="pathTextbox" Style="{DynamicResource WinUITextbox}" Tag="{x:Static global:Localisation.InstallDestination_PathPlaceholder}" Grid.Column="0" Margin="0,0,12,0" />
+            <Button x:Name="openDirectory" Content="{x:Static global:Localisation.InstallDestination_OpenFolder}" Grid.Column="1" Click="openDirectory_Click" />
         </Grid>
 
-        <Label Grid.Row="2" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Padding="0" Content="{x:Static local:Resources.InstallDestination_AmethystInstallLocationFootnote}" />
+        <Label Grid.Row="2" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Padding="0" Content="{x:Static global:Localisation.InstallDestination_AmethystInstallLocationFootnote}" />
 
         <!-- TODO: Better UI for this card ; also hide it! -->
         <Border x:Name="installFoundCard" Background="{StaticResource BrushBackgroundAlt}" Grid.Row="3" Padding="8" CornerRadius="4" Margin="0,8,0,0">
@@ -44,7 +45,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Source="/Resources/Icons/4x/Warning.png" Width="20" Grid.Column="0"/>
-                <TextBlock Margin="8,0,0,0" Grid.Column="1" Foreground="White" Text="{x:Static local:Resources.InstallDestination_AmeInstallFound}" />
+                <TextBlock Margin="8,0,0,0" Grid.Column="1" Foreground="White" Text="{x:Static global:Localisation.InstallDestination_AmeInstallFound}" />
             </Grid>
         </Border>
         
