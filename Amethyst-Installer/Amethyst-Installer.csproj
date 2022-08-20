@@ -498,9 +498,6 @@
     <EmbeddedResource Include="Resources\Licenses.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Sounds\suspicious.ogg" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AutoGenerate\AutoGenerate.csproj">
       <Project>{3f1750ac-522a-4983-b648-84606bbeb8bb}</Project>
       <Name>AutoGenerate</Name>
