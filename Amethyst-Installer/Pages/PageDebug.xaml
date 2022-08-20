@@ -19,6 +19,7 @@
                 <Button x:Name="steamVRSettingsDetails" Content="SteamVR HMD" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Click="steamVRSettingsDetails_Click"/>
                 <Button x:Name="steamVRPlayspace" Content="SteamVR Playspace" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="steamVRPlayspace_Click"/>
                 <Button x:Name="plutosphereTest" Content="PlutoSphere Test" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="plutosphereTest_Click"/>
+                <Button x:Name="throwException" Content="Exception" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="throwException_Click"/>
             </StackPanel>
             <StackPanel x:Name="driverSearchContainer" Orientation="Horizontal" Margin="0,10,0,0">
                 <Grid Width="{Binding ElementName=driverSearchContainer, Path=ActualWidth}">
@@ -39,6 +40,16 @@
                     <TextBox x:Name="driverAddBox" Tag="Driver Path..." Grid.Column="0"></TextBox>
                     <Button x:Name="driverAdd" Grid.Column="1" Content="Register Driver" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="driverAdd_Click" Height="{Binding ElementName=driverAddContainer, Path=ActualHeight}"/>
                 </Grid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <ComboBox x:Name="soundsBox">
+
+                </ComboBox>
+                <Button x:Name="playSoundBtn" Margin="10,0,0,0" Click="playSoundBtn_Click">Play Sound</Button>
+                <ComboBox x:Name="desiredPageBox" Margin="10,0,0,0">
+
+                </ComboBox>
+                <Button x:Name="navigateToPageBtn" Margin="10,0,0,0" Click="navigateToPageBtn_Click">Go To Page</Button>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

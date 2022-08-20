@@ -22,6 +22,16 @@ namespace amethyst_installer_gui.Pages {
     public partial class PageDebug : UserControl, IInstallerPage {
         public PageDebug() {
             InitializeComponent();
+
+            foreach ( var item in Enum.GetValues(typeof(SoundEffect)) ) {
+                soundsBox.Items.Add(new ComboBoxItem() { Content = item.ToString(), Tag = ( SoundEffect ) item });
+            }
+
+            foreach ( var item in Enum.GetValues(typeof(InstallerState)) ) {
+                desiredPageBox.Items.Add(new ComboBoxItem() { Content = item.ToString(), Tag = ( InstallerState ) item });
+            }
+            soundsBox.SelectedIndex = 0;
+            desiredPageBox.SelectedIndex = 0;
         }
 
         public InstallerState GetInstallerState() {
@@ -38,9 +48,7 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.GoToLastPage();
         }
 
-        public void OnSelected() {
-
-        }
+        public void OnSelected() {}
 
         // Force only the first button to have focus
         public void OnFocus() {
@@ -103,6 +111,10 @@ namespace amethyst_installer_gui.Pages {
             Util.ShowMessageBox($"PlutoSphere: {CloudPCUtil.IsOnPlutoSphere()}", "PlutoSphere Status");
         }
 
+        private void throwException_Click(object sender, RoutedEventArgs e) {
+            throw new Exception("This is an intentional exception!");
+        }
+
         private void driverSearch_Click(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox($"Driver Search: {OpenVRUtil.GetDriverPath(driverSearchBox.Text)}", "Driver search");
@@ -112,6 +124,15 @@ namespace amethyst_installer_gui.Pages {
             OpenVRUtil.RegisterSteamVrDriver(driverAddBox.Text);
             Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "openvr", "openvrpaths.vrpath")));
             Util.ShowMessageBox($"Driver Registered!", "Driver search");
+        }
+
+        private void playSoundBtn_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(( SoundEffect ) ( ( ComboBoxItem ) soundsBox.SelectedItem ).Tag);
+        }
+
+        private void navigateToPageBtn_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.MoveNext);
+            MainWindow.Instance.SetPage(( InstallerState ) ( ( ComboBoxItem ) desiredPageBox.SelectedItem ).Tag);
         }
     }
 }
