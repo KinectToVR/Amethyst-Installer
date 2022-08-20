@@ -50,8 +50,8 @@ namespace amethyst_installer_gui.Pages {
                     InstallerStateManager.ModulesToInstall.Add(a);
                 }
 
-                installOptionsContainer.Children.Remove(installableItemControls[i]);
             }
+            installOptionsContainer.Children.Clear();
             installableItemControls.Clear();
         }
 
