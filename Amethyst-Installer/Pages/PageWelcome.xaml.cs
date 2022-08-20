@@ -65,7 +65,7 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.readPrivacyPolicy.Inlines.Add(firstPart);
             Hyperlink privacyPolicyLink = new Hyperlink()
             {
-                NavigateUri = new Uri($"https://k2vr.tech/{MainWindow.LocaleCode}/privacy"),
+                NavigateUri = new Uri($"https://k2vr.tech/{LocaleManager.CurrentLocale}/privacy"),
             };
             privacyPolicyLink.Inlines.Add(Localisation.Welcome_PrivacyPolicy);
             privacyPolicyLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;

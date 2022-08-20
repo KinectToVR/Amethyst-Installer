@@ -233,7 +233,7 @@ namespace amethyst_installer_gui {
         }
 
         public static string GenerateDocsURL(string relative) {
-            return Constants.DocsDomain + $"/{MainWindow.LocaleCode}/" + relative;
+            return Constants.DocsDomain + $"/{LocaleManager.CurrentLocale}/" + relative;
         }
     }
 }

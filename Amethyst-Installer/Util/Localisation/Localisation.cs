@@ -334,6 +334,26 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("SystemRequirement_Footnote_StageTracking_VirtualDesktop");
             }
         }
+        public static string SystemRequirement_Description_Headset_Via {
+            get {
+                return LocaleManager.GetString("SystemRequirement_Description_Headset_Via");
+            }
+        }
+        public static string SystemRequirement_Description_Headset_UsingLighthouse {
+            get {
+                return LocaleManager.GetString("SystemRequirement_Description_Headset_UsingLighthouse");
+            }
+        }
+        public static string SystemRequirement_Description_Headset_TrackingUnder {
+            get {
+                return LocaleManager.GetString("SystemRequirement_Description_Headset_TrackingUnder");
+            }
+        }
+        public static string SystemRequirement_Description_Headset_Phone {
+            get {
+                return LocaleManager.GetString("SystemRequirement_Description_Headset_Phone");
+            }
+        }
         public static string Welcome_OptIn {
             get {
                 return LocaleManager.GetString("Welcome_OptIn");

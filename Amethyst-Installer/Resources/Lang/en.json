@@ -18,6 +18,7 @@
   "InstallDestination_PathPlaceholder": "Please select a valid install folder",
   "InstallDestination_StorageFormatFree": "{0} free", /* {0} is required (it's going to get replaced with 420GB for example) */
 
+  /* Install Options download size and install size strings */
   "InstallOptions_DownloadSize": "Download Size:",
   "InstallOptions_InstallSize": "Installed Size:",
   "InstallOptions_TotalDownloadSize": "Total Download Size:",
@@ -77,11 +78,12 @@
   "SystemRequirement_Description_UsbControllers": "{0} compatible USB controllers found ({1})", /* {0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
   "SystemRequirement_Description_UsbControllers_One": "{0} compatible USB controller found ({1})", /* {0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
   "SystemRequirement_Footnote_StageTracking_VirtualDesktop": "We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.", /* The first string of text surrounded by []s will get turned into the hyperlink */
+  "SystemRequirement_Description_Headset_Via": "via",
+  "SystemRequirement_Description_Headset_UsingLighthouse": "using Lighthouse devices",
+  "SystemRequirement_Description_Headset_TrackingUnder": "Tracking under",
+  "SystemRequirement_Description_Headset_Phone": "Mobile Phone",
   
   "Welcome_OptIn": "Opt in to anonymous analytics and crash reports.",
   "Welcome_PrivacyPolicy": "Privacy Policy", /* The text for the link */
   "Welcome_ReadPrivacyPolicy": "Read our %s% to see what we send.", /* %s% gets replaced with the link */
-
-  /* TOOD: Add Phone + Lighthouse + English my behated */
-  
 }

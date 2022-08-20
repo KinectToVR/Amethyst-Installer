@@ -31,6 +31,12 @@ namespace amethyst_installer_gui {
 
         public static AnalyticsData Analytics = new AnalyticsData();
 
+#if DEBUG
+        public static bool DebugMode { get; private set; } = true;
+#else
+        public static bool DebugMode { get; private set; } = false;
+#endif
+
         /// <summary>
         /// Returns the current instance of the <see cref="MainWindow"/>
         /// </summary>
@@ -41,12 +47,6 @@ namespace amethyst_installer_gui {
                 // ( Application.Current.MainWindow as MainWindow ); 
             }
         }
-
-        /// <summary>
-        /// The current locale string
-        /// </summary>
-        public static string LocaleCode = "en";
-        // TODO: actually get the locale
 
         // Please read the shit
         private const int NextButtonCooldownMillis  = 1000;
@@ -60,6 +60,8 @@ namespace amethyst_installer_gui {
         private DoubleAnimation m_fadeOutAnimation;
 
         public MainWindow() {
+            // TODO: Launch args can set debug mode
+            // DebugMode = DebugMode && 
             InitializeComponent();
 
             // Init pages
@@ -106,7 +108,7 @@ namespace amethyst_installer_gui {
             Analytics.WindowsBuild = "UNIMPLEMENTED"; // TODO: Windows build
         }
 
-        #region Win UI 3 Window Functionality
+#region Win UI 3 Window Functionality
 
         // Dragging
         private void Titlebar_MouseDown(object sender, MouseButtonEventArgs e) {
@@ -129,9 +131,9 @@ namespace amethyst_installer_gui {
             WindowState = WindowState.Minimized;
         }
 
-        #endregion
+#endregion
 
-        #region Installer pages
+#region Installer pages
 
         public IInstallerPage CurrentInstallerPage {
             get { return ( IInstallerPage ) GetValue(CurrentInstallerPageProperty); }
@@ -262,7 +264,7 @@ namespace amethyst_installer_gui {
                 }
             } else {
 #endif
-            CurrentInstallerPage.OnButtonPrimary(sender, e);
+                CurrentInstallerPage.OnButtonPrimary(sender, e);
                 TimeSinceLastCooldown = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 #if !DEBUG
             }
@@ -278,7 +280,7 @@ namespace amethyst_installer_gui {
             CurrentInstallerPage.OnButtonTertiary(sender, e);
         }
 
-        #endregion
+#endregion
 
         int viewBntCount = 0;
         readonly string[] altLogsBtnStrings = new string[]
@@ -307,12 +309,10 @@ namespace amethyst_installer_gui {
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e) {
-#if DEBUG
-            if ( e.Key == Key.F12 ) {
+            if ( e.Key == Key.F12 && DebugMode ) {
                 SoundPlayer.PlaySound(SoundEffect.Show);
                 OverridePage(InstallerState.Debug);
             }
-#endif
         }
 
         void speedunTimer_Tick(object sender, EventArgs e) {
