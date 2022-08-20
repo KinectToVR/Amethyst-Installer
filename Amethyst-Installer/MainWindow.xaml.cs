@@ -105,7 +105,7 @@ namespace amethyst_installer_gui {
             Analytics.HeadsetModel = OpenVRUtil.HmdType;
             Analytics.TrackingUniverse = OpenVRUtil.TrackingType;
             Analytics.ConnectionType = OpenVRUtil.ConnectionType;
-            Analytics.WindowsBuild = "UNIMPLEMENTED"; // TODO: Windows build
+            Analytics.WindowsBuild = $"{Environment.OSVersion.Version.ToString(3)}.{WindowsUtils.GetDisplayVersion()}"; // TODO: Windows build
         }
 
 #region Win UI 3 Window Functionality
