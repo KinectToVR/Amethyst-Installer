@@ -4,9 +4,6 @@
 // This file is auto-generated, do not edit it.
 //
 //=============================================================================
-
-// TODO: Strip this file down aggressively
-
 #if !OPENVR_XR_API
 
 using System;
@@ -1040,6 +1037,16 @@ namespace Valve.VR {
         internal _GetOverlayCurvature GetOverlayCurvature;
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        internal delegate EVROverlayError _SetOverlayPreCurvePitch(ulong ulOverlayHandle, float fRadians);
+        [MarshalAs(UnmanagedType.FunctionPtr)]
+        internal _SetOverlayPreCurvePitch SetOverlayPreCurvePitch;
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        internal delegate EVROverlayError _GetOverlayPreCurvePitch(ulong ulOverlayHandle, ref float pfRadians);
+        [MarshalAs(UnmanagedType.FunctionPtr)]
+        internal _GetOverlayPreCurvePitch GetOverlayPreCurvePitch;
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         internal delegate EVROverlayError _SetOverlayTextureColorSpace(ulong ulOverlayHandle, EColorSpace eTextureColorSpace);
         [MarshalAs(UnmanagedType.FunctionPtr)]
         internal _SetOverlayTextureColorSpace SetOverlayTextureColorSpace;
@@ -1138,6 +1145,11 @@ namespace Valve.VR {
         internal delegate EVROverlayError _GetTransformForOverlayCoordinates(ulong ulOverlayHandle, ETrackingUniverseOrigin eTrackingOrigin, HmdVector2_t coordinatesInOverlay, ref HmdMatrix34_t pmatTransform);
         [MarshalAs(UnmanagedType.FunctionPtr)]
         internal _GetTransformForOverlayCoordinates GetTransformForOverlayCoordinates;
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        internal delegate EVROverlayError _WaitFrameSync(uint nTimeoutMs);
+        [MarshalAs(UnmanagedType.FunctionPtr)]
+        internal _WaitFrameSync WaitFrameSync;
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         internal delegate bool _PollNextOverlayEvent(ulong ulOverlayHandle, ref VREvent_t pEvent, uint uncbVREvent);
@@ -1930,7 +1942,7 @@ namespace Valve.VR {
     [StructLayout(LayoutKind.Sequential)]
     public struct IVRBlockQueue {
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        internal delegate EBlockQueueError _Create(ref ulong pulQueueHandle, IntPtr pchPath, uint unBlockDataSize, uint unBlockHeaderSize, uint unBlockCount);
+        internal delegate EBlockQueueError _Create(ref ulong pulQueueHandle, IntPtr pchPath, uint unBlockDataSize, uint unBlockHeaderSize, uint unBlockCount, uint unFlags);
         [MarshalAs(UnmanagedType.FunctionPtr)]
         internal _Create Create;
 
@@ -2992,6 +3004,15 @@ namespace Valve.VR {
             EVROverlayError result = FnTable.GetOverlayCurvature(ulOverlayHandle,ref pfCurvature);
             return result;
         }
+        public EVROverlayError SetOverlayPreCurvePitch(ulong ulOverlayHandle, float fRadians) {
+            EVROverlayError result = FnTable.SetOverlayPreCurvePitch(ulOverlayHandle,fRadians);
+            return result;
+        }
+        public EVROverlayError GetOverlayPreCurvePitch(ulong ulOverlayHandle, ref float pfRadians) {
+            pfRadians = 0;
+            EVROverlayError result = FnTable.GetOverlayPreCurvePitch(ulOverlayHandle,ref pfRadians);
+            return result;
+        }
         public EVROverlayError SetOverlayTextureColorSpace(ulong ulOverlayHandle, EColorSpace eTextureColorSpace) {
             EVROverlayError result = FnTable.SetOverlayTextureColorSpace(ulOverlayHandle,eTextureColorSpace);
             return result;
@@ -3075,6 +3096,10 @@ namespace Valve.VR {
         }
         public EVROverlayError GetTransformForOverlayCoordinates(ulong ulOverlayHandle, ETrackingUniverseOrigin eTrackingOrigin, HmdVector2_t coordinatesInOverlay, ref HmdMatrix34_t pmatTransform) {
             EVROverlayError result = FnTable.GetTransformForOverlayCoordinates(ulOverlayHandle,eTrackingOrigin,coordinatesInOverlay,ref pmatTransform);
+            return result;
+        }
+        public EVROverlayError WaitFrameSync(uint nTimeoutMs) {
+            EVROverlayError result = FnTable.WaitFrameSync(nTimeoutMs);
             return result;
         }
         // This is a terrible hack to workaround the fact that VRControllerState_t and VREvent_t were
@@ -3982,10 +4007,10 @@ namespace Valve.VR {
         internal CVRBlockQueue(IntPtr pInterface) {
             FnTable = ( IVRBlockQueue ) Marshal.PtrToStructure(pInterface, typeof(IVRBlockQueue));
         }
-        public EBlockQueueError Create(ref ulong pulQueueHandle, string pchPath, uint unBlockDataSize, uint unBlockHeaderSize, uint unBlockCount) {
+        public EBlockQueueError Create(ref ulong pulQueueHandle, string pchPath, uint unBlockDataSize, uint unBlockHeaderSize, uint unBlockCount, uint unFlags) {
             pulQueueHandle = 0;
             IntPtr pchPathUtf8 = Utils.ToUtf8(pchPath);
-            EBlockQueueError result = FnTable.Create(ref pulQueueHandle,pchPathUtf8,unBlockDataSize,unBlockHeaderSize,unBlockCount);
+            EBlockQueueError result = FnTable.Create(ref pulQueueHandle,pchPathUtf8,unBlockDataSize,unBlockHeaderSize,unBlockCount,unFlags);
             Marshal.FreeHGlobal(pchPathUtf8);
             return result;
         }
@@ -4167,6 +4192,8 @@ namespace Valve.VR {
         Prop_ManufacturerSerialNumber_String = 1049,
         Prop_ComputedSerialNumber_String = 1050,
         Prop_EstimatedDeviceFirstUseTime_Int32 = 1051,
+        Prop_DevicePowerUsage_Float = 1052,
+        Prop_IgnoreMotionForStandby_Bool = 1053,
         Prop_ReportsTimeSinceVSync_Bool = 2000,
         Prop_SecondsFromVsyncToPhotons_Float = 2001,
         Prop_DisplayFrequency_Float = 2002,
@@ -4255,10 +4282,14 @@ namespace Valve.VR {
         Prop_CameraExposureTime_Float = 2088,
         Prop_CameraGlobalGain_Float = 2089,
         Prop_DashboardScale_Float = 2091,
+        Prop_PeerButtonInfo_String = 2092,
         Prop_IpdUIRangeMinMeters_Float = 2100,
         Prop_IpdUIRangeMaxMeters_Float = 2101,
         Prop_Hmd_SupportsHDCP14LegacyCompat_Bool = 2102,
         Prop_Hmd_SupportsMicMonitoring_Bool = 2103,
+        Prop_Hmd_SupportsDisplayPortTrainingMode_Bool = 2104,
+        Prop_SupportsRoomViewDirect_Bool = 2105,
+        Prop_SupportsAppThrottling_Bool = 2106,
         Prop_DriverRequestedMuraCorrectionMode_Int32 = 2200,
         Prop_DriverRequestedMuraFeather_InnerLeft_Int32 = 2201,
         Prop_DriverRequestedMuraFeather_InnerRight_Int32 = 2202,
@@ -4352,6 +4383,7 @@ namespace Valve.VR {
         Submit_VulkanTextureWithArrayData = 64,
         Submit_GlArrayTexture = 128,
         Submit_Reserved2 = 32768,
+        Submit_Reserved3 = 65536,
     }
     public enum EVRState {
         Undefined = -1,
@@ -4437,6 +4469,9 @@ namespace Valve.VR {
         VREvent_ShowDevTools = 529,
         VREvent_DesktopViewUpdating = 530,
         VREvent_DesktopViewReady = 531,
+        VREvent_StartDashboard = 532,
+        VREvent_ElevatePrism = 533,
+        VREvent_OverlayClosed = 534,
         VREvent_Notification_Shown = 600,
         VREvent_Notification_Hidden = 601,
         VREvent_Notification_BeginInteraction = 602,
@@ -4446,6 +4481,7 @@ namespace Valve.VR {
         VREvent_QuitAcknowledged = 703,
         VREvent_DriverRequestedQuit = 704,
         VREvent_RestartRequested = 705,
+        VREvent_InvalidateSwapTextureSets = 706,
         VREvent_ChaperoneDataHasChanged = 800,
         VREvent_ChaperoneUniverseHasChanged = 801,
         VREvent_ChaperoneTempDataHasChanged = 802,
@@ -4500,6 +4536,7 @@ namespace Valve.VR {
         VREvent_Compositor_OutOfVideoMemory = 1417,
         VREvent_Compositor_DisplayModeNotSupported = 1418,
         VREvent_Compositor_StageOverrideReady = 1419,
+        VREvent_Compositor_RequestDisconnectReconnect = 1420,
         VREvent_TrackedCamera_StartVideoStream = 1500,
         VREvent_TrackedCamera_StopVideoStream = 1501,
         VREvent_TrackedCamera_PauseVideoStream = 1502,
@@ -4677,6 +4714,7 @@ namespace Valve.VR {
         TextureAlreadyLocked = 31,
         TextureLockCapacityReached = 32,
         TextureNotLocked = 33,
+        TimedOut = 34,
     }
     public enum EVRApplicationType {
         VRApplication_Other = 0,
@@ -4692,7 +4730,8 @@ namespace Valve.VR {
         VRApplication_OpenXRScene = 10,
         VRApplication_OpenXROverlay = 11,
         VRApplication_Prism = 12,
-        VRApplication_Max = 13,
+        VRApplication_RoomView = 13,
+        VRApplication_Max = 14,
     }
     public enum EVRFirmwareError {
         None = 0,
@@ -4774,8 +4813,20 @@ namespace Valve.VR {
         Init_PrismNeedsNewDrivers = 151,
         Init_PrismStartupTimedOut = 152,
         Init_CouldNotStartPrism = 153,
-        Init_CreateDriverDirectDeviceFailed = 154,
-        Init_PrismExitedUnexpectedly = 155,
+        Init_PrismClientInitFailed = 154,
+        Init_PrismClientStartFailed = 155,
+        Init_PrismExitedUnexpectedly = 156,
+        Init_BadLuid = 157,
+        Init_NoServerForAppContainer = 158,
+        Init_DuplicateBootstrapper = 159,
+        Init_VRDashboardServicePending = 160,
+        Init_VRDashboardServiceTimeout = 161,
+        Init_VRDashboardServiceStopped = 162,
+        Init_VRDashboardAlreadyStarted = 163,
+        Init_VRDashboardCopyFailed = 164,
+        Init_VRDashboardTokenFailure = 165,
+        Init_VRDashboardEnvironmentFailure = 166,
+        Init_VRDashboardPathFailure = 167,
         Driver_Failed = 200,
         Driver_Unknown = 201,
         Driver_HmdUnknown = 202,
@@ -4789,6 +4840,8 @@ namespace Valve.VR {
         Driver_HmdDriverIdOutOfBounds = 211,
         Driver_HmdDisplayMirrored = 212,
         Driver_HmdDisplayNotFoundLaptop = 213,
+        Driver_PeerDriverNotInstalled = 214,
+        Driver_WirelessHmdNotConnected = 215,
         IPC_ServerInitFailed = 300,
         IPC_ConnectFailed = 301,
         IPC_SharedStateInitFailed = 302,
@@ -4894,8 +4947,11 @@ namespace Valve.VR {
         Compositor_WindowInterfaceIsNull = 491,
         Compositor_SystemLayerCreateInstance = 492,
         Compositor_SystemLayerCreateSession = 493,
+        Compositor_CreateInverseDistortUVs = 494,
+        Compositor_CreateBackbufferDepth = 495,
         VendorSpecific_UnableToConnectToOculusRuntime = 1000,
         VendorSpecific_WindowsNotInDevMode = 1001,
+        VendorSpecific_OculusLinkNotEnabled = 1002,
         VendorSpecific_HmdFound_CantOpenDevice = 1101,
         VendorSpecific_HmdFound_UnableToRequestConfigStart = 1102,
         VendorSpecific_HmdFound_NoStoredConfig = 1103,
@@ -4910,6 +4966,7 @@ namespace Valve.VR {
         VendorSpecific_HmdFound_UserDataError = 1112,
         VendorSpecific_HmdFound_ConfigFailedSanityCheck = 1113,
         VendorSpecific_OculusRuntimeBadInstall = 1114,
+        VendorSpecific_HmdFound_UnexpectedConfiguration_1 = 1115,
         Steam_SteamInstallationNotFound = 2000,
         LastError = 2001,
     }
@@ -5103,6 +5160,7 @@ namespace Valve.VR {
         HideLaserIntersection = 524288,
         WantsModalBehavior = 1048576,
         IsPremultiplied = 2097152,
+        IgnoreTextureAlpha = 4194304,
     }
     public enum VRMessageOverlayResponse {
         ButtonPress_0 = 0,
@@ -5161,6 +5219,7 @@ namespace Valve.VR {
         BC4 = 2,
         BC7 = 3,
         BC7_SRGB = 4,
+        RGBA16_FLOAT = 5,
     }
     public enum EVRNotificationType {
         Transient = 0,
@@ -5269,6 +5328,9 @@ namespace Valve.VR {
         BlockQueueRead_Latest = 0,
         BlockQueueRead_New = 1,
         BlockQueueRead_Next = 2,
+    }
+    public enum EBlockQueueCreationFlag {
+        BlockQueueFlag_OwnerIsReader = 1,
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -5968,6 +6030,7 @@ namespace Valve.VR {
         public ushort unHeight;
         public IntPtr rubTextureMapData; // const uint8_t *
         public EVRRenderModelTextureFormat format;
+        public ushort unMipLevels;
     }
     // This structure is for backwards binary compatibility on Linux and OSX only
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
@@ -5976,17 +6039,20 @@ namespace Valve.VR {
         public ushort unHeight;
         public IntPtr rubTextureMapData; // const uint8_t *
         public EVRRenderModelTextureFormat format;
+        public ushort unMipLevels;
         public RenderModel_TextureMap_t_Packed(RenderModel_TextureMap_t unpacked) {
             this.unWidth = unpacked.unWidth;
             this.unHeight = unpacked.unHeight;
             this.rubTextureMapData = unpacked.rubTextureMapData;
             this.format = unpacked.format;
+            this.unMipLevels = unpacked.unMipLevels;
         }
         public void Unpack(ref RenderModel_TextureMap_t unpacked) {
             unpacked.unWidth = this.unWidth;
             unpacked.unHeight = this.unHeight;
             unpacked.rubTextureMapData = this.rubTextureMapData;
             unpacked.format = this.format;
+            unpacked.unMipLevels = this.unMipLevels;
         }
     }
     [StructLayout(LayoutKind.Sequential)]
@@ -6997,7 +7063,7 @@ namespace Valve.VR {
         public const uint k_unVROverlayMaxNameLength = 128;
         public const uint k_unMaxOverlayCount = 128;
         public const uint k_unMaxOverlayIntersectionMaskPrimitivesCount = 32;
-        public const string IVROverlay_Version = "IVROverlay_025";
+        public const string IVROverlay_Version = "IVROverlay_026";
         public const string IVROverlayView_Version = "IVROverlayView_003";
         public const uint k_unHeadsetViewMaxWidth = 3840;
         public const uint k_unHeadsetViewMaxHeight = 2160;
@@ -7045,6 +7111,8 @@ namespace Valve.VR {
         public const string k_pch_SteamVR_MotionSmoothingOverride_Int32 = "motionSmoothingOverride";
         public const string k_pch_SteamVR_FramesToThrottle_Int32 = "framesToThrottle";
         public const string k_pch_SteamVR_AdditionalFramesToPredict_Int32 = "additionalFramesToPredict";
+        public const string k_pch_SteamVR_WorldScale_Float = "worldScale";
+        public const string k_pch_SteamVR_FovScale_Int32 = "fovScale";
         public const string k_pch_SteamVR_DisableAsyncReprojection_Bool = "disableAsync";
         public const string k_pch_SteamVR_ForceFadeOnBadTracking_Bool = "forceFadeOnBadTracking";
         public const string k_pch_SteamVR_DefaultMirrorView_Int32 = "mirrorView";
@@ -7088,6 +7156,7 @@ namespace Valve.VR {
         public const string k_pch_SteamVR_BlockOculusSDKOnOpenVRLaunchOption_Bool = "blockOculusSDKOnOpenVRLaunchOption";
         public const string k_pch_SteamVR_BlockOculusSDKOnAllLaunches_Bool = "blockOculusSDKOnAllLaunches";
         public const string k_pch_SteamVR_HDCPLegacyCompatibility_Bool = "hdcp14legacyCompatibility";
+        public const string k_pch_SteamVR_DisplayPortTrainingMode_Int = "displayPortTrainingMode";
         public const string k_pch_SteamVR_UsePrism_Bool = "usePrism";
         public const string k_pch_DirectMode_Section = "direct_mode";
         public const string k_pch_DirectMode_Enable_Bool = "enable";
@@ -7196,6 +7265,7 @@ namespace Valve.VR {
         public const string k_pch_Dashboard_DesktopScale = "desktopScale";
         public const string k_pch_Dashboard_DashboardScale = "dashboardScale";
         public const string k_pch_Dashboard_UseStandaloneSystemLayer = "standaloneSystemLayer";
+        public const string k_pch_Dashboard_StickyDashboard = "stickyDashboard";
         public const string k_pch_modelskin_Section = "modelskins";
         public const string k_pch_Driver_Enable_Bool = "enable";
         public const string k_pch_Driver_BlockedBySafemode_Bool = "blocked_by_safe_mode";
@@ -7282,7 +7352,7 @@ namespace Valve.VR {
         public const string k_pchPathClientAppKey = "/client_info/app_key";
         public const ulong k_ulInvalidPathHandle = 0;
         public const string IVRPaths_Version = "IVRPaths_001";
-        public const string IVRBlockQueue_Version = "IVRBlockQueue_004";
+        public const string IVRBlockQueue_Version = "IVRBlockQueue_005";
 
         static uint VRToken { get; set; }
 
@@ -7601,3 +7671,4 @@ namespace Valve.VR {
 
 }
 #endif
+
