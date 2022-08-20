@@ -59,7 +59,7 @@ namespace amethyst_installer_gui {
             ( AppWindow.Instance.Pages[InstallerState.Exception] as PageException ).currentException = e.Exception;
             AppWindow.Instance.OverridePage(InstallerState.Exception);
             AppWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
-            SoundPlayer.PlaySound(SoundEffect.Focus);
+            SoundPlayer.PlaySound(SoundEffect.Error);
         }
     }
 }
