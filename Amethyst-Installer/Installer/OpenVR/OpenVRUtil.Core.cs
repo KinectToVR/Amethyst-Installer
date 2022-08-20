@@ -63,7 +63,7 @@ namespace amethyst_installer_gui.Installer {
         private static void LoadOpenVrPaths(bool force = false) {
 
             if ( s_openvrpaths == null || force == true ) {
-                s_openvrPathsPath = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "openvr", "openvrpaths.vrpath"));
+                s_openvrPathsPath = Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local", "openvr", "openvrpaths.vrpath"));
                 if ( !File.Exists(s_openvrPathsPath) ) {
                     Logger.Warn("openvrpaths.vrpath doesn't exist on the current system... Is SteamVR installed, and has it been run at least once?");
                     s_openvrpaths = null;

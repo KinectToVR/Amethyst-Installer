@@ -122,7 +122,7 @@ namespace amethyst_installer_gui.Pages {
         private void driverAdd_Click(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             OpenVRUtil.RegisterSteamVrDriver(driverAddBox.Text);
-            Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "openvr", "openvrpaths.vrpath")));
+            Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local", "openvr", "openvrpaths.vrpath")));
             Util.ShowMessageBox($"Driver Registered!", "Driver search");
         }
 
