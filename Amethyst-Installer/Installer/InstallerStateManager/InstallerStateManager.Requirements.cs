@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using amethyst_installer_gui.PInvoke;
 using Newtonsoft.Json;
 
@@ -42,101 +43,111 @@ namespace amethyst_installer_gui.Installer {
 
             // TODO: actually compute the requirements for installing amethyst
 
-            // STEAMVR
-            {
-                // Detect if we are even able to install Amethyst
-                SteamVRInstalled = Directory.Exists(OpenVRUtil.RuntimePath());
-
-                // Determine SteamVR playspace bounds
-                PlayspaceBounds = OpenVRUtil.GetPlayspaceBounds();
-
-                Logger.Info($"Detected VR headset type {OpenVRUtil.HmdType}, connected using {OpenVRUtil.ConnectionType}; tracking type: {OpenVRUtil.TrackingType}");
-                Logger.Info($"Playspace bounds: {PlayspaceBounds}");
-            }
-
-            // K2EX UPGRADING
-            {
-                // Try locating K2EX
-                K2EXPath = K2EXUtil.LocateK2EX();
-                K2EXDetected = K2EXPath.Length > 0 && Directory.Exists(K2EXPath);
-            }
-
-            // WINDOWS VERSION GATEKEEP
-            {
-                // If older than Windows 10
-                if ( Environment.OSVersion.Version.Major < 10 ) {
-                    IsWindowsAncient = true;
-                }
-                // If the user is running a Windows 10 install that's older than 20H2
-                if ( Environment.OSVersion.Version.Build < ( int ) WindowsUtils.WindowsMajorReleases.Win10_20H2 ) {
-                    IsWindowsAncient = true;
-                }
-                Logger.Info($"OS too old: {IsWindowsAncient} ; OS Version: {Environment.OSVersion.Version} ; Version String: {WindowsUtils.GetDisplayVersion()}");
-            }
-
-            // USB CONTROLLERS
-            {
-                // TODO: USB controller shit
-
-                // Get USB Controller info
-                var deviceTree = new DeviceTree();
-                // Selects USB devices exclusively
-                foreach ( var device in deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.USB) ) {
-                    // USB Controllers have their Enumerator property set to PCI, while everything else has Enumerator set to USB
-                    if ( device.EnumeratorName == "PCI" ) {
-                        Logger.Info($"Found USB Controller: Name: {device.FriendlyName}; Location: {device.LocationInfo}; Description: {device.Description}");
-                        UsbControllers.Add(new UsbControllerData(device));
-                    }
-                }
-            }
-
-            // CLOUD PC DETECTION
-            {
-                bool isPluto = CloudPCUtil.IsOnPlutoSphere();
-                bool isShadow = CloudPCUtil.IsRunningOnShadow();
-                IsCloudPC = isPluto || isShadow;
-                if ( isPluto ) {
-                    Logger.Info($"Detected Plutosphere! Amethyst does not work in a networked environment!");
-                }
-                if ( isShadow ) {
-                    Logger.Info($"Detected Shadow! Amethyst does not work in a networked environment!");
-                }
-            }
+            CheckSteamVR();
+            CheckAmethyst();
+            CheckK2EX();
+            CheckOS();
+            DetectUsbControllers();
+            DetectCloudPc();
+            DetectLaptop();
 
             CanInstall = !IsCloudPC && SteamVRInstalled && !IsWindowsAncient;
+        }
 
-            // SHIT TO DETECT IF WE'RE USING A LAPTOP
-            {
-                // TODO: YEET!
-                // This is temp, just to see if this is reliable for now
-                Logger.Warn($"PowerButtonPresent: {PowerProvider.SystemPowerCapabilites.PowerButtonPresent}");
-                Logger.Warn($"SleepButtonPresent: {PowerProvider.SystemPowerCapabilites.SleepButtonPresent}");
-                Logger.Warn($"LidPresent: {PowerProvider.SystemPowerCapabilites.LidPresent}");
-                Logger.Warn($"SystemS1: {PowerProvider.SystemPowerCapabilites.SystemS1}");
-                Logger.Warn($"SystemS2: {PowerProvider.SystemPowerCapabilites.SystemS2}");
-                Logger.Warn($"SystemS3: {PowerProvider.SystemPowerCapabilites.SystemS3}");
-                Logger.Warn($"SystemS4: {PowerProvider.SystemPowerCapabilites.SystemS4}");
-                Logger.Warn($"SystemS5: {PowerProvider.SystemPowerCapabilites.SystemS5}");
-                Logger.Warn($"HiberFilePresent: {PowerProvider.SystemPowerCapabilites.HiberFilePresent}");
-                Logger.Warn($"FullWake: {PowerProvider.SystemPowerCapabilites.FullWake}");
-                Logger.Warn($"VideoDimPresent: {PowerProvider.SystemPowerCapabilites.VideoDimPresent}");
-                Logger.Warn($"ApmPresent: {PowerProvider.SystemPowerCapabilites.ApmPresent}");
-                Logger.Warn($"UpsPresent: {PowerProvider.SystemPowerCapabilites.UpsPresent}");
-                Logger.Warn($"ThermalControl: {PowerProvider.SystemPowerCapabilites.ThermalControl}");
-                Logger.Warn($"ProcessorThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorThrottle}");
-                Logger.Warn($"ProcessorMinThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorMinThrottle}");
-                Logger.Warn($"ProcessorMaxThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorMaxThrottle}");
-                Logger.Warn($"FastSystemS4: {PowerProvider.SystemPowerCapabilites.FastSystemS4}");
-                Logger.Warn($"Hiberboot: {PowerProvider.SystemPowerCapabilites.Hiberboot}");
-                Logger.Warn($"WakeAlarmPresent: {PowerProvider.SystemPowerCapabilites.WakeAlarmPresent}");
-                Logger.Warn($"WakeAlarmPresent: {PowerProvider.SystemPowerCapabilites.WakeAlarmPresent}");
-                Logger.Warn($"AoAc: {PowerProvider.SystemPowerCapabilites.AoAc}");
-                Logger.Warn($"DiskSpinDown: {PowerProvider.SystemPowerCapabilites.DiskSpinDown}");
-                Logger.Warn($"HiberFileType: {PowerProvider.SystemPowerCapabilites.HiberFileType}");
-                Logger.Warn($"AoAcConnectivitySupported: {PowerProvider.SystemPowerCapabilites.AoAcConnectivitySupported}");
-                Logger.Warn($"SystemBatteriesPresent: {PowerProvider.SystemPowerCapabilites.SystemBatteriesPresent}");
-                Logger.Warn($"BatteriesAreShortTerm: {PowerProvider.SystemPowerCapabilites.BatteriesAreShortTerm}");
+        private static void CheckSteamVR() {
+
+            // Detect if we are even able to install Amethyst
+            SteamVRInstalled = Directory.Exists(OpenVRUtil.RuntimePath());
+
+            // Determine SteamVR playspace bounds
+            PlayspaceBounds = OpenVRUtil.GetPlayspaceBounds();
+
+            Logger.Info($"Detected VR headset type {OpenVRUtil.HmdType}, connected using {OpenVRUtil.ConnectionType}; tracking type: {OpenVRUtil.TrackingType}");
+            Logger.Info($"Playspace bounds: {PlayspaceBounds}");
+        }
+
+        private static void CheckAmethyst() {
+
+            // TODO: Check for Amethyst
+        }
+        
+
+        private static void CheckK2EX() {
+
+            // Try locating K2EX
+            K2EXPath = K2EXUtil.LocateK2EX();
+            K2EXDetected = K2EXPath.Length > 0 && Directory.Exists(K2EXPath);
+        }
+
+        private static void CheckOS() {
+            // If older than Windows 10
+            if ( Environment.OSVersion.Version.Major < 10 ) {
+                IsWindowsAncient = true;
             }
+            // If the user is running a Windows 10 install that's older than 20H2
+            if ( Environment.OSVersion.Version.Build < ( int ) WindowsUtils.WindowsMajorReleases.Win10_20H2 ) {
+                IsWindowsAncient = true;
+            }
+            Logger.Info($"OS too old: {IsWindowsAncient} ; OS Version: {Environment.OSVersion.Version} ; Version String: {WindowsUtils.GetDisplayVersion()}");
+        }
+
+        private static void DetectUsbControllers() {
+            // TODO: USB controller shit
+
+            // Get USB Controller info
+            var deviceTree = new DeviceTree();
+            // Selects USB devices exclusively
+            foreach ( var device in deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.USB) ) {
+                // USB Controllers have their Enumerator property set to PCI, while everything else has Enumerator set to USB
+                if ( device.EnumeratorName == "PCI" ) {
+                    Logger.Info($"Found USB Controller: Name: {device.FriendlyName}; Location: {device.LocationInfo}; Description: {device.Description}");
+                    UsbControllers.Add(new UsbControllerData(device));
+                }
+            }
+        }
+
+        private static void DetectCloudPc() {
+            bool isPluto = CloudPCUtil.IsOnPlutoSphere();
+            bool isShadow = CloudPCUtil.IsRunningOnShadow();
+            IsCloudPC = isPluto || isShadow;
+            if ( isPluto ) {
+                Logger.Info($"Detected Plutosphere! Amethyst does not work in a networked environment!");
+            }
+            if ( isShadow ) {
+                Logger.Info($"Detected Shadow! Amethyst does not work in a networked environment!");
+            }
+        }
+
+        private static void DetectLaptop() {
+            // TODO: YEET!
+            // This is temp, just to see if this is reliable for now
+            Logger.Warn($"PowerButtonPresent: {PowerProvider.SystemPowerCapabilites.PowerButtonPresent}");
+            Logger.Warn($"SleepButtonPresent: {PowerProvider.SystemPowerCapabilites.SleepButtonPresent}");
+            Logger.Warn($"LidPresent: {PowerProvider.SystemPowerCapabilites.LidPresent}");
+            Logger.Warn($"SystemS1: {PowerProvider.SystemPowerCapabilites.SystemS1}");
+            Logger.Warn($"SystemS2: {PowerProvider.SystemPowerCapabilites.SystemS2}");
+            Logger.Warn($"SystemS3: {PowerProvider.SystemPowerCapabilites.SystemS3}");
+            Logger.Warn($"SystemS4: {PowerProvider.SystemPowerCapabilites.SystemS4}");
+            Logger.Warn($"SystemS5: {PowerProvider.SystemPowerCapabilites.SystemS5}");
+            Logger.Warn($"HiberFilePresent: {PowerProvider.SystemPowerCapabilites.HiberFilePresent}");
+            Logger.Warn($"FullWake: {PowerProvider.SystemPowerCapabilites.FullWake}");
+            Logger.Warn($"VideoDimPresent: {PowerProvider.SystemPowerCapabilites.VideoDimPresent}");
+            Logger.Warn($"ApmPresent: {PowerProvider.SystemPowerCapabilites.ApmPresent}");
+            Logger.Warn($"UpsPresent: {PowerProvider.SystemPowerCapabilites.UpsPresent}");
+            Logger.Warn($"ThermalControl: {PowerProvider.SystemPowerCapabilites.ThermalControl}");
+            Logger.Warn($"ProcessorThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorThrottle}");
+            Logger.Warn($"ProcessorMinThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorMinThrottle}");
+            Logger.Warn($"ProcessorMaxThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorMaxThrottle}");
+            Logger.Warn($"FastSystemS4: {PowerProvider.SystemPowerCapabilites.FastSystemS4}");
+            Logger.Warn($"Hiberboot: {PowerProvider.SystemPowerCapabilites.Hiberboot}");
+            Logger.Warn($"WakeAlarmPresent: {PowerProvider.SystemPowerCapabilites.WakeAlarmPresent}");
+            Logger.Warn($"WakeAlarmPresent: {PowerProvider.SystemPowerCapabilites.WakeAlarmPresent}");
+            Logger.Warn($"AoAc: {PowerProvider.SystemPowerCapabilites.AoAc}");
+            Logger.Warn($"DiskSpinDown: {PowerProvider.SystemPowerCapabilites.DiskSpinDown}");
+            Logger.Warn($"HiberFileType: {PowerProvider.SystemPowerCapabilites.HiberFileType}");
+            Logger.Warn($"AoAcConnectivitySupported: {PowerProvider.SystemPowerCapabilites.AoAcConnectivitySupported}");
+            Logger.Warn($"SystemBatteriesPresent: {PowerProvider.SystemPowerCapabilites.SystemBatteriesPresent}");
+            Logger.Warn($"BatteriesAreShortTerm: {PowerProvider.SystemPowerCapabilites.BatteriesAreShortTerm}");
         }
 
     }
@@ -207,6 +218,8 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
 
              */
 
+            // Generate a cleaned up string for USB devices
+
             // Most USB Controllers have the string "(Microsoft)" in their name, handle those first
             if ( this.FriendlyString.Contains("(Microsoft)") ) {
                 this.FriendlyString = this.FriendlyString.Substring(0, this.FriendlyString.IndexOf("eXtensible"));
@@ -236,6 +249,7 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
             this.FriendlyString = this.FriendlyString.Trim();
 
             // this.IsGoodController = false;
+            // TODO: Blacklist / whitelist
             KinectV1_Compatible = false;
             KinectV2_Compatible = false;
         }
