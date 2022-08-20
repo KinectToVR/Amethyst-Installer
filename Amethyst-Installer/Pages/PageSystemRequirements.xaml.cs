@@ -211,53 +211,70 @@ namespace amethyst_installer_gui.Pages {
                     break;
             }
 
+            string headsetString = string.Empty;
+
             switch ( OpenVRUtil.HmdType ) {
 
                 case VRHmdType.Rift:
-                    return $"Oculus Rift CV1";
+                    headsetString = "Oculus Rift CV1";
+                    break;
                 case VRHmdType.RiftS:
-                    return $"Oculus Rift S";
+                    headsetString = "Oculus Rift S";
+                    break;
                 case VRHmdType.Quest:
-                    return $"Meta Quest via {vrConnectionType}";
+                    headsetString = $"Meta Quest {Localisation.SystemRequirement_Description_Headset_Via} {vrConnectionType}";
+                    break;
                 case VRHmdType.Quest2:
-                    return $"Meta Quest 2 via {vrConnectionType}";
+                    headsetString = $"Meta Quest 2 {Localisation.SystemRequirement_Description_Headset_Via} {vrConnectionType}";
+                    break;
 
                 case VRHmdType.Vive:
-                    return $"HTC Vive";
+                    return "HTC Vive";
                 case VRHmdType.ViveCosmos:
-                    return $"HTC Vive Cosmos";
+                    headsetString = "HTC Vive Cosmos";
+                    break;
                 case VRHmdType.VivePro:
-                    return $"HTC Vive Pro";
+                    return "HTC Vive Pro";
 
                 case VRHmdType.Pimax:
-                    return $"Pimax";
+                    return "Pimax";
 
                 case VRHmdType.WMR:
-                    if (OpenVRUtil.TrackingType == VRTrackingType.Lighthouse) {
-                        return $"Windows Mixed Reality using Lighthouse devices";
-                    }
-                    return $"Windows Mixed Reality";
+                    headsetString = "Windows Mixed Reality";
+                    break;
 
                 case VRHmdType.Index:
-                    return $"Valve Index";
+                    return "Valve Index";
                 case VRHmdType.Deckard:
-                    return $"Valve Deckard";
+                    headsetString = "Valve Deckard";
+                    break;
 
                 case VRHmdType.PSVR:
-                    return $"PlayStation VR";
+                    headsetString = "PlayStation VR";
+                    break;
 
                 case VRHmdType.PicoNeo:
-                    return $"Pico Neo";
+                    headsetString = "Pico Neo";
+                    break;
                 case VRHmdType.PicoNeo2:
-                    return $"Pico Neo 2";
+                    headsetString = "Pico Neo 2";
+                    break;
                 case VRHmdType.PicoNeo3:
-                    return $"Pico Neo 3";
+                    headsetString = "Pico Neo 3";
+                    break;
 
                 case VRHmdType.Phone:
-                    return $"Mobile Phone";
+                    headsetString = Localisation.SystemRequirement_Description_Headset_Phone;
+                    break;
             }
 
-            return $"{OpenVRUtil.HmdType} via {OpenVRUtil.ConnectionType} (Tracking under {OpenVRUtil.TrackingType})";
+            if ( headsetString.Length > 0 ) {
+                if ( OpenVRUtil.TrackingType == VRTrackingType.Lighthouse ) {
+                    return $"{headsetString} {Localisation.SystemRequirement_Description_Headset_UsingLighthouse}";
+                }
+            }
+
+            return $"{OpenVRUtil.HmdType} {Localisation.SystemRequirement_Description_Headset_Via} {OpenVRUtil.ConnectionType} ({Localisation.SystemRequirement_Description_Headset_TrackingUnder} {OpenVRUtil.TrackingType})";
         }
 
         // Force only the first button to have focus
