@@ -152,7 +152,7 @@ namespace amethyst_installer_gui.Installer {
                             TrackingType = VRTrackingType.Quest;
                             DetectQuestConnectionMethod();
                             return;
-                        case "miramar": // TODO: Test if this is ALVR or other devices ; patterns are currently unclear
+                        case "miramar": // Most common HMD name I've seen when using ALVR, ALVR is special and I fucking hate it
                         case "oculus quest2":
                         case "oculus quest 2":
                             HmdType = VRHmdType.Quest2;

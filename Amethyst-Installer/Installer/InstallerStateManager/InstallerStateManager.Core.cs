@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -20,9 +21,17 @@ namespace amethyst_installer_gui.Installer {
         public static void Initialize() {
 
             // Fetch JSON Response, and load it
-            var txtResponse = File.ReadAllText(Path.GetFullPath("ame-installer-sample-api-response.json"));
+            // var txtResponse = File.ReadAllText(Path.GetFullPath("ame-installer-sample-api-response.json"));
+
+            string txtResponse = string.Empty;
+            using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("amethyst_installer_gui.ame-installer-sample-api-response.json") ) {
+                using ( StreamReader reader = new StreamReader(resource) ) {
+                    txtResponse = reader.ReadToEnd();
+                }
+            }
+
             API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
-            InstallerStateManager.ModulesToInstall = new List<Module>();
+            ModulesToInstall = new List<Module>();
 
             ComputeRequirements();
         }
