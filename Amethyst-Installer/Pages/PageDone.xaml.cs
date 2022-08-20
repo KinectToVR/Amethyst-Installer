@@ -22,7 +22,7 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
-            throw new InvalidOperationException("AMONG US IS AN AWEOSME VIDEOGAME I FUCKING LOVE AMONGUS");
+            Application.Current.Shutdown(( int ) ExitCodes.OK);
         }
 
         public void OnSelected() {

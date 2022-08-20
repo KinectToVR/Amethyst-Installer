@@ -6,7 +6,6 @@ using System.Media;
 using System.Windows;
 
 using AppWindow = amethyst_installer_gui.MainWindow;
-// using LocaleStrings = amethyst_installer_gui.Properties.Resources;
 using LocaleStrings = amethyst_installer_gui.Localisation;
 
 namespace amethyst_installer_gui {
@@ -25,6 +24,7 @@ namespace amethyst_installer_gui {
             --uninstall -x :: Attempts to uninstall Amethyst
             --silent -s :: Executes the installer silently
             --install-dir :: Sets the install directory, 
+            --debug :: Forces the installer to run in Debug mode
              
              */
 
@@ -52,7 +52,7 @@ namespace amethyst_installer_gui {
             if ( AppWindow.Instance == null ) {
                 // uhhhhhhhhhh how the fuck did you get here
                 Util.ShowMessageBox(LocaleStrings.Dialog_Description_CritError.Replace("[server]", Constants.DiscordInvite), LocaleStrings.Dialog_Title_CritError);
-                Current.Shutdown();
+                Current.Shutdown((int)ExitCodes.ExceptionPreInit);
                 return;
             }
             // AFAIK the app should always be initialized, so this scenario should be impossible
