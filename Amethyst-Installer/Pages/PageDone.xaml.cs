@@ -21,7 +21,6 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
-            SoundPlayer.PlaySound(SoundEffect.Invoke);
             Application.Current.Shutdown(( int ) ExitCodes.OK);
         }
 
