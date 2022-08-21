@@ -58,6 +58,14 @@ namespace amethyst_installer_gui.Pages {
             m_timer.Elapsed += Timer_Elapsed;
             m_timer.Start();
 
+            // TODO: Download progress in taskbar
+
+            // https://docs.microsoft.com/en-us/dotnet/api/system.windows.shell.taskbariteminfo?view=netframework-4.6.2
+
+            // Reset progress bar
+            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
+            MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
+
             /*
 
             Random rng = new Random();
@@ -100,6 +108,7 @@ namespace amethyst_installer_gui.Pages {
             // Populate install shit
             for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
 
+
                 var moduleToInstall = InstallerStateManager.ModulesToInstall[i];
 
                 DownloadItem downloadItem = new DownloadItem();
@@ -122,6 +131,8 @@ namespace amethyst_installer_gui.Pages {
         private async Task DownloadModule(int index) {
 
             Logger.Info(index);
+            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
+            MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
             var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
             m_currentProgressControl = ( DownloadItem ) downloadContent.Children[index];
@@ -165,6 +176,9 @@ namespace amethyst_installer_gui.Pages {
 
                 m_currentProgressControl.DownloadedBytes = value;
                 m_totalBytesDownloaded = value;
+
+                // Update taskbar progress
+                MainWindow.Instance.taskBarItemInfo.ProgressValue = m_currentProgressControl.DownloadedBytes / (double) m_currentProgressControl.TotalBytes;
             }
         }
 
@@ -192,6 +206,9 @@ namespace amethyst_installer_gui.Pages {
 
             m_currentProgressControl.DownloadFailed = true;
             m_currentProgressControl.IsPending = false;
+
+            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
+            MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
         }
 
         // Force only the first button to have focus

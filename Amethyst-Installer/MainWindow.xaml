@@ -103,4 +103,7 @@
             </StackPanel>
         </DockPanel>
     </Border>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="taskBarItemInfo" />
+    </Window.TaskbarItemInfo>
 </Window>

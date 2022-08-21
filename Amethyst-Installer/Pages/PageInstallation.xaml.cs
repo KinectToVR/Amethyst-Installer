@@ -42,6 +42,8 @@ namespace amethyst_installer_gui.Pages {
         public void OnSelected() {
 
             for (int i = 0; i < 10; i++ ) {
+            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
+            MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
                 InstallModuleProgress installControl = new InstallModuleProgress();
                 installControl.Title = "amogus";
@@ -55,6 +57,10 @@ namespace amethyst_installer_gui.Pages {
 
                 installationListContainer.Children.Add(installControl);
             }
+
+            // TODO: Implement
+            // MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
+            // MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
             // TODO: If installing Kinect 360 SDK, show EULA after extracting
             // I have no fucking clue how that will even be implemented but that is a problem for future me!
