@@ -27,11 +27,26 @@ namespace amethyst_installer_gui {
         /// <returns></returns>
         public static async Task DownloadFileAsync(string url, string filename = null, string path = null, Action<long> progress = null, float timeout = 10) {
 
+            string fullPath = Path.GetFullPath(Path.Combine(path, filename));
+            Logger.Info(fullPath);
+
+#if DEBUG && DOWNLOAD_CACHE
+            // True Debug mode has a download cache, Release builds will have this disabled, as this doesn't help us in Releases.
+            // Basically this is only here so that I can debug faster
+            // If the file exists assume it's been downloaded properly and is cached
+
+            // C:\Users\hyblocker\dev\Amethyst-Installer\Amethyst-Installer\bin\x64\Debug\temp\amethyst-latest.zip
+            if ( File.Exists(fullPath) ) {
+                progress.Invoke(long.MaxValue);
+                return;
+            }
+#endif
+
             s_httpClient.Timeout = TimeSpan.FromSeconds(timeout);
 
             Logger.Info($"Downloading file {filename} from {url}...");
 
-            using ( var fileStream = File.OpenWrite(Path.GetFullPath(Path.Combine(path, filename))) ) {
+            using ( var fileStream = File.OpenWrite(fullPath) ) {
                 await s_httpClient.DownloadAsync(url, fileStream, progress, ( long ) ( timeout * 1000L ));
             }
         }

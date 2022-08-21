@@ -37,12 +37,15 @@ namespace amethyst_installer_gui {
 #else
                     m_ameTmpDir = Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Local", "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
 #endif
+
+#if !(DEBUG && DOWNLOAD_CACHE)
                     if ( Directory.Exists(m_ameTmpDir) ) {
                         Directory.Delete(m_ameTmpDir, true); // Clear previous temp dir if it exists
                     }
 
                     Directory.CreateDirectory(m_ameTmpDir);
                     Logger.Info($"Created temp directory at \"{m_ameTmpDir}\"...");
+#endif
                 }
                 return m_ameTmpDir;
             }
@@ -64,6 +67,9 @@ namespace amethyst_installer_gui {
         /// The minimum size a playspace should have
         /// </summary>
         public const float MinimumPlayspaceSize = 1.6f;
+
+        public const double Epsilon = 0.000001;
+        public const double DoubleMinNormal = 1.40129846432e-45;
 
         /// <summary>
         /// The duration of the page transition animation
