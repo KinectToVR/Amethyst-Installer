@@ -49,6 +49,9 @@ namespace amethyst_installer_gui.Pages {
                 // Advance to next page
                 MainWindow.Instance.SetPage(InstallerState.SystemRequirements);
                 SoundPlayer.PlaySound(SoundEffect.MoveNext);
+                InstallerStateManager.AmethystInstallDirectory = finalPath;
+                InstallerStateManager.CreateStartMenuEntry = startMenuCheckbox.IsChecked.Value;
+                InstallerStateManager.CreateDesktopShortcut = desktopShortcutCheckbox.IsChecked.Value;
             }
             catch (System.IO.IOException) {
                 // If we reach here the directory is invalid

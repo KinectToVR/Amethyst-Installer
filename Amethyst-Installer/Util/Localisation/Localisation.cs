@@ -84,6 +84,16 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("InstallDestination_StorageFormatFree");
             }
         }
+        public static string InstallDestination_CreateStartMenuShortcut {
+            get {
+                return LocaleManager.GetString("InstallDestination_CreateStartMenuShortcut");
+            }
+        }
+        public static string InstallDestination_CreateDesktopShortcut {
+            get {
+                return LocaleManager.GetString("InstallDestination_CreateDesktopShortcut");
+            }
+        }
         public static string InstallOptions_DownloadSize {
             get {
                 return LocaleManager.GetString("InstallOptions_DownloadSize");

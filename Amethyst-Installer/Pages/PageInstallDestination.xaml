@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -48,8 +49,13 @@
                 <TextBlock Margin="8,0,0,0" Grid.Column="1" Foreground="White" Text="{x:Static global:Localisation.InstallDestination_AmeInstallFound}" />
             </Grid>
         </Border>
+
+        <StackPanel Grid.Row="4" Margin="0,8,0,0">
+            <CheckBox x:Name="startMenuCheckbox" Content="{x:Static global:Localisation.InstallDestination_CreateStartMenuShortcut}" IsChecked="True" />
+            <CheckBox x:Name="desktopShortcutCheckbox" Content="{x:Static global:Localisation.InstallDestination_CreateDesktopShortcut}" Margin="0,8,0,0" IsChecked="False" />
+        </StackPanel>
         
-        <Border Background="Transparent" Grid.Row="4" />
+        <Border Background="Transparent" Grid.Row="5" />
 
     </Grid>
 </UserControl>

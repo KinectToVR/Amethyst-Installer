@@ -3,12 +3,12 @@
   "Dialog_Title_CritError": "Critical Error",
   "Download_Failure": "An error occured when trying to download this item. Try disabling any VPNs or firewalls.", /* Error message that gets displayed to the user whenever a download fails */
   "Download_FailureCritical": "An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue.", /* Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue. */
-  
+
   "EULA_Agree": "I agree",
   "EULA_DontAgree": "I do not agree",
   "EULA_Licenses": "Follows is a long and boring list of licenses for crap, because unfortunately, licenses are a thing, and we have to show them to you.", /* We drop a lot of "copy pastas" here */
   "EULA_Warranty": "By continuing with installation, you agree that this software, and every component bundled or installed by it are provided \"as-is\" and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability.", /* We are not reponsible for you being braindead */
-  
+
   "InstallDestination_AmeInstallFound": "This folder already contains an installation of Amethyst, it will be overwritten.", /* Shown if the install folder is detected to have a copy of Amethyst */
   "InstallDestination_AmethystInstallLocationFootnote": "Only Amethyst will be installed to this folder. Other items will install to their default locations.",
   "InstallDestination_DiskLabelFormat": "{0} ({1})", /* {0} gets replaced with the disk label (eg "Local Disk") and {1} gets replaced with the drive letter {eg "C:" ) */
@@ -17,32 +17,34 @@
   "InstallDestination_OpenFolder": "Open Folder",
   "InstallDestination_PathPlaceholder": "Please select a valid install folder",
   "InstallDestination_StorageFormatFree": "{0} free", /* {0} is required (it's going to get replaced with 420GB for example) */
+  "InstallDestination_CreateStartMenuShortcut": "Create a start menu entry",
+  "InstallDestination_CreateDesktopShortcut": "Create a desktop shortcut",
 
   /* Install Options download size and install size strings */
   "InstallOptions_DownloadSize": "Download Size:",
   "InstallOptions_InstallSize": "Installed Size:",
   "InstallOptions_TotalDownloadSize": "Total Download Size:",
   "InstallOptions_TotalInstallSize": "Total Installed Size:",
-  
+
   "InstallError_CloudPC": "Cloud PC detected. Amethyst does not support networked environments.", /* The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere */
   "InstallError_SteamVRNotFound": "Couldn't find SteamVR! Is it installed, and have you run it at least once?", /* The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once. */
   "InstallError_WindowsVersionIsOld": "Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst.", /* The message shown to a user when they have an old version of Windows that is not supported by Amethyst */
-  
+
   "Installer_Action_Back": "Back",
   "Installer_Action_CopyError": "Copy error",
   "Installer_Action_Discord": "Get help on Discord",
   "Installer_Action_Exit": "Exit",
   "Installer_Action_Next": "Next",
-  
+
   "InstallProhibited_Title": "Cannot install Amethyst", /* The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window. */
-  
+
   "Logs_DirectoryIsLocatedHere": "The log file is stored here:",
-  
+
   "Modal_Cancel": "Cancel",
   "Modal_No": "No",
   "Modal_OK": "OK",
   "Modal_Yes": "Yes",
-  
+
   "Page_Done_Title": "Install completed",
   "Page_Download_Title": "Downloading",
   "Page_EULA_Title": "Licenses",
@@ -52,7 +54,7 @@
   "Page_Location_Title": "Choose destination",
   "Page_Logs_Title": "Logs",
   "Page_Sysreq_Title": "System requirements",
-  
+
   "Sidebar_Task_Done": "Install completed",
   "Sidebar_Task_Download": "Downloading",
   "Sidebar_Task_Install": "Installation",
@@ -64,7 +66,7 @@
 
   "Speedrunner_Description": "Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?\n\nBe careful where you click!", /* this dialog gets shown when the user spams through the installer */
   "Speedrunner_Title": "Slow down!", /* this dialog gets shown when the user spams through the installer */
-  
+
   "SystemRequirement_Category_Compatibility": "Compatible devices",
   "SystemRequirement_Category_Playspace": "Play Area",
   "SystemRequirement_Category_Storage": "Disk space",
@@ -78,12 +80,18 @@
   "SystemRequirement_Description_UsbControllers": "{0} compatible USB controllers found ({1})", /* {0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
   "SystemRequirement_Description_UsbControllers_One": "{0} compatible USB controller found ({1})", /* {0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
   "SystemRequirement_Footnote_StageTracking_VirtualDesktop": "We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.", /* The first string of text surrounded by []s will get turned into the hyperlink */
-  "SystemRequirement_Description_Headset_Via": "via",
-  "SystemRequirement_Description_Headset_UsingLighthouse": "using Lighthouse devices",
-  "SystemRequirement_Description_Headset_TrackingUnder": "Tracking under",
+  "SystemRequirement_Description_Headset_Via": "{0} via {1}", /* {0} gets replaced with the headset (eg Meta Quest 2) and {1} gets replaced with the connection method (eg Virtual Desktop Streamer) */
+  "SystemRequirement_Description_Headset_UsingLighthouse": "{0} using Lighthouse devices", /* {0} gets replaced with the headset (eg Windows Mixed Reality) */
+  "SystemRequirement_Description_Headset_TrackingUnder": "Tracking under {0}",
   "SystemRequirement_Description_Headset_Phone": "Mobile Phone",
-  
+  "SystemRequirement_Description_Headset_Not_Detected": "No VR Headset detected",
+
   "Welcome_OptIn": "Opt in to anonymous analytics and crash reports.",
   "Welcome_PrivacyPolicy": "Privacy Policy", /* The text for the link */
   "Welcome_ReadPrivacyPolicy": "Read our %s% to see what we send.", /* %s% gets replaced with the link */
+
+  "Done_InstallSuccess": "Amethyst has been successfully installed!",
+  "Done_LaunchDesktop": "It can be launched from the desktop",
+  "Done_LaunchStartMenu": "It can be launched from the start menu",
+  "Done_LaunchAmethyst": "Launch Amethyst after exiting the installer",
 }

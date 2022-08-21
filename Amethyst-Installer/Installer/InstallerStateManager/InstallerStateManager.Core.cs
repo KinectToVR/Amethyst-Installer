@@ -18,6 +18,16 @@ namespace amethyst_installer_gui.Installer {
 
         public static List<Module> ModulesToInstall;
 
+        /// <summary>
+        /// Whether to create a start menu entry or not
+        /// </summary>
+        public static bool CreateStartMenuEntry = false;
+
+        /// <summary>
+        /// Whether to create a desktop shortcut or not
+        /// </summary>
+        public static bool CreateDesktopShortcut = false;
+
         public static void Initialize() {
 
             // Fetch JSON Response, and load it

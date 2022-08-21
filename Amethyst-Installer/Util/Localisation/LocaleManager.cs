@@ -18,6 +18,10 @@ namespace amethyst_installer_gui {
         public static string CurrentLocale { get; private set; }
 
         static LocaleManager() {
+            // I'm not sure why but on exit this function gets called again...
+            // I'm not sure as to why this is happening either
+            // Because of this, error sounds have been omitted
+
             m_loadedLocale = new Dictionary<string, string>();
             CurrentLocale = FetchSystemLocale();
 
@@ -36,10 +40,9 @@ namespace amethyst_installer_gui {
                         using ( FileStream file = new FileStream(m_debugLocalePath, FileMode.Open, FileAccess.Read) ) {
                             localeJson = File.ReadAllText(m_debugLocalePath);
                         }
-                        if ( localeJson.Length == 0 ) {
-                            SoundPlayer.PlaySound(SoundEffect.Error);
-                            Util.ShowMessageBox("Invalid locale.json!", "LocaleNotFoundException");
+                        if ( localeJson.Length < 1 ) {
                             LoadLocale(CurrentLocale);
+                            Console.Error.WriteLine("File \"locale.json\" is invalid! Defaulting to built-in locale...");
                             return;
                         }
 
@@ -52,14 +55,13 @@ namespace amethyst_installer_gui {
                             }
                         }
                     } catch ( Exception e ) {
-                        Logger.Error("Failed to read locale.json");
-                        Logger.Error(Util.FormatException(e));
                         LoadLocale(CurrentLocale);
+                        Console.Error.WriteLine("Failed to read locale.json! Defaulting to built-in locale...");
+                        Console.Error.WriteLine(Util.FormatException(e));
                     }
                 } else {
-                    SoundPlayer.PlaySound(SoundEffect.Error);
-                    Util.ShowMessageBox("Failed to find a valid Locale! Does a file at \"Lang/locale.json\" exist?", "LocaleNotFoundException");
                     LoadLocale(CurrentLocale);
+                    Console.Error.WriteLine("Directory \"Lang\" exists, but couldn't find file \"locale.json\"! Defaulting to built-in locale...");
                 }
 
             } else {
