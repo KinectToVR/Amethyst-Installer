@@ -364,6 +364,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("SystemRequirement_Description_Headset_Phone");
             }
         }
+        public static string SystemRequirement_Description_Headset_Not_Detected {
+            get {
+                return LocaleManager.GetString("SystemRequirement_Description_Headset_Not_Detected");
+            }
+        }
         public static string Welcome_OptIn {
             get {
                 return LocaleManager.GetString("Welcome_OptIn");
@@ -377,6 +382,26 @@ namespace amethyst_installer_gui {
         public static string Welcome_ReadPrivacyPolicy {
             get {
                 return LocaleManager.GetString("Welcome_ReadPrivacyPolicy");
+            }
+        }
+        public static string Done_InstallSuccess {
+            get {
+                return LocaleManager.GetString("Done_InstallSuccess");
+            }
+        }
+        public static string Done_LaunchDesktop {
+            get {
+                return LocaleManager.GetString("Done_LaunchDesktop");
+            }
+        }
+        public static string Done_LaunchStartMenu {
+            get {
+                return LocaleManager.GetString("Done_LaunchStartMenu");
+            }
+        }
+        public static string Done_LaunchAmethyst {
+            get {
+                return LocaleManager.GetString("Done_LaunchAmethyst");
             }
         }
     }
