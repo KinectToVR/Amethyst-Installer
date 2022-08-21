@@ -5,18 +5,18 @@
 			"display_name": "Amethyst",
 			"summary": "The Amethyst application itself.",
 			"description": "The Amethyst application itself.",
-			"filesize": 296,
-			"downloadsize": 89694591,
+			"display_version": "1.0.2.10",
+			"version": 1,
+			"filesize": 246845534,
+			"downloadsize": 98853912,
 			"required": true,
 			"visible": true,
 			"critical": true,
 			"depends": [
-				"wasdk",
-				"dotnet6",
 				"vcredist2022"
 			],
 			"remote": {
-				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/KTVR1.0.2.1/Amethyst-Release-9ea9886.zip",
+				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/v1.0.2.10/Amethyst-Release-bb9b9bd.zip",
 				"mirror_url": "https://api.k2vr.tech/mirrors/amethyst-latest.zip",
 				"filename": "amethyst-latest.zip"
 			},
@@ -32,40 +32,14 @@
 			}
 		},
 		{
-			"id": "wasdk",
-			"display_name": "Windows App Runtime",
-			"summary": "Libraries to run apps created with the Windows App SDK.",
-			"description": "Libraries to run apps created with the Windows App SDK.",
-			"filesize": 78,
-			"downloadsize": 57,
-			"required": true,
-			"visible": false,
-			"critical": true,
-			"depends": [],
-			"remote": {
-				"main_url": "https://aka.ms/windowsappsdk/1.1/latest/windowsappruntimeinstall-1.1-x64.exe",
-				"mirror_url": "https://api.k2vr.tech/mirrors/windowsappruntimeinstall-1.1-x64.exe",
-				"filename": "windowsappruntimeinstall-1.1-x64.exe"
-			},
-			"install": {
-				"type": "exe",
-				"items": [
-					{
-						"executable": "windowsappruntimeinstall-1.1-x64.exe"
-					}
-				]
-			},
-			"detect": {
-				"type": "wasdk"
-			}
-		},
-		{
 			"id": "vcredist2022",
 			"display_name": "Visual C++ Redistributable 2022",
 			"summary": "Visual C++ runtime libraries.",
 			"description": "Visual C++ runtime libraries.",
-			"filesize": 20,
-			"downloadsize": 24,
+			"display_version": "1.0.2.10",
+			"version": 1,
+			"filesize": 12005376,
+			"downloadsize": 25234792,
 			"required": true,
 			"visible": false,
 			"critical": true,
@@ -87,36 +61,6 @@
 			"detect": {
 				"type": "vcredist",
 				"version": "2022"
-			}
-		},
-		{
-			"id": "dotnet6",
-			"display_name": ".NET 6.0 Desktop Runtime",
-			"summary": ".NET (v6.0.4) Runtime Installer",
-			"description": ".NET (v6.0.4) Runtime Installer",
-			"filesize": 90,
-			"downloadsize": 55,
-			"required": true,
-			"visible": false,
-			"critical": true,
-			"depends": [],
-			"remote": {
-				"main_url": "https://download.visualstudio.microsoft.com/download/pr/f13d7b5c-608f-432b-b7ec-8fe84f4030a1/5e06998f9ce23c620b9d6bac2dae6c1d/windowsdesktop-runtime-6.0.4-win-x64.exe",
-				"mirror_url": "https://api.k2vr.tech/mirrors/windowsdesktop-runtime-6.0.4-win-x64.exe",
-				"filename": "windowsdesktop-runtime-6.0.4-win-x64.exe"
-			},
-			"install": {
-				"type": "exe",
-				"items": [
-					{
-						"executable": "windowsdesktop-runtime-6.0.4-win-x64.exe",
-						"arguments": "/install /quiet /norestart"
-					}
-				]
-			},
-			"detect": {
-				"type": "dotnet",
-				"version": "6"
 			}
 		},
 
