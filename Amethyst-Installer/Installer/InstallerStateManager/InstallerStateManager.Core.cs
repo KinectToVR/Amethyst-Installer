@@ -18,6 +18,15 @@ namespace amethyst_installer_gui.Installer {
 
         public static List<Module> ModulesToInstall;
 
+        public static Dictionary<string, ModuleBase> ModuleTypes { get; private set; }
+
+        public static string AmethystInstallDirectory;
+
+        /// <summary>
+        /// Whether the current process is an upgrade, as some installation steps are handled differently during an upgrade
+        /// </summary>
+        public static bool IsUpgrading = false;
+
         /// <summary>
         /// Whether to create a start menu entry or not
         /// </summary>
@@ -42,6 +51,20 @@ namespace amethyst_installer_gui.Installer {
 
             API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
             ModulesToInstall = new List<Module>();
+
+            // Create internal LUT for modules
+            ModuleTypes = new Dictionary<string, ModuleBase>();
+
+            ModuleTypes.Add("amethyst", new AmethystModule());
+            ModuleTypes.Add("exe", new ExeModule());
+
+            foreach (var module in API_Response.Modules ) {
+                if (ModuleTypes.ContainsKey(module.Install.Type) ) {
+                    ModuleTypes[module.Install.Type].Module = module;
+                } else {
+                    Logger.Warn($"Unknown install type {module.Install.Type} on module {module.DisplayName}");
+                }
+            }
 
             ComputeRequirements();
         }
