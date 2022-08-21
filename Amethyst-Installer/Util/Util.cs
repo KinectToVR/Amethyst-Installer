@@ -110,6 +110,8 @@ namespace amethyst_installer_gui {
                 Keyboard.ClearFocus();
         }
 
+        public static bool UseShitpostSizes = false;
+
         private static readonly string[] SizeSuffixes =
             { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
@@ -120,7 +122,7 @@ namespace amethyst_installer_gui {
         /// Converts bytes to the largest format which makes sense
         /// </summary>
         public static string SizeSuffix(long value, int decimalPlaces = 3) {
-            return SizeSuffix(value, SizeSuffixes, decimalPlaces);
+            return SizeSuffix(value, UseShitpostSizes ? ShitpostSizeSuffixes : SizeSuffixes, decimalPlaces);
         }
         public static string SizeSuffix(long value, string[] sizeSuffixes, int decimalPlaces = 3) {
             if ( decimalPlaces < 0 ) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
@@ -252,6 +254,24 @@ namespace amethyst_installer_gui {
             // This is required in the event of an upgrade for example
 
             Application.Current.Shutdown(( int ) exitCode);
+        }
+
+        // https://floating-point-gui.de/errors/comparison/
+        public static bool ApproximatelyEqualTo(this double a, double b, double epsilon = Constants.Epsilon) {
+            double absA = Math.Abs(a);
+            double absB = Math.Abs(b);
+            double diff = Math.Abs(a - b);
+
+            if ( a == b ) {
+                // handle infinities
+                return true;
+            } else if ( a == 0 || b == 0 || ( absA + absB < Constants.DoubleMinNormal ) ) {
+                // a or b are extremely close to 0, hence relative error is less meaningful
+                return diff < epsilon * Constants.DoubleMinNormal;
+            } else {
+                // use relative error
+                return diff / Math.Min(absA + absB, float.MaxValue) < epsilon;
+            }
         }
     }
 }
