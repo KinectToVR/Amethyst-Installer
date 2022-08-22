@@ -12,7 +12,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Grid x:Name="heading" MouseUp="heading_MouseUp" Grid.Row="0">
+            <Grid x:Name="heading" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="19"/>

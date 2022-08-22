@@ -72,27 +72,32 @@ namespace amethyst_installer_gui.Controls {
             ( d as InstallModuleProgress ).moduleTitle.Text = ( string ) e.NewValue;
         }
 
-        private void heading_MouseUp(object sender, MouseButtonEventArgs e) {
-            // logContainer.Visibility = logContainer.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        }
-
         public void LogInfo(string message) {
-            LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.White]);
+            Dispatcher.Invoke(() => {
+                // TODO: Abstract into some other class for light mode support
+                LogLineInternal(message, new SolidColorBrush(Color.FromArgb(255, 165, 165, 165)));
+            });
         }
 
         public void LogWarning(string message) {
-            LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.Yellow]);
+            Dispatcher.Invoke(() => {
+                LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.Yellow]);
+            });
         }
 
         public void LogError(string message) {
-            LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.DarkRed]);
+            Dispatcher.Invoke(() => {
+                LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.DarkRed]);
+            });
         }
 
         private void LogLineInternal(string msg, SolidColorBrush color) {
+
             Paragraph paragraph = new Paragraph();
             Run run = new Run(msg);
             run.Foreground = color;
             paragraph.Inlines.Add(run);
+            paragraph.LineHeight = detailedLog.FontSize * 0.5;
             detailedLog.Document.Blocks.Add(paragraph);
         }
     }
