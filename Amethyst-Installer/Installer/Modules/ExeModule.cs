@@ -11,6 +11,8 @@ namespace amethyst_installer_gui.Installer.Modules {
 
             state = TaskState.Question;
 
+            // TODO: Implement
+
             return false;
         }
     }

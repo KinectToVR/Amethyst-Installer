@@ -110,6 +110,11 @@ namespace amethyst_installer_gui.Pages {
         public void OnSelected() {
 
             MainWindow.Instance.sidebar_welcome.State = Controls.TaskState.Busy;
+
+#if DEBUG
+            eulaAgree.IsChecked = true;
+            eulaDeny.IsChecked = false;
+#endif
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) { }

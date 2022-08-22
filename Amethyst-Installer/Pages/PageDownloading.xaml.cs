@@ -45,14 +45,14 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             // Advance to next page
             m_timer.Stop();
-            MainWindow.Instance.sidebar_download.State = Controls.TaskState.Checkmark;
+            MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
             SoundPlayer.PlaySound(SoundEffect.MoveNext);
             MainWindow.Instance.SetPage(InstallerState.Installation);
         }
 
         public async void OnSelected() {
 
-            MainWindow.Instance.sidebar_download.State = Controls.TaskState.Busy;
+            MainWindow.Instance.sidebar_download.State = TaskState.Busy;
 
             m_timer = new TimeoutClock(1000); // Update every second
             m_timer.Elapsed += Timer_Elapsed;
