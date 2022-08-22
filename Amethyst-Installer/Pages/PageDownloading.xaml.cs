@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 using TimeoutClock = System.Timers.Timer;
 
 namespace amethyst_installer_gui.Pages {
@@ -179,6 +180,15 @@ namespace amethyst_installer_gui.Pages {
 
                 // Update taskbar progress
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = m_currentProgressControl.DownloadedBytes / (double) m_currentProgressControl.TotalBytes;
+
+                // TODO: Total bytes should be another value
+                if ( m_currentProgressControl.DownloadedBytes == m_currentProgressControl.TotalBytes ) {
+                    // Assume the download is done
+                    m_currentProgressControl.Completed = true;
+
+                    // TODO: Process next in queue
+                    MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+                }
             }
         }
 
