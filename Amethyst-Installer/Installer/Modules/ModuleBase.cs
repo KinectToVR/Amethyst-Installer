@@ -1,3 +1,5 @@
+using amethyst_installer_gui.Controls;
+
 namespace amethyst_installer_gui.Installer.Modules {
     public abstract class ModuleBase {
         /// <summary>
@@ -5,17 +7,17 @@ namespace amethyst_installer_gui.Installer.Modules {
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        bool Install(string path) { return false; }
+        public abstract bool Install(string sourceFile, string path, ref InstallModuleProgress installModuleProgress, out TaskState state);
 
         /// <summary>
         /// JSON deserialized <see cref="Module"/> instance.
         /// </summary>
-        Module Module { get; }
+        public Module Module;
 
         /// <summary>
         /// Whether the current Module has any dependencies
         /// </summary>
-        bool HasDependencies {
+        public bool HasDependencies {
             get {
                 return ( Module?.Depends?.Count ?? 0 ) > 0;
             }
@@ -24,6 +26,6 @@ namespace amethyst_installer_gui.Installer.Modules {
         /// <summary>
         /// Whether the current module is installed
         /// </summary>
-        bool IsInstalled { get; }
+        public bool IsInstalled { get; protected set; }
     }
 }

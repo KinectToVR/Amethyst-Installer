@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using amethyst_installer_gui.Installer.Modules;
 using Newtonsoft.Json;
 
 namespace amethyst_installer_gui.Installer {
