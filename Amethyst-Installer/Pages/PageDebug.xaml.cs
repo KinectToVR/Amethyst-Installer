@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -115,6 +116,17 @@ namespace amethyst_installer_gui.Pages {
             throw new Exception("This is an intentional exception!");
         }
 
+        private void forceNoVrpath_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+
+            // Equivalent of:
+            // OpenVRUtil.s_failedToInit = false;
+
+            BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+            FieldInfo handleField = typeof(OpenVRUtil).GetField("s_failedToInit", bindFlags);
+            handleField.SetValue(null, true);
+        }
+
         private void driverSearch_Click(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox($"Driver Search: {OpenVRUtil.GetDriverPath(driverSearchBox.Text)}", "Driver search");
@@ -124,6 +136,12 @@ namespace amethyst_installer_gui.Pages {
             OpenVRUtil.RegisterSteamVrDriver(driverAddBox.Text);
             Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local", "openvr", "openvrpaths.vrpath")));
             Util.ShowMessageBox($"Driver Registered!", "Driver search");
+        }
+        private void driverRemove_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            OpenVRUtil.RemoveDriversWithName(driverRemoveBox.Text);
+            Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local", "openvr", "openvrpaths.vrpath")));
+            Util.ShowMessageBox($"Driver Removed!", "Driver removal");
         }
 
         private void playSoundBtn_Click(object sender, RoutedEventArgs e) {

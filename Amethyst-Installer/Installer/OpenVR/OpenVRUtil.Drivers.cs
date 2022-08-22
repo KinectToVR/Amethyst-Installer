@@ -134,6 +134,145 @@ namespace amethyst_installer_gui.Installer {
         }
 
         /// <summary>
+        /// Removes a driver if it exists
+        /// </summary>
+        /// <param name="path">File path for the specified driver</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void RemoveDriver(string path) {
+            if ( !s_initialized )
+                throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
+
+            path = Path.GetFullPath(path);
+
+            if ( !s_failedToInit ) {
+                string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
+                if ( File.Exists(vrpathregPath) ) {
+                    var args = $"removedriver {path}";
+                    var vrpathregProc = Process.Start(new ProcessStartInfo() {
+                        FileName = vrpathregPath,
+                        Arguments = args,
+                        RedirectStandardError = true,
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden
+                    });
+                    var output = vrpathregProc.StandardOutput.ReadToEnd();
+                    vrpathregProc.WaitForExit();
+                    output = output.Split(Environment.NewLine[0])[0];
+                    switch ( vrpathregProc.ExitCode ) {
+                        case 0: // Success
+                            return;
+                        case 1: // Driver not present
+                            return;
+                        case 2: // Driver installed more than once
+                            return;
+                        case -1: // Configuration or permission problem
+                        case -2: // Argument problem (wtf??)
+                            Logger.Fatal($"vrpathreg failed:\n\tCode: -2\n\tArgs: \"{args}\"");
+                            break;
+                    }
+                }
+            }
+
+            if ( s_openvrpaths != null && s_openvrpaths.external_drivers != null && s_openvrpaths.external_drivers.Count > 0 ) {
+                for ( int i = 0; i < s_openvrpaths.external_drivers.Count; i++ ) {
+                    try {
+                        // Cleanup invalids
+                        if ( !Directory.Exists(s_openvrpaths.external_drivers[i]) ) {
+                            s_openvrpaths.external_drivers.RemoveAt(i);
+                            i--;
+                            continue;
+                        } else {
+                            var driverManifestPath = Path.GetFullPath(Path.Combine(s_openvrpaths.external_drivers[i], "driver.vrdrivermanifest"));
+                            if ( !File.Exists(driverManifestPath) ) {
+                                s_openvrpaths.external_drivers.RemoveAt(i);
+                                i--;
+                                continue;
+                            }
+                        }
+                        // Check if the driver matches, if so, remove
+                        if ( s_openvrpaths.external_drivers[i].ToLowerInvariant() == path.ToLowerInvariant() ) {
+                            s_openvrpaths.external_drivers.RemoveAt(i);
+                            i--;
+                        }
+                    } catch (Exception e) {
+                        Logger.Fatal($"Failed to read info for driver at {path}!");
+                    }
+                }
+                SaveOpenVrPaths();
+            }
+        }
+
+        /// <summary>
+        /// Removes a driver if it exists
+        /// </summary>
+        /// <param name="path">File path for the specified driver</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void RemoveDriversWithName(string driverName) {
+            if ( !s_initialized )
+                throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
+
+            if ( !s_failedToInit ) {
+                string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
+                if ( File.Exists(vrpathregPath) ) {
+                    var args = $"removedriverswithname {driverName}";
+                    var vrpathregProc = Process.Start(new ProcessStartInfo() {
+                        FileName = vrpathregPath,
+                        Arguments = args,
+                        RedirectStandardError = true,
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden
+                    });
+                    var output = vrpathregProc.StandardOutput.ReadToEnd();
+                    vrpathregProc.WaitForExit();
+                    output = output.Split(Environment.NewLine[0])[0];
+                    switch ( vrpathregProc.ExitCode ) {
+                        case 0: // Success
+                            return;
+                        case 1: // Driver not present
+                            return;
+                        case 2: // Driver installed more than once
+                            return;
+                        case -1: // Configuration or permission problem
+                        case -2: // Argument problem (wtf??)
+                            Logger.Fatal($"vrpathreg failed:\n\tCode: -2\n\tArgs: \"{args}\"");
+                            break;
+                    }
+                }
+            }
+
+            if ( s_openvrpaths != null && s_openvrpaths.external_drivers != null && s_openvrpaths.external_drivers.Count > 0 ) {
+                for ( int i = 0; i < s_openvrpaths.external_drivers.Count; i++ ) {
+                    // Make sure the driver directory even exists
+                    if ( Directory.Exists(s_openvrpaths.external_drivers[i]) ) {
+
+                        // Attempt to load the driver manifest
+                        var driverManifestPath = Path.GetFullPath(Path.Combine(s_openvrpaths.external_drivers[i], "driver.vrdrivermanifest"));
+                        try {
+                            var driverManifest = JsonConvert.DeserializeObject<OpenVrDriverManifest>(File.ReadAllText(driverManifestPath));
+                            // JSON safety checks
+                            if ( driverManifest == null || driverManifest.Name == null ) {
+                                Logger.Error($"Invalid OpenVR driver manifest at \"{driverManifestPath}\"! The manifest may be corrupt or invalid...");
+                                continue;
+                            }
+                            if ( driverManifest.Name.ToLowerInvariant() == driverName.ToLowerInvariant() ) {
+                                s_openvrpaths.external_drivers.RemoveAt(i);
+                                i--;
+                            }
+                        } catch ( Exception e ) {
+                            Logger.Error($"Invalid OpenVR driver manifest at \"{driverManifestPath}\"! The manifest may be corrupt or invalid...");
+                            Logger.Error(Util.FormatException(e));
+                        }
+                    }
+                }
+                SaveOpenVrPaths();
+            }
+        }
+
+        /// <summary>
         /// Forces a SteamVR driver to be enabled
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

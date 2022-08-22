@@ -21,6 +21,9 @@
                 <Button x:Name="plutosphereTest" Content="PlutoSphere Test" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="plutosphereTest_Click"/>
                 <Button x:Name="throwException" Content="Exception" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="throwException_Click"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button x:Name="forceNoVrpath" Margin="10,0,0,0" Click="forceNoVrpath_Click">Disable vrpathreg</Button>
+            </StackPanel>
             <StackPanel x:Name="driverSearchContainer" Orientation="Horizontal" Margin="0,10,0,0">
                 <Grid Width="{Binding ElementName=driverSearchContainer, Path=ActualWidth}">
                     <Grid.ColumnDefinitions>
@@ -39,6 +42,16 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="driverAddBox" Tag="Driver Path..." Grid.Column="0"></TextBox>
                     <Button x:Name="driverAdd" Grid.Column="1" Content="Register Driver" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="driverAdd_Click" Height="{Binding ElementName=driverAddContainer, Path=ActualHeight}"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Name="driverRemoveContainer" Orientation="Horizontal" Margin="0,10,0,0">
+                <Grid Width="{Binding ElementName=driverRemoveContainer, Path=ActualWidth}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="driverRemoveBox" Tag="Driver Name..." Grid.Column="0"></TextBox>
+                    <Button x:Name="driverRemove" Grid.Column="1" Content="Remove Driver" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="driverRemove_Click" Height="{Binding ElementName=driverRemoveContainer, Path=ActualHeight}"/>
                 </Grid>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
