@@ -106,7 +106,7 @@ namespace amethyst_installer_gui.Pages {
 
             // TODO: Better calculation, check dependency chain, proper storage units
             downloadSize.Content = Util.SizeSuffix(currentModule.DownloadSize);
-            installSize.Content = currentModule.FileSize + " MegaFarts";
+            installSize.Content = Util.SizeSuffix(currentModule.FileSize);
         }
 
         private void CalculateInstallSize() {
