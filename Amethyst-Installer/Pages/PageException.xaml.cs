@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shell;
 
 namespace amethyst_installer_gui.Pages {
     /// <summary>
@@ -58,6 +59,10 @@ namespace amethyst_installer_gui.Pages {
 
             MainWindow.Instance.SetSidebarHidden(false);
             MainWindow.Instance.SetButtonsHidden(false);
+
+            // Reset taskbar progress
+            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
+            MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
         }
 
         // Since we never know when we will hit this page (this page is a special case as it's exception handling) we'll handle everything on page focus
