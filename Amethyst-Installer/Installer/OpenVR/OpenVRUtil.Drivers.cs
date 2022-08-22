@@ -36,6 +36,8 @@ namespace amethyst_installer_gui.Installer {
                         FileName = vrpathregPath,
                         Arguments = args,
                         WorkingDirectory = driverDirectory,
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden
                     });
                     vrpathregProc.WaitForExit();
                     switch ( vrpathregProc.ExitCode ) {
@@ -45,6 +47,8 @@ namespace amethyst_installer_gui.Installer {
                         case 1: // Driver not present
                             break;
                         case -1: // Configuration or permission problem
+                            Logger.Fatal($"Failed to register using vrpathreg:: Configuration or permission problem");
+                            break;
                         case -2: // Argument problem (wtf??)
                             Logger.Fatal($"vrpathreg failed:\n\tCode: -2\n\tArgs: \"{args}\"");
                             break;
@@ -60,7 +64,6 @@ namespace amethyst_installer_gui.Installer {
                 }
             }
         }
-
 
         /// <summary>
         /// Returns the path of an OpenVR driver
@@ -80,7 +83,9 @@ namespace amethyst_installer_gui.Installer {
                         Arguments = args,
                         RedirectStandardError = true,
                         RedirectStandardOutput = true,
-                        UseShellExecute = false
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden
                     });
                     var output = vrpathregProc.StandardOutput.ReadToEnd();
                     vrpathregProc.WaitForExit();
@@ -117,9 +122,6 @@ namespace amethyst_installer_gui.Installer {
                             if ( driverManifest.Name.ToLowerInvariant() == drivername.ToLowerInvariant() ) {
                                 return s_openvrpaths.external_drivers[i];
                             }
-                        } catch ( JsonReaderException e ) {
-                            Logger.Error($"Invalid OpenVR driver manifest at \"{driverManifestPath}\"! The manifest may be corrupt or invalid...");
-                            Logger.Error(Util.FormatException(e));
                         } catch ( Exception e ) {
                             Logger.Error($"Invalid OpenVR driver manifest at \"{driverManifestPath}\"! The manifest may be corrupt or invalid...");
                             Logger.Error(Util.FormatException(e));
