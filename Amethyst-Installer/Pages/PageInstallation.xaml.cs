@@ -14,14 +14,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 
 namespace amethyst_installer_gui.Pages {
     /// <summary>
     /// Interaction logic for PageInstallation.xaml
     /// </summary>
     public partial class PageInstallation : UserControl, IInstallerPage {
+
+        private List<InstallModuleProgress> m_installControls;
         public PageInstallation() {
             InitializeComponent();
+            m_installControls = new List<InstallModuleProgress>();
         }
 
         public InstallerState GetInstallerState() {
@@ -41,22 +45,28 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnSelected() {
 
-            for (int i = 0; i < 10; i++ ) {
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
             MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
+            for (int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
+
+                var module = InstallerStateManager.ModulesToInstall[i];
+                var moduleBase = InstallerStateManager.ModuleTypes[module.Install.Type];
+
+                Logger.Info($"Installing module {module.DisplayName} of type {module.Install.Type}...");
+
                 InstallModuleProgress installControl = new InstallModuleProgress();
-                installControl.Title = "amogus";
-                installControl.State = ( TaskState ) (i % 5);
-                if ( i != 10 )
+                installControl.Title = module.DisplayName;
+                // installControl.State = ( TaskState ) (i % 5);
+                installControl.State = TaskState.Default;
+                if ( i != InstallerStateManager.ModulesToInstall.Count )
                     installControl.Margin = new Thickness(0, 0, 0, 8);
 
-                installControl.LogInfo("FUCK");
-                installControl.LogWarning("SHIT");
-                installControl.LogError("AAAA");
-
                 installationListContainer.Children.Add(installControl);
+                m_installControls.Add(installControl);
             }
+
+            InstallModule(0);
 
             // TODO: Implement
             // MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
@@ -64,6 +74,22 @@ namespace amethyst_installer_gui.Pages {
 
             // TODO: If installing Kinect 360 SDK, show EULA after extracting
             // I have no fucking clue how that will even be implemented but that is a problem for future me!
+        }
+
+        private void InstallModule(int index) {
+
+            var module = InstallerStateManager.ModulesToInstall[index];
+            var moduleBase = InstallerStateManager.ModuleTypes[module.Install.Type];
+            var control =  m_installControls[index];
+            control.State = TaskState.Busy;
+            TaskState outState = TaskState.Question;
+
+            Task.Run(() => {
+                if ( moduleBase.Install(module.Remote.Filename, InstallerStateManager.AmethystInstallDirectory, ref control, out outState) ) {
+                    // TODO: Handle failure
+                }
+                control.Dispatcher.Invoke(() => control.State = outState);
+            });
         }
 
         // Force only the first button to have focus
