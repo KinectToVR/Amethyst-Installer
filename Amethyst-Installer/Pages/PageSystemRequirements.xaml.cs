@@ -222,10 +222,10 @@ namespace amethyst_installer_gui.Pages {
                     headsetString = "Oculus Rift S";
                     break;
                 case VRHmdType.Quest:
-                    headsetString = $"Meta Quest {Localisation.SystemRequirement_Description_Headset_Via} {vrConnectionType}";
+                    headsetString = string.Format(Localisation.SystemRequirement_Description_Headset_Via, "Meta Quest", vrConnectionType);
                     break;
                 case VRHmdType.Quest2:
-                    headsetString = $"Meta Quest 2 {Localisation.SystemRequirement_Description_Headset_Via} {vrConnectionType}";
+                    headsetString = string.Format(Localisation.SystemRequirement_Description_Headset_Via, "Meta Quest 2", vrConnectionType);
                     break;
 
                 case VRHmdType.Vive:
@@ -270,11 +270,15 @@ namespace amethyst_installer_gui.Pages {
 
             if ( headsetString.Length > 0 ) {
                 if ( OpenVRUtil.TrackingType == VRTrackingType.Lighthouse ) {
-                    return $"{headsetString} {Localisation.SystemRequirement_Description_Headset_UsingLighthouse}";
+                    return string.Format(Localisation.SystemRequirement_Description_Headset_UsingLighthouse, headsetString);
                 }
             }
 
-            return $"{OpenVRUtil.HmdType} {Localisation.SystemRequirement_Description_Headset_Via} {OpenVRUtil.ConnectionType} ({Localisation.SystemRequirement_Description_Headset_TrackingUnder} {OpenVRUtil.TrackingType})";
+            if ( OpenVRUtil.HmdType == VRHmdType.Unknown ) {
+                return Localisation.SystemRequirement_Description_Headset_Not_Detected;
+            }
+
+            return $"{string.Format(Localisation.SystemRequirement_Description_Headset_Via, OpenVRUtil.HmdType.ToString(), OpenVRUtil.ConnectionType.ToString())} ({string.Format(Localisation.SystemRequirement_Description_Headset_TrackingUnder, OpenVRUtil.TrackingType.ToString())})";
         }
 
         // Force only the first button to have focus
