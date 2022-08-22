@@ -139,6 +139,24 @@ namespace amethyst_installer_gui.Installer {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ForceEnableDriver(string driverId) {
 
+            return ForceDriverState(driverId, true);
+        }
+
+        /// <summary>
+        /// Forces a SteamVR driver to be disabled
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ForceDisableDriver(string driverId) {
+
+            return ForceDriverState(driverId, false);
+        }
+
+        /// <summary>
+        /// Forces a SteamVR driver to the specified state
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ForceDriverState(string driverId, bool state) {
+
             try {
                 // Try loading steam vr settings in case
                 LoadSteamVRSettings();
@@ -153,7 +171,7 @@ namespace amethyst_installer_gui.Installer {
                 if ( s_steamvrSettings[driverId] == null )
                     s_steamvrSettings[driverId] = new JObject();
 
-                s_steamvrSettings[driverId]["enable"] = true;
+                s_steamvrSettings[driverId]["enable"] = state;
                 s_steamvrSettings[driverId]["blocked_by_safe_mode"] = false;
                 SaveSteamVrSettings();
                 return true;
