@@ -116,9 +116,9 @@ namespace amethyst_installer_gui.Pages {
             Hyperlink vrSystemFootnoteHyperlink = new Hyperlink()
                 {
                 NavigateUri = new Uri(Util.GenerateDocsURL("alvr")),
-                // Foreground = WindowsColorHelpers.Accent
             };
             vrSystemFootnoteHyperlink.Inlines.Add(vrSystemFootnoteStringHyperlink);
+
             // Disable tabbing if not link
             if ( vrSystemFootnoteStringHyperlink.Length == 0 )
                 vrSystemFootnoteHyperlink.Focusable = false;

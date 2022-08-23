@@ -31,6 +31,7 @@ namespace amethyst_installer_gui.Controls {
         }
 
         private void TextView_Recomputed(object sender, EventArgs e) {
+            scrollViewport.MaxHeight = double.PositiveInfinity;
             scrollViewport.Height = text_view.ComputedHeight;
         }
 

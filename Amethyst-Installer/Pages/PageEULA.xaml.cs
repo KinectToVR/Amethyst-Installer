@@ -61,7 +61,7 @@ namespace amethyst_installer_gui.Pages {
             string pretext = Localisation.EULA_Warranty + Environment.NewLine + Environment.NewLine + Localisation.EULA_Licenses;
 
             // Use our better control :trol:
-            fastTextbox.Text = pretext + Environment.NewLine + LicenseTexts;
+            fastTextbox.Text = pretext + Environment.NewLine + Environment.NewLine + Environment.NewLine + LicenseTexts;
             fastTextbox.text_view.TypeFace = new Typeface("Consolas");
             fastTextbox.text_view.FontSize = 12;
             // Yellow warning

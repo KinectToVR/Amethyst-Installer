@@ -51,6 +51,7 @@ namespace amethyst_installer_gui.Controls {
 
         private bool m_isDirty = true;
         private double m_height = 0.0;
+        private double m_dpi = 0.0;
         private FormattedText m_computedTextFormatting;
 
         public TextView() {
@@ -63,6 +64,9 @@ namespace amethyst_installer_gui.Controls {
             if ( m_isDirty )
                 RecomputeTextInternal();
 
+            // TODO: Rewrite the text rendering using this sample as a base
+            // https://github.com/microsoft/WPF-Samples/blob/master/PerMonitorDPI/TextFormatting/
+
             // Draw the formatted text string to the DrawingContext of the control.
             // TODO: Render a small portion of the text, we know 90% of it is out of view anyway so why bother rendering the rest of the massive string
             drawingContext.DrawText(m_computedTextFormatting, new Point(0, HeightOffset));
@@ -74,15 +78,14 @@ namespace amethyst_installer_gui.Controls {
             // Compute the full text
             if ( m_isDirty )
                 RecomputeTextInternal();
-
-            m_height = m_computedTextFormatting?.Height ?? 0;
-            // DesiredSize = new Size(ActualWidth, ActualHeight < m_height ? m_height : ActualHeight);
         }
 
         private void RecomputeTextInternal() {
 
+            m_dpi = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+
             // Create the initial formatted text string.
-            m_computedTextFormatting = new FormattedText(Text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, TypeFace, FontSize, Brushes.White, 1);
+            m_computedTextFormatting = new FormattedText(Text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, TypeFace, FontSize, Brushes.White, m_dpi);
 
             // Set a maximum width and height. If the text overflows these values, an ellipsis "..." appears.
             m_computedTextFormatting.MaxTextWidth = ActualWidth;
@@ -94,6 +97,8 @@ namespace amethyst_installer_gui.Controls {
             for ( int i = 0; i < FontColors.Count; i++ ) {
                 m_computedTextFormatting.SetForegroundBrush(FontColors[i].TargetBrush, FontColors[i].Start, FontColors[i].Length);
             }
+
+            m_height = (m_computedTextFormatting?.Height ?? 0) * m_dpi;
 
             OnRecomputedValues?.Invoke(this, null);
         }
