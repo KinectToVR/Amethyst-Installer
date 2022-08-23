@@ -29,7 +29,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return "";
+            return string.Empty;
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
@@ -82,6 +82,10 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void splash_MouseUp(object sender, MouseButtonEventArgs e) {
+
+            if ( e.ChangedButton != MouseButton.Left )
+                return;
+
             SoundPlayer.PlaySound(SoundEffect.Focus);
             GenerateSplashText();
         }
