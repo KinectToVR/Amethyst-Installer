@@ -18,16 +18,29 @@ namespace amethyst_installer_gui {
             for ( int i = 0; i < HKLM_UninstallNodes.Length; i++ ) {
 
                 var currentNodeKey = HKLM.OpenSubKey(HKLM_UninstallNodes[i]);
-                var displayName = (string)currentNodeKey.GetValue("DisplayName", string.Empty);
-                var installLocation = (string)currentNodeKey.GetValue("InstallLocation", string.Empty);
-                var modifyPath = (string)currentNodeKey.GetValue("ModifyPath", string.Empty);
-                var uninstallString = (string)currentNodeKey.GetValue("UninstallString", string.Empty);
+                var displayName         = (string)currentNodeKey.GetValue("DisplayName",        string.Empty);
+                var installLocation     = (string)currentNodeKey.GetValue("InstallLocation",    string.Empty);
+                var modifyPath          = (string)currentNodeKey.GetValue("ModifyPath",         string.Empty);
+                var uninstallString     = (string)currentNodeKey.GetValue("UninstallString",    string.Empty);
+                var applicationVersion  = (string)currentNodeKey.GetValue("ApplicationVersion", string.Empty);
+                var displayVersion      = (string)currentNodeKey.GetValue("DisplayVersion",     string.Empty);
+                var publisher           = (string)currentNodeKey.GetValue("Publisher",          string.Empty);
+                var urlInfoAbout        = (string)currentNodeKey.GetValue("URLInfoAbout",       string.Empty);
+                var helpLink            = (string)currentNodeKey.GetValue("HelpLink",           string.Empty);
+                var displayIcon         = (string)currentNodeKey.GetValue("DisplayIcon",        string.Empty);
 
                 uninstallEntries.Add(new UninstallEntry() {
+
                     DisplayName = displayName,
                     InstallLocation = installLocation,
                     ModifyPath = modifyPath,
                     UninstallString = uninstallString,
+                    ApplicationVersion = applicationVersion,
+                    DisplayVersion = displayVersion,
+                    Publisher = publisher,
+                    URLInfoAbout = urlInfoAbout,
+                    HelpLink = helpLink,
+                    DisplayIcon = displayIcon,
                 });
 
                 currentNodeKey.Close();
@@ -42,12 +55,25 @@ namespace amethyst_installer_gui {
                 var installLocation     = (string)currentNodeKey.GetValue("InstallLocation",    string.Empty);
                 var modifyPath          = (string)currentNodeKey.GetValue("ModifyPath",         string.Empty);
                 var uninstallString     = (string)currentNodeKey.GetValue("UninstallString",    string.Empty);
+                var applicationVersion  = (string)currentNodeKey.GetValue("ApplicationVersion", string.Empty);
+                var displayVersion      = (string)currentNodeKey.GetValue("DisplayVersion",     string.Empty);
+                var publisher           = (string)currentNodeKey.GetValue("Publisher",          string.Empty);
+                var urlInfoAbout        = (string)currentNodeKey.GetValue("URLInfoAbout",       string.Empty);
+                var helpLink            = (string)currentNodeKey.GetValue("HelpLink",           string.Empty);
+                var displayIcon         = (string)currentNodeKey.GetValue("DisplayIcon",        string.Empty);
 
                 uninstallEntries.Add(new UninstallEntry() {
-                    DisplayName = displayName,
-                    InstallLocation = installLocation,
-                    ModifyPath = modifyPath,
-                    UninstallString = uninstallString,
+
+                    DisplayName         = displayName,
+                    InstallLocation     = installLocation,
+                    ModifyPath          = modifyPath,
+                    UninstallString     = uninstallString,
+                    ApplicationVersion  = applicationVersion,
+                    DisplayVersion      = displayVersion,
+                    Publisher           = publisher,
+                    URLInfoAbout        = urlInfoAbout,
+                    HelpLink            = helpLink,
+                    DisplayIcon         = displayIcon,
                 });
 
                 currentNodeKey.Close();
@@ -83,7 +109,7 @@ namespace amethyst_installer_gui {
                 subkeyEntry.SetValue("DisplayIcon",         uninstallEntryInfo.DisplayIcon);
                 subkeyEntry.SetValue("DisplayVersion",      uninstallEntryInfo.DisplayVersion);
                 subkeyEntry.SetValue("URLInfoAbout",        uninstallEntryInfo.URLInfoAbout);
-                subkeyEntry.SetValue("Contact",             uninstallEntryInfo.Contact);
+                subkeyEntry.SetValue("HelpLink",            uninstallEntryInfo.HelpLink);
                 subkeyEntry.SetValue("InstallDate",         DateTime.Now.ToString("yyyyMMdd"));
                 subkeyEntry.SetValue("UninstallString",     uninstallEntryInfo.UninstallString);
                 subkeyEntry.SetValue("ModifyPath",          uninstallEntryInfo.ModifyPath);
@@ -110,7 +136,7 @@ namespace amethyst_installer_gui {
         public string DisplayVersion;
         public string Publisher;
         public string URLInfoAbout;
-        public string Contact;
+        public string HelpLink;
         public string DisplayIcon;
     }
 }

@@ -165,8 +165,8 @@ if upgrade no
                 Publisher = "K2VR Team",
                 DisplayIcon = $"{amethystExecutable},0", // something.exe,0 ; number is icon index in the binary's resources
                 
-                URLInfoAbout = "https://k2vr.tech/",
-                Contact = Constants.DiscordInvite,
+                HelpLink = "https://k2vr.tech/",
+                URLInfoAbout = Constants.DiscordInvite,
 
                 DisplayVersion = Module.DisplayVersion,
                 ApplicationVersion = Module.DisplayVersion,
@@ -184,7 +184,7 @@ if upgrade no
                 Logger.Fatal($"{LogStrings.CreateUninstallEntryFailed}:\n{Util.FormatException(e)})");
             }
 
-            return false;
+            return true;
         }
     }
 }
