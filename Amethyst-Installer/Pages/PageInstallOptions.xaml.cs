@@ -22,6 +22,20 @@ namespace amethyst_installer_gui.Pages {
     public partial class PageInstallOptions : UserControl, IInstallerPage {
 
         private List<InstallableItem> installableItemControls;
+        private Module m_currentModule;
+
+        private long m_currentModuleDownloadSize = 0;
+        private long m_currentModuleInstallSize = 0;
+
+        private long m_totalDownloadSize = 0;
+        private long m_totalInstallSize = 0;
+
+        /*
+- Sometimes animations break, re-toggling the animation fixes it from my testing. I'm still looking for a solution for this.
+- Installing Amethyst on top of an existing Amethyst install explodes the installer. This is due to no uninstall workflow existing yet.
+- Visual C++ Redist isn't downloaded nor installed yet.
+- You cannot install anything Kinect. This is not implemented.
+        */
 
         public PageInstallOptions() {
             InitializeComponent();
@@ -72,6 +86,7 @@ namespace amethyst_installer_gui.Pages {
                 currentControl.Disabled = currentModule.Required;
                 currentControl.Margin = new Thickness(0, 0, 0, 8);
                 currentControl.OnMouseClickReleased += InstallOptionMouseReleaseHandler;
+                currentControl.OnToggled += InstallOptionCheckToggledHandler;
                 currentControl.Tag = currentModule;
 
                 installOptionsContainer.Children.Add(currentControl);
@@ -83,6 +98,19 @@ namespace amethyst_installer_gui.Pages {
                 }
             }
         }
+
+        private void InstallOptionCheckToggledHandler(object sender, RoutedEventArgs e) {
+
+            // Update right hand side
+            CalculateInstallSize(m_currentModule);
+
+            downloadSize.Content = Util.SizeSuffix(m_currentModuleDownloadSize);
+            installSize.Content = Util.SizeSuffix(m_currentModuleInstallSize);
+
+            totalDownloadSize.Content = Util.SizeSuffix(m_totalDownloadSize);
+            totalInstallSize.Content = Util.SizeSuffix(m_totalInstallSize);
+        }
+
         private void InstallOptionMouseReleaseHandler(object sender, MouseButtonEventArgs e) {
 
             if ( e != null )
@@ -96,21 +124,76 @@ namespace amethyst_installer_gui.Pages {
                 }
             }
 
+            m_currentModule = selectedItem.Tag as Module;
+
             // Update right hand side
-            CalculateInstallSize();
+            CalculateInstallSize(m_currentModule);
 
-            Module currentModule = selectedItem.Tag as Module;
-
-            fullTitle.Text = currentModule.DisplayName;
-            fullDescription.Text = currentModule.Description;
+            fullTitle.Text = m_currentModule.DisplayName;
+            fullDescription.Text = m_currentModule.Description;
 
             // TODO: Better calculation, check dependency chain, proper storage units
-            downloadSize.Content = Util.SizeSuffix(currentModule.DownloadSize);
-            installSize.Content = Util.SizeSuffix(currentModule.FileSize);
+            downloadSize.Content = Util.SizeSuffix(m_currentModuleDownloadSize);
+            installSize.Content = Util.SizeSuffix(m_currentModuleInstallSize);
+
+            totalDownloadSize.Content = Util.SizeSuffix(m_totalDownloadSize);
+            totalInstallSize.Content = Util.SizeSuffix(m_totalInstallSize);
         }
 
-        private void CalculateInstallSize() {
-            // TODO: Also calculate total install size here
+        private void CalculateInstallSize(Module currentModule) {
+
+            m_currentModuleDownloadSize = 0;
+            m_currentModuleInstallSize  = 0;
+            m_totalDownloadSize         = 0;
+            m_totalInstallSize          = 0;
+
+            Logger.Info("Re-calculating file sizes...");
+
+            for ( int i = 0; i < installableItemControls.Count; i++ ) {
+
+                var module = ( Module ) installableItemControls[i].Tag;
+
+                // Directly read the checkbox because when toggling the chexbox rather than clicking the control directly the
+                // "Checked" property's state is deferred till after this method is executed, however the "itemCheckbox.IsChecked"
+                // property is reliable for this page's purposes
+                bool isChecked = installableItemControls[i].Disabled ?
+                    true : (installableItemControls[i].itemCheckbox?.IsChecked ?? false);
+
+                // Collect the current root module's file sizes
+                if ( isChecked ) {
+                    m_totalDownloadSize += module.DownloadSize;
+                    m_totalInstallSize += module.FileSize;
+                }
+
+                if ( module == currentModule ) {
+                    m_currentModuleDownloadSize += module.DownloadSize;
+                    m_currentModuleInstallSize += module.FileSize;
+                }
+
+                // Collect the dependency module's file sizes
+                for ( int j = 0; j < module.Depends.Count; j++ ) {
+
+                    var thisModule = InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT[module.Depends[j]]];
+
+                    if ( isChecked ) {
+                        m_totalDownloadSize += thisModule.DownloadSize;
+                        m_totalInstallSize += thisModule.FileSize;
+
+                        // For dependency in X
+                        Logger.Info(thisModule.DisplayName);
+                    }
+
+                    if ( module == currentModule ) {
+                        m_currentModuleDownloadSize += thisModule.DownloadSize;
+                        m_currentModuleInstallSize += thisModule.FileSize;
+                    }
+                }
+
+                if ( isChecked )
+                    // Module :D
+                    Logger.Info(module.DisplayName);
+            }
+
         }
 
         // Force only the first button to have focus
