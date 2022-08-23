@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel x:Name="msgBoxContainer" Grid.Row="0">
-            <RichTextBox Height="{Binding ElementName=msgBoxContainer, Path=ActualHeight}" x:Name="logMessagesBox" IsReadOnly="True" Style="{DynamicResource WinUIScrollRichTextBox}" FontFamily="Consolas" MaxWidth="{Binding ElementName=logsPageContainer, Path=ActualWidth}" VerticalScrollBarVisibility="Auto" LayoutUpdated="logMessagesBox_LayoutUpdated" />
+            <RichTextBox Height="{Binding ElementName=msgBoxContainer, Path=ActualHeight}" x:Name="logMessagesBox" IsReadOnly="True" Style="{DynamicResource WinUIScrollRichTextBox}" FontFamily="Consolas" MaxWidth="{Binding ElementName=logsPageContainer, Path=ActualWidth}" VerticalScrollBarVisibility="Auto" LayoutUpdated="logMessagesBox_LayoutUpdated" IsUndoEnabled="False" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,15,0,0">
             <TextBlock Foreground="#FF949494" LineStackingStrategy="BlockLineHeight">
