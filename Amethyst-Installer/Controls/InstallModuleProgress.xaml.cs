@@ -72,6 +72,12 @@ namespace amethyst_installer_gui.Controls {
             ( d as InstallModuleProgress ).moduleTitle.Text = ( string ) e.NewValue;
         }
 
+        public void ClearLog() {
+            Dispatcher.Invoke(() => {
+                detailedLog.Document.Blocks.Clear();
+            });
+        }
+
         public void LogInfo(string message) {
             Dispatcher.Invoke(() => {
                 // TODO: Abstract into some other class for light mode support

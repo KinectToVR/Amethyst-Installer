@@ -54,7 +54,8 @@
 				"items": [
 					{
 						"executable": "vc_redist.x64.exe",
-						"arguments": "/install /quiet /norestart"
+						"arguments": "/install /quiet /norestart",
+						"successful_exit_codes": [ 0, 3010, 1641 ]
 					}
 				]
 			},
