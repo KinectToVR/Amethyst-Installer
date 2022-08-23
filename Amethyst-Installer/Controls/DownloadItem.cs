@@ -129,7 +129,18 @@ namespace amethyst_installer_gui.Controls {
         }
 
         public static readonly DependencyProperty CompletedProperty =
-            DependencyProperty.Register("Completed", typeof(bool), typeof(DownloadItem), new UIPropertyMetadata(false));
+            DependencyProperty.Register("Completed", typeof(bool), typeof(DownloadItem), new UIPropertyMetadata(false, new PropertyChangedCallback(CompletedChanged)));
+
+        private static void CompletedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var thisControl = d as DownloadItem;
+            if ( thisControl.totalSizeText == null || thisControl.percentageText == null || thisControl.progressBar == null )
+                return;
+            thisControl.totalSizeText.Text = Util.SizeSuffix(thisControl.TotalBytes);
+
+            if ( !(bool)e.NewValue && !thisControl.IsPending ) {
+                thisControl.totalSizeText.Text += $" ({Util.SizeSuffix(( long ) thisControl.TransferSpeed)}/s)";
+            }
+        }
 
         public string ErrorMessage {
             get { return ( string ) GetValue(ErrorMessageProperty); }

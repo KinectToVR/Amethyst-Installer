@@ -15,6 +15,7 @@ namespace amethyst_installer_gui {
 
         static Download() {
             s_httpClient = new HttpClient();
+            s_httpClient.Timeout = TimeSpan.FromSeconds(Constants.DownloadTimeout);
         }
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace amethyst_installer_gui {
         /// <param name="path"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public static async Task DownloadFileAsync(string url, string filename = null, string path = null, Action<long> progress = null, float timeout = 10) {
+        public static async Task DownloadFileAsync(string url, string filename = null, string path = null, Func<long, int, Task> progress = null, int identifier = -1) {
 
             string fullPath = Path.GetFullPath(Path.Combine(path, filename));
             Logger.Info(fullPath);
@@ -42,12 +43,10 @@ namespace amethyst_installer_gui {
             }
 #endif
 
-            s_httpClient.Timeout = TimeSpan.FromSeconds(timeout);
-
             Logger.Info($"Downloading file {filename} from {url}...");
 
             using ( var fileStream = File.OpenWrite(fullPath) ) {
-                await s_httpClient.DownloadAsync(url, fileStream, progress, ( long ) ( timeout * 1000L ));
+                await s_httpClient.DownloadAsync(url, fileStream, progress, ( long ) ( s_httpClient.Timeout.TotalMilliseconds ), identifier);
             }
         }
     }

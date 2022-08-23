@@ -254,6 +254,8 @@ namespace amethyst_installer_gui {
             // This is required in the event of an upgrade for example
 
             Application.Current.Shutdown(( int ) exitCode);
+
+            
         }
 
         // https://floating-point-gui.de/errors/comparison/

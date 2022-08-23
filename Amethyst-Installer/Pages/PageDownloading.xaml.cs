@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +15,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Shell;
 using TimeoutClock = System.Timers.Timer;
 
@@ -25,6 +25,7 @@ namespace amethyst_installer_gui.Pages {
     public partial class PageDownloading : UserControl, IInstallerPage {
 
         private DownloadItem m_currentProgressControl;
+        private int m_downloadIndex = 0;
 
         private TimeoutClock m_timer;
         private long m_lastTotalBytesDownloaded = 0;
@@ -109,7 +110,6 @@ namespace amethyst_installer_gui.Pages {
             // Populate install shit
             for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
 
-
                 var moduleToInstall = InstallerStateManager.ModulesToInstall[i];
 
                 DownloadItem downloadItem = new DownloadItem();
@@ -125,7 +125,8 @@ namespace amethyst_installer_gui.Pages {
             }
 
             // DownloadModule(0).GetAwaiter().GetResult();
-            await DownloadModule(0);
+            m_downloadIndex = 0;
+            await DownloadModule(m_downloadIndex);
 
         }
 
@@ -152,7 +153,7 @@ namespace amethyst_installer_gui.Pages {
             m_transferSpeed = 0;
 
             try {
-                await Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, 30.0f);
+                await Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, m_downloadIndex);
             } catch ( OperationCanceledException ) {
                 OnDownloadFailed(index);
             } catch ( TimeoutException ) {
@@ -172,36 +173,56 @@ namespace amethyst_installer_gui.Pages {
         }
 
         // Progress update
-        public void DownloadModule_ProgressCallback(long value) {
-            if ( m_currentProgressControl != null ) {
+        public async Task DownloadModule_ProgressCallback(long value, int identifier) {
+            // If this callback is from the identifier associated with the current control and the current control isn't null
+            var thisControl = ( DownloadItem ) downloadContent.Children[identifier];
+            // if ( identifier == m_downloadIndex && m_currentProgressControl != null ) {
+            if ( thisControl != null ) {
 
-                m_currentProgressControl.DownloadedBytes = value;
+                thisControl.DownloadedBytes = value;
                 m_totalBytesDownloaded = value;
 
                 // Update taskbar progress
-                MainWindow.Instance.taskBarItemInfo.ProgressValue = m_currentProgressControl.DownloadedBytes / (double) m_currentProgressControl.TotalBytes;
+                if ( identifier == m_downloadIndex ) {
+                    MainWindow.Instance.taskBarItemInfo.ProgressValue = thisControl.DownloadedBytes / ( double ) thisControl.TotalBytes;
 
-                // TODO: Total bytes should be another value
-                if ( m_currentProgressControl.DownloadedBytes == m_currentProgressControl.TotalBytes ) {
-                    // Assume the download is done
-                    m_currentProgressControl.Completed = true;
-
-                    // TODO: Process next in queue
-                    MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+                    // TODO: Total bytes should be another value
+                    if ( !thisControl.Completed && thisControl.DownloadedBytes == thisControl.TotalBytes ) {
+                        // Assume the download is done
+                        await OnDownloadComplete();
+                    }
                 }
+            }
+        }
+
+        private async Task OnDownloadComplete() {
+            m_currentProgressControl.Completed = true;
+            m_downloadIndex++;
+
+            if (m_downloadIndex == InstallerStateManager.ModulesToInstall.Count) {
+                MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+                MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
+                Logger.Info("Downloaded all modules successfully!");
+            } else {
+                Logger.Info("Download complete!");
+                await DownloadModule(m_downloadIndex);
             }
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
 
-            // Calculate the transfer speed every second
-            m_transferSpeed = m_totalBytesDownloaded - m_lastTotalBytesDownloaded;
-            m_lastTotalBytesDownloaded = m_totalBytesDownloaded;
+            try {
 
-            // Force update the UI on the UI thread
-            if ( m_currentProgressControl != null)
-                m_currentProgressControl.Dispatcher.Invoke(() => m_currentProgressControl.TransferSpeed = m_transferSpeed);
+                // Calculate the transfer speed every second
+                m_transferSpeed = m_totalBytesDownloaded - m_lastTotalBytesDownloaded;
+                m_lastTotalBytesDownloaded = m_totalBytesDownloaded;
 
+                // Force update the UI on the UI thread
+                if ( m_currentProgressControl != null )
+                    m_currentProgressControl.Dispatcher.Invoke(() => m_currentProgressControl.TransferSpeed = m_transferSpeed);
+            } catch ( Exception ex ) {
+                Logger.Fatal(Util.FormatException(ex));
+            }
         }
 
         private void OnDownloadFailed(int index) {

@@ -68,6 +68,11 @@ namespace amethyst_installer_gui {
         /// </summary>
         public const float MinimumPlayspaceSize = 1.6f;
 
+        /// <summary>
+        /// How long to wait for a download to complete
+        /// </summary>
+        public const float DownloadTimeout = 30.0f;
+
         public const double Epsilon = 0.000001;
         public const double DoubleMinNormal = 1.40129846432e-45;
 
