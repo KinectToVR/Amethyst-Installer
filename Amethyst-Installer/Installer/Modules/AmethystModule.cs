@@ -79,7 +79,6 @@ if upgrade no
 
             string driverPath = Path.Combine(path, "Amethyst");
 
-
             // TODO: Skip this step during an upgrade
             Logger.Info(LogStrings.CheckingAmethystDriverConflicts);
             control.LogInfo(LogStrings.CheckingAmethystDriverConflicts);
@@ -92,7 +91,7 @@ if upgrade no
             // Check for K2EX driver
             if ( Directory.Exists(OpenVRUtil.GetDriverPath("KinectToVR")) ) {
                 OpenVRUtil.ForceDisableDriver("KinectToVR");
-                // OpenVRUtil.RemoveDriversWithName("KinectToVR");
+                OpenVRUtil.RemoveDriversWithName("KinectToVR");
             }
 
             // TODO: Skip this step during an upgrade
@@ -109,7 +108,63 @@ if upgrade no
 
         private bool AssignTrackerRoles(ref InstallModuleProgress control) {
 
-            return false;
+            {
+                Logger.Info(LogStrings.AssigningTrackerRoles);
+                control.LogInfo(LogStrings.AssigningTrackerRoles);
+
+                try {
+                    // Assign all Amethyst tracker roles
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-00WAIST0", TrackerRole.TrackerRole_Waist);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-00WAIST00", TrackerRole.TrackerRole_Waist);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-CHEST", TrackerRole.TrackerRole_Chest);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0ELBOW0", TrackerRole.TrackerRole_LeftElbow);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0FOOT00", TrackerRole.TrackerRole_LeftFoot);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0KNEE00", TrackerRole.TrackerRole_LeftKnee);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LELBOW", TrackerRole.TrackerRole_LeftElbow);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LFOOT", TrackerRole.TrackerRole_LeftFoot);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LKNEE", TrackerRole.TrackerRole_LeftKnee);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0ELBOW0", TrackerRole.TrackerRole_RightElbow);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0FOOT00", TrackerRole.TrackerRole_RightFoot);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0KNEE00", TrackerRole.TrackerRole_RightKnee);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RELBOW", TrackerRole.TrackerRole_RightElbow);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RFOOT", TrackerRole.TrackerRole_RightFoot);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RKNEE", TrackerRole.TrackerRole_RightKnee);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-WAIST", TrackerRole.TrackerRole_Waist);
+                } catch ( Exception e ) {
+                    control.LogError($"{LogStrings.FailAssignTrackerRoles}! {LogStrings.ViewLogs}");
+                    Logger.Fatal($"{LogStrings.FailAssignTrackerRoles}:\n{Util.FormatException(e)})");
+                }
+            }
+
+            {
+                Logger.Info(LogStrings.RemovingConflictingTrackerRoles);
+                control.LogInfo(LogStrings.RemovingConflictingTrackerRoles);
+
+                try {
+                    // Ancient Versions of KinectToVR
+                    OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/0");
+                    OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/1");
+                    OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/2");
+                    OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/3");
+
+                    // For most of K2EX's lifespan we tried mimicking Vive Trackers
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB11ABEC");
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB1441A7");
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T0");
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T1");
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T2");
+
+                    // In K2EX 0.9.1 we use custom roles
+                    OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_HIP");
+                    OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_LFOOT");
+                    OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_RFOOT");
+                } catch ( Exception e ) {
+                    control.LogError($"{LogStrings.FailRemoveConflictingTrackerRoles}! {LogStrings.ViewLogs}");
+                    Logger.Fatal($"{LogStrings.FailRemoveConflictingTrackerRoles}:\n{Util.FormatException(e)})");
+                }
+            }
+
+            return true;
         }
 
         private bool CreateShortcuts(string path, ref InstallModuleProgress control) {
