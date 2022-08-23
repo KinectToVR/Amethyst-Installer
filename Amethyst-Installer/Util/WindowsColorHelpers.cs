@@ -61,8 +61,7 @@ namespace amethyst_installer_gui {
                          */
 
                         float deltaLuminosity = 0.4f - luminosity;
-                        float H, S, L;
-                        ColorToHSL(col, out H, out S, out L);
+                        ColorToHSL(col, out float H, out float S, out float L);
                         L = Math.Max(0.02f, Math.Min(0.98f, L + deltaLuminosity)); // clamp between 0.02 and 0.98
                         return ColorFromHSL(H, S, L);
                     }
@@ -78,8 +77,7 @@ namespace amethyst_installer_gui {
         }
 
         public static Color Lighten(Color color, float amount = 0f) {
-            float H, S, L;
-            ColorToHSL(color, out H, out S, out L);
+            ColorToHSL(color, out float H, out float S, out float L);
             S -= .3f;
             L += .04f;
             S = Math.Max(0.02f, Math.Min(0.98f, S)); // clamp between 0.02 and 0.98
@@ -112,7 +110,7 @@ namespace amethyst_installer_gui {
 
         private static Color ParseDWordColor(int color) {
             byte
-                a = (byte)((color >> 24) & 0xFF),
+                // a = (byte)((color >> 24) & 0xFF),
                 b = (byte)((color >> 16) & 0xFF),
                 g = (byte)((color >> 8) & 0xFF),
                 r = (byte)((color >> 0) & 0xFF);
