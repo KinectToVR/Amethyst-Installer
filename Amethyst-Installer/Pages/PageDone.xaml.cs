@@ -1,5 +1,7 @@
 using amethyst_installer_gui.Installer;
+using Microsoft.NodejsTools.SharedProject;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -21,6 +23,16 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
+
+            if ( launchAmeOnExit.IsChecked.Value ) {
+
+                SystemUtility.ExecuteProcessUnElevated(
+                    Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst.exe")),
+                    "",
+                    InstallerStateManager.AmethystInstallDirectory,
+                    ShowWindow.SW_NORMAL);
+            }
+
             Util.Quit(ExitCodes.OK);
         }
 

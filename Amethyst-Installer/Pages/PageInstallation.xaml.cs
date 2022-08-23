@@ -87,6 +87,7 @@ namespace amethyst_installer_gui.Pages {
             Task.Run(() => {
                 if ( moduleBase.Install(module.Remote.Filename, InstallerStateManager.AmethystInstallDirectory, ref control, out outState) ) {
                     // TODO: Handle failure
+                    MainWindow.Instance.ActionButtonPrimary.Dispatcher.Invoke(() => MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible);
                 }
                 control.Dispatcher.Invoke(() => control.State = outState);
             });
@@ -94,7 +95,11 @@ namespace amethyst_installer_gui.Pages {
 
         // Force only the first button to have focus
         public void OnFocus() {
+#if DEBUG
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+#else
+            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Hidden;
+#endif
             MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;

@@ -181,6 +181,7 @@
     <Compile Include="Installer\OpenVR\OpenVRUtil.Steam.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.SteamVR.cs" />
     <Compile Include="Installer\CloudPCUtil.cs" />
+    <Compile Include="Installer\OpenVR\OpenVRUtil.TrackerRoles.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
     <Compile Include="Pages\PageDebug.xaml.cs">
       <DependentUpon>PageDebug.xaml</DependentUpon>
@@ -246,6 +247,7 @@
     <Compile Include="PInvoke\openvr_api.cs" />
     <Compile Include="PInvoke\PowerProvider.cs" />
     <Compile Include="PInvoke\Shell.cs" />
+    <Compile Include="PInvoke\SystemUtility.cs" />
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
     </Compile>
@@ -504,6 +506,17 @@
       <Project>{3f1750ac-522a-4983-b648-84606bbeb8bb}</Project>
       <Name>AutoGenerate</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
+             xmlns:global="clr-namespace:amethyst_installer_gui"
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="{x:Static global:Localisation.Done_InstallSuccess}" Foreground="White" />
+            <CheckBox x:Name="launchAmeOnExit" Content="{x:Static global:Localisation.Done_LaunchAmethyst}" Margin="0,8,0,0" IsChecked="True" />
+        </StackPanel>
 
     </Grid>
 </UserControl>
