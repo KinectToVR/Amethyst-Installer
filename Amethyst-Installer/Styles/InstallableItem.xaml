@@ -6,6 +6,7 @@
     <Style TargetType="{x:Type local:InstallableItem}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
+        <Setter Property="Checked" Value="False" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -17,7 +18,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <CheckBox x:Name="itemCheckbox" Grid.Column="0" />
+                            <CheckBox x:Name="itemCheckbox" Grid.Column="0" IsChecked="{Binding Checked}" />
                             <StackPanel Grid.Column="1" Margin="8,0,0,0">
                                 <TextBlock TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" x:Name="itemTitle" Foreground="{DynamicResource BrushForeground}" FontWeight="SemiBold" FontFamily="Segoe UI Semibold" FontSize="12" />
                                 <TextBlock TextTrimming="CharacterEllipsis" x:Name="itemDescription" Foreground="{DynamicResource BrushForegroundAlt}" FontWeight="SemiBold" FontFamily="Segoe UI Semibold" FontSize="12" />
