@@ -23,6 +23,9 @@ namespace amethyst_installer_gui.Pages {
     public partial class PageInstallation : UserControl, IInstallerPage {
 
         private List<InstallModuleProgress> m_installControls;
+        private int m_installedModuleCount = 0;
+        private bool m_failedToInstall = false;
+
         public PageInstallation() {
             InitializeComponent();
             m_installControls = new List<InstallModuleProgress>();
@@ -37,20 +40,34 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
-            // Advance to next page
-            MainWindow.Instance.sidebar_install.State = Controls.TaskState.Checkmark;
-            SoundPlayer.PlaySound(SoundEffect.MoveNext);
-            MainWindow.Instance.SetPage(InstallerState.Done);
+            if ( m_failedToInstall ) {
+                
+                // TODO: What the fuck do I do here
+
+
+
+            } else {
+                // Advance to next page
+                MainWindow.Instance.sidebar_install.State = Controls.TaskState.Checkmark;
+                SoundPlayer.PlaySound(SoundEffect.MoveNext);
+                MainWindow.Instance.SetPage(InstallerState.Done);
+            }
         }
 
         public void OnSelected() {
 
+            // Marquee progress
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
             MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
+            // Create controls
             for (int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
 
                 var module = InstallerStateManager.ModulesToInstall[i];
+                if ( !InstallerStateManager.ModuleTypes.ContainsKey(module.Install.Type )) {
+                    Logger.Warn($"Module of type {module.Install.Type} couldn't be found! Skipping...");
+                    continue;
+                }
                 var moduleBase = InstallerStateManager.ModuleTypes[module.Install.Type];
 
                 Logger.Info($"Installing module {module.DisplayName} of type {module.Install.Type}...");
@@ -61,12 +78,15 @@ namespace amethyst_installer_gui.Pages {
                 installControl.State = TaskState.Default;
                 if ( i != InstallerStateManager.ModulesToInstall.Count )
                     installControl.Margin = new Thickness(0, 0, 0, 8);
+                installControl.LogInfo(LogStrings.WaitingForExecution);
 
                 installationListContainer.Children.Add(installControl);
                 m_installControls.Add(installControl);
             }
 
-            InstallModule(0);
+            m_installedModuleCount = 0;
+
+            InstallModule(m_installedModuleCount);
 
             // TODO: Implement
             // MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
@@ -81,16 +101,43 @@ namespace amethyst_installer_gui.Pages {
             var module = InstallerStateManager.ModulesToInstall[index];
             var moduleBase = InstallerStateManager.ModuleTypes[module.Install.Type];
             var control =  m_installControls[index];
+            control.ClearLog();
             control.State = TaskState.Busy;
+            control.BringIntoView();
             TaskState outState = TaskState.Question;
 
             Task.Run(() => {
                 if ( moduleBase.Install(module.Remote.Filename, InstallerStateManager.AmethystInstallDirectory, ref control, out outState) ) {
                     // TODO: Handle failure
-                    MainWindow.Instance.ActionButtonPrimary.Dispatcher.Invoke(() => MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible);
+                    MainWindow.Instance.ActionButtonPrimary.Dispatcher.Invoke(() => {
+                        OnModuleInstalled();
+                        control.State = outState;
+                    });
+                } else {
+                    control.Dispatcher.Invoke(() => OnModuleFailed(ref control));
                 }
-                control.Dispatcher.Invoke(() => control.State = outState);
             });
+        }
+
+        private void OnModuleInstalled() {
+            m_installedModuleCount++;
+            if ( m_installedModuleCount == InstallerStateManager.ModulesToInstall.Count ) {
+                MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+                MainWindow.Instance.sidebar_install.State = TaskState.Checkmark;
+                MainWindow.Instance.taskBarItemInfo.ProgressValue = 0;
+                MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
+                // SoundPlayer.PlaySound(SoundEffect.Focus);
+            } else {
+                InstallModule(m_installedModuleCount);
+            }
+        }
+
+        private void OnModuleFailed(ref InstallModuleProgress control) {
+            m_failedToInstall = true;
+            control.State = TaskState.Error;
+            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
+            MainWindow.Instance.sidebar_install.State = TaskState.Error;
+            SoundPlayer.PlaySound(SoundEffect.Error);
         }
 
         // Force only the first button to have focus
