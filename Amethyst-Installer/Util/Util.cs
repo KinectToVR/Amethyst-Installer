@@ -273,5 +273,16 @@ namespace amethyst_installer_gui {
                 return diff / Math.Min(absA + absB, float.MaxValue) < epsilon;
             }
         }
+
+
+        public static void CreateExecutableShortcut(string path, string directory, string file, string description) {
+            var shell = new IWshRuntimeLibrary.WshShell();
+            var shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(path);
+            shortcut.Description = description;
+            shortcut.TargetPath = file;
+            shortcut.IconLocation = $"{file},0";
+            shortcut.WorkingDirectory = directory;
+            shortcut.Save();
+        }
     }
 }

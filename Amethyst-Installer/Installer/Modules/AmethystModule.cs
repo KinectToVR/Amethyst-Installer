@@ -30,18 +30,15 @@ if upgrade no
 
         public override bool Install(string sourceFile, string path, ref InstallModuleProgress control, out TaskState state) {
 
+            // TODO: Kill Amethyst, SteamVR
+
             // TODO: Check for previous install of Amethyst, and if present, soft-uninstall (soft means only get rid of the install itself, don't touch configs or SteamVR)
 
             if (ExtractAmethyst(sourceFile, path, ref control) ) {
 
                 bool overallSuccess = HandleDrivers(path, ref control);
-
                 overallSuccess = overallSuccess && CreateUninstallEntry(path, ref control);
-
-                // TODO: Tracker roles
                 overallSuccess = overallSuccess && AssignTrackerRoles(ref control);
-
-                // TODO: Shortcuts
                 overallSuccess = overallSuccess && CreateShortcuts(path, ref control);
 
                 // TODO: If this is an upgrade change the message to a different one
@@ -117,7 +114,42 @@ if upgrade no
 
         private bool CreateShortcuts(string path, ref InstallModuleProgress control) {
 
-            return false;
+            // Start menu shortcut
+            if ( InstallerStateManager.CreateStartMenuEntry ) {
+
+                Logger.Info(LogStrings.CreatingStartMenuEntry);
+                control.LogInfo(LogStrings.CreatingStartMenuEntry);
+
+                try {
+                    Util.CreateExecutableShortcut(
+                        Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "..", "ProgramData", "Microsoft", "Windows", "Start Menu", "Programs", "Amethyst.lnk")),
+                        path,
+                        Path.Combine(path, "Amethyst.exe"),
+                        "Launch Amethyst");
+                } catch ( Exception e ) {
+                    control.LogError($"{LogStrings.FailedCreateStartMenuEntry}! {LogStrings.ViewLogs}");
+                    Logger.Fatal($"{LogStrings.FailedCreateStartMenuEntry}:\n{Util.FormatException(e)})");
+                }
+            }
+
+            if ( InstallerStateManager.CreateDesktopShortcut ) {
+
+                Logger.Info(LogStrings.CreatingDesktopEntry);
+                control.LogInfo(LogStrings.CreatingDesktopEntry);
+
+                try {
+                    Util.CreateExecutableShortcut(
+                        Path.GetFullPath(@"C:\Users\Public\Desktop\Amethyst.lnk"),
+                        path,
+                        Path.Combine(path, "Amethyst.exe"),
+                        "Launch Amethyst");
+                } catch ( Exception e ) {
+                    control.LogError($"{LogStrings.FailedCreateDesktopEntry}! {LogStrings.ViewLogs}");
+                    Logger.Fatal($"{LogStrings.FailedCreateDesktopEntry}:\n{Util.FormatException(e)})");
+                }
+            }
+
+            return true;
         }
 
         private bool CreateUninstallEntry(string target, ref InstallModuleProgress control) {
