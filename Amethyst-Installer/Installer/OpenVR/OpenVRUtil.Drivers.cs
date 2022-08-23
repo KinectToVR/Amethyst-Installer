@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace amethyst_installer_gui.Installer {
@@ -157,9 +153,9 @@ namespace amethyst_installer_gui.Installer {
                         CreateNoWindow = true,
                         WindowStyle = ProcessWindowStyle.Hidden
                     });
-                    var output = vrpathregProc.StandardOutput.ReadToEnd();
+                    // var output = vrpathregProc.StandardOutput.ReadToEnd();
                     vrpathregProc.WaitForExit();
-                    output = output.Split(Environment.NewLine[0])[0];
+                    // output = output.Split(Environment.NewLine[0])[0];
                     switch ( vrpathregProc.ExitCode ) {
                         case 0: // Success
                             return;
@@ -198,6 +194,7 @@ namespace amethyst_installer_gui.Installer {
                         }
                     } catch (Exception e) {
                         Logger.Fatal($"Failed to read info for driver at {path}!");
+                        Logger.Fatal(Util.FormatException(e));
                     }
                 }
                 SaveOpenVrPaths();
@@ -226,9 +223,9 @@ namespace amethyst_installer_gui.Installer {
                         CreateNoWindow = true,
                         WindowStyle = ProcessWindowStyle.Hidden
                     });
-                    var output = vrpathregProc.StandardOutput.ReadToEnd();
+                    // var output = vrpathregProc.StandardOutput.ReadToEnd();
                     vrpathregProc.WaitForExit();
-                    output = output.Split(Environment.NewLine[0])[0];
+                    // output = output.Split(Environment.NewLine[0])[0];
                     switch ( vrpathregProc.ExitCode ) {
                         case 0: // Success
                             return;
