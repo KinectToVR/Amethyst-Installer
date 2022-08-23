@@ -1,4 +1,5 @@
-﻿using amethyst_installer_gui.Installer;
+﻿using amethyst_installer_gui.Controls;
+using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,19 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return "Updating your walls...";
+            return string.Empty;
+        }
+
+        private void StartUpdateSequence() {
+            // TODO: Stub
+            var downloadModule = new DownloadItem();
+            downloadModule.Title = "shitty jokes";
+            downloadModule.DownloadedBytes = 20;
+            downloadModule.TotalBytes = 50;
+            downloadModule.Completed = false;
+            downloadModule.IsPending = false;
+            downloadModule.DownloadFailed = false;
+            displayedItem.Content = downloadModule;
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
@@ -49,7 +62,10 @@ namespace amethyst_installer_gui.Pages {
         public void OnSelected() {
             MainWindow.Instance.SetSidebarHidden(true);
             MainWindow.Instance.SetButtonsHidden(true);
+
+            StartUpdateSequence();
         }
+
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
     }

@@ -3,11 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:global="clr-namespace:amethyst_installer_gui"
              xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="447" d:DesignWidth="822">
     <Grid>
-        <Button Content="AAAAAA" Background="Red"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="1" x:Name="updatingHeader" Orientation="Vertical">
+            <Grid MaxHeight="192">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Image Source="/Resources/Icons/4x/amethyst-icon.png" Grid.Row="0" />
+                <TextBlock Grid.Row="1" Text="{x:Static global:Localisation.Updating_UpdatingAmethyst}" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Center" FontSize="16" FontWeight="SemiBold" Margin="0,8" />
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
+            <ContentPresenter x:Name="displayedItem" Grid.Column="1" />
+        </Grid>
+        <TextBlock Grid.Row="5" Text="{x:Static global:Util.InstallerVersionString}" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Margin="8"/>
     </Grid>
 </UserControl>

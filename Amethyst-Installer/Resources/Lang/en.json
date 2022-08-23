@@ -94,4 +94,6 @@
   "Done_LaunchDesktop": "It can be launched from the desktop",
   "Done_LaunchStartMenu": "It can be launched from the start menu",
   "Done_LaunchAmethyst": "Launch Amethyst after exiting the installer",
+
+  "Updating_UpdatingAmethyst": "Amethyst is being updated..."
 }

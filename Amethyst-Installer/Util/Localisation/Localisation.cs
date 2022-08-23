@@ -404,5 +404,10 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Done_LaunchAmethyst");
             }
         }
+        public static string Updating_UpdatingAmethyst {
+            get {
+                return LocaleManager.GetString("Updating_UpdatingAmethyst");
+            }
+        }
     }
 }
