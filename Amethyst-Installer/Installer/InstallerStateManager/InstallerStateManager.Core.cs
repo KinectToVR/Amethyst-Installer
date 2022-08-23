@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using amethyst_installer_gui.Installer.Modules;
+using amethyst_installer_gui.PInvoke;
 using Newtonsoft.Json;
 
 namespace amethyst_installer_gui.Installer {
@@ -20,6 +22,10 @@ namespace amethyst_installer_gui.Installer {
         public static List<Module> ModulesToInstall;
 
         public static Dictionary<string, ModuleBase> ModuleTypes { get; private set; }
+        /// <summary>
+        /// A mapping from string identifiers to an index, used to efficiently lookup an index given an id
+        /// </summary>
+        public static Dictionary<string, int> ModuleIdLUT { get; private set; }
 
         public static string AmethystInstallDirectory;
 
@@ -38,6 +44,11 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool CreateDesktopShortcut = false;
 
+        /// <summary>
+        /// Whether we must de-elevate processes or not
+        /// </summary>
+        public static bool MustDelevateProcesses = false;
+
         public static void Initialize() {
 
             // Fetch JSON Response, and load it
@@ -55,19 +66,30 @@ namespace amethyst_installer_gui.Installer {
 
             // Create internal LUT for modules
             ModuleTypes = new Dictionary<string, ModuleBase>();
+            ModuleIdLUT = new Dictionary<string, int>();
 
             ModuleTypes.Add("amethyst", new AmethystModule());
             ModuleTypes.Add("exe", new ExeModule());
 
-            foreach (var module in API_Response.Modules ) {
-                if (ModuleTypes.ContainsKey(module.Install.Type) ) {
+            for ( int i = 0; i < API_Response.Modules.Count; i++ ) {
+                var module = API_Response.Modules[i];
+
+                // Assign executable module to ModuleTypes
+                if ( ModuleTypes.ContainsKey(module.Install.Type) ) {
                     ModuleTypes[module.Install.Type].Module = module;
                 } else {
                     Logger.Warn($"Unknown install type {module.Install.Type} on module {module.DisplayName}");
                 }
+
+                ModuleIdLUT.Add(module.Id, i);
             }
 
             ComputeRequirements();
+
+            string currentUser = WindowsIdentity.GetCurrent().Name.Substring(Environment.MachineName.Length + 1);
+            MustDelevateProcesses = CurrentUser.GetCurrentlyLoggedInUsername() != currentUser;
+
+            Logger.Info($"Must de-elevate: {MustDelevateProcesses}");
         }
 
 
