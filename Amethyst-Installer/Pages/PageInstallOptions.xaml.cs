@@ -66,6 +66,7 @@ namespace amethyst_installer_gui.Pages {
             // 
             // }
 
+            List<Module> modulesPostBuffer = new List<Module>();
 
             for ( int i = 0; i < installableItemControls.Count; i++ ) {
 
@@ -85,15 +86,33 @@ namespace amethyst_installer_gui.Pages {
                     if ( isChecked ) {
                         // For dependency in X
                         Logger.Info($"Queueing dependency \"{thisModule.DisplayName}\"...");
-                        InstallerStateManager.ModulesToInstall.Add(thisModule);
+                        if ( !InstallerStateManager.ModulesToInstall.Contains(thisModule) ) {
+                            InstallerStateManager.ModulesToInstall.Add(thisModule);
+                        }
                     }
                 }
 
                 if ( isChecked ) {
                     Logger.Info($"Queueing module \"{module.DisplayName}\"...");
-                    InstallerStateManager.ModulesToInstall.Add(module);
+                    modulesPostBuffer.Add(module);
                 }
             }
+
+            // Merge the dependencies and modules lists together, so that dependencies are earlier than modules.
+            // This should resolve dependency chain issues where a module installs out of order
+            for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
+                for ( int j = 0; j < modulesPostBuffer.Count; j++ ) {
+                    var deps = InstallerStateManager.ModulesToInstall[i];
+                    var mod = modulesPostBuffer[j];
+
+                    if ( deps.Id == mod.Id ) {
+                        InstallerStateManager.ModulesToInstall.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+            // Add the list of modules which depend on other modules to the back of the modules to install vector
+            InstallerStateManager.ModulesToInstall.AddRange(modulesPostBuffer);
 
             installOptionsContainer.Children.Clear();
             installableItemControls.Clear();

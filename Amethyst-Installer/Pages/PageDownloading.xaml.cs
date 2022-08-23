@@ -145,6 +145,9 @@ namespace amethyst_installer_gui.Pages {
             m_currentProgressControl.DownloadedBytes = 0;
             m_currentProgressControl.Tag = index;
 
+            // Scroll it into view
+            m_currentProgressControl.BringIntoView();
+
             // Reset download progress state
             m_timer.Stop();
             m_timer.Start();
