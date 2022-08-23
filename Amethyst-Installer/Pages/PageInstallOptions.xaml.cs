@@ -56,15 +56,45 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.SetPage(InstallerState.InstallDestination);
             InstallerStateManager.ModulesToInstall.Clear();
             // Clear memory
-            for (int i = 0; i < installableItemControls.Count; i++ ) {
-                Module a = (Module)installableItemControls[i].Tag;
-                // TODO: Queue everything that has been selected into a buffer somewhere
-                if ( installableItemControls[i].Checked ) {
-                    // TODO: Handle dependency chains
-                    InstallerStateManager.ModulesToInstall.Add(a);
+            // for (int i = 0; i < installableItemControls.Count; i++ ) {
+            //     Module a = (Module)installableItemControls[i].Tag;
+            //     // TODO: Queue everything that has been selected into a buffer somewhere
+            //     if ( installableItemControls[i].Checked ) {
+            //         // TODO: Handle dependency chains
+            //         InstallerStateManager.ModulesToInstall.Add(a);
+            //     }
+            // 
+            // }
+
+
+            for ( int i = 0; i < installableItemControls.Count; i++ ) {
+
+                var module = ( Module ) installableItemControls[i].Tag;
+
+                // Directly read the checkbox because when toggling the chexbox rather than clicking the control directly the
+                // "Checked" property's state is deferred till after this method is executed, however the "itemCheckbox.IsChecked"
+                // property is reliable for this page's purposes
+                bool isChecked = installableItemControls[i].Disabled ?
+                    true : (installableItemControls[i].itemCheckbox?.IsChecked ?? false);
+
+                // Go through dependencies
+                for ( int j = 0; j < module.Depends.Count; j++ ) {
+
+                    var thisModule = InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT[module.Depends[j]]];
+
+                    if ( isChecked ) {
+                        // For dependency in X
+                        Logger.Info($"Queueing dependency \"{thisModule.DisplayName}\"...");
+                        InstallerStateManager.ModulesToInstall.Add(thisModule);
+                    }
                 }
 
+                if ( isChecked ) {
+                    Logger.Info($"Queueing module \"{module.DisplayName}\"...");
+                    InstallerStateManager.ModulesToInstall.Add(module);
+                }
             }
+
             installOptionsContainer.Children.Clear();
             installableItemControls.Clear();
         }
@@ -193,7 +223,6 @@ namespace amethyst_installer_gui.Pages {
                     // Module :D
                     Logger.Info(module.DisplayName);
             }
-
         }
 
         // Force only the first button to have focus
