@@ -1,8 +1,10 @@
 using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
+using amethyst_installer_gui.Installer.Modules;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -52,7 +54,7 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.SetPage(InstallerState.Installation);
         }
 
-        public async void OnSelected() {
+        public void OnSelected() {
 
             MainWindow.Instance.sidebar_download.State = TaskState.Busy;
 
@@ -126,11 +128,11 @@ namespace amethyst_installer_gui.Pages {
 
             // DownloadModule(0).GetAwaiter().GetResult();
             m_downloadIndex = 0;
-            await DownloadModule(m_downloadIndex);
+            DownloadModule(m_downloadIndex);
 
         }
 
-        private async Task DownloadModule(int index) {
+        private void DownloadModule(int index) {
 
             Logger.Info(index);
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
@@ -156,7 +158,9 @@ namespace amethyst_installer_gui.Pages {
             m_transferSpeed = 0;
 
             try {
-                await Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, m_downloadIndex);
+                Task.Run(() =>
+                    Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, OnDownloadComplete, m_downloadIndex).GetAwaiter().GetResult()
+                );
             } catch ( OperationCanceledException ) {
                 OnDownloadFailed(index);
             } catch ( TimeoutException ) {
@@ -164,52 +168,70 @@ namespace amethyst_installer_gui.Pages {
             }
         }
 
-		private async void downloadModule_Retry(object sender, RoutedEventArgs e) {
+		private void downloadModule_Retry(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
 
             // Attempt redownload
 
             // TODO: Track retry attempts
             DownloadItem downloadItem = (DownloadItem) sender;
-            await DownloadModule(( int ) downloadItem.Tag);
+            // DownloadModule(( int ) downloadItem.Tag);
+            DownloadModule(( int ) downloadItem.Tag);
 
         }
 
         // Progress update
-        public async Task DownloadModule_ProgressCallback(long value, int identifier) {
-            // If this callback is from the identifier associated with the current control and the current control isn't null
-            var thisControl = ( DownloadItem ) downloadContent.Children[identifier];
-            // if ( identifier == m_downloadIndex && m_currentProgressControl != null ) {
-            if ( thisControl != null ) {
+        public void DownloadModule_ProgressCallback(long value, int identifier) {
+            downloadContent.Dispatcher.Invoke(() => {
 
-                thisControl.DownloadedBytes = value;
-                m_totalBytesDownloaded = value;
+                // Check if we closed the app first, assume exit if instance is null
+                if ( MainWindow.Instance == null )
+                    return;
 
-                // Update taskbar progress
-                if ( identifier == m_downloadIndex ) {
-                    MainWindow.Instance.taskBarItemInfo.ProgressValue = thisControl.DownloadedBytes / ( double ) thisControl.TotalBytes;
+                // If this callback is from the identifier associated with the current control and the current control isn't null
+                var thisControl = ( DownloadItem ) downloadContent.Children[identifier];
+                // if ( identifier == m_downloadIndex && m_currentProgressControl != null ) {
+                if ( thisControl != null ) {
 
-                    // TODO: Total bytes should be another value
-                    if ( !thisControl.Completed && thisControl.DownloadedBytes == thisControl.TotalBytes ) {
-                        // Assume the download is done
-                        await OnDownloadComplete();
+                    thisControl.DownloadedBytes = value;
+                    m_totalBytesDownloaded = value;
+
+                    // Update taskbar progress
+                    if ( identifier == m_downloadIndex ) {
+                        MainWindow.Instance.taskBarItemInfo.ProgressValue = thisControl.DownloadedBytes / ( double ) thisControl.TotalBytes;
                     }
                 }
-            }
+            });
         }
 
-        private async Task OnDownloadComplete() {
-            m_currentProgressControl.Completed = true;
-            m_downloadIndex++;
+        private void OnDownloadComplete() {
+            downloadContent.Dispatcher.Invoke(() => {
 
-            if (m_downloadIndex == InstallerStateManager.ModulesToInstall.Count) {
-                MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-                MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
-                Logger.Info("Downloaded all modules successfully!");
-            } else {
-                Logger.Info("Download complete!");
-                await DownloadModule(m_downloadIndex);
-            }
+                // Check if we closed the app first, assume exit if instance is null
+                if ( MainWindow.Instance == null )
+                    return;
+
+                // There is a VERY slim chance of a file not setting downloaded bytes to total bytes due to multithreading
+                // Hence we set it here to be safe
+                m_currentProgressControl.DownloadedBytes = m_currentProgressControl.TotalBytes;
+
+                m_currentProgressControl.Completed = true;
+                m_downloadIndex++;
+
+                // TODO: Verify checksum
+                string filePath = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, InstallerStateManager.ModulesToInstall[( int ) m_currentProgressControl.Tag].Remote.Filename));
+                Logger.Info($"Checksum: {Util.GetChecksum(filePath)}");
+
+                if ( m_downloadIndex == InstallerStateManager.ModulesToInstall.Count ) {
+                    MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+                    MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
+                    Logger.Info("Downloaded all modules successfully!");
+                } else {
+                    Logger.Info("Download complete!");
+                    // DownloadModule(m_downloadIndex);
+                    DownloadModule(m_downloadIndex);
+                }
+            });
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
