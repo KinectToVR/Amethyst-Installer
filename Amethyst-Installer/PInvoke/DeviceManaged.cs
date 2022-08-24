@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace amethyst_installer_gui.PInvoke {
 
@@ -92,9 +93,10 @@ namespace amethyst_installer_gui.PInvoke {
         /// Equivalent functionality to "Scan for Hardware Changes" in device manager
         /// </summary>
         public bool RescanDevices() {
-            if ( CM_Locate_DevNode_Ex(ref _rootDeviceHandle, 0, 0, _machineHandle) != 0 )
+            _rootDeviceHandle = IntPtr.Zero;
+            if ( CM_Locate_DevNodeA(ref _rootDeviceHandle, null, CM_LOCATE_DEVNODE_NORMAL) != 0 )
                 return false;
-            if ( CM_Reenumerate_DevNode_Ex(ref _rootDeviceHandle, 0, IntPtr.Zero) != 0 )
+            if ( CM_Reenumerate_DevNode(_rootDeviceHandle, CM_REENUMERATE_NORMAL) != 0 )
                 return false;
 
             return true;
@@ -106,9 +108,16 @@ namespace amethyst_installer_gui.PInvoke {
         private static extern int CM_Disconnect_Machine(IntPtr machineHandle);
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Locate_DevNode_Ex(ref IntPtr deviceHandle, int deviceId, uint flags, IntPtr machineHandle);
+
+        [DllImport("CfgMgr32.dll", SetLastError = true)]
+        private static extern int CM_Locate_DevNodeA(ref IntPtr pdnDevInst, string pDeviceID, uint ulFlags);
+
         [DllImport("setupapi.dll")]
         private static extern UInt32 CM_Reenumerate_DevNode_Ex(ref IntPtr deviceHandle, UInt32 flags, IntPtr machineHandle);
+        [DllImport("CfgMgr32.dll", SetLastError = true)]
+        private static extern int CM_Reenumerate_DevNode(IntPtr dnDevInst, uint ulFlags);
 
+        const uint CM_LOCATE_DEVNODE_NORMAL             = 0x00000000;
         const uint CM_REENUMERATE_NORMAL                = 0x00000000;
         const uint CM_REENUMERATE_SYNCHRONOUS           = 0x00000001;
         const uint CM_REENUMERATE_RETRY_INSTALLATION    = 0x00000002;
@@ -207,6 +216,10 @@ namespace amethyst_installer_gui.PInvoke {
         }
 
         public void UninstallDevice() {
+            var wasRemoved = CM_Query_And_Remove_SubTree_Ex(_deviceHandle, out _, null, 0, 0, _machineHandle);
+            if ( wasRemoved != 0 )
+                Logger.Fatal("Failed to remove device! Cannot uninstall!");
+
             var result = CM_Uninstall_DevNode(_deviceHandle, 0);
             if ( result != 0 )
                 Logger.Fatal("Failed to uninstall device!");
@@ -261,39 +274,42 @@ namespace amethyst_installer_gui.PInvoke {
             return $"{{ {( FriendlyName.Length > 0 ? FriendlyName : Description )} : {EnumeratorName} }}";
         }
 
-        private enum DevRegProperty : uint {
-            DeviceDescription = 1,
-            HardwareId = 2,
-            CompatibleIds = 3,
-            Unused0 = 4,
-            Service = 5,
-            Unused1 = 6,
-            Unused2 = 7,
-            Class = 8,
-            ClassGuid = 9,
-            Driver = 0x0a,
-            ConfigFlags = 0x0b,
-            Mfg = 0x0c,
-            FriendlyName = 0x0d,
-            LocationInfo = 0x0e,
-            PhysicalDeviceObjectName = 0x0f,
-            Capabilities = 0x10,
-            UiNumber = 0x11,
-            UpperFilters = 0x12,
-            LowerFilters = 0x13,
-            BusTypeGuid = 0x014,
-            LegacyBusType = 0x15,
-            BusNumber = 0x16,
-            EnumeratorName = 0x17,
-        }
-
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Get_Child_Ex(ref IntPtr childDeviceHandle, IntPtr parentDeviceHandle, uint flags, IntPtr machineHandle);
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Get_Sibling_Ex(ref IntPtr siblingDeviceHandle, IntPtr deviceHandle, uint flags, IntPtr machineHandle);
         [DllImport("cfgmgr32.dll")]
-        private static extern int CM_Get_DevNode_Registry_Property_Ex(IntPtr deviceHandle, int property, IntPtr regDataType, IntPtr outBuffer, ref uint size, int flags, IntPtr machineHandler);
+        private static extern int CM_Get_DevNode_Registry_Property_Ex(IntPtr deviceHandle, int property, IntPtr regDataType, IntPtr outBuffer, ref uint size, int flags, IntPtr machineHandle);
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Uninstall_DevNode(IntPtr deviceHandle, int flags);
+
+        [DllImport("Cfgmgr32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        static extern int CM_Query_And_Remove_SubTree_Ex(IntPtr deviceInstance, out int vetoType, StringBuilder vetoName, uint vetoNameLength, int flags, IntPtr machineHandle);
+    }
+
+    public enum DevRegProperty : uint {
+        DeviceDescription = 1,
+        HardwareId = 2,
+        CompatibleIds = 3,
+        Unused0 = 4,
+        Service = 5,
+        Unused1 = 6,
+        Unused2 = 7,
+        Class = 8,
+        ClassGuid = 9,
+        Driver = 0x0a,
+        ConfigFlags = 0x0b,
+        Mfg = 0x0c,
+        FriendlyName = 0x0d,
+        LocationInfo = 0x0e,
+        PhysicalDeviceObjectName = 0x0f,
+        Capabilities = 0x10,
+        UiNumber = 0x11,
+        UpperFilters = 0x12,
+        LowerFilters = 0x13,
+        BusTypeGuid = 0x014,
+        LegacyBusType = 0x15,
+        BusNumber = 0x16,
+        EnumeratorName = 0x17,
     }
 }
