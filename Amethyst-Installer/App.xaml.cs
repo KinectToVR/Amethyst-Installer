@@ -40,10 +40,26 @@ namespace amethyst_installer_gui {
             // Fetch installer API response from server
             InstallerStateManager.Initialize();
 
-            if (!InstallerStateManager.CanInstall) {
+            // Check if we can even install Amethyst
+            CheckCanInstall();
+        }
+
+        private void CheckCanInstall() {
+            if ( !InstallerStateManager.CanInstall ) {
                 SystemSounds.Exclamation.Play();
-                Util.ShowMessageBox("Oh no! The table! It's broken!", LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
-                Util.Quit(ExitCodes.IncompatibleSetup);
+                if ( InstallerStateManager.IsCloudPC ) {
+                    // If Cloud PC
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_CloudPC, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.Quit(ExitCodes.IncompatibleSetup);
+                } else if ( !InstallerStateManager.SteamVRInstalled ) {
+                    // If no SteamVR
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_NoSteamVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.Quit(ExitCodes.IncompatibleSetup);
+                } else if ( InstallerStateManager.IsWindowsAncient ) {
+                    // If Windows version is not supported
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_WindowsAncient, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.Quit(ExitCodes.IncompatibleSetup);
+                }
             }
         }
 

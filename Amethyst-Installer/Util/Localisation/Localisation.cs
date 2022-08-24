@@ -169,6 +169,21 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("InstallProhibited_Title");
             }
         }
+        public static string InstallProhibited_CloudPC {
+            get {
+                return LocaleManager.GetString("InstallProhibited_CloudPC");
+            }
+        }
+        public static string InstallProhibited_NoSteamVR {
+            get {
+                return LocaleManager.GetString("InstallProhibited_NoSteamVR");
+            }
+        }
+        public static string InstallProhibited_WindowsAncient {
+            get {
+                return LocaleManager.GetString("InstallProhibited_WindowsAncient");
+            }
+        }
         public static string Logs_DirectoryIsLocatedHere {
             get {
                 return LocaleManager.GetString("Logs_DirectoryIsLocatedHere");
