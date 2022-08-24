@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -295,6 +296,16 @@ namespace amethyst_installer_gui {
             shortcut.IconLocation = $"{file},0";
             shortcut.WorkingDirectory = directory;
             shortcut.Save();
+        }
+
+        public static string GetChecksum(string filePath) {
+            // 1MB read buffer, seems *200ms faster*
+            using ( var stream = new BufferedStream(File.OpenRead(filePath), 1024 * 1024 * 1) ) {
+                using ( var md5 = MD5.Create() ) {
+                    byte[] checksum = md5.ComputeHash(stream);
+                    return BitConverter.ToString(checksum).Replace("-", String.Empty);
+                }
+            }
         }
     }
 }

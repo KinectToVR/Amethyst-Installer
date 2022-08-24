@@ -95,6 +95,9 @@ namespace amethyst_installer_gui.Installer {
 
         [JsonProperty("filename")]
         public string Filename;
+
+        [JsonProperty("checksum")]
+        public string Checksum;
     }
     public class ModuleUninstallConfig {
         [JsonProperty("type")]

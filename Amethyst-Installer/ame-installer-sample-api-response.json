@@ -18,7 +18,8 @@
 			"remote": {
 				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/v1.0.2.10/Amethyst-Release-bb9b9bd.zip",
 				"mirror_url": "https://api.k2vr.tech/mirrors/amethyst-latest.zip",
-				"filename": "amethyst-latest.zip"
+				"filename": "amethyst-latest.zip",
+				"checksum": "B384C1A40553E43735DDFB1EEA63EBF5"
 			},
 			"install": {
 				"type": "amethyst"
@@ -47,7 +48,8 @@
 			"remote": {
 				"main_url": "https://aka.ms/vs/17/release/vc_redist.x64.exe",
 				"mirror_url": "https://api.k2vr.tech/mirrors/vc_redist.x64.exe",
-				"filename": "vc_redist.x64.exe"
+				"filename": "vc_redist.x64.exe",
+				"checksum": "CDCE5D5EE259D8071FA82F522C5C7D6E"
 			},
 			"install": {
 				"type": "exe",
@@ -67,7 +69,7 @@
 
 		{
 			"id": "wix",
-			"display_name": "WiX Toolset",
+			"display_name": "Windows Install XML Toolset",
 			"summary": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
 			"description": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
 			"display_version": "1.0.2.10",
@@ -81,7 +83,8 @@
 			"remote": {
 				"main_url": "https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip",
 				"mirror_url": "https://api.k2vr.tech/mirrors/wix311-binaries.zip",
-				"filename": "wix311-binaries.zip"
+				"filename": "wix311-binaries.zip",
+				"checksum": "47A506F8AB6666EE3CC502FB07D0EE2A"
 			},
 			"install": {
 				"type": "temp-archive",
@@ -106,7 +109,8 @@
 			"remote": {
 				"main_url": "https://download.microsoft.com/download/E/1/D/E1DEC243-0389-4A23-87BF-F47DE869FC1A/KinectSDK-v1.8-Setup.exe",
 				"mirror_url": "https://api.k2vr.tech/mirrors/KinectSDK-v1.8-Setup.exe",
-				"filename": "KinectSDK-v1.8-Setup.exe"
+				"filename": "KinectSDK-v1.8-Setup.exe",
+				"checksum": "6D3A32D7E8D5A215F7AE155D5F1DF7EF"
 			},
 			"install": {
 				"type": "dark-extract",
@@ -141,7 +145,8 @@
 			"remote": {
 				"main_url": "https://download.microsoft.com/download/D/0/6/D061A21C-3AF3-4571-8560-4010E96F0BC8/KinectDeveloperToolkit-v1.8.0-Setup.exe",
 				"mirror_url": "https://api.k2vr.tech/mirrors/KinectDeveloperToolkit-v1.8.0-Setup.exe",
-				"filename": "KinectDeveloperToolkit-v1.8.0-Setup.exe"
+				"filename": "KinectDeveloperToolkit-v1.8.0-Setup.exe",
+				"checksum": "FAF2F13C79F96955BB72CDBA3A1BF15D"
 			},
 			"install": {
 				"type": "dark-extract",
