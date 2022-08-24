@@ -26,6 +26,7 @@ namespace amethyst_installer_gui.Installer {
         /// A mapping from string identifiers to an index, used to efficiently lookup an index given an id
         /// </summary>
         public static Dictionary<string, int> ModuleIdLUT { get; private set; }
+        public static Dictionary<string, PostBase> ModulePostOps { get; private set; }
 
         public static string AmethystInstallDirectory;
 
@@ -67,6 +68,7 @@ namespace amethyst_installer_gui.Installer {
             // Create internal LUT for modules
             ModuleTypes = new Dictionary<string, ModuleBase>();
             ModuleIdLUT = new Dictionary<string, int>();
+            ModulePostOps = new Dictionary<string, PostBase>();
 
             ModuleTypes.Add("amethyst", new AmethystModule());
             ModuleTypes.Add("exe", new ExeModule());
