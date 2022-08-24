@@ -19,6 +19,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Download_Failure");
             }
         }
+        public static string Download_Retry {
+            get {
+                return LocaleManager.GetString("Download_Retry");
+            }
+        }
         public static string Download_FailureCritical {
             get {
                 return LocaleManager.GetString("Download_FailureCritical");

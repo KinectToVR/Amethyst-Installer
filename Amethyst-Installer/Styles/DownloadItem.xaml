@@ -46,7 +46,7 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button x:Name="retryButton" Background="{DynamicResource BrushBackgroundAlt}" Grid.Column="1">Retry</Button>
+                                    <Button x:Name="retryButton" Background="{DynamicResource BrushBackgroundAlt}" Grid.Column="1" Content="{x:Static root:Localisation.Download_Retry}" />
                                 </Grid>
                             </StackPanel>
                             

@@ -1,7 +1,9 @@
 ﻿{
   "Dialog_Description_CritError": "An unknown error has occured, please join the Discord server for help at [server]", /* [server] gets replaced with the server invite */
   "Dialog_Title_CritError": "Critical Error",
+
   "Download_Failure": "An error occured when trying to download this item. Try disabling any VPNs or firewalls.", /* Error message that gets displayed to the user whenever a download fails */
+  "Download_Retry": "Retry",
   "Download_FailureCritical": "An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue.", /* Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue. */
 
   "EULA_Agree": "I agree",
