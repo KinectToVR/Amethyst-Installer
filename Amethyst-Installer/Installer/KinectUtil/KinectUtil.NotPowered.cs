@@ -16,7 +16,7 @@ namespace amethyst_installer_gui.Installer {
 
         #region Not Powered Fix
 
-        public static void FixNotPowered() {
+        public static bool FixNotPowered() {
 
             // An automagic fix for E_NUI_NOTPOWERED
             // This fix involves practically uninstalling all Kinect Drivers, using P/Invoke, then forcing a scan for hardware changes to trigger the drivers to re-scan
@@ -25,7 +25,7 @@ namespace amethyst_installer_gui.Installer {
 
             // TODO: For each unrecognised Xbox 360 device in XX, try uninstall then scan for hardware changes
 
-
+            bool success = true;
 
             TryGetDeviceTree();
 
@@ -40,15 +40,15 @@ namespace amethyst_installer_gui.Installer {
                     device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02AE&REV_010;"          // Kinect for Windows Camera
                     ) {
 
-                    Logger.Info($"Found faulty Kinect device!  {{ Name: {device.FriendlyName} }}");
-                    Logger.Info($"Attemping to fix device {device.FriendlyName}...");
+                    Logger.Info($"Found faulty Kinect device!  {{ Name: {device.Description} }}");
+                    Logger.Info($"Attemping to fix device {device.Description}...");
 
-                    device.UninstallDevice();
+                    success = success && device.UninstallDevice();
                 }
             }
 
             // Scan for hardware changes
-            s_deviceTree.RescanDevices();
+            return success && s_deviceTree.RescanDevices();
         }
 
         public static bool MustFixNotPowered() {

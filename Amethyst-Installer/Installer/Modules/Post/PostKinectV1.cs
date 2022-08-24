@@ -44,12 +44,24 @@ namespace amethyst_installer_gui.Installer.Modules {
 
         private void TryFixNotPowered(ref InstallModuleProgress control) {
 
-            control.LogInfo(LogStrings.CheckingKinectMicrophone);
-            Logger.Info(LogStrings.CheckingKinectMicrophone);
+            control.LogInfo(LogStrings.ApplyingKinectFixes);
+            Logger.Info(LogStrings.ApplyingKinectFixes);
 
-            Logger.Info("KinectUtil.MustFixNotPowered: " + KinectUtil.MustFixNotPowered());
+            if ( KinectUtil.MustFixNotPowered() ) {
 
-            KinectUtil.FixNotPowered();
+                control.LogInfo(LogStrings.NotPoweredDetected);
+                Logger.Info(LogStrings.NotPoweredDetected);
+
+                if (KinectUtil.FixNotPowered()) {
+
+                    control.LogInfo(LogStrings.NotPoweredFixed);
+                    Logger.Info(LogStrings.NotPoweredFixed);
+                } else {
+
+                    control.LogError(LogStrings.NotPoweredFixFailure);
+                    Logger.Fatal(LogStrings.NotPoweredFixFailure);
+                }
+            }
 
         }
 

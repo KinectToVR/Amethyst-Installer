@@ -111,12 +111,14 @@ namespace amethyst_installer_gui.Pages {
                 if ( moduleBase.Install(module.Remote.Filename, InstallerStateManager.AmethystInstallDirectory, ref control, out outState) ) {
 
                     // Try executing post operations
-                    if ( InstallerStateManager.ModulePostOps.ContainsKey(module.Install.Post) ) {
-                        var modulePost = InstallerStateManager.ModulePostOps[module.Install.Post];
-                        modulePost.OnPostOperation(ref control);
-                    } else {
-                        if ( module.Install.Post.Length > 0 ) {
-                            Logger.Warn($"Unknown post module {module.Install.Post}!");
+                    if ( module.Install.Post != null ) {
+                        if ( InstallerStateManager.ModulePostOps.ContainsKey(module.Install.Post) ) {
+                            var modulePost = InstallerStateManager.ModulePostOps[module.Install.Post];
+                            modulePost.OnPostOperation(ref control);
+                        } else {
+                            if ( module.Install.Post.Length > 0 ) {
+                                Logger.Warn($"Unknown post module {module.Install.Post}!");
+                            }
                         }
                     }
 

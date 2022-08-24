@@ -39,10 +39,17 @@
         public const string FailedInstallDark                   = "Failed to install {0}";
 
         // Kinect Microphone status
-        public const string CheckingKinectMicrophone            = "Checking Kinect microphone status...";
+        public const string CheckingKinectMicrophone            = "Verifying that the Kinect microphone is on...";
         public const string KinectV1MicrophoneFound             = "Xbox 360 Kinect microphone found!";
         public const string KinectV2MicrophoneFound             = "Xbox One Kinect microphone found!";
         public const string KinectMicrophoneDisabled            = "Kinect microphone is disabled! Kinect SDK will not function properly. Please enable the microphone...";
+
+        // Kinect auto-fixes
+        public const string ApplyingKinectFixes                 = "Attempting fixes...";
+        // Not Powered
+        public const string NotPoweredDetected                  = "Detected E_NUI_NOTPOWERED!";
+        public const string NotPoweredFixed                     = "Successfully fixed E_NUI_NOTPOWERED!";
+        public const string NotPoweredFixFailure                = "Failed to fix E_NUI_NOTPOWERED!";
 
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";

@@ -215,7 +215,7 @@ namespace amethyst_installer_gui.PInvoke {
             return result ? buffer : string.Empty;
         }
 
-        public void UninstallDevice() {
+        public bool UninstallDevice() {
             var wasRemoved = CM_Query_And_Remove_SubTree_Ex(_deviceHandle, out _, null, 0, 0, _machineHandle);
             if ( wasRemoved != 0 )
                 Logger.Fatal("Failed to remove device! Cannot uninstall!");
@@ -223,6 +223,8 @@ namespace amethyst_installer_gui.PInvoke {
             var result = CM_Uninstall_DevNode(_deviceHandle, 0);
             if ( result != 0 )
                 Logger.Fatal("Failed to uninstall device!");
+
+            return wasRemoved == 0 && result == 0;
         }
 
         private void EnumerateDeviceProperties() {
