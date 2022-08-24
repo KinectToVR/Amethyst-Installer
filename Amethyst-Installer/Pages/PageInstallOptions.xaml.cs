@@ -198,6 +198,9 @@ namespace amethyst_installer_gui.Pages {
 
             Logger.Info("Re-calculating file sizes...");
 
+            // @TODO: Cache for performance to not kill the heap
+            List<Module> processedModule = new List<Module>();
+
             for ( int i = 0; i < installableItemControls.Count; i++ ) {
 
                 var module = ( Module ) installableItemControls[i].Tag;
@@ -223,6 +226,8 @@ namespace amethyst_installer_gui.Pages {
                 for ( int j = 0; j < module.Depends.Count; j++ ) {
 
                     var thisModule = InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT[module.Depends[j]]];
+
+                    // @TODO: If module is in processedModules, skip
 
                     if ( isChecked ) {
                         m_totalDownloadSize += thisModule.DownloadSize;
