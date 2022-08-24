@@ -17,6 +17,10 @@
         /// The user encountered an unknown exception before the Main Window was shown
         /// </summary>
         ExceptionPreInit            = -3,
+        /// <summary>
+        /// The user encountered an unknown exception while installing a module
+        /// </summary>
+        ExceptionInstall            = -4,
 
     }
 }

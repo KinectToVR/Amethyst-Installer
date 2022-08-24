@@ -129,6 +129,16 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("InstallError_WindowsVersionIsOld");
             }
         }
+        public static string InstallFailure_Modal_Title {
+            get {
+                return LocaleManager.GetString("InstallFailure_Modal_Title");
+            }
+        }
+        public static string InstallFailure_Modal_Description {
+            get {
+                return LocaleManager.GetString("InstallFailure_Modal_Description");
+            }
+        }
         public static string Installer_Action_Back {
             get {
                 return LocaleManager.GetString("Installer_Action_Back");

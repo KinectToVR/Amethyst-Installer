@@ -2,6 +2,7 @@ using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,10 +42,9 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {
             if ( m_failedToInstall ) {
-                
-                // TODO: What the fuck do I do here
 
-
+                // Exit
+                Util.Quit(ExitCodes.ExceptionInstall);
 
             } else {
                 // Advance to next page
@@ -139,6 +139,14 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
             MainWindow.Instance.sidebar_install.State = TaskState.Error;
             SoundPlayer.PlaySound(SoundEffect.Error);
+
+            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
+
+            MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Visible;
+            MainWindow.Instance.ActionButtonSecondary.Content = Localisation.Installer_Action_Discord;
+
+            Util.ShowMessageBox(String.Format(Localisation.InstallFailure_Modal_Description, control.Title), Localisation.InstallFailure_Modal_Title, MessageBoxButton.OK);
         }
 
         // Force only the first button to have focus
@@ -157,7 +165,11 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.SetButtonsHidden(false);
         }
 
-        public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
+        public void OnButtonSecondary(object sender, RoutedEventArgs e) {
+            // Open Discord
+            Process.Start(Constants.DiscordInvite);
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+        }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
     }
 }

@@ -26,9 +26,13 @@
   "InstallOptions_TotalDownloadSize": "Total Download Size:",
   "InstallOptions_TotalInstallSize": "Total Installed Size:",
 
+  /* Shown on the System requirements page */
   "InstallError_CloudPC": "Cloud PC detected. Amethyst does not support networked environments.", /* The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere */
   "InstallError_SteamVRNotFound": "Couldn't find SteamVR! Is it installed, and have you run it at least once?", /* The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once. */
   "InstallError_WindowsVersionIsOld": "Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst.", /* The message shown to a user when they have an old version of Windows that is not supported by Amethyst */
+
+  "InstallFailure_Modal_Title": "An unexpected error occured!",
+  "InstallFailure_Modal_Description": "An unexpected error occured while installing {0}. Please view the logs for more information, or join our Discord server for help. The installation cannot continue.", /* {0} gets replaced with the module that failed to install */
 
   "Installer_Action_Back": "Back",
   "Installer_Action_CopyError": "Copy error",
