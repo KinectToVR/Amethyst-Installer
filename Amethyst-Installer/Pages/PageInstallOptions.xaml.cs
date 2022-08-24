@@ -56,17 +56,6 @@ namespace amethyst_installer_gui.Pages {
             SoundPlayer.PlaySound(SoundEffect.MoveNext);
             MainWindow.Instance.SetPage(InstallerState.InstallDestination);
             InstallerStateManager.ModulesToInstall.Clear();
-            // Clear memory
-            // for (int i = 0; i < installableItemControls.Count; i++ ) {
-            //     Module a = (Module)installableItemControls[i].Tag;
-            //     // TODO: Queue everything that has been selected into a buffer somewhere
-            //     if ( installableItemControls[i].Checked ) {
-            //         // TODO: Handle dependency chains
-            //         InstallerStateManager.ModulesToInstall.Add(a);
-            //     }
-            // 
-            // }
-
             List<Module> modulesPostBuffer = new List<Module>();
 
             for ( int i = 0; i < installableItemControls.Count; i++ ) {
@@ -121,7 +110,6 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnSelected() {
 
-            // TODO: Loop through JSON
             for (int i = 0; i < InstallerStateManager.API_Response.Modules.Count; i++ ) {
 
                 var currentModule = InstallerStateManager.API_Response.Modules[i];
@@ -173,7 +161,9 @@ namespace amethyst_installer_gui.Pages {
                 if ( installableItemControls[i] != selectedItem ) {
                     installableItemControls[i].Background = new SolidColorBrush(Colors.Transparent);
                 }
+                // @TODO: Travel through dependency chain and auto-select any visible dependencies
             }
+
 
             m_currentModule = selectedItem.Tag as Module;
 
@@ -183,7 +173,6 @@ namespace amethyst_installer_gui.Pages {
             fullTitle.Text = m_currentModule.DisplayName;
             fullDescription.Text = m_currentModule.Description;
 
-            // TODO: Better calculation, check dependency chain, proper storage units
             downloadSize.Content = Util.SizeSuffix(m_currentModuleDownloadSize);
             installSize.Content = Util.SizeSuffix(m_currentModuleInstallSize);
 
@@ -198,9 +187,6 @@ namespace amethyst_installer_gui.Pages {
             m_totalDownloadSize         = 0;
             m_totalInstallSize          = 0;
 
-            Logger.Info("Re-calculating file sizes...");
-
-            // @TODO: Cache for performance to not kill the heap
             m_processedModules.Clear();
 
             for ( int i = 0; i < installableItemControls.Count; i++ ) {
@@ -214,12 +200,8 @@ namespace amethyst_installer_gui.Pages {
                     true : (installableItemControls[i].itemCheckbox?.IsChecked ?? false);
 
                 // Collect the current root module's file sizes
-                if ( isChecked ) {
-                    if ( !m_processedModules.Contains(module) ) {
+                if ( isChecked && !m_processedModules.Contains(module) ) {
                         m_processedModules.Add(module);
-                        // m_totalDownloadSize += module.DownloadSize;
-                        // m_totalInstallSize += module.FileSize;
-                    }
                 }
 
                 if ( module == currentModule ) {
@@ -232,17 +214,8 @@ namespace amethyst_installer_gui.Pages {
 
                     var thisModule = InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT[module.Depends[j]]];
 
-                    // @TODO: If module is in processedModules, skip
-
-                    if ( isChecked ) {
-                        if ( !m_processedModules.Contains(thisModule) ) {
-                            m_processedModules.Add(thisModule);
-                            // m_totalDownloadSize += thisModule.DownloadSize;
-                            // m_totalInstallSize += thisModule.FileSize;
-
-                            // For dependency in X
-                            Logger.Info(thisModule.DisplayName);
-                        }
+                    if ( isChecked && !m_processedModules.Contains(thisModule) ) {
+                        m_processedModules.Add(thisModule);
                     }
 
                     if ( module == currentModule ) {
@@ -250,10 +223,6 @@ namespace amethyst_installer_gui.Pages {
                         m_currentModuleInstallSize += thisModule.FileSize;
                     }
                 }
-
-                if ( isChecked )
-                    // Module :D
-                    Logger.Info(module.DisplayName);
             }
 
             for (int i = 0; i < m_processedModules.Count; i++ ) {
