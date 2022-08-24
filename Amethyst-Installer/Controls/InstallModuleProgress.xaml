@@ -25,7 +25,7 @@
             </Grid>
 
             <Grid Grid.Row="1" x:Name="logContainer">
-                <RichTextBox x:Name="detailedLog" Margin="0,16,0,0" MinHeight="120" IsReadOnly="True" Style="{DynamicResource WinUIScrollRichTextBox}" FontFamily="Consolas" VerticalScrollBarVisibility="Auto" MaxWidth="{Binding ElementName=installableContainer,Path=ActualWidth}" ScrollViewer.CanContentScroll="False" />
+                <RichTextBox x:Name="detailedLog" Margin="0,16,0,0" MinHeight="120" IsReadOnly="True" Style="{DynamicResource WinUIScrollRichTextBox}" FontFamily="Consolas" VerticalScrollBarVisibility="Auto" MaxWidth="{Binding ElementName=installableContainer,Path=ActualWidth}" ScrollViewer.CanContentScroll="False" Focusable="False" />
             </Grid>
         </Grid>
     </Border>
