@@ -271,6 +271,8 @@ namespace amethyst_installer_gui.Pages {
             if ( headsetString.Length > 0 ) {
                 if ( OpenVRUtil.TrackingType == VRTrackingType.Lighthouse ) {
                     return string.Format(Localisation.SystemRequirement_Description_Headset_UsingLighthouse, headsetString);
+                } else {
+                    return headsetString;
                 }
             }
 
