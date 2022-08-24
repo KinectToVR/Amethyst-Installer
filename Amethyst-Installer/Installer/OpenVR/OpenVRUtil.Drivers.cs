@@ -12,6 +12,8 @@ namespace amethyst_installer_gui.Installer {
     /// </summary>
     public static partial class OpenVRUtil {
 
+        private static string s_vrpathreg;
+
         /// <summary>
         /// Registers an OpenVR driver
         /// </summary>
@@ -24,12 +26,11 @@ namespace amethyst_installer_gui.Installer {
             string driverDirectory = Path.GetDirectoryName(driverPath);
 
             if ( !s_failedToInit ) {
-                string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
-                if ( File.Exists(vrpathregPath) ) {
+                if ( File.Exists(s_vrpathreg) ) {
                     // TODO: vrpathreg now returns error codes! use it for driver handling
                     var args = $"adddriver {driverPath}";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
-                        FileName = vrpathregPath,
+                        FileName = s_vrpathreg,
                         Arguments = args,
                         WorkingDirectory = driverDirectory,
                         CreateNoWindow = true,
@@ -71,11 +72,10 @@ namespace amethyst_installer_gui.Installer {
                 throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
 
             if ( !s_failedToInit ) {
-                string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
-                if ( File.Exists(vrpathregPath) ) {
+                if ( File.Exists(s_vrpathreg) ) {
                     var args = $"finddriver {drivername}";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
-                        FileName = vrpathregPath,
+                        FileName = s_vrpathreg,
                         Arguments = args,
                         RedirectStandardError = true,
                         RedirectStandardOutput = true,
@@ -141,11 +141,10 @@ namespace amethyst_installer_gui.Installer {
             path = Path.GetFullPath(path);
 
             if ( !s_failedToInit ) {
-                string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
-                if ( File.Exists(vrpathregPath) ) {
+                if ( File.Exists(s_vrpathreg) ) {
                     var args = $"removedriver {path}";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
-                        FileName = vrpathregPath,
+                        FileName = s_vrpathreg,
                         Arguments = args,
                         RedirectStandardError = true,
                         RedirectStandardOutput = true,
@@ -211,11 +210,10 @@ namespace amethyst_installer_gui.Installer {
                 throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
 
             if ( !s_failedToInit ) {
-                string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
-                if ( File.Exists(vrpathregPath) ) {
+                if ( File.Exists(s_vrpathreg) ) {
                     var args = $"removedriverswithname {driverName}";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
-                        FileName = vrpathregPath,
+                        FileName = s_vrpathreg,
                         Arguments = args,
                         RedirectStandardError = true,
                         RedirectStandardOutput = true,

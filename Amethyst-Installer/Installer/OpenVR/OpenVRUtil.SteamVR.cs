@@ -55,7 +55,7 @@ namespace amethyst_installer_gui.Installer {
 
                 return string.Empty;
             } else
-                return Valve.VR.OpenVR.RuntimePath();
+                return Valve.VR.OpenVR.IsRuntimeInstalled() ? Valve.VR.OpenVR.RuntimePath() : string.Empty;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -30,6 +30,7 @@ namespace amethyst_installer_gui.Installer {
             if ( !s_initialized ) {
                 LoadOpenVRAPI();
                 LoadOpenVrPaths(true);
+                InitVrPathReg();
                 LoadSteamVRSettings(true);
                 DetectHeadset();
             } else
@@ -56,6 +57,18 @@ namespace amethyst_installer_gui.Installer {
             s_initialized = true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void ExtractVrPathReg() {
+
+            var vrpathregEmbed = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, "vrpathreg.exe"));
+
+            // Extract the openvr_api.dll binary to our temp directory
+            Util.ExtractResourceToFile("Binaries.vrpathreg.exe", vrpathregEmbed);
+
+            // Load the openvr_api.dll unmanaged library using P/Invoke :D
+             Logger.Info("Successfully extracted vrpathreg.exe!");
+        }
+
         /// <summary>
         /// Loads openvrpaths.vrpath
         /// </summary>
@@ -73,6 +86,19 @@ namespace amethyst_installer_gui.Installer {
                 string vrpathsTxt = File.ReadAllText(s_openvrPathsPath);
                 s_openvrpaths = JsonConvert.DeserializeObject<OpenVrPaths>(vrpathsTxt);
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void InitVrPathReg() {
+            if ( Valve.VR.OpenVR.IsRuntimeInstalled() ) {
+                string vrpathregPath = Path.GetFullPath(Path.Combine(Valve.VR.OpenVR.RuntimePath(), "bin", "win64", "vrpathreg.exe"));
+                if ( File.Exists(vrpathregPath) ) {
+                    s_vrpathreg = vrpathregPath;
+                    return;
+                }
+            }
+            ExtractVrPathReg();
+            s_vrpathreg = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, "vrpathreg.exe"));
         }
     }
 }
