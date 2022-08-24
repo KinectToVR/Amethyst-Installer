@@ -142,5 +142,15 @@ namespace amethyst_installer_gui.Pages {
             SoundPlayer.PlaySound(SoundEffect.MoveNext);
             MainWindow.Instance.SetPage(( InstallerState ) ( ( ComboBoxItem ) desiredPageBox.SelectedItem ).Tag);
         }
+
+        private void checkNotPowered_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            Util.ShowMessageBox($"Must fix E_NUI_NOTPOWERED: {KinectUtil.MustFixNotPowered()}", "Checking for E_NUI_NOTPOWERED...");
+        }
+
+        private void fixNotPowered_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            KinectUtil.FixNotPowered();
+        }
     }
 }

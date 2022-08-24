@@ -99,5 +99,8 @@
   "Done_LaunchStartMenu": "It can be launched from the start menu",
   "Done_LaunchAmethyst": "Launch Amethyst after exiting the installer",
 
+  "PostOp_Kinect_EnableMic_Title": "Kinect microphone disabled!",
+  "PostOp_Kinect_EnableMic_Description": "Please enable the Kinect microphone. It is required for the Kinect SDK to function properly.",
+
   "Updating_UpdatingAmethyst": "Amethyst is being updated..."
 }

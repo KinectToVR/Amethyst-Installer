@@ -68,6 +68,9 @@ namespace amethyst_installer_gui.Installer {
             ModuleTypes.Add("dark-extract", new DarkModule());
             ModuleTypes.Add("temp-archive", new TempArchiveModule());
 
+            ModulePostOps.Add("kinectv1", new PostKinectV1());
+            ModulePostOps.Add("kinectv2", new PostKinectV2());
+
             for ( int i = 0; i < API_Response.Modules.Count; i++ ) {
                 var module = API_Response.Modules[i];
 

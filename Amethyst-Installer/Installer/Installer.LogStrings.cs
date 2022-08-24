@@ -38,6 +38,12 @@
         public const string InstallDarkSuccess                  = "Successfully installed {0}!";
         public const string FailedInstallDark                   = "Failed to install {0}";
 
+        // Kinect Microphone status
+        public const string CheckingKinectMicrophone            = "Checking Kinect microphone status...";
+        public const string KinectV1MicrophoneFound             = "Xbox 360 Kinect microphone found!";
+        public const string KinectV2MicrophoneFound             = "Xbox One Kinect microphone found!";
+        public const string KinectMicrophoneDisabled            = "Kinect microphone is disabled! Kinect SDK will not function properly. Please enable the microphone...";
+
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";
         public const string WaitingForExecution                 = "Waiting for previous tasks to finish...";
