@@ -215,12 +215,18 @@ namespace amethyst_installer_gui.Pages {
                 // Hence we set it here to be safe
                 m_currentProgressControl.DownloadedBytes = m_currentProgressControl.TotalBytes;
 
-                m_currentProgressControl.Completed = true;
-                m_downloadIndex++;
-
                 // TODO: Verify checksum
                 string filePath = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, InstallerStateManager.ModulesToInstall[( int ) m_currentProgressControl.Tag].Remote.Filename));
-                Logger.Info($"Checksum: {Util.GetChecksum(filePath)}");
+                if ( Util.GetChecksum(filePath) != InstallerStateManager.ModulesToInstall[m_downloadIndex].Remote.Checksum ) {
+
+                    m_currentProgressControl.DownloadFailed = true;
+                    Logger.Fatal("Invalid checksum!");
+                    OnDownloadFailed(m_downloadIndex);
+                    return;
+                }
+
+                m_currentProgressControl.Completed = true;
+                m_downloadIndex++;
 
                 if ( m_downloadIndex == InstallerStateManager.ModulesToInstall.Count ) {
                     MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
