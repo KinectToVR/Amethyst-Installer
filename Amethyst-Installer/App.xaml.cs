@@ -1,6 +1,7 @@
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Media;
 using System.Windows;

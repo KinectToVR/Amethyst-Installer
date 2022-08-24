@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.PInvoke;
 using amethyst_installer_gui.Popups;
 
@@ -240,7 +241,16 @@ namespace amethyst_installer_gui {
         }
 
         public static string GenerateDocsURL(string relative) {
-            return Constants.DocsDomain + $"/{LocaleManager.CurrentLocale}/" + relative;
+
+            string docsLocaleCode = "en";
+            for ( int i = 0; i < InstallerStateManager.AmeDocsLocaleList.Length; i++ ) {
+                if ( InstallerStateManager.AmeDocsLocaleList[i] == LocaleManager.CurrentLocale ) {
+                    docsLocaleCode = InstallerStateManager.AmeDocsLocaleList[i];
+                    break;
+                }
+            }
+
+            return Constants.DocsDomain + $"/{docsLocaleCode}/" + relative;
         }
 
         /// <summary>

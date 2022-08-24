@@ -9,7 +9,7 @@ namespace amethyst_installer_gui {
     public static class HttpClientExtensions {
 
         // https://stackoverflow.com/questions/20661652/progress-bar-with-httpclient
-        public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, Func<long, int, Task> progress = null, long timeout = 30000, int identifier = -1, CancellationToken cancellationToken = default) {
+        public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, Action<long, int> progress = null, long timeout = 30000, int identifier = -1, CancellationToken cancellationToken = default) {
 
             try {
                 // Get the http headers first to examine the content length
@@ -54,18 +54,13 @@ namespace amethyst_installer_gui {
 
                                     // Progess update callback
                                     progress.Invoke(totalBytes, identifier);
-
-                                    if (totalBytes == contentLength) {
-                                        response.Dispose();
-                                        return;
-                                    }
                                 });
 
                                 // Use extension method to report progress while downloading
                                 // Use a 1MB buffer for download operations
                                 await download.CopyToAsync(destination, 1024 * 1024, relativeProgress, cancellationToken);
                                 timer.Stop();
-                                await progress.Invoke(contentLength.Value, identifier);
+                                progress.Invoke(contentLength.Value, identifier);
                             }
                         }
                     }

@@ -62,6 +62,11 @@ namespace amethyst_installer_gui {
         /// The domain the documentation will be hosted at
         /// </summary>
         public static readonly string DocsDomain = "https://docs.k2vr.tech";
+        
+        /// <summary>
+        /// The URL pointing to a JSON object full of locale codes supported on docs.
+        /// </summary>
+        public static readonly string DocsLocalesEndpoint = "https://docs.k2vr.tech/shared/locales.json";
 
         /// <summary>
         /// The minimum size a playspace should have

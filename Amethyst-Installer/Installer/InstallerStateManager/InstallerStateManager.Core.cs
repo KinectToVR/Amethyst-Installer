@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using amethyst_installer_gui.Installer.Modules;
 using amethyst_installer_gui.PInvoke;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -18,6 +19,7 @@ namespace amethyst_installer_gui.Installer {
     public static partial class InstallerStateManager {
 
         public static AmeInstallApiResponse API_Response { get; private set; }
+        public static string[] AmeDocsLocaleList { get; private set; }
 
         public static List<Module> ModulesToInstall;
 
@@ -52,17 +54,8 @@ namespace amethyst_installer_gui.Installer {
 
         public static void Initialize() {
 
-            // Fetch JSON Response, and load it
-            // var txtResponse = File.ReadAllText(Path.GetFullPath("ame-installer-sample-api-response.json"));
-
-            string txtResponse = string.Empty;
-            using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("amethyst_installer_gui.ame-installer-sample-api-response.json") ) {
-                using ( StreamReader reader = new StreamReader(resource) ) {
-                    txtResponse = reader.ReadToEnd();
-                }
-            }
-
-            API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
+            FetchInstallerJson();
+            FetchLocaleCodes();
             ModulesToInstall = new List<Module>();
 
             // Create internal LUT for modules
@@ -96,6 +89,35 @@ namespace amethyst_installer_gui.Installer {
             Logger.Info($"Must de-elevate: {MustDelevateProcesses}");
         }
 
+        private static void FetchInstallerJson() {
+
+            // TODO: Fetch JSON Response, and load it
+            // var txtResponse = File.ReadAllText(Path.GetFullPath("ame-installer-sample-api-response.json"));
+
+            string txtResponse = string.Empty;
+            using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("amethyst_installer_gui.ame-installer-sample-api-response.json") ) {
+                using ( StreamReader reader = new StreamReader(resource) ) {
+                    txtResponse = reader.ReadToEnd();
+                }
+            }
+
+            API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
+        }
+
+        private static void FetchLocaleCodes() {
+            try {
+
+                Logger.Info("Fetching supported documentation locales...");
+                var localesJson = Download.GetStringAsync(Constants.DocsLocalesEndpoint);
+
+                var ameDocsLocaleResponseParsed = JsonConvert.DeserializeObject<Dictionary<string, object>>(localesJson);
+                AmeDocsLocaleList = ameDocsLocaleResponseParsed.Keys.ToArray();
+                Logger.Info("Fetched locale codes successfully!");
+
+            } catch (Exception e) {
+                Logger.Fatal(Util.FormatException(e));
+            }
+        }
 
         // TODO: System to allow selecting modules to install / update, etc
     }

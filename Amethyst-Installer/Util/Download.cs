@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -26,7 +27,7 @@ namespace amethyst_installer_gui {
         /// <param name="path"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public static async Task DownloadFileAsync(string url, string filename = null, string path = null, Func<long, int, Task> progress = null, int identifier = -1) {
+        public static async Task DownloadFileAsync(string url, string filename = null, string path = null, Action<long, int> progress = null, Action onComplete = null, int identifier = -1) {
 
             string fullPath = Path.GetFullPath(Path.Combine(path, filename));
             Logger.Info(fullPath);
@@ -47,6 +48,17 @@ namespace amethyst_installer_gui {
 
             using ( var fileStream = File.OpenWrite(fullPath) ) {
                 await s_httpClient.DownloadAsync(url, fileStream, progress, ( long ) ( s_httpClient.Timeout.TotalMilliseconds ), identifier);
+            }
+            if ( onComplete != null )
+                onComplete();
+        }
+
+        public static string GetStringAsync(string url) {
+
+            using ( var webClient = new WebClient() ) {
+
+                string final = webClient.DownloadString(url);
+                return final;
             }
         }
     }
