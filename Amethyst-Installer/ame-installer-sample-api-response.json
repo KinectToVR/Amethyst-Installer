@@ -84,7 +84,8 @@
 				"filename": "wix311-binaries.zip"
 			},
 			"install": {
-				"type": "temp-archive"
+				"type": "temp-archive",
+				"items": [ "wix" ]
 			}
 		},
 		{
@@ -114,7 +115,6 @@
 					"KinectRuntime-v1.8-x64.msi",
 					"KinectSDK-v1.8-x64.msi"
 				],
-				"showEula": true,
 				"post": "kinectv1"
 			},
 			"detect": {
@@ -147,8 +147,7 @@
 				"type": "dark-extract",
 				"items": [
 					"KinectToolkit-v1.8.0-x64.msi"
-				],
-				"showEula": true
+				]
 			},
 			"detect": {
 				"type": "env-var",

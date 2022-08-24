@@ -100,6 +100,7 @@ namespace amethyst_installer_gui.Pages {
 
             var module = InstallerStateManager.ModulesToInstall[index];
             var moduleBase = InstallerStateManager.ModuleTypes[module.Install.Type];
+            moduleBase.Module = module; // This is for expected behaviour
             var control =  m_installControls[index];
             control.ClearLog();
             control.State = TaskState.Busy;

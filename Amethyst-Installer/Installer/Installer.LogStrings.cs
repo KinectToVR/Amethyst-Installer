@@ -2,6 +2,7 @@
 {
     public static class LogStrings
     {
+        // amethyst
         public const string ExtractingAmethyst                  = "Extracting Amethyst to {0}...";
         public const string ExtractAmethystFailed               = "Failed to extract Amethyst";
         public const string RegisteringAmethystDriver           = "Registering Amethyst driver...";
@@ -18,11 +19,26 @@
         public const string FailedCreateDesktopEntry            = "Failed to create desktop shortcut";
         public const string InstalledAmethystSuccess            = "Successfully installed Amethyst!";
 
+        // exe-module
         public const string InstallingExe                       = "Installing {0}...";
         public const string FailedInstallExe                    = "Failed to install {0}";
         public const string FailedExeInvalidExitCode            = "{0} returned unexpected exit code {1}!";
         public const string InstallExeSuccess                   = "Successfully installed {0}!";
 
+        // extract-archive
+        public const string ExtractingArchive                   = "Extracting archive {0}...";
+        public const string ExtractingArchiveSuccess            = "Successfully extracted {0}!...";
+        public const string FailedExtractArchive                = "Failed to extract {0}";
+
+        // dark-extract
+        public const string ExtractingDark                      = "Extracting files from {0}...";
+        public const string ExtractDarkSuccess                  = "Successfully extracted files from {0}!";
+        public const string FailedExtractDark                   = "Failed to extract files from {0}";
+        public const string InstallingDark                      = "Installing {0}...";
+        public const string InstallDarkSuccess                  = "Successfully installed {0}!";
+        public const string FailedInstallDark                   = "Failed to install {0}";
+
+        // common
         public const string ViewLogs                            = "Please view the logs for more info.";
         public const string WaitingForExecution                 = "Waiting for previous tasks to finish...";
     }

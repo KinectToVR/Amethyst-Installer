@@ -70,7 +70,8 @@ namespace amethyst_installer_gui.Installer {
 
             ModuleTypes.Add("amethyst", new AmethystModule());
             ModuleTypes.Add("exe", new ExeModule());
-            ModuleTypes.Add("wix", new ExeModule());
+            ModuleTypes.Add("dark-extract", new DarkModule());
+            ModuleTypes.Add("temp-archive", new TempArchiveModule());
 
             for ( int i = 0; i < API_Response.Modules.Count; i++ ) {
                 var module = API_Response.Modules[i];
