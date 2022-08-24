@@ -69,6 +69,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft.Kinect.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
@@ -164,12 +168,16 @@
     <Compile Include="Installer\KinectUtil\KinectUtil.Install.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Microphone.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.NotPowered.cs" />
+    <Compile Include="Installer\KinectUtil\KinectUtil.NotReady.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.SDK.cs" />
     <Compile Include="Installer\Modules\AmethystModule.cs" />
     <Compile Include="Installer\Modules\DarkModule.cs" />
     <Compile Include="Installer\Modules\ExeModule.cs" />
     <Compile Include="Installer\Modules\ModuleBase.cs" />
     <Compile Include="Installer\Modules\MsiModule.cs" />
+    <Compile Include="Installer\Modules\Post\PostBase.cs" />
+    <Compile Include="Installer\Modules\Post\PostKinectV1.cs" />
+    <Compile Include="Installer\Modules\Post\PostKinectV2.cs" />
     <Compile Include="Installer\Modules\TempArchiveModule.cs" />
     <Compile Include="Installer\OpenVR\OpenVrDriverManifest.cs" />
     <Compile Include="Installer\OpenVR\OpenVrPaths.cs" />
@@ -251,6 +259,7 @@
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Commands\ICommand.cs" />
     <Compile Include="Util\Constants.cs" />
     <Compile Include="Util\Download.cs" />
     <Compile Include="Util\ExitCodes.cs" />
@@ -426,6 +435,7 @@
     <None Include="app.config" />
     <None Include="ILRepack.targets" />
     <Compile Include="Installer\Installer.LogStrings.cs" />
+    <Compile Include="Installer\InstallerStateManager\InstallerStateManager.WMI.cs" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
