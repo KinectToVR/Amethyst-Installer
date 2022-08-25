@@ -1,18 +1,20 @@
-﻿using System;
+﻿using CommandLine.Text;
+using CommandLine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Runtime.CompilerServices;
 
 namespace amethyst_installer_gui.Commands {
+
+    [Verb("uninstall", aliases: new string[] { "x" }, HelpText = "Starts the uninstall workflow", Hidden = false)]
     public class CommandUninstall : ICommand {
 
-        public string Command { get => "uninstall"; set { } }
-        public string Description { get => "Starts the uninstall workflow"; set { } }
-        public string[] Aliases { get => new string[] { "x" }; set {  } }
-
-        public void Execute(params string[] parameters) {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Execute() {
             // @TODO: Rework whenever we have a better upgrade workflow
 
             // App.InitialPage = Installer.InstallerState.Uninstall;
@@ -22,6 +24,7 @@ namespace amethyst_installer_gui.Commands {
                 Util.ShowMessageBox("Successfully uninstalled Amethyst!", "Uninstalling Amethyst", MessageBoxButton.OK);
             }
 
+            CommandParser.HaltProgram();
             Util.Quit(ExitCodes.Command);
             return;
         }

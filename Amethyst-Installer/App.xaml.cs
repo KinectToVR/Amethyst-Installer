@@ -40,8 +40,7 @@ namespace amethyst_installer_gui {
             Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
             Logger.Info(Util.InstallerVersionString);
 
-            CommandParser parser = new CommandParser();
-            parser.ParseCommands(e.Args);
+            CommandParser.ParseCommands(e.Args);
 
             // Init OpenVR
             OpenVRUtil.InitOpenVR();
