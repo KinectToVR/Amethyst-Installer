@@ -19,7 +19,7 @@
 				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/v1.0.2.11/Amethyst-Release-22a89a9.zip",
 				"mirror_url": "https://api.k2vr.tech/mirrors/amethyst-latest.zip",
 				"filename": "amethyst-latest.zip",
-				"checksum": "B384C1A40553E43735DDFB1EEA63EBF5"
+				"checksum": "F2C32A37F1D2D2BBCF2B74000306A5F5"
 			},
 			"install": {
 				"type": "amethyst"
