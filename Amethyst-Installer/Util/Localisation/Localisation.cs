@@ -259,6 +259,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Page_Sysreq_Title");
             }
         }
+        public static string Page_Uninstall_Title {
+            get {
+                return LocaleManager.GetString("Page_Uninstall_Title");
+            }
+        }
         public static string Sidebar_Task_Done {
             get {
                 return LocaleManager.GetString("Sidebar_Task_Done");
