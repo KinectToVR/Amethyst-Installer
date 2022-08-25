@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace amethyst_installer_gui.Commands {
+﻿namespace amethyst_installer_gui.Commands {
     /// <summary>
     /// A generic command the installer supports
     /// </summary>
