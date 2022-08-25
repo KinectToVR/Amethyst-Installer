@@ -40,14 +40,6 @@ namespace InstallerTools {
             if (obj is ICommand ) {
                 ( ( ICommand ) obj ).Execute();
             }
-
-            /*
-            switch ( obj ) {
-                case ICommand c:
-                    c.Execute();
-                    break;
-            }
-            */
         }
 
         /// <summary>
@@ -102,10 +94,11 @@ namespace InstallerTools {
             return errors;
         }
 
-        static void DisplayHelp<T>(ParserResult<T> result) {
+        private static void DisplayHelp<T>(ParserResult<T> result) {
             HelpText helpText = HelpText.AutoBuild(result, h =>
             {
                 h.AdditionalNewLineAfterOption = false;
+                h.AddDashesToOption = true;
                 h.Heading = "Amethyst Installer Tools";
                 h.Copyright = "";
                 // return HelpText.DefaultParsingErrorsHandler(result, h);
