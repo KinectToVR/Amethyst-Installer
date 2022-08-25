@@ -17,6 +17,7 @@ namespace amethyst_installer_gui.Commands {
         --help, -h :: Shows help
         --update -u :: Attempts to update Amethyst
         --uninstall -x :: Attempts to uninstall Amethyst
+        --modify -m :: Attempts to modify an existing Amethyst install
         --silent -s :: Executes the installer silently
         --install-dir :: Sets the install directory, 
         --debug :: Forces the installer to run in Debug mode
