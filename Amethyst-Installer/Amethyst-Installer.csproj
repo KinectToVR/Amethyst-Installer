@@ -521,7 +521,7 @@
     <EmbeddedResource Include="Resources\Licenses.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoGenerate\AutoGenerateLoc.csproj">
+    <ProjectReference Include="..\AutoGenerateLoc\AutoGenerateLoc.csproj">
       <Project>{3f1750ac-522a-4983-b648-84606bbeb8bb}</Project>
       <Name>AutoGenerateLoc</Name>
     </ProjectReference>
