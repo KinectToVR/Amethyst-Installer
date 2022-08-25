@@ -14,6 +14,9 @@ namespace amethyst_installer_gui {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+
+        public static InstallerState InitialPage = InstallerState.Welcome;
+
         private void Application_Startup(object sender, StartupEventArgs e) {
 
             /*

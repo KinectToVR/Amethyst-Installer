@@ -80,7 +80,7 @@ namespace amethyst_installer_gui {
             Pages.Add(InstallerState.Debug, new PageDebug());
 
             // Set default page to welcome
-            SetPage(InstallerState.Welcome);
+            SetPage(App.InitialPage);
 
             // Fix corners on Win11
             DWM.SetWindowCorners(this, CornerPreference.Round);

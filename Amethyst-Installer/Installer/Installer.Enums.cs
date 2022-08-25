@@ -62,6 +62,11 @@
         Updating = 10,
 
         /// <summary>
+        /// Uninstall Screen
+        /// </summary>
+        Uninstall = 11,
+
+        /// <summary>
         /// DEBUG
         /// </summary>
         Debug = 1000,

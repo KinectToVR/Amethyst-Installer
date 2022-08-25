@@ -221,6 +221,9 @@
     <Compile Include="Pages\PageSystemRequirements.xaml.cs">
       <DependentUpon>PageSystemRequirements.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PageUninstall.xaml.cs">
+      <DependentUpon>PageUninstall.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PageUpdating.xaml.cs">
       <DependentUpon>PageUpdating.xaml</DependentUpon>
     </Compile>
@@ -259,6 +262,8 @@
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Commands\CommandParser.cs" />
+    <Compile Include="Util\Commands\CommandUninstall.cs" />
     <Compile Include="Util\Commands\ICommand.cs" />
     <Compile Include="Util\Constants.cs" />
     <Compile Include="Util\Download.cs" />
@@ -340,6 +345,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageSystemRequirements.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageUninstall.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
