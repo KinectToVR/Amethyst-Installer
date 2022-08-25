@@ -1,7 +1,7 @@
 ﻿using CommandLine;
+using InstallerTools.Ame_Installer;
 using System;
 using System.IO;
-using AmeUtil = amethyst_installer_gui.Util;
 
 namespace InstallerTools.Commands {
 

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GenUninstallList")]
+[assembly: AssemblyTitle("InstallerTools")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GenUninstallList")]
+[assembly: AssemblyProduct("InstallerTools")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ac33a332-2c69-47ee-8a35-f4d53da5622a")]
+[assembly: Guid("f84d6923-d7a8-425d-b4ee-da0ac1c9f7b7")]
 
 // Version information for an assembly consists of the following four values:
 //

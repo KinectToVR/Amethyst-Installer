@@ -27,7 +27,7 @@ namespace InstallerTools {
             });
             var parserResult = s_parser.ParseArguments(args, s_types);
             parserResult
-                .WithParsed(Run)
+                .WithParsed(Exec)
                 .WithNotParsed(e => HandleError(parserResult, e));
 
 #if DEBUG
@@ -36,7 +36,7 @@ namespace InstallerTools {
 #endif
         }
 
-        private static void Run(object obj) {
+        private static void Exec(object obj) {
             if (obj is ICommand ) {
                 ( ( ICommand ) obj ).Execute();
             }
