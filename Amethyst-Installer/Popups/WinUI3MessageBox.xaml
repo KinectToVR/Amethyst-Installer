@@ -12,6 +12,7 @@
         ShowInTaskbar="False"
         Background="#FF2B2B2B" Foreground="#FFFFFFFF"
         MinWidth="256"
+        MaxWidth="679"
         Title="WinUI3MessageBox" Height="450" Width="800">
     <Border BorderThickness="1" BorderBrush="#FF3F3F3F" SnapsToDevicePixels="True" MouseDown="Border_MouseDown">
         <Grid>
