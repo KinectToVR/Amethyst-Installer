@@ -1,12 +1,12 @@
 ﻿using CommandLine;
 using CommandLine.Text;
-using GenUninstallList.Commands;
+using InstallerTools.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace GenUninstallList {
+namespace InstallerTools {
 
     internal class Program {
 
@@ -14,6 +14,11 @@ namespace GenUninstallList {
         private static Type[] s_types;
 
         static void Main(string[] args) {
+
+#if DEBUG
+            args = @"checksum --p F:\Downloads\Amethyst-Release-22a89a9.zip".Split();
+            // args = @"--help checksum".Split();
+#endif
 
             s_types = Util.LoadVerbs();
 
@@ -25,16 +30,24 @@ namespace GenUninstallList {
                 .WithParsed(Run)
                 .WithNotParsed(e => HandleError(parserResult, e));
 
+#if DEBUG
             Console.WriteLine("Press any key to exit...");
-            Console.Read();
+            Console.ReadKey();
+#endif
         }
 
         private static void Run(object obj) {
+            if (obj is ICommand ) {
+                ( ( ICommand ) obj ).Execute();
+            }
+
+            /*
             switch ( obj ) {
-                case ChecksumOptions c:
-                    CommandChecksum.Execute(c);
+                case ICommand c:
+                    c.Execute();
                     break;
             }
+            */
         }
 
         /// <summary>
@@ -95,8 +108,9 @@ namespace GenUninstallList {
                 h.AdditionalNewLineAfterOption = false;
                 h.Heading = "Amethyst Installer Tools";
                 h.Copyright = "";
-                return HelpText.DefaultParsingErrorsHandler(result, h);
-            } , e => e);
+                // return HelpText.DefaultParsingErrorsHandler(result, h);
+                return h;
+            } , e => e, verbsIndex:true);
             Console.WriteLine(helpText);
         }
 

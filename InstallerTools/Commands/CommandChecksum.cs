@@ -1,25 +1,22 @@
-﻿using CommandLine.Text;
-using CommandLine;
+﻿using CommandLine;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using AmeUtil = amethyst_installer_gui.Util;
 
-namespace GenUninstallList.Commands {
+namespace InstallerTools.Commands {
 
-    [Verb("checksum", HelpText = "Calculates the checksum of a given file.")]
-    public class ChecksumOptions {
+    [Verb("checksum", aliases: new string[] { "k" }, HelpText = "Calculates the MD5 checksum of a given file.", Hidden = false)]
+    public class CommandChecksum : ICommand {
 
-        [Option('p', HelpText="The path to the specified file")]
+        [Option('p', "filepath", HelpText = "The path to the specified file")]
         public string FilePath { get; set; }
-    }
 
-    public static class CommandChecksum {
+        public void Execute() {
 
-        public static void Execute(ChecksumOptions parameters) {
-            
+            FilePath = Path.GetFullPath(FilePath);
 
+            var checksum = AmeUtil.GetChecksum(FilePath);
+            Console.WriteLine(checksum);
 
             return;
         }

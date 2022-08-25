@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 
-namespace AutoGenerate {
+namespace AutoGenerateLoc {
     internal class Program {
         static void Main(string[] args) {
 

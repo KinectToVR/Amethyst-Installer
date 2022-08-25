@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GenUninstallList {
+namespace InstallerTools {
     public static class Util {
         public static bool IsAny<T>(this IEnumerable<T> data) {
             return data != null && data.Any();

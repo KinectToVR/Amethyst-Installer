@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3F1750AC-522A-4983-B648-84606BBEB8BB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>AutoGenerate</RootNamespace>
-    <AssemblyName>AutoGenerate</AssemblyName>
+    <RootNamespace>AutoGenerateLoc</RootNamespace>
+    <AssemblyName>AutoGenerateLoc</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>AutoGenerate.Program</StartupObject>
+    <StartupObject>AutoGenerateLoc.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
