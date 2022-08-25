@@ -125,6 +125,11 @@ namespace amethyst_installer_gui {
                 throw;
             }
         }
+
+        public static void UninstallAmethyst() {
+            // Removes Amethyst according to a list of files
+
+        }
     }
 
     public struct UninstallEntry {

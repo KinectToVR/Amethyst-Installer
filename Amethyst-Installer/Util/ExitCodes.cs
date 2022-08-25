@@ -5,6 +5,11 @@
         /// The installer didn't encounter any errors
         /// </summary>
         OK                          =  0,
+
+        /// <summary>
+        /// The installer didn't encounter any errors. The installer was invoked using a command which returned before the GUI appeared.
+        /// </summary>
+        Command                     =  1,
         /// <summary>
         /// The user's setup was deemed incompatible
         /// </summary>

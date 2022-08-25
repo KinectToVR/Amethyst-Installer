@@ -10,19 +10,19 @@ namespace amethyst_installer_gui.Commands {
 
         public string Command { get => "uninstall"; set { } }
         public string Description { get => "Starts the uninstall workflow"; set { } }
-        public string[] Aliases { get => new string[] { "u" }; set {  } }
+        public string[] Aliases { get => new string[] { "x" }; set {  } }
 
         public void Execute(params string[] parameters) {
+            // @TODO: Rework whenever we have a better upgrade workflow
+
             // App.InitialPage = Installer.InstallerState.Uninstall;
 
             if (Util.ShowMessageBox("Are you sure you want to uninstall Amethyst?", "Uninstalling Amethyst", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
-                Util.ShowMessageBox("Successfully uninstalled Amethyst!", "Uninstalling Amethyst", MessageBoxButton.OK);
                 UninstallUtil.UninstallAmethyst();
-                // if (Util.ShowMessageBox("Would you like to remove all calibration data and settings as well?", "Uninstalling Amethyst", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
-                //     UninstallUtil.RemoveCalibrationData();
-                // }
+                Util.ShowMessageBox("Successfully uninstalled Amethyst!", "Uninstalling Amethyst", MessageBoxButton.OK);
             }
 
+            Util.Quit(ExitCodes.Command);
             return;
         }
     }
