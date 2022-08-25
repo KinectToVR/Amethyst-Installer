@@ -63,6 +63,9 @@ namespace amethyst_installer_gui {
             // If the window type is a WinUI3MessageBox we'll get an exception
             if ( Application.Current.MainWindow.GetType() == typeof(MainWindow) )
                 modalWindow.Owner = Application.Current.MainWindow;
+            else {
+                Application.Current.MainWindow = null;
+            }
 
             modalWindow.ShowDialog();
 
@@ -264,9 +267,8 @@ namespace amethyst_installer_gui {
             // TODO: Launch Ame on shutdown if necessary
             // This is required in the event of an upgrade for example
 
+            // Graceful close
             Application.Current.Shutdown(( int ) exitCode);
-
-            
         }
 
         // https://floating-point-gui.de/errors/comparison/

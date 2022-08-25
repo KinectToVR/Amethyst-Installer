@@ -1,3 +1,4 @@
+using amethyst_installer_gui.Commands;
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
 using System;
@@ -19,6 +20,8 @@ namespace amethyst_installer_gui {
 
         private void Application_Startup(object sender, StartupEventArgs e) {
 
+            Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
             /*
              
             COMMAND LINE ARGUMENTS:
@@ -37,6 +40,9 @@ namespace amethyst_installer_gui {
             Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
             Logger.Info(Util.InstallerVersionString);
 
+            CommandParser parser = new CommandParser();
+            parser.ParseCommands(e.Args);
+
             // Init OpenVR
             OpenVRUtil.InitOpenVR();
 
@@ -45,6 +51,10 @@ namespace amethyst_installer_gui {
 
             // Check if we can even install Amethyst
             CheckCanInstall();
+
+            // MainWindow
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.ShowDialog();
         }
 
         private void CheckCanInstall() {
