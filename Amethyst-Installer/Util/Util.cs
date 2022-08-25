@@ -24,8 +24,8 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static string InstallerVersionString {
             get {
-                string verison = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                return "Amethyst Installer v" + verison.Remove(verison.Length - 2);
+                string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                return "Amethyst Installer v" + version.Remove(version.Length - 2);
             }
         }
 
