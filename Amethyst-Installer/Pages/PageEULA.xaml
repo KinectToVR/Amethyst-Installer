@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:global = "clr-namespace:amethyst_installer_gui"
              xmlns:res = "clr-namespace:amethyst_installer_gui.Properties"
-             xmlns:local="clr-namespace:amethyst_installer_gui.Pages" xmlns:controls="clr-namespace:amethyst_installer_gui.Controls"
+             xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
+             xmlns:controls="clr-namespace:amethyst_installer_gui.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="328" d:DesignWidth="508">
     <Grid x:Name="eulaPageContainerRoot">
