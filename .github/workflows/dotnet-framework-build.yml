@@ -49,11 +49,11 @@ jobs:
         run: "$slug = '::set-output name=slug::' + $env:GITHUB_SHA.SubString(0,7); echo $slug"
         
       - name: Rename release executable
-        run: mv Amethyst-Installer/bin/x64/Release/Amethyst-Installer.exe Amethyst-Installer/bin/x64/Release/Amethyst-Installer-${{ steps.slug.outputs.slug }}.exe
+        run: mv Amethyst-Installer/bin/x64/Release/Amethyst-Installer.exe bin/x64/Release/Amethyst-Installer/Amethyst-Installer-${{ steps.slug.outputs.slug }}.exe
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v2.2.0
         with:
           name: Amethyst-Installer-${{ steps.slug.outputs.slug }}.exe
-          path: Amethyst-Installer/bin/x64/Release/Amethyst-Installer-${{ steps.slug.outputs.slug }}.exe
+          path: bin/x64/Release/Amethyst-Installer/Amethyst-Installer-${{ steps.slug.outputs.slug }}.exe
           if-no-files-found: error
