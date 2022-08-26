@@ -22,6 +22,7 @@
         /// <summary>
         /// Executes this command
         /// </summary>
+        /// <returns>Whether regular execution of the program shall be interrupted.</returns>
         bool Execute(ref string[] parameters);
     }
 }

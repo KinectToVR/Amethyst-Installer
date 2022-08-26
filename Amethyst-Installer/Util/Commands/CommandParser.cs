@@ -36,7 +36,7 @@ namespace amethyst_installer_gui.Commands {
         /// Parses a given series of commands
         /// </summary>
         /// <param name="args">Array of paremters, typically from Main's string[] args</param>
-        /// <returns>Whether any commands that were executed blocked forthcoming execution</returns>
+        /// <returns>Whether regular execution of the program shall be interrupted.</returns>
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool ParseCommands(string[] args) {

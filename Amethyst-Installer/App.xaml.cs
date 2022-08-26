@@ -24,29 +24,20 @@ namespace amethyst_installer_gui {
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             Kernel.AttachConsole(-1);
 
-            // Initialize logger
-            string logFileDate = DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff");
-            Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
-            Logger.Info(Util.InstallerVersionString);
-
             CommandParser parser = new CommandParser();
-            parser.ParseCommands(e.Args);
+            if ( !parser.ParseCommands(e.Args) ) {
 
-            // Init OpenVR
-            OpenVRUtil.InitOpenVR();
+                Init();
 
-            // Fetch installer API response from server
-            InstallerStateManager.Initialize();
-
-            // Check if we can even install Amethyst
-            CheckCanInstall();
-
-            // MainWindow
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.ShowDialog();
+                // MainWindow
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.ShowDialog();
+            } else {
+                Util.Quit(ExitCodes.Command);
+            }
         }
 
-        private void CheckCanInstall() {
+        private static void CheckCanInstall() {
             if ( !InstallerStateManager.CanInstall ) {
                 SystemSounds.Exclamation.Play();
                 if ( InstallerStateManager.IsCloudPC ) {
@@ -80,6 +71,23 @@ namespace amethyst_installer_gui {
             AppWindow.Instance.OverridePage(InstallerState.Exception);
             AppWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
             SoundPlayer.PlaySound(SoundEffect.Error);
+        }
+
+        public static void Init() {
+
+            // Initialize logger
+            string logFileDate = DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff");
+            Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
+            Logger.Info(Util.InstallerVersionString);
+
+            // Init OpenVR
+            OpenVRUtil.InitOpenVR();
+
+            // Fetch installer API response from server
+            InstallerStateManager.Initialize();
+
+            // Check if we can even install Amethyst
+            CheckCanInstall();
         }
     }
 }
