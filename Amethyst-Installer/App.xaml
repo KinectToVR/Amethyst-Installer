@@ -2,7 +2,6 @@
     x:Class="amethyst_installer_gui.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    StartupUri="MainWindow.xaml"
     Startup="Application_Startup"
     DispatcherUnhandledException="App_DispatcherUnhandledException">
 

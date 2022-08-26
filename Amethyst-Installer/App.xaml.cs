@@ -1,6 +1,7 @@
 using amethyst_installer_gui.Commands;
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
+using amethyst_installer_gui.PInvoke;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -21,19 +22,7 @@ namespace amethyst_installer_gui {
         private void Application_Startup(object sender, StartupEventArgs e) {
 
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-            /*
-             
-            COMMAND LINE ARGUMENTS:
-
-            --help, -h :: Shows help
-            --update -u :: Attempts to update Amethyst
-            --uninstall -x :: Attempts to uninstall Amethyst
-            --silent -s :: Executes the installer silently
-            --install-dir :: Sets the install directory, 
-            --debug :: Forces the installer to run in Debug mode
-             
-             */
+            Kernel.AttachConsole(-1);
 
             // Initialize logger
             string logFileDate = DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff");
