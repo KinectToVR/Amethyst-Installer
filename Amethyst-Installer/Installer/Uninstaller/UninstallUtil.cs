@@ -124,7 +124,8 @@ namespace amethyst_installer_gui {
                 // subkeyEntry.SetValue("HelpTelephone",       "441173257425");
                 subkeyEntry.SetValue("EstimatedSize",       new DirectoryInfo(uninstallEntryInfo.InstallLocation).EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length) / 1024, RegistryValueKind.DWord); // MB
 
-
+                subkeyEntry.Close();
+                HKLM.Close();
             } catch {
                 if ( subkeyEntry != null ) {
                     subkeyEntry.Close();
@@ -133,8 +134,13 @@ namespace amethyst_installer_gui {
             }
         }
 
+        /// <summary>
+        /// Uninstalls Amethyst
+        /// </summary>
+        /// <param name="removeConfig">Whether to keep configs or not</param>
+        /// <param name="ameDirectory">The directory of the Amethyst install we're trying to remove</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void UninstallAmethyst(bool removeConfig = true) {
+        public static void UninstallAmethyst(bool removeConfig = true, string ameDirectory = "") {
             // Removes Amethyst according to a list of files
 
             // 1. Locate the current Amethyst install
@@ -142,11 +148,22 @@ namespace amethyst_installer_gui {
             // If this isn't the case, we check the registry key for the path variable (I have no clue how fucked one's setup could be so fallbacks!!)
             // If this still isn't the case check in C:\\Amethyst, C:\\Program Files\\Amethyst, C:\\Program Files (x86)\\Amethyst and C:\\K2EX for installs
 
-            string ameInstall = InstallUtil.LocateAmethystInstall();
+            string ameInstall;
+            if ( ameDirectory.Length == 0) {
+                ameInstall = InstallUtil.LocateAmethystInstall();
+            } else {
+                ameInstall = ameDirectory;
+            }
+
+            if ( !Directory.Exists(ameInstall) ) {
+                Logger.Fatal("Couldn't locate Amethyst install! Aborting...");
+                return;
+            }
 
             // 2. Now that we have the install directory, check in %APPDATA% for an uninstall list. If we find one, load it and use it
             // Now based on said uninstall list, clean the directory
             UninstallListJSON uninstallList = FetchUninstallList();
+
             // Remove files
             for ( int i = 0; i < uninstallList.Files.Length; i++ ) {
                 string file = Path.Combine(ameInstall, uninstallList.Files[i]);
@@ -162,16 +179,51 @@ namespace amethyst_installer_gui {
 
             // 3. If the directory is empty, remove it
             if ( Directory.Exists(ameInstall) ) {
-
+                // If there are 0 files or directories left
+                if ( Directory.GetFiles(ameInstall, "*", SearchOption.AllDirectories).Length == 0 &&
+                     Directory.GetDirectories(ameInstall, "*", SearchOption.AllDirectories).Length == 0 ) {
+                    Directory.Delete(ameInstall);
+                }
             }
 
             // 4. Locate the uninstall key, and remove it
+            try {
+                var HKLM = Registry.LocalMachine.OpenSubKey(UninstallSubKey, true);
+                HKLM.DeleteSubKey("Amethyst");
+                HKLM.Close();
+            } catch (Exception e) {
+                Logger.Fatal("Failed to remove uninstall key!");
+                Logger.Fatal(Util.FormatException(e));
+            }
 
             // 5. Locate %APPDATA%\Amethyst, and clear configs
+            if ( removeConfig ) {
+
+            }
 
             // 6. Remove registry key; the user has completely uninstalled Amethyst
+            try {
 
-
+                var HKLMSoftware = Registry.LocalMachine.OpenSubKey(@"SOFTWARE", true);
+                var K2VRSoftware = HKLMSoftware.OpenSubKey("K2VR Team", true);
+                var Ame = K2VRSoftware.OpenSubKey("Amethyst", true);
+                if ( Ame != null ) {
+                    Ame.Close();
+                    K2VRSoftware.DeleteSubKey("Amethyst");
+                }
+                if ( K2VRSoftware != null ) {
+                    if ( K2VRSoftware.GetSubKeyNames().Length == 0 ) {
+                        K2VRSoftware.Close();
+                        HKLMSoftware.DeleteSubKey("K2VR Team");
+                    } else {
+                        K2VRSoftware.Close();
+                    }
+                }
+                HKLMSoftware.Close();
+            } catch (Exception e) {
+                Logger.Fatal("Failed to remove registry entry!");
+                Logger.Fatal(Util.FormatException(e));
+            }
         }
 
         private static UninstallListJSON FetchUninstallList() {

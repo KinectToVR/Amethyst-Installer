@@ -250,6 +250,11 @@ if upgrade no
                 // unblocked the installer executable or not, so let's fix that to be sure
                 Shell.Unblock(amethystInstallerExecutable);
 
+                // Dump the list of files to uninstall for this specific Amethyst build for later installer builds
+                // This list will be used during the uninstall process later
+                string uninstallListPath = Path.GetFullPath(Path.Combine(Constants.AmethystConfigDirectory, "UninstallList.json"));
+                Util.ExtractResourceToFile("UninstallList.json", uninstallListPath);
+
             } catch (Exception e) {
                 control.LogError($"{LogStrings.CreateUninstallExecutableFail}! {LogStrings.ViewLogs}");
                 Logger.Fatal($"{LogStrings.CreateUninstallExecutableFail}:\n{Util.FormatException(e)})");
