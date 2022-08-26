@@ -239,6 +239,25 @@ if upgrade no
             var amethystExecutable = Path.GetFullPath(Path.Combine(target, "Amethyst.exe"));
             var amethystInstallerExecutable = Path.GetFullPath(Path.Combine(target, "Amethyst-Installer.exe"));
 
+            control.LogInfo(LogStrings.CreatingUninstallExecutable);
+            Logger.Info(LogStrings.CreatingUninstallExecutable);
+
+            try {
+                // Try copying the installer from wherever the we are running from to the uninstall directory
+                string selfExecutable = Assembly.GetExecutingAssembly().Location;
+                Logger.Info("Installer at:: "+selfExecutable);
+                File.Copy(selfExecutable, amethystInstallerExecutable, true);
+
+                // Also unblock the installer in AME-DIR\Amethyst-Installer.exe, we have no clue whether the user
+                // unblocked the installer executable or not, so let's fix that to be sure
+                Shell.Unblock(amethystInstallerExecutable);
+
+            } catch (Exception e) {
+                control.LogError($"{LogStrings.CreateUninstallExecutableFail}! {LogStrings.ViewLogs}");
+                Logger.Fatal($"{LogStrings.CreateUninstallExecutableFail}:\n{Util.FormatException(e)})");
+                return true;
+            }
+
             control.LogInfo(LogStrings.CreatingUninstallEntry);
             Logger.Info(LogStrings.CreatingUninstallEntry);
 
