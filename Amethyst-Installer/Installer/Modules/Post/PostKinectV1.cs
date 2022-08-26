@@ -37,6 +37,9 @@ namespace amethyst_installer_gui.Installer.Modules {
                     // Open sound control panel on the recording tab
                     // @TODO: See if automating this is possible
                     Process.Start("rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1");
+
+                    // @TODO: I fucking hate microsoft
+                    // https://www.codeproject.com/articles/31836/changing-your-windows-audio-device-programmaticall
                 }
             }
         }
