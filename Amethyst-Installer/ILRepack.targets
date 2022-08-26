@@ -7,7 +7,6 @@
 		<ItemGroup>
 			<InputAssemblies Include="$(OutputPath)$(TargetName)$(TargetExt)"/>
 			<InputAssemblies Include="$(OutputPath)Ookii.Dialogs.Wpf.dll" />
-			<InputAssemblies Include="$(OutputPath)CommandLine.dll" />
 			<InputAssemblies Include="$(OutputPath)Newtonsoft.Json.dll" />
 			<InputAssemblies Include="$(OutputPath)NVorbis.dll" />
 			<InputAssemblies Include="$(OutputPath)NAudio.Core.dll" />
@@ -15,6 +14,7 @@
 			<InputAssemblies Include="$(OutputPath)NAudio.WInMM.dll" />
 			<InputAssemblies Include="$(OutputPath)System.Memory.dll" />
 			<InputAssemblies Include="$(OutputPath)System.Runtime.CompilerServices.Unsafe.dll" />
+			<InputAssemblies Include="$(OutputPath)CommandLineParser.dll" />
 		</ItemGroup>
 
 		<PropertyGroup>

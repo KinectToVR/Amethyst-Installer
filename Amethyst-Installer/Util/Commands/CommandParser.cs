@@ -1,16 +1,14 @@
-﻿using CommandLine;
-using CommandLine.Text;
-using System;
+﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Commands {
-    public static class CommandParser {
+    public class CommandParser {
+
+        private ICommand[] m_commandList;
 
         /*
 
@@ -26,120 +24,86 @@ namespace amethyst_installer_gui.Commands {
 
          */
 
-        private static bool continueExecution = true;
-
-        private static Parser s_parser;
-        private static Type[] s_types;
+        public CommandParser() {
+            // Init command list
+            m_commandList = new ICommand[] {
+                new CommandUninstall(),
+            };
+        }
 
         /// <summary>
         /// Parses a given series of commands
         /// </summary>
         /// <param name="args">Array of paremters, typically from Main's string[] args</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool ParseCommands(string[] args) {
+        public void ParseCommands(string[] args) {
+            for ( int i = 0; i < args.Length; i++ ) {
+                // Check if this item matches a command or not
+                if ( IsCommand(args[i], out string cmd) ) {
 
-            s_types = LoadVerbs();
+                    bool hasExecutedAnything = false;
 
-            s_parser = new Parser(with => {
-                with.HelpWriter = null;
-            });
-            var parserResult = s_parser.ParseArguments(args, s_types);
-            parserResult
-                .WithParsed(Exec)
-                .WithNotParsed(e => HandleError(parserResult, e));
+                    // For each command
+                    for ( int j = 0; j < m_commandList.Length; j++ ) {
 
-            return continueExecution;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void Exec(object obj) {
-            if ( obj is ICommand ) {
-                ( ( ICommand ) obj ).Execute();
-                continueExecution = false;
+                        if ( ShouldExecute(m_commandList[j], cmd) ) {
+                            hasExecutedAnything = true;
+                            m_commandList[j].Execute();
+                            return;
+                        }
+                    }
+                    if ( !hasExecutedAnything ) {
+                        Console.WriteLine($"Unknown command \"{cmd}\"!");
+                    }
+                }
             }
         }
 
         /// <summary>
-        /// Handling command errors, handles showing help / version or defaulting to no args workflow
+        /// Returns whether the input string is a command, and a formatted command (without a command prefix) if valid
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static object HandleError(ParserResult<object> parserResult, IEnumerable<Error> errors) {
-            // If we have a command
-            if ( errors != null && errors.Any() ) {
-                Error firstError = errors.First();
+        /// <param name="input">The input parameter</param>
+        /// <param name="formattedCommand">The command itself</param>
+        /// <returns>Whether the input is a valid command or not</returns>
+        private bool IsCommand(string input, out string formattedCommand) {
 
-                // Switch on error type...
-                // This syntax is ugly, but "actually decent command parser!"
-                switch ( firstError.GetType() ) {
+            formattedCommand = string.Empty;
 
-                    // No Verb :: array is empty
-                    case Type nv when nv == typeof(NoVerbSelectedError):
-                        ExecuteNoCommand();
-                        break;
+            // --XXXXX
+            if ( input.Length > 3 && input[0] == '-' && input[1] == '-' ) {
 
-                    // Invalid command
-                    case Type bv when bv == typeof(BadVerbSelectedError):
-                        // If verb has any length, it means you are likely trying to use the CLI, so assume 0 length is no command
-                        if ( ( ( CommandLine.BadVerbSelectedError ) firstError ).Token.Trim().Length > 0 ) {
-                            DisplayHelp(parserResult);
-                        } else {
-                            ExecuteNoCommand();
-                        }
-                        break;
+                formattedCommand = input.Substring(2);
 
-                    // Help requested command
-                    case Type hv1 when hv1 == typeof(HelpVerbRequestedError):
-                    case Type hv2 when hv2 == typeof(HelpRequestedError):
-                        DisplayHelp(parserResult);
-                        break;
+            // -XXXXX
+            } else if ( input.Length > 2 && input[0] == '-' ) {
 
-                    // Version requested command
-                    case Type hv1 when hv1 == typeof(VersionRequestedError):
-                        string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                        Console.WriteLine($"Amethyst Installer Tools v{version.Remove(version.Length - 2)}");
-                        break;
+                formattedCommand = input.Substring(1);
 
-                    // Other cases
-                    default:
-                        ExecuteNoCommand();
-                        break;
-                }
+            // /XXXXX
+            } else if ( input.Length > 2 && input[0] == '/' ) {
 
-            } else {
-                ExecuteNoCommand();
+                formattedCommand = input.Substring(1);
             }
-
-            return errors;
+            return formattedCommand.Length > 0;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DisplayHelp<T>(ParserResult<T> result) {
-            HelpText helpText = HelpText.AutoBuild(result, h =>
-            {
-                h.AdditionalNewLineAfterOption = false;
-                h.AddDashesToOption = true;
-                h.Heading = "Amethyst Installer";
-                h.Copyright = "";
-                return h;
-            } , e => e, verbsIndex:true);
-            Console.WriteLine(helpText);
-            continueExecution = false;
-        }
+        /// <summary>
+        /// Returns whether the command should be executed or not
+        /// </summary>
+        /// <param name="command">The command to check</param>
+        /// <param name="cmd">A formatted command string</param>
+        /// <returns>Whether the command should execute or not</returns>
+        private bool ShouldExecute(ICommand command, string cmd) {
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Type[] LoadVerbs() {
-            return Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t => t.GetCustomAttribute<VerbAttribute>() != null).ToArray();
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void ExecuteNoCommand() {
-            continueExecution = true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void HaltProgram() {
-            continueExecution = false;
+            if ( command.Command == cmd ) {
+                return true;
+            } else {
+                for ( int i = 0; i < command.Aliases.Length; i++ ) {
+                    if ( command.Aliases[i] == cmd ) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
