@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace amethyst_installer_gui {
     public static class UninstallUtil {
@@ -83,6 +84,7 @@ namespace amethyst_installer_gui {
             HKCU.Close();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UninstallEntry? GetUninstallEntry(string amogus) {
             for (int i = 0; i < uninstallEntries.Count; i++ )
                 if ( uninstallEntries[i].DisplayName == amogus )
@@ -90,10 +92,12 @@ namespace amethyst_installer_gui {
             return null;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RegisterUninstallEntry(UninstallEntry uninstallEntryInfo) {
             RegisterUninstallEntry(uninstallEntryInfo, Guid.NewGuid().ToString());
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RegisterUninstallEntry(UninstallEntry uninstallEntryInfo, string keyName) {
 
             RegistryKey subkeyEntry = null;
@@ -112,7 +116,8 @@ namespace amethyst_installer_gui {
                 subkeyEntry.SetValue("HelpLink",            uninstallEntryInfo.HelpLink);
                 subkeyEntry.SetValue("InstallDate",         DateTime.Now.ToString("yyyyMMdd"));
                 subkeyEntry.SetValue("UninstallString",     uninstallEntryInfo.UninstallString);
-                subkeyEntry.SetValue("ModifyPath",          uninstallEntryInfo.ModifyPath);
+                // @TODO: Add modify back once we have a modify workflow implemented
+                // subkeyEntry.SetValue("ModifyPath",          uninstallEntryInfo.ModifyPath);
                 subkeyEntry.SetValue("InstallLocation",     uninstallEntryInfo.InstallLocation);
                 // subkeyEntry.SetValue("HelpTelephone",       "441173257425");
                 subkeyEntry.SetValue("EstimatedSize",       new DirectoryInfo(uninstallEntryInfo.InstallLocation).EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length) / 1024, RegistryValueKind.DWord); // MB
@@ -126,8 +131,26 @@ namespace amethyst_installer_gui {
             }
         }
 
-        public static void UninstallAmethyst() {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void UninstallAmethyst(bool removeConfig = true) {
             // Removes Amethyst according to a list of files
+
+            // 1. Locate the current Amethyst install
+            // We first check if the directory containing the installer is an Amethyst install. If so we continue to stage 2.
+            // If this isn't the case, we check the registry key for the path variable (I have no clue how fucked one's setup could be so fallbacks!!)
+            // If this still isn't the case check in C:\\Amethyst, C:\\Program Files\\Amethyst, C:\\Program Files (x86)\\Amethyst and C:\\K2EX for installs
+
+            // 2. Now that we have the install directory, check in %APPDATA% for an uninstall list. If we find one, load it and use it
+            // Now based on said uninstall list, clean the directory
+
+            // 3. If the directory is empty, remove it
+
+            // 4. Locate the uninstall key, and remove it
+
+            // 5. Locate %APPDATA%\Amethyst, and clear configs
+
+            // 6. Remove registry key; the user has completely uninstalled Amethyst
+
 
         }
     }
