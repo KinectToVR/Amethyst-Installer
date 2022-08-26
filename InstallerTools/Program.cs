@@ -67,7 +67,7 @@ namespace InstallerTools {
   ╘═════════════════════════════════════════════════════════════╛");
 
 #if DEBUG
-            args = @"checksum --p F:\Downloads\Amethyst-Release-22a89a9.zip".Split();
+            args = @"--checksum F:\Downloads\Amethyst-Release-22a89a9.zip".Split();
             // args = @"--help checksum".Split();
 #endif
 

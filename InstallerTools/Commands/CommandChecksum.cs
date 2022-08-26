@@ -6,18 +6,18 @@ namespace InstallerTools.Commands {
 
     public class CommandChecksum : ICommand {
 
-        public string Command { get => "uninstall"; set { } }
-        public string Description { get => "Starts the uninstall workflow"; set { } }
-        public string[] Aliases { get => new string[] { "x" }; set { } }
+        public string Command { get => "checksum"; set { } }
+        public string Description { get => "Computes the MD5 checksum of the given file"; set { } }
+        public string[] Aliases { get => new string[] { "c" }; set { } }
 
-        public bool Execute(ref string[] parameters) {
+        public bool Execute(string parameters) {
 
             if ( parameters.Length == 0 ) {
                 Console.Error.WriteLine("Invalid parameter count!");
                 return true;
             }
 
-            string filePath = Path.GetFullPath(string.Join(" ", parameters));
+            string filePath = Path.GetFullPath(parameters);
 
             var checksum = AmeUtil.GetChecksum(filePath);
             Console.WriteLine(checksum);

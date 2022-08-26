@@ -54,7 +54,7 @@ namespace InstallerTools.Commands {
                     for ( int j = 0; j < m_commandList.Length; j++ ) {
 
                         if ( ShouldExecute(ref m_commandList[j], ref cmd) ) {
-                            return m_commandList[j].Execute(ref args);
+                            return m_commandList[j].Execute(ExtractParameters(ref args, i));
                         }
                     }
                     ShowErrorMessage(ref cmd);
@@ -156,6 +156,17 @@ namespace InstallerTools.Commands {
                 }
             }
             return false;
+        }
+
+        private string ExtractParameters(ref string[] args, int index) {
+            // i + 1 is our first entry
+            StringBuilder stringBuffer = new StringBuilder();
+            for (int i = index + 1; i < args.Length; i++ ) {
+                stringBuffer.Append(args[i] + " ");
+            }
+            stringBuffer.Remove(stringBuffer.Length - 1, 1);
+
+            return stringBuffer.ToString().Trim();
         }
     }
 }
