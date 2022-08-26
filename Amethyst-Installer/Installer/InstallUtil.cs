@@ -47,14 +47,11 @@ namespace amethyst_installer_gui {
             }
 
             // That failed! Let's check the registry next
-            var AmeReg = Registry.LocalMachine.OpenSubKey(Constants.AmethystRegsitryKey, false);
+            var AmeReg = Registry.LocalMachine.OpenSubKey(Constants.AmethystRegsitryKey, false)?.GetValue("Path");
             if ( AmeReg != null ) {
-                var path = AmeReg.GetValue("Path");
-                if ( path != null ) {
-                    string pathFull = Path.GetFullPath(path as string);
-                    if ( IsAmethystInstalledInDirectory(pathFull) ) {
-                        return pathFull;
-                    }
+                string pathFull = Path.GetFullPath(AmeReg as string);
+                if ( IsAmethystInstalledInDirectory(pathFull) ) {
+                    return pathFull;
                 }
             }
 
@@ -83,14 +80,11 @@ namespace amethyst_installer_gui {
             // existing K2EX install with Amethyst. This means that Amethyst is installed in C:\\K2EX for instance...
 
             // Let's check the registry next
-            var K2EXReg = Registry.LocalMachine.OpenSubKey(@"Software\KinectToVR", false);
+            var K2EXReg = Registry.LocalMachine.OpenSubKey(@"Software\KinectToVR", false)?.GetValue("InstallPath");
             if ( K2EXReg != null ) {
-                var path = K2EXReg.GetValue("InstallPath");
-                if ( path != null ) {
-                    string pathFull = Path.GetFullPath(path as string);
-                    if ( IsAmethystInstalledInDirectory(pathFull) ) {
-                        return pathFull;
-                    }
+                string pathFull = Path.GetFullPath(K2EXReg as string);
+                if ( IsAmethystInstalledInDirectory(pathFull) ) {
+                    return pathFull;
                 }
             }
 
