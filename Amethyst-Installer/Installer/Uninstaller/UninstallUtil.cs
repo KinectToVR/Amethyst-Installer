@@ -149,14 +149,21 @@ namespace amethyst_installer_gui {
             UninstallListJSON uninstallList = FetchUninstallList();
             // Remove files
             for ( int i = 0; i < uninstallList.Files.Length; i++ ) {
-                File.Delete(uninstallList.Files[i]);
+                string file = Path.Combine(ameInstall, uninstallList.Files[i]);
+                if (File.Exists(file) )
+                    File.Delete(file);
             }
             // Remove directories
             for ( int i = 0; i < uninstallList.Directories.Length; i++ ) {
-                Directory.Delete(uninstallList.Directories[i]);
+                string dir = Path.Combine(ameInstall, uninstallList.Directories[i]);
+                if (Directory.Exists(dir))
+                    Directory.Delete(dir);
             }
 
             // 3. If the directory is empty, remove it
+            if ( Directory.Exists(ameInstall) ) {
+
+            }
 
             // 4. Locate the uninstall key, and remove it
 
