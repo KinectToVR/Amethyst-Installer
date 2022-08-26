@@ -1,9 +1,10 @@
 ﻿using amethyst_installer_gui.Installer;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 
 namespace InstallerTools.Commands {
 
@@ -42,10 +43,18 @@ namespace InstallerTools.Commands {
                 directoryList.Add(new Uri(directory).MakeRelativeUri(new Uri(dir)).ToString().Replace("/", "\\"));
             }
 
-
+            // Convert variable vectors to arrays
             list.Files = filesList.ToArray();
             list.Directories = directoryList.ToArray();
 
+            // Sort by least nested
+            Array.Sort(list.Files, (x, y) => x.Count(z => (z == '\\' || z == '/')).CompareTo(y.Count(z => ( z == '\\' || z == '/' ))));
+            Array.Sort(list.Directories, (x, y) => x.Count(z => (z == '\\' || z == '/')).CompareTo(y.Count(z => ( z == '\\' || z == '/' ))));
+            // Reverse so that they're sorted by most nested
+            Array.Reverse(list.Files);
+            Array.Reverse(list.Directories);
+
+            // Serialize
             File.WriteAllText("list.json", JsonConvert.SerializeObject(list, Formatting.None));
 
             return true;

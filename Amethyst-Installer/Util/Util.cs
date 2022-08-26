@@ -13,6 +13,7 @@ using System.Windows.Input;
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.PInvoke;
 using amethyst_installer_gui.Popups;
+using Microsoft.Win32;
 
 namespace amethyst_installer_gui {
     public static class Util {
@@ -308,6 +309,12 @@ namespace amethyst_installer_gui {
                     return BitConverter.ToString(checksum).Replace("-", String.Empty);
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string GetProcessorName() {
+            var key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\CentralProcessor\0\");
+            return key?.GetValue("ProcessorNameString").ToString() ?? "Unknown CPU";
         }
     }
 }
