@@ -1,0 +1,55 @@
+﻿using amethyst_installer_gui.Installer;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+
+namespace InstallerTools.Commands {
+
+    public class CommandGenUninstallList : ICommand {
+
+        public string Command { get => "uninstalllist"; set { } }
+        public string Description { get => "Generates a JSON file of uninstallable items; Saves to ./list.json"; set { } }
+        public string[] Aliases { get => new string[] { "ul" }; set { } }
+
+        public bool Execute(string parameters) {
+
+            if ( parameters.Length == 0 ) {
+                Console.Error.WriteLine("Invalid parameter count!");
+                return true;
+            }
+
+            string directory = Path.GetFullPath(parameters);
+
+            if ( !Directory.Exists(directory) ) {
+                Console.Error.WriteLine($"{directory} doesn't exist!");
+                return true;
+            }
+
+            UninstallListJSON list = new UninstallListJSON();
+            List<string> filesList = new List<string>();
+            List<string> directoryList = new List<string>();
+
+            // @TODO: Gen list
+
+            foreach ( string file in Directory.GetFiles(directory, "*", SearchOption.AllDirectories) ) {
+                filesList.Add(new Uri(directory).MakeRelativeUri(new Uri(file)).ToString().Replace("/", "\\"));
+            }
+            
+
+            foreach ( string dir in Directory.GetDirectories(directory, "*", SearchOption.AllDirectories) ) {
+                directoryList.Add(new Uri(directory).MakeRelativeUri(new Uri(dir)).ToString().Replace("/", "\\"));
+            }
+
+
+            list.Files = filesList.ToArray();
+            list.Directories = directoryList.ToArray();
+
+            File.WriteAllText("list.json", JsonConvert.SerializeObject(list, Formatting.None));
+
+            return true;
+        }
+    }
+}
+

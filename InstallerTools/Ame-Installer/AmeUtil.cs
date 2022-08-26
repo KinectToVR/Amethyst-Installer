@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace InstallerTools.Ame_Installer {
     public static class AmeUtil {
-
-
         public static string GetChecksum(string filePath) {
             // 1MB read buffer, seems *200ms faster*
             using ( var stream = new BufferedStream(File.OpenRead(filePath), 1024 * 1024 * 1) ) {

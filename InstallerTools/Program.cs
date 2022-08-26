@@ -50,6 +50,7 @@ namespace InstallerTools {
             Console.OutputEncoding = Encoding.Unicode;
             EnableAnsiCmd();
 
+#if DEBUG
             Console.WriteLine(@"  ╭─────────────────────────────────────────────────────────────╮
   |                                                             |
   |   AMETHYST INSTALLER                                        |
@@ -66,7 +67,6 @@ namespace InstallerTools {
   |                                                             |
   ╘═════════════════════════════════════════════════════════════╛");
 
-#if DEBUG
             args = @"--checksum F:\Downloads\Amethyst-Release-22a89a9.zip".Split();
             // args = @"--help checksum".Split();
 #endif

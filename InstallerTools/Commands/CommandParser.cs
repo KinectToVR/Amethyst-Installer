@@ -31,6 +31,7 @@ namespace InstallerTools.Commands {
             // Init command list
             m_commandList = new ICommand[] {
                 new CommandChecksum(),
+                new CommandGenUninstallList(),
             };
         }
 

@@ -50,7 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ame-Installer\AmeUtil.cs" />
+    <Compile Include="Ame-Installer\UninstallListJSON.cs" />
     <Compile Include="Commands\CommandChecksum.cs" />
+    <Compile Include="Commands\CommandGenUninstallList.cs" />
     <Compile Include="Commands\CommandParser.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Program.cs" />
@@ -63,6 +65,7 @@
     <None Include="ILRepack.targets" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
