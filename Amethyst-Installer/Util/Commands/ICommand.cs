@@ -22,6 +22,6 @@
         /// <summary>
         /// Executes this command
         /// </summary>
-        void Execute(params string[] parameters);
+        bool Execute(ref string[] parameters);
     }
 }

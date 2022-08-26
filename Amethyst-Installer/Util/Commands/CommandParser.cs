@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,27 +36,39 @@ namespace amethyst_installer_gui.Commands {
         /// Parses a given series of commands
         /// </summary>
         /// <param name="args">Array of paremters, typically from Main's string[] args</param>
-        public void ParseCommands(string[] args) {
+        /// <returns>Whether any commands that were executed blocked forthcoming execution</returns>
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool ParseCommands(string[] args) {
             for ( int i = 0; i < args.Length; i++ ) {
                 // Check if this item matches a command or not
                 if ( IsCommand(args[i], out string cmd) ) {
 
-                    bool hasExecutedAnything = false;
-
                     // For each command
+                    if (cmd == "help" || cmd == "h") {
+                        ShowHelpMessage();
+                        return true;
+                    }
                     for ( int j = 0; j < m_commandList.Length; j++ ) {
 
                         if ( ShouldExecute(m_commandList[j], cmd) ) {
-                            hasExecutedAnything = true;
-                            m_commandList[j].Execute();
-                            return;
+                            return m_commandList[j].Execute(ref args);
                         }
                     }
-                    if ( !hasExecutedAnything ) {
-                        Console.WriteLine($"Unknown command \"{cmd}\"!");
-                    }
+                    ShowErrorMessage(cmd);
                 }
             }
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void ShowHelpMessage() {
+
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void ShowErrorMessage(string cmd) {
+            Console.WriteLine($"Unknown command \"{cmd}\"!");
         }
 
         /// <summary>
@@ -64,6 +77,7 @@ namespace amethyst_installer_gui.Commands {
         /// <param name="input">The input parameter</param>
         /// <param name="formattedCommand">The command itself</param>
         /// <returns>Whether the input is a valid command or not</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool IsCommand(string input, out string formattedCommand) {
 
             formattedCommand = string.Empty;
@@ -83,6 +97,7 @@ namespace amethyst_installer_gui.Commands {
 
                 formattedCommand = input.Substring(1);
             }
+            formattedCommand = formattedCommand.ToLowerInvariant();
             return formattedCommand.Length > 0;
         }
 
@@ -92,6 +107,7 @@ namespace amethyst_installer_gui.Commands {
         /// <param name="command">The command to check</param>
         /// <param name="cmd">A formatted command string</param>
         /// <returns>Whether the command should execute or not</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool ShouldExecute(ICommand command, string cmd) {
 
             if ( command.Command == cmd ) {
