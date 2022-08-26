@@ -42,7 +42,7 @@ namespace amethyst_installer_gui.Commands {
         public bool ParseCommands(string[] args) {
             for ( int i = 0; i < args.Length; i++ ) {
                 // Check if this item matches a command or not
-                if ( IsCommand(args[i], out string cmd) ) {
+                if ( IsCommand(ref args[i], out string cmd) ) {
 
                     // For each command
                     if (cmd == "help" || cmd == "h") {
@@ -51,11 +51,11 @@ namespace amethyst_installer_gui.Commands {
                     }
                     for ( int j = 0; j < m_commandList.Length; j++ ) {
 
-                        if ( ShouldExecute(m_commandList[j], cmd) ) {
+                        if ( ShouldExecute(ref m_commandList[j], ref cmd) ) {
                             return m_commandList[j].Execute(ref args);
                         }
                     }
-                    ShowErrorMessage(cmd);
+                    ShowErrorMessage(ref cmd);
                 }
             }
             return false;
@@ -67,7 +67,7 @@ namespace amethyst_installer_gui.Commands {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ShowErrorMessage(string cmd) {
+        private void ShowErrorMessage(ref string cmd) {
             Console.WriteLine($"Unknown command \"{cmd}\"!");
         }
 
@@ -78,7 +78,7 @@ namespace amethyst_installer_gui.Commands {
         /// <param name="formattedCommand">The command itself</param>
         /// <returns>Whether the input is a valid command or not</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool IsCommand(string input, out string formattedCommand) {
+        private bool IsCommand(ref string input, out string formattedCommand) {
 
             formattedCommand = string.Empty;
 
@@ -108,7 +108,7 @@ namespace amethyst_installer_gui.Commands {
         /// <param name="cmd">A formatted command string</param>
         /// <returns>Whether the command should execute or not</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool ShouldExecute(ICommand command, string cmd) {
+        private bool ShouldExecute(ref ICommand command, ref string cmd) {
 
             if ( command.Command == cmd ) {
                 return true;
