@@ -124,7 +124,6 @@ namespace amethyst_installer_gui {
         private void Close_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             Logger.Info($"User closed installer!");
-            Close();
             Util.Quit(ExitCodes.OK);
         }
 
