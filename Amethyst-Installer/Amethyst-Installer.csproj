@@ -269,6 +269,7 @@
     <Compile Include="Util\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Util\Extensions\LinqExtensions.cs" />
     <Compile Include="Util\Extensions\StreamExtensions.cs" />
+    <Compile Include="Util\InstallUtil.cs" />
     <Compile Include="Util\Localisation\LocaleManager.cs" />
     <Compile Include="Util\Localisation\Localisation.cs" />
     <Compile Include="Util\Logger.cs" />

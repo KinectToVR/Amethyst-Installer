@@ -189,10 +189,8 @@ namespace amethyst_installer_gui.Pages {
             // Check if Amethyst is in the selected drive
             installFoundCard.Visibility = Visibility.Collapsed;
             string fullPath = Path.GetFullPath(pathTextbox.Text);
-            if (Directory.Exists(fullPath)) {
-                if (File.Exists(Path.Combine(fullPath, "Amethyst.exe"))) {
-                    installFoundCard.Visibility = Visibility.Visible;
-                }
+            if ( InstallUtil.IsAmethystInstalledInDirectory(fullPath) ) {
+                installFoundCard.Visibility = Visibility.Visible;
             }
         }
     }
