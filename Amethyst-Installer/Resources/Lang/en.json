@@ -80,15 +80,15 @@
   "SystemRequirement_Category_Compatibility": "Compatible devices",
   "SystemRequirement_Category_Playspace": "Play Area",
   "SystemRequirement_Category_Storage": "Disk space",
-  "SystemRequirement_Category_UsbControllers": "USB controllers",
+  "SystemRequirement_Category_UsbControllers": "USB host controllers",
   "SystemRequirement_Category_VrSystem": "VR headset",
   "SystemRequirement_Description_NoDriversFound": "No drivers installed yet",
   "SystemRequirement_Description_Playspace_Good": "Your VR play area is large enough for tracking.\n{0}m by {1}m", /* Shown if the playspace is large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively */
   "SystemRequirement_Description_Playspace_Small": "The size of your VR play area could cause issues with tracking. [Refer to the documentation for physical space requirements.]\n{0}m by {1}m", /* Shown if the playspace is not large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively. Everything in between [] will turn into a hyperlink leading to the relevant documentation page. */
   "SystemRequirement_Description_Playspace_Unknown": "Your play area size could not be detected. [Refer to the documentation for physical space requirements.]", /* Shown if the playspace size couldn't be determined. Everything in between [] will turn into a hyperlink leading to the relevant documentation page. */
   "SystemRequirement_Description_Storage": "{0} of disk space based on the components selected.", /* {0} gets replaced with the storage string (eg "400MB") */
-  "SystemRequirement_Description_UsbControllers": "{0} compatible USB controllers found ({1})", /* {0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
-  "SystemRequirement_Description_UsbControllers_One": "{0} compatible USB controller found ({1})", /* {0} gets replaced with the number of USB controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
+  "SystemRequirement_Description_UsbControllers": "{0} compatible controllers found ({1})", /* {0} gets replaced with the number of USB host controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
+  "SystemRequirement_Description_UsbControllers_One": "{0} compatible controller found ({1})", /* {0} gets replaced with the number of USB host controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "Intel 3.1, Renesas 720201/720202") */
   "SystemRequirement_Footnote_StageTracking_VirtualDesktop": "We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.", /* The first string of text surrounded by []s will get turned into the hyperlink */
   "SystemRequirement_Description_Headset_Via": "{0} via {1}", /* {0} gets replaced with the headset (eg Meta Quest 2) and {1} gets replaced with the connection method (eg Virtual Desktop Streamer) */
   "SystemRequirement_Description_Headset_UsingLighthouse": "{0} using Lighthouse devices", /* {0} gets replaced with the headset (eg Windows Mixed Reality) */
