@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using amethyst_installer_gui.Installer;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -140,8 +142,19 @@ namespace amethyst_installer_gui {
             // If this isn't the case, we check the registry key for the path variable (I have no clue how fucked one's setup could be so fallbacks!!)
             // If this still isn't the case check in C:\\Amethyst, C:\\Program Files\\Amethyst, C:\\Program Files (x86)\\Amethyst and C:\\K2EX for installs
 
+            string ameInstall = InstallUtil.LocateAmethystInstall();
+
             // 2. Now that we have the install directory, check in %APPDATA% for an uninstall list. If we find one, load it and use it
             // Now based on said uninstall list, clean the directory
+            UninstallListJSON uninstallList = FetchUninstallList();
+            // Remove files
+            for ( int i = 0; i < uninstallList.Files.Length; i++ ) {
+                File.Delete(uninstallList.Files[i]);
+            }
+            // Remove directories
+            for ( int i = 0; i < uninstallList.Directories.Length; i++ ) {
+                Directory.Delete(uninstallList.Directories[i]);
+            }
 
             // 3. If the directory is empty, remove it
 
@@ -152,6 +165,30 @@ namespace amethyst_installer_gui {
             // 6. Remove registry key; the user has completely uninstalled Amethyst
 
 
+        }
+
+        private static UninstallListJSON FetchUninstallList() {
+            UninstallListJSON uninstallList = null;
+            string uninstallListText = string.Empty;
+            string uninstallListPath = Path.GetFullPath(Path.Combine(Constants.AmethystConfigDirectory, "UninstallList.json"));
+
+            if ( File.Exists(uninstallListPath) ) {
+                try {
+                    uninstallListText = File.ReadAllText(uninstallListPath);
+                    uninstallList = JsonConvert.DeserializeObject<UninstallListJSON>(uninstallListPath);
+                } catch {
+                    uninstallListText = Util.ExtractResourceAsString("UninstallList.json");
+                }
+            }
+
+            if ( uninstallListText.Length == 0 ) {
+                uninstallListText = Util.ExtractResourceAsString("UninstallList.json");
+            }
+            if ( uninstallList == null ) {
+                uninstallList = JsonConvert.DeserializeObject<UninstallListJSON>(uninstallListPath);
+            }
+
+            return uninstallList;
         }
     }
 

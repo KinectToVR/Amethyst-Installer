@@ -188,6 +188,7 @@
     <Compile Include="Installer\OpenVR\OpenVRUtil.SteamVR.cs" />
     <Compile Include="Installer\CloudPCUtil.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.TrackerRoles.cs" />
+    <Compile Include="Installer\Uninstaller\UninstallListJSON.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
     <Compile Include="Pages\PageDebug.xaml.cs">
       <DependentUpon>PageDebug.xaml</DependentUpon>
@@ -269,12 +270,12 @@
     <Compile Include="Util\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Util\Extensions\LinqExtensions.cs" />
     <Compile Include="Util\Extensions\StreamExtensions.cs" />
-    <Compile Include="Util\InstallUtil.cs" />
+    <Compile Include="Installer\InstallUtil.cs" />
     <Compile Include="Util\Localisation\LocaleManager.cs" />
     <Compile Include="Util\Localisation\Localisation.cs" />
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\SoundPlayer.cs" />
-    <Compile Include="Util\UninstallUtil.cs" />
+    <Compile Include="Installer\Uninstaller\UninstallUtil.cs" />
     <Compile Include="Util\Util.cs" />
     <Compile Include="Util\Vectors.cs" />
     <Compile Include="Util\WindowsColorHelpers.cs" />
@@ -453,6 +454,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Lang\en.json" />
+    <EmbeddedResource Include="Resources\UninstallList.json" />
     <None Include="Resources\welcome-splash.png" />
   </ItemGroup>
   <ItemGroup>

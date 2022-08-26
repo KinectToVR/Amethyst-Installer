@@ -18,6 +18,15 @@ namespace amethyst_installer_gui {
         }
 
         /// <summary>
+        /// Returns the config directory for Amethyst
+        /// </summary>
+        public static string AmethystConfigDirectory {
+            get {
+                return Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Roaming", "Amethyst"));
+            }
+        }
+
+        /// <summary>
         /// Returns the logging directory for Amethyst
         /// </summary>
         public static string AmethystLogsDirectory {
@@ -67,6 +76,11 @@ namespace amethyst_installer_gui {
         /// The URL pointing to a JSON object full of locale codes supported on docs.
         /// </summary>
         public static readonly string DocsLocalesEndpoint = "https://docs.k2vr.tech/shared/locales.json";
+
+        /// <summary>
+        /// Amethyst registry key location
+        /// </summary>
+        public const string AmethystRegsitryKey = @"Software\K2VR Team\Amethyst";
 
         /// <summary>
         /// The minimum size a playspace should have

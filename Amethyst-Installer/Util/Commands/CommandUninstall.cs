@@ -18,6 +18,8 @@ namespace amethyst_installer_gui.Commands {
             // App.InitialPage = Installer.InstallerState.Uninstall;
 
             if (Util.ShowMessageBox("Are you sure you want to uninstall Amethyst?", "Uninstalling Amethyst", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+
+                App.Init();
                 UninstallUtil.UninstallAmethyst();
                 Util.ShowMessageBox("Successfully uninstalled Amethyst!", "Uninstalling Amethyst", MessageBoxButton.OK);
             }

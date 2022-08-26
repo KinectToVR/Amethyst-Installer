@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Installer.Modules {
     public class AmethystModule : ModuleBase {
-
-        private const string AmethystRegsitryKey = @"Software\K2VR Team\Amethyst";
         public AmethystModule() {}
 
         /*
@@ -119,7 +117,7 @@ if upgrade no
                 control.LogInfo(string.Format(LogStrings.CreatingAmethystRegistryEntry, path));
 
                 // Open or create registry entry
-                var HKLM = Registry.LocalMachine.CreateSubKey(AmethystRegsitryKey, true);
+                var HKLM = Registry.LocalMachine.CreateSubKey(Constants.AmethystRegsitryKey, true);
                 HKLM.SetValue("DisplayVersion", Module.DisplayVersion);
                 HKLM.SetValue("Version", Module.InternalVersion, RegistryValueKind.DWord);
                 HKLM.SetValue("Path", path);
