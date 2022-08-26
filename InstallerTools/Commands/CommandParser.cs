@@ -158,6 +158,7 @@ namespace InstallerTools.Commands {
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private string ExtractParameters(ref string[] args, int index) {
             // i + 1 is our first entry
             StringBuilder stringBuffer = new StringBuilder();
