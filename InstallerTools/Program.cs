@@ -24,6 +24,8 @@ namespace InstallerTools {
 
             s_parser = new Parser(with => {
                 with.HelpWriter = null;
+                with.GetoptMode = true;
+                with.CaseSensitive = false;
             });
             var parserResult = s_parser.ParseArguments(args, s_types);
             parserResult
