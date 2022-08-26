@@ -1,116 +1,86 @@
-﻿using CommandLine;
-using CommandLine.Text;
-using InstallerTools.Commands;
+﻿using InstallerTools.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace InstallerTools {
 
     internal class Program {
 
-        private static Parser s_parser;
-        private static Type[] s_types;
+
+        #region ANSI CMD
+        private const int STD_OUTPUT_HANDLE = -11;
+        private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
+        private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
+
+        [DllImport("kernel32.dll")]
+        private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+        [DllImport("kernel32.dll")]
+        private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll")]
+        private static extern uint GetLastError();
+
+
+        public static void EnableAnsiCmd() {
+            var iStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+            if ( !GetConsoleMode(iStdOut, out uint outConsoleMode) ) {
+                Console.Error.WriteLine("Failed to get output console mode");
+                return;
+            }
+
+            outConsoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN;
+            if ( !SetConsoleMode(iStdOut, outConsoleMode) ) {
+                Console.Error.WriteLine($"Failed to set output console mode, error code: {GetLastError()}");
+                return;
+            }
+        }
+
+        #endregion
 
         static void Main(string[] args) {
+
+            Console.OutputEncoding = Encoding.Unicode;
+            EnableAnsiCmd();
+
+            Console.WriteLine(@"  ╭─────────────────────────────────────────────────────────────╮
+  |                                                             |
+  |   AMETHYST INSTALLER                                        |
+  |                                                             |
+  |   --help, -h          Shows help                            |
+  |   --update -u         Attempts to update Amethyst           |
+  |   --uninstall -x      Attempts to uninstall Amethyst        |
+  |   --modify -m         Attempts to modify an existing        |
+  |                       Amethyst install                      |
+  |   --silent -s         Executes the installer silently       |
+  |   --install-dir       Sets the install directory,           |
+  |   --debug             Forces the installer to run in Debug  |
+  |                       mode                                  |
+  |                                                             |
+  ╘═════════════════════════════════════════════════════════════╛");
 
 #if DEBUG
             args = @"checksum --p F:\Downloads\Amethyst-Release-22a89a9.zip".Split();
             // args = @"--help checksum".Split();
 #endif
 
-            s_types = Util.LoadVerbs();
-
-            s_parser = new Parser(with => {
-                with.HelpWriter = null;
-                with.GetoptMode = true;
-                with.CaseSensitive = false;
-            });
-            var parserResult = s_parser.ParseArguments(args, s_types);
-            parserResult
-                .WithParsed(Exec)
-                .WithNotParsed(e => HandleError(parserResult, e));
-
+            CommandParser parser = new CommandParser();
+            if ( !parser.ParseCommands(args) ) {
+                // Woo command!
+            } else {
+                // Regular execution
+            }
 #if DEBUG
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
 #endif
-        }
-
-        private static void Exec(object obj) {
-            if (obj is ICommand ) {
-                ( ( ICommand ) obj ).Execute();
-            }
-        }
-
-        /// <summary>
-        /// Handling command errors, handles showing help / version or defaulting to no args workflow
-        /// </summary>
-        private static object HandleError(ParserResult<object> parserResult, IEnumerable<Error> errors) {
-            // If we have a command
-            if ( errors.IsAny() ) {
-                Error firstError = errors.First();
-
-                // Switch on error type...
-                // This syntax is ugly, but "actually decent command parser!"
-                switch ( firstError.GetType() ) {
-
-                    // No Verb :: array is empty
-                    case Type nv when nv == typeof(NoVerbSelectedError):
-                        ExecuteNoCommand();
-                        break;
-
-                    // Invalid command
-                    case Type bv when bv == typeof(BadVerbSelectedError):
-                        // If verb has any length, it means you are likely trying to use the CLI, so assume 0 length is no command
-                        if ( ( ( CommandLine.BadVerbSelectedError ) firstError ).Token.Trim().Length > 0 ) {
-                            DisplayHelp(parserResult);
-                        } else {
-                            ExecuteNoCommand();
-                        }
-                        break;
-
-                    // Help requested command
-                    case Type hv1 when hv1 == typeof(HelpVerbRequestedError):
-                    case Type hv2 when hv2 == typeof(HelpRequestedError):
-                        DisplayHelp(parserResult);
-                        break;
-
-                    // Version requested command
-                    case Type hv1 when hv1 == typeof(VersionRequestedError):
-                        string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                        Console.WriteLine($"Amethyst Installer Tools v{version.Remove(version.Length - 2)}");
-                        break;
-
-                    // Other cases
-                    default:
-                        ExecuteNoCommand();
-                        break;
-                }
-
-            } else {
-                ExecuteNoCommand();
-            }
-
-            return errors;
-        }
-
-        private static void DisplayHelp<T>(ParserResult<T> result) {
-            HelpText helpText = HelpText.AutoBuild(result, h =>
-            {
-                h.AdditionalNewLineAfterOption = false;
-                h.AddDashesToOption = true;
-                h.Heading = "Amethyst Installer Tools";
-                h.Copyright = "";
-                // return HelpText.DefaultParsingErrorsHandler(result, h);
-                return h;
-            } , e => e, verbsIndex:true);
-            Console.WriteLine(helpText);
-        }
-
-        public static void ExecuteNoCommand() {
-
         }
     }
 }

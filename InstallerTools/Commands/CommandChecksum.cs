@@ -1,24 +1,28 @@
-﻿using CommandLine;
-using InstallerTools.Ame_Installer;
+﻿using InstallerTools.Ame_Installer;
 using System;
 using System.IO;
 
 namespace InstallerTools.Commands {
 
-    [Verb("checksum", aliases: new string[] { "k" }, HelpText = "Calculates the MD5 checksum of a given file.", Hidden = false)]
     public class CommandChecksum : ICommand {
 
-        [Option('p', "filepath", HelpText = "The path to the specified file")]
-        public string FilePath { get; set; }
+        public string Command { get => "uninstall"; set { } }
+        public string Description { get => "Starts the uninstall workflow"; set { } }
+        public string[] Aliases { get => new string[] { "x" }; set { } }
 
-        public void Execute() {
+        public bool Execute(ref string[] parameters) {
 
-            FilePath = Path.GetFullPath(FilePath);
+            if ( parameters.Length == 0 ) {
+                Console.Error.WriteLine("Invalid parameter count!");
+                return true;
+            }
 
-            var checksum = AmeUtil.GetChecksum(FilePath);
+            string filePath = Path.GetFullPath(string.Join(" ", parameters));
+
+            var checksum = AmeUtil.GetChecksum(filePath);
             Console.WriteLine(checksum);
 
-            return;
+            return true;
         }
     }
 }

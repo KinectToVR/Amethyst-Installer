@@ -6,7 +6,6 @@
 
 		<ItemGroup>
 			<InputAssemblies Include="$(OutputPath)$(TargetName)$(TargetExt)"/>
-			<InputAssemblies Include="$(OutputPath)CommandLine.dll" />
 			<InputAssemblies Include="$(OutputPath)Newtonsoft.Json.dll" />
 		</ItemGroup>
 

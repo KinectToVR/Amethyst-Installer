@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace amethyst_installer_gui.Commands {
+namespace InstallerTools.Commands {
     public class CommandParser {
 
         private ICommand[] m_commandList;
@@ -30,7 +30,7 @@ namespace amethyst_installer_gui.Commands {
         public CommandParser() {
             // Init command list
             m_commandList = new ICommand[] {
-                new CommandUninstall(),
+                new CommandChecksum(),
             };
         }
 
@@ -47,7 +47,7 @@ namespace amethyst_installer_gui.Commands {
                 if ( IsCommand(ref args[i], out string cmd) ) {
 
                     // For each command
-                    if (cmd == "help" || cmd == "h") {
+                    if ( cmd == "help" || cmd == "h" ) {
                         ShowHelpMessage();
                         return true;
                     }
@@ -123,12 +123,12 @@ namespace amethyst_installer_gui.Commands {
 
                 formattedCommand = input.Substring(2);
 
-            // -XXXXX
+                // -XXXXX
             } else if ( input.Length > 2 && input[0] == '-' ) {
 
                 formattedCommand = input.Substring(1);
 
-            // /XXXXX
+                // /XXXXX
             } else if ( input.Length > 2 && input[0] == '/' ) {
 
                 formattedCommand = input.Substring(1);
