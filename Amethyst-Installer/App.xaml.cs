@@ -3,9 +3,9 @@ using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
 using amethyst_installer_gui.PInvoke;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Media;
+using System.Reflection;
 using System.Windows;
 
 using AppWindow = amethyst_installer_gui.MainWindow;
@@ -88,6 +88,19 @@ namespace amethyst_installer_gui {
 
             // Check if we can even install Amethyst
             CheckCanInstall();
+
+            // Check if we're running on a multi-account setup.
+            // If the user is a standard user but we're running the installer as admin, we have to break vrpathreg, as we can't de-elevate it.
+            // Well... we can de-elevate it (see SystemUtilities.cs), but we won't be able to get any return codes.
+            if ( InstallerStateManager.MustDelevateProcesses ) {
+
+                // Equivalent of:
+                // OpenVRUtil.s_failedToInit = false;
+
+                BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+                FieldInfo handleField = typeof(OpenVRUtil).GetField("s_failedToInit", bindFlags);
+                handleField.SetValue(null, true);
+            }
         }
     }
 }
