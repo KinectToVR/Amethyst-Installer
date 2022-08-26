@@ -1,16 +1,20 @@
 ﻿using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.PInvoke;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Installer.Modules {
     public class AmethystModule : ModuleBase {
+
+        private const string AmethystRegsitryKey = @"Software\K2VR Team\Amethyst";
         public AmethystModule() {}
 
         /*
@@ -37,6 +41,7 @@ if upgrade no
             if (ExtractAmethyst(sourceFile, path, ref control) ) {
 
                 bool overallSuccess = HandleDrivers(path, ref control);
+                overallSuccess = overallSuccess && CreateRegistryEntry(path, ref control);
                 overallSuccess = overallSuccess && CreateUninstallEntry(path, ref control);
                 overallSuccess = overallSuccess && AssignTrackerRoles(ref control);
                 overallSuccess = overallSuccess && CreateShortcuts(path, ref control);
@@ -104,6 +109,28 @@ if upgrade no
             // Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local", "openvr", "openvrpaths.vrpath")));
 
             return true;
+        }
+
+        private bool CreateRegistryEntry(string path, ref InstallModuleProgress control) {
+
+            try {
+
+                Logger.Info(string.Format(LogStrings.CreatingAmethystRegistryEntry, path));
+                control.LogInfo(string.Format(LogStrings.CreatingAmethystRegistryEntry, path));
+
+                // Open or create registry entry
+                var HKLM = Registry.LocalMachine.CreateSubKey(AmethystRegsitryKey, true);
+                HKLM.SetValue("DisplayVersion", Module.DisplayVersion);
+                HKLM.SetValue("Version", Module.InternalVersion, RegistryValueKind.DWord);
+                HKLM.SetValue("Path", path);
+
+                return true;
+
+            } catch ( Exception e ) {
+                Logger.Fatal($"{LogStrings.ExtractAmethystFailed}:\n{Util.FormatException(e)})");
+                control.LogError($"{LogStrings.ExtractAmethystFailed}! {LogStrings.ViewLogs}");
+            }
+            return false;
         }
 
         private bool AssignTrackerRoles(ref InstallModuleProgress control) {

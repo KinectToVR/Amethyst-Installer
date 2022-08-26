@@ -7,6 +7,7 @@
         public const string ExtractAmethystFailed               = "Failed to extract Amethyst";
         public const string RegisteringAmethystDriver           = "Registering Amethyst driver...";
         public const string CheckingAmethystDriverConflicts     = "Checking for conflicting SteamVR drivers...";
+        public const string CreatingAmethystRegistryEntry       = "Creating registry entry...";
         public const string CreatingUninstallEntry              = "Registering uninstall entry...";
         public const string CreateUninstallEntryFailed          = "Failed to register uninstall entry";
         public const string RemovingConflictingTrackerRoles     = "Removing conflicting tracker roles...";
