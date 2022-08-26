@@ -81,14 +81,15 @@ namespace amethyst_installer_gui.Installer {
 
         private static void CheckOS() {
             // If older than Windows 10
-            if ( Environment.OSVersion.Version.Major < 10 ) {
+            Version osVersion = WindowsUtils.GetVersion();
+            if ( osVersion.Major < 10 ) {
                 IsWindowsAncient = true;
             }
             // If the user is running a Windows 10 install that's older than 20H2
-            if ( Environment.OSVersion.Version.Build < ( int ) WindowsUtils.WindowsMajorReleases.Win10_20H2 ) {
+            if ( osVersion.Build < ( int ) WindowsUtils.WindowsMajorReleases.Win10_20H2 ) {
                 IsWindowsAncient = true;
             }
-            Logger.Info($"OS too old: {IsWindowsAncient} ; OS Version: {Environment.OSVersion.Version} ; Version String: {WindowsUtils.GetDisplayVersion()}");
+            Logger.Info($"OS too old: {IsWindowsAncient} ; OS Version: {osVersion} ; Version String: {WindowsUtils.GetDisplayVersion()}");
         }
 
         private static void DetectUsbControllers() {

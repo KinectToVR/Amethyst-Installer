@@ -23,10 +23,21 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// Returns the "patch" of the currently installed Windows version ; This would be the number after the build number in winver.
         /// </summary>
-        public static int GetVersion() {
+        public static Version GetVersion() {
             RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+            var majorNumber = registryKey.GetValue("CurrentMajorVersionNumber");
+            var minorNumber = registryKey.GetValue("CurrentMinorVersionNumber");
+            var revisionNumber = registryKey.GetValue("CurrentBuildNumber");
             var buildNumber = registryKey.GetValue("UBR");
-            return ( int ) (buildNumber ?? int.MinValue);
+
+            int revNumAsInt32 = 0;
+            int.TryParse(( string ) revisionNumber ?? "0", out revNumAsInt32);
+            return new Version(
+                ( int ) ( majorNumber ?? int.MinValue ),
+                ( int ) ( minorNumber ?? int.MinValue ),
+                revNumAsInt32,
+                ( int ) ( buildNumber ?? int.MinValue )
+            );
         }
 
         /// <summary>

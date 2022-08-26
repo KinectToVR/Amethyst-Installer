@@ -62,6 +62,7 @@ namespace amethyst_installer_gui {
         public MainWindow() {
             // TODO: Launch args can set debug mode
             // DebugMode = DebugMode && 
+
             InitializeComponent();
 
             // Init pages
@@ -105,7 +106,7 @@ namespace amethyst_installer_gui {
             Analytics.HeadsetModel = OpenVRUtil.HmdType;
             Analytics.TrackingUniverse = OpenVRUtil.TrackingType;
             Analytics.ConnectionType = OpenVRUtil.ConnectionType;
-            Analytics.WindowsBuild = $"{Environment.OSVersion.Version.ToString(3)}.{WindowsUtils.GetVersion()}"; // TODO: Windows build
+            Analytics.WindowsBuild = WindowsUtils.GetVersion().ToString();
         }
 
 #region Win UI 3 Window Functionality
