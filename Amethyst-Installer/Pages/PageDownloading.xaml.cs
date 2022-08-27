@@ -46,7 +46,7 @@ namespace amethyst_installer_gui.Pages {
             return Localisation.Page_Download_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
+        public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             // Advance to next page
             m_timer.Stop();
             MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
@@ -229,7 +229,7 @@ namespace amethyst_installer_gui.Pages {
                 m_downloadIndex++;
 
                 if ( m_downloadIndex == InstallerStateManager.ModulesToInstall.Count ) {
-                    MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+                    ActionButtonPrimary.Visibility = Visibility.Visible;
                     MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
                     Logger.Info("Downloaded all modules successfully!");
                 } else {
@@ -278,23 +278,21 @@ namespace amethyst_installer_gui.Pages {
             // From here we automatically go to the installation page
             // TODO: we need an actual downloader lmao
 #if DEBUG
-            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+            ActionButtonPrimary.Visibility = Visibility.Visible;
 #else
-            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Hidden;
+            ActionButtonPrimary.Visibility = Visibility.Hidden;
 #endif
             MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 
             MainWindow.Instance.SetSidebarHidden(false);
-            MainWindow.Instance.SetButtonsHidden(false);
+            MainWindow.Instance.SetButtonsHidden(true);
         }
 
+
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) {}
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
-
-        private void button_Click(object sender, RoutedEventArgs e) {
-            MainWindow.Instance.SetPage(InstallerState.Installation);
-        }
 	}
 }
