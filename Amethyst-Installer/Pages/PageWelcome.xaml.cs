@@ -147,6 +147,8 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e) {
+            if ( ActualWidth == 0 || ActualHeight == 0 )
+                return;
             SoundPlayer.PlaySound(SoundEffect.Invoke);
         }
     }
