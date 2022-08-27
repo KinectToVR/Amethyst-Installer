@@ -10,7 +10,7 @@ namespace AutoGenerateLoc {
         static void Main(string[] args) {
 
             string loc = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            loc = Path.GetFullPath(Path.Combine(loc, "../../.."));
+            loc = Path.GetFullPath(Path.Combine(loc, "../../../.."));
 
             string localeJson = File.ReadAllText(Path.Combine(loc, "Amethyst-Installer","Resources","Lang","en.json"));
 
