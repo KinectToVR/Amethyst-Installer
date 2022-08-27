@@ -99,6 +99,7 @@
   "Welcome_OptIn": "Opt in to anonymous analytics and crash reports.",
   "Welcome_PrivacyPolicy": "Privacy Policy", /* The text for the link */
   "Welcome_ReadPrivacyPolicy": "Read our %s% to see what we send.", /* %s% gets replaced with the link */
+  "Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks": "This installer is in technical preview. If you got this app from anywhere other than the %s% please join the server before using it.", /* %s% gets replaced with "Discord Server" */
 
   "Done_InstallSuccess": "Amethyst has been successfully installed!",
   "Done_LaunchDesktop": "It can be launched from the desktop",

@@ -121,6 +121,10 @@
                 <TextBlock Foreground="White" Name="readPrivacyPolicy" LineStackingStrategy="BlockLineHeight">Privacy policy string generated during runtime</TextBlock>
             </StackPanel>
 
+            <StackPanel Name="previewWarningContainer" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Foreground="White" Name="previewWarning" LineStackingStrategy="BlockLineHeight" TextWrapping="WrapWithOverflow">Preview warning string generated during runtime</TextBlock>
+            </StackPanel>
+
             <Button Grid.Column="1" x:Name="proceedButton" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="proceedButton_Click"/>
         </Grid>
     </Grid>

@@ -66,6 +66,25 @@ namespace amethyst_installer_gui.Pages {
             if ( secondPart.Length > 0 )
                 readPrivacyPolicy.Inlines.Add(secondPart);
 
+            // @HACK: This is temporary, until we fully release the installer
+
+            // Localize the privacy policy thing
+            var techPreviewRaw = Localisation.Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks;
+            string t_firstPart = techPreviewRaw.Substring(0, techPreviewRaw.IndexOf("%s%"));
+            string t_secondPart = techPreviewRaw.Substring(techPreviewRaw.IndexOf("%s%") + 3);
+
+            previewWarning.Inlines.Clear();
+            previewWarning.Inlines.Add(t_firstPart);
+            Hyperlink discordLink = new Hyperlink()
+            {
+                NavigateUri = new Uri(Constants.DiscordInvite),
+            };
+            discordLink.Inlines.Add("K2VR Community Discord");
+            discordLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;
+            previewWarning.Inlines.Add(discordLink);
+            if ( t_secondPart.Length > 0 )
+                previewWarning.Inlines.Add(t_secondPart);
+
             // Splash screen
             GenerateSplashText();
         }

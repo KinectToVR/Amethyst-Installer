@@ -419,6 +419,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Welcome_ReadPrivacyPolicy");
             }
         }
+        public static string Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks {
+            get {
+                return LocaleManager.GetString("Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks");
+            }
+        }
         public static string Done_InstallSuccess {
             get {
                 return LocaleManager.GetString("Done_InstallSuccess");
