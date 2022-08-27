@@ -26,7 +26,6 @@ namespace amethyst_installer_gui {
 
             CommandParser parser = new CommandParser();
             if ( !parser.ParseCommands(e.Args) ) {
-            // if ( !parser.ParseCommands("--uninstall".Split()) ) {
 
                 Init();
 

@@ -60,6 +60,10 @@ if upgrade no
 
                 Logger.Info(string.Format(LogStrings.ExtractingAmethyst, target));
                 control.LogInfo(string.Format(LogStrings.ExtractingAmethyst, target));
+
+                if (InstallUtil.IsAmethystInstalledInDirectory(target)) {
+                    UninstallUtil.UninstallAmethyst(false, target);
+                }
                 
                 string ameZip = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, zip));
                 if ( File.Exists(ameZip) ) {
