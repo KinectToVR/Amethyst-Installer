@@ -22,6 +22,7 @@ namespace InstallerTools.Commands {
             }
 
             string directory = Path.GetFullPath(parameters);
+            string dirName = directory.Substring(directory.LastIndexOf("\\") + 1);
 
             if ( !Directory.Exists(directory) ) {
                 Console.Error.WriteLine($"{directory} doesn't exist!");
@@ -35,12 +36,12 @@ namespace InstallerTools.Commands {
             // @TODO: Gen list
 
             foreach ( string file in Directory.GetFiles(directory, "*", SearchOption.AllDirectories) ) {
-                filesList.Add(new Uri(directory).MakeRelativeUri(new Uri(file)).ToString().Replace("/", "\\"));
+                filesList.Add(new Uri(directory).MakeRelativeUri(new Uri(file)).ToString().Replace("/", "\\").Substring(dirName.Length + 1));
             }
             
 
             foreach ( string dir in Directory.GetDirectories(directory, "*", SearchOption.AllDirectories) ) {
-                directoryList.Add(new Uri(directory).MakeRelativeUri(new Uri(dir)).ToString().Replace("/", "\\"));
+                directoryList.Add(new Uri(directory).MakeRelativeUri(new Uri(dir)).ToString().Replace("/", "\\").Substring(dirName.Length + 1));
             }
 
             // Convert variable vectors to arrays
