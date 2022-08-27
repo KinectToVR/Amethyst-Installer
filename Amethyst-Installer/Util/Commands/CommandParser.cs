@@ -160,6 +160,12 @@ namespace amethyst_installer_gui.Commands {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private string ExtractParameters(ref string[] args, int index) {
+
+            // If less than minimum parameters
+            if (args.Length - index < 2 ) {
+                return "";
+            }
+
             // i + 1 is our first entry
             StringBuilder stringBuffer = new StringBuilder();
             for ( int i = index + 1; i < args.Length; i++ ) {
