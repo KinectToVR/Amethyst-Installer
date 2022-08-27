@@ -3,15 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:global="clr-namespace:amethyst_installer_gui"
              xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="328" d:DesignWidth="508">
-    <Grid x:Name="exceptionPageContainerRoot">
+             d:DesignHeight="414" d:DesignWidth="508">
+    <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="exceptionTraceBox" Grid.Row="0" IsReadOnly="True" Style="{DynamicResource WinUIScrollTextbox}" FontFamily="Consolas" MaxWidth="{Binding ElementName=exceptionPageContainerRoot, Path=ActualWidth}" IsUndoEnabled="False"
+        <Grid x:Name="exceptionPageContainerRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBox x:Name="exceptionTraceBox" Grid.Row="0" IsReadOnly="True" Style="{DynamicResource WinUIScrollTextbox}" FontFamily="Consolas" MaxWidth="{Binding ElementName=exceptionPageContainerRoot, Path=ActualWidth}" IsUndoEnabled="False"
 Text="          No exception?
                  ⠀⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝
 ⠸⡸⠜⠕⠕⠁⢁⢇⢏⢽⢺⣪⡳⡝⣎⣏⢯⢞⡿⣟⣷⣳⢯⡷⣽⢽⢯⣳⣫⠇
@@ -26,10 +33,21 @@ Text="          No exception?
 ⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" />
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,15,0,0">
-            <TextBlock Foreground="#FF949494">
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,15,0,0">
+                <TextBlock Foreground="#FF949494">
                 <Label x:Name="logsPathTextPre" Content="aaa" Padding="0"/><Hyperlink Click="logsPathLink_Click"><TextBlock x:Name="logsPathLink">AAA</TextBlock></Hyperlink>
             </TextBlock>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ActionButtonTertiary" Grid.Column="0" Content="{x:Static global:Localisation.Installer_Action_CopyError}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonTertiary_Click"/>
+            <Button x:Name="ActionButtonSecondary" Grid.Column="1" Content="{x:Static global:Localisation.Installer_Action_Discord}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonSecondary_Click"/>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Exit}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+        </Grid>
     </Grid>
 </UserControl>

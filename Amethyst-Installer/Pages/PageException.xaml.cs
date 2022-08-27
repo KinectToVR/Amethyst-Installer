@@ -25,18 +25,18 @@ namespace amethyst_installer_gui.Pages {
             return Localisation.Page_Exception_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
+        public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             // Exit
             Util.Quit(ExitCodes.ExceptionUserClosed);
         }
 
-        public void OnButtonSecondary(object sender, RoutedEventArgs e) {
+        public void ActionButtonSecondary_Click(object sender, RoutedEventArgs e) {
             // Open Discord
             Process.Start(Constants.DiscordInvite);
             SoundPlayer.PlaySound(SoundEffect.Invoke);
         }
 
-        public void OnButtonTertiary(object sender, RoutedEventArgs e) {
+        public void ActionButtonTertiary_Click(object sender, RoutedEventArgs e) {
             // Copy Error
             Clipboard.SetText($"```\nUnhandled Exception: {currentException.GetType().Name} in {currentException.Source}: {currentException.Message}\n```");
             SoundPlayer.PlaySound(SoundEffect.Invoke);
@@ -58,7 +58,7 @@ namespace amethyst_installer_gui.Pages {
             logsPathLink.Text = Constants.AmethystLogsDirectory;
 
             MainWindow.Instance.SetSidebarHidden(false);
-            MainWindow.Instance.SetButtonsHidden(false);
+            MainWindow.Instance.SetButtonsHidden(true);
 
             // Reset taskbar progress
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
@@ -67,6 +67,10 @@ namespace amethyst_installer_gui.Pages {
 
         // Since we never know when we will hit this page (this page is a special case as it's exception handling) we'll handle everything on page focus
         public void OnSelected() { }
+
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) {}
+        public void OnButtonSecondary(object sender, RoutedEventArgs e) {}
+        public void OnButtonTertiary(object sender, RoutedEventArgs e) {}
 
         private void logsPathLink_Click(object sender, RoutedEventArgs e) {
             // open logs dir with the current log file selected
