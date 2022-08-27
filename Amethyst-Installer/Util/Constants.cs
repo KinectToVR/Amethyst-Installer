@@ -53,7 +53,10 @@ namespace amethyst_installer_gui {
                     }
 
                     Directory.CreateDirectory(m_ameTmpDir);
-                    Logger.Info($"Created temp directory at \"{m_ameTmpDir}\"...");
+                    if ( Logger.LogFilePath != null )
+                        Logger.Info($"Created temp directory at \"{m_ameTmpDir}\"...");
+                    else
+                        Console.WriteLine($"Created temp directory at \"{m_ameTmpDir}\"...");
 #endif
                 }
                 return m_ameTmpDir;
