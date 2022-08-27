@@ -13,24 +13,24 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-    <Grid>
+        <Grid>
 
-		<ScrollViewer x:Name="scrollContainer" Focusable="false" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
-			<StackPanel Orientation="Vertical" x:Name="installationListContainer" Margin="0,0,8,0">
+            <ScrollViewer x:Name="scrollContainer" Focusable="false" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
+                <StackPanel Orientation="Vertical" x:Name="installationListContainer" Margin="0,0,8,0">
 
 
 
-			</StackPanel>
-		</ScrollViewer>
-    </Grid>
-    <Grid Grid.Row="1" Margin="0,15,0,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Button x:Name="ActionButtonSecondary" Grid.Column="1" Content="{x:Static global:Localisation.Installer_Action_Discord}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonSecondary_Click" Visibility="Hidden"/>
-        <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Discord}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
-    </Grid>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Discord}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+        </Grid>
     </Grid>
 </UserControl>
