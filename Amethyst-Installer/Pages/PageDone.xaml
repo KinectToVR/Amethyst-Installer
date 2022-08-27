@@ -6,12 +6,27 @@
              xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
              xmlns:global="clr-namespace:amethyst_installer_gui"
              mc:Ignorable="d" 
-             d:DesignHeight="328" d:DesignWidth="508">
+             d:DesignHeight="414" d:DesignWidth="508">
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <TextBlock Text="{x:Static global:Localisation.Done_InstallSuccess}" Foreground="White" />
-            <CheckBox x:Name="launchAmeOnExit" Content="{x:Static global:Localisation.Done_LaunchAmethyst}" Margin="0,8,0,0" IsChecked="True" />
-        </StackPanel>
 
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="{x:Static global:Localisation.Done_InstallSuccess}" Foreground="White" />
+                <CheckBox x:Name="launchAmeOnExit" Content="{x:Static global:Localisation.Done_LaunchAmethyst}" Margin="0,8,0,0" IsChecked="True" Checked="launchAmeOnExit_Checked" Unchecked="launchAmeOnExit_Checked" />
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+        </Grid>
     </Grid>
 </UserControl>
