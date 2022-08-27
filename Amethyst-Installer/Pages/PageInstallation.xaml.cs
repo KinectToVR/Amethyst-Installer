@@ -40,7 +40,7 @@ namespace amethyst_installer_gui.Pages {
             return Localisation.Page_Install_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
+        public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             if ( m_failedToInstall ) {
 
                 // Exit
@@ -53,6 +53,13 @@ namespace amethyst_installer_gui.Pages {
                 MainWindow.Instance.SetPage(InstallerState.Done);
             }
         }
+
+        public void ActionButtonSecondary_Click(object sender, RoutedEventArgs e) {
+            // Open Discord
+            Process.Start(Constants.DiscordInvite);
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+        }
+
 
         public void OnSelected() {
 
@@ -124,7 +131,7 @@ namespace amethyst_installer_gui.Pages {
 
                     // TODO: Handle failure
                     
-                    MainWindow.Instance.ActionButtonPrimary.Dispatcher.Invoke(() => {
+                    ActionButtonPrimary.Dispatcher.Invoke(() => {
                         OnModuleInstalled();
                         control.State = outState;
                     });
@@ -137,7 +144,7 @@ namespace amethyst_installer_gui.Pages {
         private void OnModuleInstalled() {
             m_installedModuleCount++;
             if ( m_installedModuleCount == InstallerStateManager.ModulesToInstall.Count ) {
-                MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+                ActionButtonPrimary.Visibility = Visibility.Visible;
                 MainWindow.Instance.sidebar_install.State = TaskState.Checkmark;
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0;
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
@@ -154,11 +161,11 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.sidebar_install.State = TaskState.Error;
             SoundPlayer.PlaySound(SoundEffect.Error);
 
-            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
+            ActionButtonPrimary.Visibility = Visibility.Visible;
+            ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
 
-            MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonSecondary.Content = Localisation.Installer_Action_Discord;
+            ActionButtonSecondary.Visibility = Visibility.Visible;
+            ActionButtonSecondary.Content = Localisation.Installer_Action_Discord;
 
             Util.ShowMessageBox(String.Format(Localisation.InstallFailure_Modal_Description, control.Title), Localisation.InstallFailure_Modal_Title, MessageBoxButton.OK);
         }
@@ -166,24 +173,21 @@ namespace amethyst_installer_gui.Pages {
         // Force only the first button to have focus
         public void OnFocus() {
 #if DEBUG
-            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
+            ActionButtonPrimary.Visibility = Visibility.Visible;
 #else
-            MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Hidden;
+            ActionButtonPrimary.Visibility = Visibility.Hidden;
 #endif
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
+            ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
             MainWindow.Instance.sidebar_install.State = Controls.TaskState.Busy;
 
             MainWindow.Instance.SetSidebarHidden(false);
-            MainWindow.Instance.SetButtonsHidden(false);
+            MainWindow.Instance.SetButtonsHidden(true);
         }
 
-        public void OnButtonSecondary(object sender, RoutedEventArgs e) {
-            // Open Discord
-            Process.Start(Constants.DiscordInvite);
-            SoundPlayer.PlaySound(SoundEffect.Invoke);
-        }
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) {}
+        public void OnButtonSecondary(object sender, RoutedEventArgs e) {}
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
     }
 }
