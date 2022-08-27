@@ -198,6 +198,43 @@ namespace amethyst_installer_gui {
 
             // 5. Locate %APPDATA%\Amethyst, and clear configs
             if ( removeConfig ) {
+                // @TODO: Implement
+
+                if ( Directory.Exists(Constants.AmethystConfigDirectory) ) {
+                    
+                    // Settings
+                    string[] settings = Directory.GetFiles(Constants.AmethystConfigDirectory, "*_settings.xml", SearchOption.TopDirectoryOnly);
+                    for ( int i = 0; i < settings.Length; i++ ) {
+                        if ( File.Exists(settings[i]) ) {
+                            File.Delete(settings[i]);
+                        }
+                    }
+
+                    // Installer configs
+                    if ( File.Exists(Path.Combine(Constants.AmethystConfigDirectory, "UninstallList.json")) ) {
+                        File.Delete(Path.Combine(Constants.AmethystConfigDirectory, "UninstallList.json"));
+                    }
+
+                    // Logs
+                    string[] logs = Directory.GetFiles(Path.Combine(Constants.AmethystConfigDirectory, "logs"), "*.log", SearchOption.TopDirectoryOnly);
+
+                    for ( int i = 0; i < logs.Length; i++ ) {
+                        if ( File.Exists(logs[i]) && logs[i] != Logger.LogFilePath ) {
+                            File.Delete(logs[i]);
+                        }
+                    }
+
+                    // We would remove the logs and ame dir but because of the log file we're currently writing to, we can't!
+                    /*
+                    if (Directory.GetFiles(Path.Combine(Constants.AmethystConfigDirectory, "logs"), "*", SearchOption.AllDirectories).Length == 0) {
+                        Directory.Delete(Path.Combine(Constants.AmethystConfigDirectory, "logs"));
+                    }
+
+                    if (Directory.GetFiles(Path.Combine(Constants.AmethystConfigDirectory), "*", SearchOption.AllDirectories).Length == 0) {
+                        Directory.Delete(Path.Combine(Constants.AmethystConfigDirectory));
+                    }
+                    */
+                }
 
             }
 
@@ -234,7 +271,7 @@ namespace amethyst_installer_gui {
             if ( File.Exists(uninstallListPath) ) {
                 try {
                     uninstallListText = File.ReadAllText(uninstallListPath);
-                    uninstallList = JsonConvert.DeserializeObject<UninstallListJSON>(uninstallListPath);
+                    uninstallList = JsonConvert.DeserializeObject<UninstallListJSON>(uninstallListText);
                 } catch {
                     uninstallListText = Util.ExtractResourceAsString("UninstallList.json");
                 }
@@ -244,7 +281,7 @@ namespace amethyst_installer_gui {
                 uninstallListText = Util.ExtractResourceAsString("UninstallList.json");
             }
             if ( uninstallList == null ) {
-                uninstallList = JsonConvert.DeserializeObject<UninstallListJSON>(uninstallListPath);
+                uninstallList = JsonConvert.DeserializeObject<UninstallListJSON>(uninstallListText);
             }
 
             return uninstallList;
