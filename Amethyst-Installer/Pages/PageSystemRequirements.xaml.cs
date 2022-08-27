@@ -21,6 +21,9 @@ namespace amethyst_installer_gui.Pages {
     /// </summary>
     public partial class PageSystemRequirements : UserControl, IInstallerPage {
 
+        public static long RequiredStorage = 0;
+        public static long FreeDriveSpace = 0;
+
         bool canContinue = true;
 
         public PageSystemRequirements() {
@@ -37,15 +40,11 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnSelected() {
 
-            // Compute install requirements
-            canContinue = InstallerStateManager.CanInstall;
-
             // STORAGE CHECK
             DisplayStorage();
 
             // USB CONTROLLERS
             DisplayUSBControllers();
-
 
             // VR SYSTEM
             DisplayVRSystem();
@@ -55,13 +54,25 @@ namespace amethyst_installer_gui.Pages {
 
             // PLAYSPACE SIZE
             DisplayPlayspaceSize();
+
+            // Compute install requirements
+            canContinue = InstallerStateManager.CanInstall;
+            if ( !canContinue ) {
+                SoundPlayer.PlaySound(SoundEffect.Error);
+            }
         }
 
         private void DisplayStorage() {
 
             // TODO: Check storage
-            diskSpaceDescription.Text = Localisation.SystemRequirement_Description_Storage; // TODO: String format
-            diskSpace.State = Controls.TaskState.Question;
+            diskSpaceDescription.Text = string.Format(Localisation.SystemRequirement_Description_Storage, Util.SizeSuffix(RequiredStorage)); // TODO: String format
+            diskSpace.State = Controls.TaskState.Checkmark;
+
+            // If less than 2GB free on drive
+            if ( ( FreeDriveSpace < ( 1024L * 1024L * 1024L * 2L ) ) ) {
+                InstallerStateManager.CanInstall = false;
+                diskSpace.State = Controls.TaskState.Error;
+            }
         }
 
         private void DisplayUSBControllers() {
@@ -113,6 +124,14 @@ namespace amethyst_installer_gui.Pages {
             vrSystemFootnoteHyperlink.RequestNavigate += Hyperlink_RequestNavigate;
             vrSystemFootnote.Inlines.Add(vrSystemFootnoteHyperlink);
             vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringLastPart);
+
+            if ( OpenVRUtil.HmdType == VRHmdType.Quest ||
+                OpenVRUtil.HmdType == VRHmdType.Quest2 ||
+                OpenVRUtil.HmdType == VRHmdType.PicoNeo ||
+                OpenVRUtil.HmdType == VRHmdType.PicoNeo2 ||
+                OpenVRUtil.HmdType == VRHmdType.PicoNeo3 ) {
+                vrSystemFootnote.Visibility = Visibility.Visible;
+            }
         }
 
         private void DisplayCompatibleDevices() {

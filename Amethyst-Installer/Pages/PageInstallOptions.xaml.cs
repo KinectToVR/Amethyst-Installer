@@ -106,6 +106,8 @@ namespace amethyst_installer_gui.Pages {
 
             installOptionsContainer.Children.Clear();
             installableItemControls.Clear();
+
+            PageSystemRequirements.RequiredStorage = m_totalDownloadSize + m_totalInstallSize;
         }
 
         public void OnSelected() {

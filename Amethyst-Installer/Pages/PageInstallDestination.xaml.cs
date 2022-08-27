@@ -46,6 +46,7 @@ namespace amethyst_installer_gui.Pages {
                 CheckPath();
                 var finalPath = Path.GetFullPath(pathTextbox.Text);
                 DirectoryInfo dirInfo = new DirectoryInfo(finalPath);
+                PageSystemRequirements.FreeDriveSpace = ( ( DriveInfo ) currentlySelectedDriveControl.Tag ).AvailableFreeSpace;
                 // Advance to next page
                 MainWindow.Instance.SetPage(InstallerState.SystemRequirements);
                 SoundPlayer.PlaySound(SoundEffect.MoveNext);
@@ -53,7 +54,7 @@ namespace amethyst_installer_gui.Pages {
                 InstallerStateManager.CreateStartMenuEntry = startMenuCheckbox.IsChecked.Value;
                 InstallerStateManager.CreateDesktopShortcut = desktopShortcutCheckbox.IsChecked.Value;
             }
-            catch (System.IO.IOException) {
+            catch ( IOException ) {
                 // If we reach here the directory is invalid
                 SoundPlayer.PlaySound(SoundEffect.Focus);
                 Util.ShowMessageBox(Localisation.InstallDestination_InvalidPathDescription, Localisation.InstallDestination_InvalidPathTitle, MessageBoxButton.OK);

@@ -51,7 +51,7 @@ namespace amethyst_installer_gui.Installer {
             DetectCloudPc();
             DetectLaptop();
 
-            CanInstall = !IsCloudPC && SteamVRInstalled && !IsWindowsAncient;
+            CanInstall = !IsCloudPC && SteamVRInstalled && !IsWindowsAncient && OpenVRUtil.HmdType != VRHmdType.Phone;
         }
 
         private static void CheckSteamVR() {
@@ -68,13 +68,13 @@ namespace amethyst_installer_gui.Installer {
 
         private static void CheckAmethyst() {
 
-            // TODO: Check for Amethyst
+            // @TODO: Check for Amethyst
         }
         
 
         private static void CheckK2EX() {
 
-            // Try locating K2EX
+            // @TODO: Try locating K2EX
             K2EXPath = K2EXUtil.LocateK2EX();
             K2EXDetected = K2EXPath.Length > 0 && Directory.Exists(K2EXPath);
         }
@@ -93,7 +93,7 @@ namespace amethyst_installer_gui.Installer {
         }
 
         private static void DetectUsbControllers() {
-            // TODO: USB controller shit
+            // @TODO: USB controller shit
 
             // Get USB Controller info
             var deviceTree = new DeviceTree();
