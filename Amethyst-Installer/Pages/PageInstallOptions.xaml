@@ -6,75 +6,90 @@
              xmlns:global="clr-namespace:amethyst_installer_gui"
              xmlns:local="clr-namespace:amethyst_installer_gui.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="328" d:DesignWidth="508">
+             d:DesignHeight="414" d:DesignWidth="508">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" Background="{StaticResource BrushBackgroundAlt}" SnapsToDevicePixels="True" CornerRadius="4" x:Name="installOptionsListContainerRoot">
-            <Border.Effect>
-                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" BlurRadius="4" Opacity="0.3" />
-            </Border.Effect>
-            <ScrollViewer x:Name="installableScroller" Focusable="false" HorizontalScrollBarVisibility="Hidden" Padding="6,8,0,8">
-                <StackPanel x:Name="installOptionsContainer" Width="{Binding ElementName=installableScroller, Path=ViewportWidth}" Margin="0,0,0,-8">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
+            <Border Grid.Column="0" Background="{StaticResource BrushBackgroundAlt}" SnapsToDevicePixels="True" CornerRadius="4" x:Name="installOptionsListContainerRoot">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" BlurRadius="4" Opacity="0.3" />
+                </Border.Effect>
+                <ScrollViewer x:Name="installableScroller" Focusable="false" HorizontalScrollBarVisibility="Hidden" Padding="6,8,0,8">
+                    <StackPanel x:Name="installOptionsContainer" Width="{Binding ElementName=installableScroller, Path=ViewportWidth}" Margin="0,0,0,-8">
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" x:Name="fullTitle" FontSize="16" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="#FFFFFFFF">Kinect for Windows SDK v2.0_1409</TextBlock>
+                <ScrollViewer Grid.Row="1" Margin="0,16" FocusVisualStyle="{x:Null}">
+                    <TextBlock x:Name="fullDescription" FontSize="12" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="{DynamicResource BrushForegroundAlt}">big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus.</TextBlock>
+                </ScrollViewer>
+                <StackPanel Grid.Row="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left">
+                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_DownloadSize}" />
+                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_TotalDownloadSize}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right">
+                            <Label x:Name="downloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>
+                            <Label x:Name="totalDownloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>
+                        </StackPanel>
+                        <Rectangle Fill="{DynamicResource BrushLineSeparator}" Grid.Row="1" Grid.ColumnSpan="2" Height="1" Margin="0,4"/>
+                    </Grid>
                 </StackPanel>
-            </ScrollViewer>
-        </Border>
+                <StackPanel Grid.Row="3">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_InstallSize}" />
+                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_TotalInstallSize}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                            <Label x:Name="installSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">420 TeraShits</Label>
+                            <Label x:Name="totalInstallSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">420 TeraShits</Label>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
 
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" x:Name="fullTitle" FontSize="16" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="#FFFFFFFF">Kinect for Windows SDK v2.0_1409</TextBlock>
-            <ScrollViewer Grid.Row="1" Margin="0,16" FocusVisualStyle="{x:Null}">
-                <TextBlock x:Name="fullDescription" FontSize="12" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="{DynamicResource BrushForegroundAlt}">big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus. big big chungus, big chungus, big chungus.</TextBlock>
-            </ScrollViewer>
-            <StackPanel Grid.Row="2">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left">
-                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_DownloadSize}" />
-                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_TotalDownloadSize}" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right">
-                        <Label x:Name="downloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>
-                        <Label x:Name="totalDownloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>
-                    </StackPanel>
-                    <Rectangle Fill="{DynamicResource BrushLineSeparator}" Grid.Row="1" Grid.ColumnSpan="2" Height="1" Margin="0,4"/>
-                </Grid>
-            </StackPanel>
-            <StackPanel Grid.Row="3">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" HorizontalAlignment="Left">
-                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_InstallSize}" />
-                        <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_TotalInstallSize}" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                        <Label x:Name="installSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">420 TeraShits</Label>
-                        <Label x:Name="totalInstallSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">420 TeraShits</Label>
-                    </StackPanel>
-                </Grid>
-            </StackPanel>
         </Grid>
-
+        <Grid Grid.Row="1" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+        </Grid>
     </Grid>
 </UserControl>

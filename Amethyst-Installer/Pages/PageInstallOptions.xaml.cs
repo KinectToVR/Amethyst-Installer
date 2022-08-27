@@ -51,7 +51,7 @@ namespace amethyst_installer_gui.Pages {
             return Localisation.Page_InstallOptions_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
+        private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             // Advance to next page
             SoundPlayer.PlaySound(SoundEffect.MoveNext);
             MainWindow.Instance.SetPage(InstallerState.InstallDestination);
@@ -239,9 +239,10 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 
             MainWindow.Instance.SetSidebarHidden(false);
-            MainWindow.Instance.SetButtonsHidden(false);
+            MainWindow.Instance.SetButtonsHidden(true);
         }
 
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) { }
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
     }
