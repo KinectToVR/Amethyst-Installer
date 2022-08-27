@@ -97,10 +97,6 @@
                             <Button x:Name="ActionButtonSecondary" Content="{x:Static local:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,2" Click="ActionButtonSecondary_Click" Visibility="Hidden" TabIndex="1"/>
                             <Button x:Name="ActionButtonPrimary" Content="{x:Static local:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="ActionButtonPrimary_Click" TabIndex="2" IsDefault="True"/>
                         </StackPanel>
-                        <StackPanel Name="privacyPolicyContainer" Grid.Column="1" Margin="0,0,160,28" Orientation="Vertical" VerticalAlignment="Center" >
-                            <CheckBox Content="{x:Static local:Localisation.Welcome_OptIn}" Margin="0,0,0,4" IsChecked="True" Unchecked="CheckBox_Checked" Checked="CheckBox_Checked"/>
-                            <TextBlock Name="readPrivacyPolicy" LineStackingStrategy="BlockLineHeight">Privacy policy string generated during runtime</TextBlock>
-                        </StackPanel>
                     </Grid>
                 </Grid>
             </StackPanel>

@@ -55,8 +55,6 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
-
-            MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Collapsed;
         }
 
         public void OnSelected() {

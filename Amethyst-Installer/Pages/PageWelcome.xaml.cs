@@ -32,25 +32,18 @@ namespace amethyst_installer_gui.Pages {
             return string.Empty;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
-            // Advance to next page
-            MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
-            MainWindow.Instance.SetPage(InstallerState.EULA, false);
-            SoundPlayer.PlaySound(SoundEffect.MoveNext);
-        }
-
         // Force only the first button to have focus
         public void OnFocus() {
-            MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 
             MainWindow.Instance.SetSidebarHidden(false);
-            MainWindow.Instance.SetButtonsHidden(false);
+            MainWindow.Instance.SetButtonsHidden(true);
         }
 
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) { }
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
@@ -61,17 +54,17 @@ namespace amethyst_installer_gui.Pages {
             string firstPart = readPrivacyPolicyRaw.Substring(0, readPrivacyPolicyRaw.IndexOf("%s%"));
             string secondPart = readPrivacyPolicyRaw.Substring(readPrivacyPolicyRaw.IndexOf("%s%") + 3);
 
-            MainWindow.Instance.readPrivacyPolicy.Inlines.Clear();
-            MainWindow.Instance.readPrivacyPolicy.Inlines.Add(firstPart);
+            readPrivacyPolicy.Inlines.Clear();
+            readPrivacyPolicy.Inlines.Add(firstPart);
             Hyperlink privacyPolicyLink = new Hyperlink()
             {
                 NavigateUri = new Uri($"https://k2vr.tech/{LocaleManager.CurrentLocale}/privacy"),
             };
             privacyPolicyLink.Inlines.Add(Localisation.Welcome_PrivacyPolicy);
             privacyPolicyLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;
-            MainWindow.Instance.readPrivacyPolicy.Inlines.Add(privacyPolicyLink);
+            readPrivacyPolicy.Inlines.Add(privacyPolicyLink);
             if ( secondPart.Length > 0 )
-                MainWindow.Instance.readPrivacyPolicy.Inlines.Add(secondPart);
+                readPrivacyPolicy.Inlines.Add(secondPart);
 
             // Splash screen
             GenerateSplashText();
@@ -125,6 +118,17 @@ namespace amethyst_installer_gui.Pages {
                 splashText.Text = splashString;
             else
                 splashText.Text = $"\"{splashString}\"";
+        }
+
+        private void proceedButton_Click(object sender, RoutedEventArgs e) {
+            Util.HandleKeyboardFocus(e);
+            // Advance to next page
+            MainWindow.Instance.SetPage(InstallerState.EULA, false);
+            SoundPlayer.PlaySound(SoundEffect.MoveNext);
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
         }
     }
 }

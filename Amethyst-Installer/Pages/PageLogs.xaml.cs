@@ -31,7 +31,6 @@ namespace amethyst_installer_gui.Pages {
 
         // Force only the first button to have focus
         public void OnFocus() {
-            MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
@@ -79,7 +78,6 @@ namespace amethyst_installer_gui.Pages {
 
         // Since this page can be opened at any time we can't trust this function
         public void OnSelected() {
-            MainWindow.Instance.privacyPolicyContainer.Visibility = Visibility.Hidden;
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) { }

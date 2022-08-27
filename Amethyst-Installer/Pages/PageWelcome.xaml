@@ -3,102 +3,125 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:global="clr-namespace:amethyst_installer_gui"
              xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="328" d:DesignWidth="508">
-    <Grid ClipToBounds="True" MouseUp="splash_MouseUp" MouseWheel="splash_MouseWheel" >
-        <Border CornerRadius="8" x:Name="rootContainer">
-            <Border.Background>
-                <ImageBrush Stretch="Fill" ImageSource="/Resources/welcome-splash-bg.png"/>
-            </Border.Background>
-        </Border>
-        <Image x:Name="splashWordmark" Source="/Resources/welcome-amethyst-wordmark.png" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5" Opacity="0">
-            <Image.RenderTransform>
-                <TranslateTransform X="0"/>
-            </Image.RenderTransform>
-            <Image.Triggers>
-                <EventTrigger RoutedEvent="Image.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.X)" From="-112" To="-112" Duration="0:0:0"/>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0" Duration="0:0:0"/>
-                            
-                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.X)" From="-112"
+             d:DesignHeight="414" d:DesignWidth="508">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid ClipToBounds="True" MouseUp="splash_MouseUp" MouseWheel="splash_MouseWheel" Grid.Row="0">
+            <Border CornerRadius="8" x:Name="rootContainer">
+                <Border.Background>
+                    <ImageBrush Stretch="Fill" ImageSource="/Resources/welcome-splash-bg.png"/>
+                </Border.Background>
+            </Border>
+            <Image x:Name="splashWordmark" Source="/Resources/welcome-amethyst-wordmark.png" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5" Opacity="0">
+                <Image.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Image.RenderTransform>
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Image.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.X)" From="-112" To="-112" Duration="0:0:0"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0" Duration="0:0:0"/>
+
+                                <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.X)" From="-112"
                             To="0" Duration="0:0:0.75" BeginTime="0:0:0.15">
 
-                                <DoubleAnimation.EasingFunction>
-                                    <PowerEase EasingMode="EaseOut" Power="3" />
-                                </DoubleAnimation.EasingFunction>
+                                    <DoubleAnimation.EasingFunction>
+                                        <PowerEase EasingMode="EaseOut" Power="3" />
+                                    </DoubleAnimation.EasingFunction>
 
-                            </DoubleAnimation>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1" BeginTime="0:0:0.15">
-                                <DoubleAnimation.EasingFunction>
-                                    <PowerEase EasingMode="EaseOut" Power="1" />
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Image.Triggers>
-        </Image>
-        <Image x:Name="splashIcon" Source="/Resources/welcome-amethyst-icon.png" Opacity="0">
-            <Image.RenderTransform>
-                <TranslateTransform X="0"/>
-            </Image.RenderTransform>
-            <Image.Triggers>
-                <EventTrigger RoutedEvent="Image.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.X)" From="-112"
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1" BeginTime="0:0:0.15">
+                                    <DoubleAnimation.EasingFunction>
+                                        <PowerEase EasingMode="EaseOut" Power="1" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+            <Image x:Name="splashIcon" Source="/Resources/welcome-amethyst-icon.png" Opacity="0">
+                <Image.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Image.RenderTransform>
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Image.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.X)" From="-112"
                             To="0" Duration="0:0:0.75">
 
-                                <DoubleAnimation.EasingFunction>
-                                    <PowerEase EasingMode="EaseOut" Power="3" />
-                                </DoubleAnimation.EasingFunction>
+                                    <DoubleAnimation.EasingFunction>
+                                        <PowerEase EasingMode="EaseOut" Power="3" />
+                                    </DoubleAnimation.EasingFunction>
 
-                            </DoubleAnimation>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1">
-                                <DoubleAnimation.EasingFunction>
-                                    <PowerEase EasingMode="EaseOut" Power="1" />
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Image.Triggers>
-        </Image>
-        <TextBlock x:Name="splashText" TextWrapping="WrapWithOverflow" Foreground="#FFFFFF" Text="Lorem ipsum dolor sit amet among us!" Margin="27,204,194,8" FontSize="16"
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1">
+                                    <DoubleAnimation.EasingFunction>
+                                        <PowerEase EasingMode="EaseOut" Power="1" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+            <TextBlock x:Name="splashText" TextWrapping="WrapWithOverflow" Foreground="#FFFFFF" Text="Lorem ipsum dolor sit amet among us!" Margin="27,204,194,8" FontSize="16"
                    Opacity="0" FontStyle="Italic" Height="Auto">
 
-            <TextBlock.RenderTransform>
-                <TranslateTransform Y="0"/>
-            </TextBlock.RenderTransform>
+                <TextBlock.RenderTransform>
+                    <TranslateTransform Y="0"/>
+                </TextBlock.RenderTransform>
 
-            <TextBlock.Triggers>
-                <EventTrigger RoutedEvent="TextBlock.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="(TextBlock.RenderTransform).(TranslateTransform.Y)" From="0" To="0" Duration="0:0:0" BeginTime="0:0:0" />
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0" Duration="0:0:0" BeginTime="0:0:0" />
-                            
-                            <DoubleAnimation Storyboard.TargetProperty="(TextBlock.RenderTransform).(TranslateTransform.Y)" From="-50"
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="TextBlock.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(TextBlock.RenderTransform).(TranslateTransform.Y)" From="0" To="0" Duration="0:0:0" BeginTime="0:0:0" />
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0" Duration="0:0:0" BeginTime="0:0:0" />
+
+                                <DoubleAnimation Storyboard.TargetProperty="(TextBlock.RenderTransform).(TranslateTransform.Y)" From="-50"
                             To="0" Duration="0:0:0.75" BeginTime="0:0:0.2">
 
-                                <DoubleAnimation.EasingFunction>
-                                    <PowerEase EasingMode="EaseOut" Power="3" />
-                                </DoubleAnimation.EasingFunction>
+                                    <DoubleAnimation.EasingFunction>
+                                        <PowerEase EasingMode="EaseOut" Power="3" />
+                                    </DoubleAnimation.EasingFunction>
 
-                            </DoubleAnimation>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"
                                              BeginTime="0:0:0.2">
-                                <DoubleAnimation.EasingFunction>
-                                    <PowerEase EasingMode="EaseOut" Power="1" />
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </TextBlock.Triggers>
-        </TextBlock>
+                                    <DoubleAnimation.EasingFunction>
+                                        <PowerEase EasingMode="EaseOut" Power="1" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,15,0,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Name="privacyPolicyContainer" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center" Visibility="Collapsed">
+                <CheckBox Content="{x:Static global:Localisation.Welcome_OptIn}" Margin="0,0,0,4" IsChecked="True" Checked="CheckBox_Checked" />
+                <TextBlock Foreground="White" Name="readPrivacyPolicy" LineStackingStrategy="BlockLineHeight">Privacy policy string generated during runtime</TextBlock>
+            </StackPanel>
+
+            <Button Grid.Column="1" x:Name="proceedButton" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="proceedButton_Click"/>
+        </Grid>
     </Grid>
 </UserControl>
