@@ -35,18 +35,6 @@ namespace amethyst_installer_gui.Pages {
             return Localisation.Page_Sysreq_Title;
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e) {
-
-            if ( canContinue ) {
-                // Advance to next page
-                MainWindow.Instance.SetPage(InstallerState.Downloading);
-                SoundPlayer.PlaySound(SoundEffect.MoveNext);
-            } else {
-                // TODO: Ella pls tell me how to handle the UX part of this I'm not sure if straight up exiting is a good idea
-                MainWindow.Instance.Close();
-            }
-        }
-
         public void OnSelected() {
 
             // Compute install requirements
@@ -148,7 +136,7 @@ namespace amethyst_installer_gui.Pages {
             }
 
             if ( compatibilityString.Length == 0 )
-                compatibilityString.Append("Amogus (OK)");
+                compatibilityString.Append("Not implemented yet.");
 
             compatDevicesDescription.Text = compatibilityString.ToString();
             // compatDevices.State = Controls.TaskState.Question;
@@ -198,7 +186,6 @@ namespace amethyst_installer_gui.Pages {
         private string GetVRHeadsetString() {
 
             string vrConnectionType = OpenVRUtil.ConnectionType.ToString();
-            vrConnectionType = OpenVRUtil.ConnectionType.ToString();
 
             switch ( OpenVRUtil.ConnectionType ) {
                 case VRConnectionType.ALVR:
@@ -291,15 +278,29 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 
             MainWindow.Instance.SetSidebarHidden(false);
-            MainWindow.Instance.SetButtonsHidden(false);
+            MainWindow.Instance.SetButtonsHidden(true);
         }
 
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) {}
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Process.Start(e.Uri.ToString());
+        }
+
+        private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
+            Util.HandleKeyboardFocus(e);
+
+            if ( canContinue ) {
+                // Advance to next page
+                MainWindow.Instance.SetPage(InstallerState.Downloading);
+                SoundPlayer.PlaySound(SoundEffect.MoveNext);
+            } else {
+                // TODO: Ella pls tell me how to handle the UX part of this I'm not sure if straight up exiting is a good idea
+                MainWindow.Instance.Close();
+            }
         }
     }
 }
