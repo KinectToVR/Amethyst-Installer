@@ -93,7 +93,14 @@ namespace amethyst_installer_gui.Commands {
 
             */
 
-            int maxCommandLength = 0;
+            int minPaddingBetweenCommandAndDescription = 6;
+            int windowWidth = 63;
+            int borderPaddingX = 2;
+            int borderPaddingY = 1;
+
+            var commandList = new List<(string commandStr, string description)>();
+            // @TODO: Get all types implementing ICommand
+
 
             // @TODO: Implement fancy help
 
