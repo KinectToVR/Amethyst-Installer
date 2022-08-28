@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -336,6 +337,36 @@ namespace amethyst_installer_gui {
                     taskkillProc.WaitForExit();
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns whether the current process is elevated or not
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsCurrentProcessElevated() {
+            WindowsIdentity currentIdentity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal currentGroup = new WindowsPrincipal(currentIdentity);
+            return currentGroup.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        /// <summary>
+        /// Elevates the current process by re-launching it, passing all parameters to the new process, with a run as verb, just in case because
+        /// people somehow got around this on k2vr-installer-gui
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ElevateSelf() {
+
+            ProcessStartInfo procInfo = new ProcessStartInfo(){
+                
+                // Pass same args
+                FileName            = Process.GetCurrentProcess().MainModule.FileName,
+                Arguments           = string.Join(" ", Environment.GetCommandLineArgs()),
+                WorkingDirectory    = Directory.GetCurrentDirectory(),
+
+                Verb                = "runas" // Force UAC prompt
+            };
+
+            Process.Start(procInfo);
         }
     }
 }

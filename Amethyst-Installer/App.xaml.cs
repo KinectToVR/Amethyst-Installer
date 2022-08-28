@@ -29,6 +29,15 @@ namespace amethyst_installer_gui {
             Console.OutputEncoding = Encoding.Unicode;
             Kernel.EnableAnsiCmd();
 
+            // Ensure that we are running as admin, in the event that the user somehow started the app without admin
+            if ( !Util.IsCurrentProcessElevated() ) {
+                Console.WriteLine("Currently executing as a standard user...");
+                Console.WriteLine("Restarting installer as admin!");
+                Util.ElevateSelf();
+                Util.Quit(ExitCodes.OK);
+                return;
+            }
+
             CommandParser parser = new CommandParser();
             if ( !parser.ParseCommands(e.Args) ) {
 

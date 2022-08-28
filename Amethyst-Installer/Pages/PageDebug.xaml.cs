@@ -157,5 +157,10 @@ namespace amethyst_installer_gui.Pages {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ForceKillProcess(killProcTreeBox.Text);
         }
+
+        private void isElevated_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            Util.ShowMessageBox($"Is Elevated: {Util.IsCurrentProcessElevated()}", "Is process elevated");
+        }
     }
 }

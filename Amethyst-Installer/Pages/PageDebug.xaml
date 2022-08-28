@@ -25,6 +25,7 @@
                 <Button x:Name="forceNoVrpath" Click="forceNoVrpath_Click">Disable vrpathreg</Button>
                 <Button x:Name="checkNotPowered" Click="checkNotPowered_Click" Margin="5,0,0,0">Check E_NP</Button>
                 <Button x:Name="fixNotPowered" Click="fixNotPowered_Click" Margin="5,0,0,0">Fix E_NP</Button>
+                <Button x:Name="isElevated" Click="isElevated_Click" Margin="5,0,0,0">Is Elevated</Button>
             </StackPanel>
             <StackPanel x:Name="driverSearchContainer" Orientation="Horizontal" Margin="0,10,0,0">
                 <Grid Width="{Binding ElementName=driverSearchContainer, Path=ActualWidth}">
