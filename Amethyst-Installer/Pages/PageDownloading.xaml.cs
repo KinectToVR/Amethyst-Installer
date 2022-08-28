@@ -144,6 +144,7 @@ namespace amethyst_installer_gui.Pages {
             m_currentProgressControl.IsPending = false;
             m_currentProgressControl.DownloadFailed = false;
             m_currentProgressControl.IsErrorCritical = moduleToInstall.IsCritical;
+            m_currentProgressControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Download_FailureCritical : Localisation.Download_Failure;
             m_currentProgressControl.Completed = false;
             m_currentProgressControl.DownloadedBytes = 0;
             m_currentProgressControl.Tag = index;
@@ -159,9 +160,15 @@ namespace amethyst_installer_gui.Pages {
             m_transferSpeed = 0;
 
             try {
-                Task.Run(() =>
-                    Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, OnDownloadComplete, m_downloadIndex).GetAwaiter().GetResult()
-                );
+                Task.Run(() => {
+                    try {
+                        Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, OnDownloadComplete, m_downloadIndex).GetAwaiter().GetResult();
+                    } catch (Exception e) {
+                        Logger.Fatal($"Failed to download file {moduleToInstall.Remote.Filename}!");
+                        Logger.Fatal(Util.FormatException(e));
+                        downloadContent.Dispatcher.Invoke(() => OnDownloadFailed(index));
+                    }
+                });
             } catch ( OperationCanceledException ) {
                 OnDownloadFailed(index);
             } catch ( TimeoutException ) {
@@ -276,6 +283,8 @@ namespace amethyst_installer_gui.Pages {
 
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
             MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
+
+            m_timer.Stop();
         }
 
         // Force only the first button to have focus
