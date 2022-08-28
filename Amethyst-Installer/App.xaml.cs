@@ -34,7 +34,7 @@ namespace amethyst_installer_gui {
                 Console.WriteLine("Currently executing as a standard user...");
                 Console.WriteLine("Restarting installer as admin!");
                 Util.ElevateSelf();
-                Util.Quit(ExitCodes.OK);
+                Util.Quit(ExitCodes.RequiredAdmin);
                 return;
             }
 

@@ -26,6 +26,10 @@
         /// The user encountered an unknown exception while installing a module
         /// </summary>
         ExceptionInstall            = -4,
+        /// <summary>
+        /// The installer was required to elevate to admin. A new, different process is now executing with administrative privileges.
+        /// </summary>
+        RequiredAdmin               = 3,
 
     }
 }
