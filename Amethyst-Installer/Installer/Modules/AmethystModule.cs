@@ -33,6 +33,7 @@ if upgrade no
         public override bool Install(string sourceFile, string path, ref InstallModuleProgress control, out TaskState state) {
 
             // TODO: Kill Amethyst, SteamVR
+            TryKillingConflictingProcesses();
 
             // TODO: Check for previous install of Amethyst, and if present, soft-uninstall (soft means only get rid of the install itself, don't touch configs or SteamVR)
 
@@ -296,6 +297,13 @@ if upgrade no
             }
 
             return true;
+        }
+
+        private void TryKillingConflictingProcesses() {
+            Util.ForceKillProcess("vrmonitor");
+            Util.ForceKillProcess("vrserver");
+            Util.ForceKillProcess("Amethyst");
+            Util.ForceKillProcess("K2CrashHandler");
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -315,6 +316,26 @@ namespace amethyst_installer_gui {
         public static string GetProcessorName() {
             var key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DESCRIPTION\System\CentralProcessor\0\");
             return key?.GetValue("ProcessorNameString").ToString() ?? "Unknown CPU";
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ForceKillProcess(string processName) {
+            var processes = Process.GetProcessesByName(processName);
+            if ( processes.Length > 0 ) {
+                // kill each process via taskkill.exe
+                foreach ( var process in processes ) {
+
+                    // yes we use taskkill, I don't want to deal with all the bullshit of "bad PID" using the P/Invoke approach
+                    // besides taskkill is garuanteed to be on the current install anyway
+                    var taskkillProc = Process.Start(new ProcessStartInfo() {
+                        FileName = "taskkill.exe",
+                        Arguments = $"/F /T /PID {process.Id}",
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true
+                    });
+                    taskkillProc.WaitForExit();
+                }
+            }
         }
     }
 }
