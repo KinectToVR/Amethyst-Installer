@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Installer.Modules {
     public class AmethystModule : ModuleBase {
-        public AmethystModule() {}
+        public AmethystModule() { }
 
         /*
          
@@ -36,18 +36,18 @@ if upgrade no
 
             // TODO: Check for previous install of Amethyst, and if present, soft-uninstall (soft means only get rid of the install itself, don't touch configs or SteamVR)
 
-            if (ExtractAmethyst(sourceFile, path, ref control) ) {
+            if ( ExtractAmethyst(sourceFile, path, ref control) ) {
 
-                bool overallSuccess = HandleDrivers(path, ref control);
-                overallSuccess = overallSuccess && CreateRegistryEntry(path, ref control);
-                overallSuccess = overallSuccess && CreateUninstallEntry(path, ref control);
-                overallSuccess = overallSuccess && AssignTrackerRoles(ref control);
-                overallSuccess = overallSuccess && CreateShortcuts(path, ref control);
+                bool overallSuccess =                   HandleDrivers(path, ref control);
+                overallSuccess      = overallSuccess && CreateRegistryEntry(path, ref control);
+                bool failureMinor   =                   CreateUninstallEntry(path, ref control);
+                failureMinor        = failureMinor   && AssignTrackerRoles(ref control);
+                overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
 
                 // TODO: If this is an upgrade change the message to a different one
                 Logger.Info(LogStrings.InstalledAmethystSuccess);
                 control.LogInfo(LogStrings.InstalledAmethystSuccess);
-                state = TaskState.Checkmark;
+                state = failureMinor ? TaskState.Warning : TaskState.Checkmark;
                 return overallSuccess;
             }
 
@@ -61,10 +61,10 @@ if upgrade no
                 Logger.Info(string.Format(LogStrings.ExtractingAmethyst, target));
                 control.LogInfo(string.Format(LogStrings.ExtractingAmethyst, target));
 
-                if (InstallUtil.IsAmethystInstalledInDirectory(target)) {
+                if ( InstallUtil.IsAmethystInstalledInDirectory(target) ) {
                     UninstallUtil.UninstallAmethyst(false, target);
                 }
-                
+
                 string ameZip = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, zip));
                 if ( File.Exists(ameZip) ) {
 
@@ -137,31 +137,33 @@ if upgrade no
 
         private bool AssignTrackerRoles(ref InstallModuleProgress control) {
 
+            bool success = true;
             {
                 Logger.Info(LogStrings.AssigningTrackerRoles);
                 control.LogInfo(LogStrings.AssigningTrackerRoles);
 
                 try {
                     // Assign all Amethyst tracker roles
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-00WAIST0", TrackerRole.TrackerRole_Waist);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-00WAIST0",  TrackerRole.TrackerRole_Waist);
                     OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-00WAIST00", TrackerRole.TrackerRole_Waist);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-CHEST", TrackerRole.TrackerRole_Chest);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0ELBOW0", TrackerRole.TrackerRole_LeftElbow);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0FOOT00", TrackerRole.TrackerRole_LeftFoot);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0KNEE00", TrackerRole.TrackerRole_LeftKnee);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LELBOW", TrackerRole.TrackerRole_LeftElbow);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LFOOT", TrackerRole.TrackerRole_LeftFoot);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LKNEE", TrackerRole.TrackerRole_LeftKnee);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0ELBOW0", TrackerRole.TrackerRole_RightElbow);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0FOOT00", TrackerRole.TrackerRole_RightFoot);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0KNEE00", TrackerRole.TrackerRole_RightKnee);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RELBOW", TrackerRole.TrackerRole_RightElbow);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RFOOT", TrackerRole.TrackerRole_RightFoot);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RKNEE", TrackerRole.TrackerRole_RightKnee);
-                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-WAIST", TrackerRole.TrackerRole_Waist);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-CHEST",     TrackerRole.TrackerRole_Chest);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0ELBOW0",  TrackerRole.TrackerRole_LeftElbow);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0FOOT00",  TrackerRole.TrackerRole_LeftFoot);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-L0KNEE00",  TrackerRole.TrackerRole_LeftKnee);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LELBOW",    TrackerRole.TrackerRole_LeftElbow);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LFOOT",     TrackerRole.TrackerRole_LeftFoot);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-LKNEE",     TrackerRole.TrackerRole_LeftKnee);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0ELBOW0",  TrackerRole.TrackerRole_RightElbow);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0FOOT00",  TrackerRole.TrackerRole_RightFoot);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-R0KNEE00",  TrackerRole.TrackerRole_RightKnee);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RELBOW",    TrackerRole.TrackerRole_RightElbow);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RFOOT",     TrackerRole.TrackerRole_RightFoot);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-RKNEE",     TrackerRole.TrackerRole_RightKnee);
+                    OpenVRUtil.SetTrackerRole("/devices/amethyst/vr_tracker/AME-WAIST",     TrackerRole.TrackerRole_Waist);
                 } catch ( Exception e ) {
                     control.LogError($"{LogStrings.FailAssignTrackerRoles}! {LogStrings.ViewLogs}");
                     Logger.Fatal($"{LogStrings.FailAssignTrackerRoles}:\n{Util.FormatException(e)})");
+                    success = success && false;
                 }
             }
 
@@ -170,7 +172,7 @@ if upgrade no
                 control.LogInfo(LogStrings.RemovingConflictingTrackerRoles);
 
                 try {
-                    // Ancient Versions of KinectToVR
+                    // Ancient versions of KinectToVR
                     OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/0");
                     OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/1");
                     OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/2");
@@ -183,17 +185,18 @@ if upgrade no
                     OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T1");
                     OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T2");
 
-                    // In K2EX 0.9.1 we use custom roles
+                    // In K2EX 0.9.1 we use custom serial ids
                     OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_HIP");
                     OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_LFOOT");
                     OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_RFOOT");
                 } catch ( Exception e ) {
                     control.LogError($"{LogStrings.FailRemoveConflictingTrackerRoles}! {LogStrings.ViewLogs}");
                     Logger.Fatal($"{LogStrings.FailRemoveConflictingTrackerRoles}:\n{Util.FormatException(e)})");
+                    success = success && false;
                 }
             }
 
-            return true;
+            return success;
         }
 
         private bool CreateShortcuts(string path, ref InstallModuleProgress control) {
@@ -247,7 +250,7 @@ if upgrade no
             try {
                 // Try copying the installer from wherever the we are running from to the uninstall directory
                 string selfExecutable = Assembly.GetExecutingAssembly().Location;
-                Logger.Info("Installer at:: "+selfExecutable);
+                Logger.Info("Installer at:: " + selfExecutable);
                 File.Copy(selfExecutable, amethystInstallerExecutable, true);
 
                 // Also unblock the installer in AME-DIR\Amethyst-Installer.exe, we have no clue whether the user
@@ -259,7 +262,7 @@ if upgrade no
                 string uninstallListPath = Path.GetFullPath(Path.Combine(Constants.AmethystConfigDirectory, "UninstallList.json"));
                 Util.ExtractResourceToFile("UninstallList.json", uninstallListPath);
 
-            } catch (Exception e) {
+            } catch ( Exception e ) {
                 control.LogError($"{LogStrings.CreateUninstallExecutableFail}! {LogStrings.ViewLogs}");
                 Logger.Fatal($"{LogStrings.CreateUninstallExecutableFail}:\n{Util.FormatException(e)})");
                 return true;
@@ -287,7 +290,7 @@ if upgrade no
             try {
                 UninstallUtil.RegisterUninstallEntry(entry, "Amethyst");
                 return true;
-            } catch (Exception e) {
+            } catch ( Exception e ) {
                 control.LogError($"{LogStrings.CreateUninstallEntryFailed}! {LogStrings.ViewLogs}");
                 Logger.Fatal($"{LogStrings.CreateUninstallEntryFailed}:\n{Util.FormatException(e)})");
             }
