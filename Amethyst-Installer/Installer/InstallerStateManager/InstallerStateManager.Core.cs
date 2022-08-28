@@ -118,10 +118,14 @@ namespace amethyst_installer_gui.Installer {
                 Logger.Info("Fetched locale codes successfully!");
 
             } catch (Exception e) {
+                Logger.Fatal("Failed to fetch locale codes!");
                 Logger.Fatal(Util.FormatException(e));
+
+                // @TODO: Update this dynamically later once we have a few languages implemented in the docs
+                AmeDocsLocaleList = new string[] { "en", "es" };
             }
         }
 
-        // TODO: System to allow selecting modules to install / update, etc
+        // @TODO: System to allow selecting modules to install / update, etc
     }
 }
