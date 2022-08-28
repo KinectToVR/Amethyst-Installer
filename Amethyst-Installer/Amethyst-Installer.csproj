@@ -42,7 +42,9 @@
   <PropertyGroup>
     <StartupObject>amethyst_installer_gui.App</StartupObject>
   </PropertyGroup>
-  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
@@ -449,7 +451,6 @@
     <Compile Include="Installer\Installer.LogStrings.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.WMI.cs" />
     <None Include="packages.config" />
-    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
