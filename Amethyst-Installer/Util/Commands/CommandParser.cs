@@ -1,8 +1,9 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace amethyst_installer_gui.Commands {
     public class CommandParser {
 
         private ICommand[] m_commandList;
+        private Type[] m_types;
 
         /*
 
@@ -25,13 +27,23 @@ namespace amethyst_installer_gui.Commands {
 
          */
 
-        const int MAX_WIDTH = 64;
-
         public CommandParser() {
             // Init command list
-            m_commandList = new ICommand[] {
-                new CommandUninstall(),
-            };
+            try {
+                m_types = Assembly.GetExecutingAssembly().GetTypes();
+            } catch ( ReflectionTypeLoadException e ) {
+                m_types = e.Types.Where(t => t != null).ToArray();
+            }
+            m_types = m_types.Where(typeof(ICommand).IsAssignableFrom).ToArray();
+
+            // Init command list from above list
+            m_commandList = new ICommand[m_types.Length - 1]; // subtract 1 because the interface itself is to be excluded
+            for (int i = 0; i < m_types.Length; i++) {
+                // Can't implement the interface itself, skip it!
+                if ( m_types[i] == typeof(ICommand) )
+                    continue;
+                m_commandList[i] = (ICommand) Activator.CreateInstance(m_types[i]);
+            }
         }
 
         /// <summary>
@@ -66,47 +78,78 @@ namespace amethyst_installer_gui.Commands {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ShowHelpMessage() {
 
-            // @TODO: idk what sort of formatting we want sooooo this is a stub
-            // @TODO: Reflection to grab all commands and dynamically compute width and stuff etc
-
-            // ╭──────╮
-            // |      |
-            // ╘══════╛
-
-            /*
-
-            ╭─────────────────────────────────────────────────────────────╮
-            |                                                             |
-            |   AMETHYST INSTALLER                                        |
-            |                                                             |
-            |   --help, -h          Shows help                            |
-            |   --update -u         Attempts to update Amethyst           |
-            |   --uninstall -x      Attempts to uninstall Amethyst        |
-            |   --modify -m         Attempts to modify an existing        |
-            |                       Amethyst install                      |
-            |   --silent -s         Executes the installer silently       |
-            |   --install-dir       Sets the install directory,           |
-            |   --debug             Forces the installer to run in Debug  |
-            |                       mode                                  |
-            |                                                             |
-            ╘═════════════════════════════════════════════════════════════╛
-
-            */
-
+            var assemblyName = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title.ToUpperInvariant() + " - HELP";
             int minPaddingBetweenCommandAndDescription = 6;
-            int windowWidth = 63;
+            int windowWidth = Math.Max(63, assemblyName.Length);
             int borderPaddingX = 2;
             int borderPaddingY = 1;
 
             var commandList = new List<(string commandStr, string description)>();
-            // @TODO: Get all types implementing ICommand
 
+            // Border top
+            Console.Write("  ╭");
+            Console.Write(new string('─', windowWidth - 2));
+            Console.WriteLine('╮');
 
-            // @TODO: Implement fancy help
+            // Whitespace line
+            for ( int i = 0; i < borderPaddingY; i++ ) {
+                Console.Write("  |");
+                Console.Write(new string(' ', 2));
+                Console.Write(new string(' ', windowWidth - 4));
+                Console.WriteLine('|');
+            }
 
-            Console.WriteLine("help message will eventually be in place of this");
-            Console.WriteLine("\n--help\tShows this message");
-            Console.WriteLine("--uninstall\tStarts uninstall flow");
+            // Title line
+            Console.Write("  |");
+            Console.Write(new string(' ', 2));
+            Console.Write(assemblyName);
+            Console.Write(new string(' ', windowWidth - 4 - assemblyName.Length));
+            Console.WriteLine('|');
+
+            // Whitespace line
+            Console.Write("  |");
+            Console.Write(new string(' ', windowWidth - 2));
+            Console.WriteLine('|');
+
+            StringBuilder line = new StringBuilder();
+            int maxLength = 0;
+            // Get longest length of a command
+            foreach ( var command in m_commandList ) {
+                maxLength = Math.Max(maxLength, command.Command.Length + command.Aliases.Length * 4);
+            }
+            // Spit out commands
+            maxLength += minPaddingBetweenCommandAndDescription;
+            int whitespaceFirst;
+            foreach ( var command in m_commandList ) {
+                line.Clear();
+                line.Append("  |");
+                line.Append(new string(' ', borderPaddingX));
+                line.Append("--");
+                line.Append(command.Command);
+                foreach ( var alias in command.Aliases ) {
+                    line.Append(", -");
+                    line.Append(alias);
+                }
+                whitespaceFirst = Math.Max(minPaddingBetweenCommandAndDescription, maxLength - command.Command.Length - command.Aliases.Length * 4);
+                line.Append(new string(' ', whitespaceFirst));
+                line.Append(command.Description);
+                line.Append(new string(' ', windowWidth - borderPaddingX - 4 - whitespaceFirst - command.Command.Length - command.Aliases.Length * 4 - command.Description.Length));
+                line.Append("|");
+                Console.WriteLine(line.ToString());
+            }
+
+            // Whitespace line
+            for ( int i = 0; i < borderPaddingY; i++ ) {
+                Console.Write("  |");
+                Console.Write(new string(' ', 2));
+                Console.Write(new string(' ', windowWidth - 4));
+                Console.WriteLine('|');
+            }
+
+            // Bottom border
+            Console.Write("  ╘");
+            Console.Write(new string('═', windowWidth - 2));
+            Console.WriteLine('╛');
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -183,4 +226,16 @@ namespace amethyst_installer_gui.Commands {
             return stringBuffer.ToString().Trim();
         }
     }
+
+    // Stub for auto-gen
+    public class CommandHelp : ICommand {
+        public string Command { get => "help"; set { } }
+        public string Description { get => "Shows this command"; set { } }
+        public string[] Aliases { get => new string[] { "h" }; set { } }
+
+        public bool Execute(string parameters) {
+            return true;
+        }
+    }
+
 }
