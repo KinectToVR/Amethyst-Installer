@@ -11,8 +11,8 @@ namespace amethyst_installer_gui.Commands {
             
             // Abuse to override MainWindow.DebugMode while enforcing the private setter
             BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
-            FieldInfo debugField = typeof(MainWindow).GetField("DebugMode", bindFlags);
-            debugField.SetValue(null, true);
+            PropertyInfo debugProperty = typeof(MainWindow).GetProperty("DebugMode", bindFlags);
+            debugProperty.SetValue(null, true);
 
             return false;
         }
