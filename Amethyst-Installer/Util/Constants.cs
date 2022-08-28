@@ -71,9 +71,14 @@ namespace amethyst_installer_gui {
         public static readonly string DiscordInvite = "https://discord.gg/YBQCRDG";
 
         /// <summary>
-        /// The domain the documentation will be hosted at
+        /// The domain the Amethyst documentation is hosted at
         /// </summary>
         public static readonly string DocsDomain = "https://docs.k2vr.tech";
+
+        /// <summary>
+        /// The domain pointing to the K2VR API
+        /// </summary>
+        public static readonly string ApiDomain = "https://api.k2vr.tech";
         
         /// <summary>
         /// The URL pointing to a JSON object full of locale codes supported on docs.
