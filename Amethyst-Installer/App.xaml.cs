@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Media;
 using System.Reflection;
+using System.Text;
 using System.Windows;
 
 using AppWindow = amethyst_installer_gui.MainWindow;
@@ -22,7 +23,11 @@ namespace amethyst_installer_gui {
         private void Application_Startup(object sender, StartupEventArgs e) {
 
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            
+            // Init console ; enables ANSI, unicode, and enables logging in WPF
             Kernel.AttachConsole(-1);
+            Console.OutputEncoding = Encoding.Unicode;
+            Kernel.EnableAnsiCmd();
 
             CommandParser parser = new CommandParser();
             if ( !parser.ParseCommands(e.Args) ) {
