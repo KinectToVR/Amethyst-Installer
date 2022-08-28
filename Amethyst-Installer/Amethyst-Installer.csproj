@@ -266,8 +266,10 @@
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Commands\CommandDebug.cs" />
     <Compile Include="Util\Commands\CommandParser.cs" />
     <Compile Include="Util\Commands\CommandUninstall.cs" />
+    <Compile Include="Util\Commands\CommandUpdate.cs" />
     <Compile Include="Util\Commands\ICommand.cs" />
     <Compile Include="Util\Constants.cs" />
     <Compile Include="Util\Download.cs" />
