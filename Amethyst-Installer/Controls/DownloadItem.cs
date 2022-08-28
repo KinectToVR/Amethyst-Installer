@@ -63,12 +63,13 @@ namespace amethyst_installer_gui.Controls {
             var thisControl = d as DownloadItem;
             if ( thisControl.downloadedSizeText == null || thisControl.percentageText == null || thisControl.progressBar == null )
                 return;
-            thisControl.downloadedSizeText.Text = Util.SizeSuffix(( long ) e.NewValue) + " / ";
+            thisControl.downloadedSizeText.Text = Util.SizeSuffix(Math.Min(( long ) e.NewValue, thisControl.TotalBytes)) + " / ";
             double percentage = ( ( long ) e.NewValue / 1000000.0 ) / ( thisControl.TotalBytes / 1000000.0 );
             if ( double.IsNaN(percentage) )
                 percentage = 0;
+            percentage = Math.Max(Math.Min(percentage, 1.0), 0.0);
             thisControl.percentageText.Text = ( int ) Math.Round(percentage * 100, MidpointRounding.AwayFromZero) + "%";
-            thisControl.progressBar.Value = Math.Max(Math.Min(percentage, 1.0), 0.0);
+            thisControl.progressBar.Value = percentage;
         }
 
         public long TotalBytes {
@@ -87,8 +88,9 @@ namespace amethyst_installer_gui.Controls {
             double percentage = ( thisControl.DownloadedBytes / 1000000.0 ) / ( ( long ) e.NewValue / 1000000.0 );
             if ( double.IsNaN(percentage) )
                 percentage = 0;
+            percentage = Math.Max(Math.Min(percentage, 1.0), 0.0);
             thisControl.percentageText.Text = ( int ) Math.Round(percentage * 100, MidpointRounding.AwayFromZero) + "%";
-            thisControl.progressBar.Value = Math.Max(Math.Min(percentage, 1.0), 0.0);
+            thisControl.progressBar.Value = percentage;
 
             if ( !thisControl.Completed && !thisControl.IsPending ) {
                 thisControl.totalSizeText.Text += $" ({Util.SizeSuffix(thisControl.TransferSpeed)}/s)";
