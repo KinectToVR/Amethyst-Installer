@@ -26,6 +26,7 @@ namespace amethyst_installer_gui.Pages {
         private List<InstallModuleProgress> m_installControls;
         private int m_installedModuleCount = 0;
         private bool m_failedToInstall = false;
+        private bool m_nextButtonVisible = false;
 
         public PageInstallation() {
             InitializeComponent();
@@ -75,7 +76,6 @@ namespace amethyst_installer_gui.Pages {
                     Logger.Warn($"Module of type {module.Install.Type} couldn't be found! Skipping...");
                     continue;
                 }
-                var moduleBase = InstallerStateManager.ModuleTypes[module.Install.Type];
 
                 Logger.Info($"Installing module {module.DisplayName} of type {module.Install.Type}...");
 
@@ -144,6 +144,7 @@ namespace amethyst_installer_gui.Pages {
         private void OnModuleInstalled() {
             m_installedModuleCount++;
             if ( m_installedModuleCount == InstallerStateManager.ModulesToInstall.Count ) {
+                m_nextButtonVisible = true;
                 ActionButtonPrimary.Visibility = Visibility.Visible;
                 MainWindow.Instance.sidebar_install.State = TaskState.Checkmark;
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0;
@@ -161,6 +162,7 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.sidebar_install.State = TaskState.Error;
             SoundPlayer.PlaySound(SoundEffect.Error);
 
+            m_nextButtonVisible = true;
             ActionButtonPrimary.Visibility = Visibility.Visible;
             ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
 
@@ -175,7 +177,7 @@ namespace amethyst_installer_gui.Pages {
 #if DEBUG
             ActionButtonPrimary.Visibility = Visibility.Visible;
 #else
-            ActionButtonPrimary.Visibility = Visibility.Hidden;
+            ActionButtonPrimary.Visibility = m_nextButtonVisible ? Visibility.Visible : Visibility.Hidden;
 #endif
             ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;

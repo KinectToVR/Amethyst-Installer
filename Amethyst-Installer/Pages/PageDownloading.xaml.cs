@@ -28,6 +28,7 @@ namespace amethyst_installer_gui.Pages {
 
         private DownloadItem m_currentProgressControl;
         private int m_downloadIndex = 0;
+        private bool m_nextButtonVisibile = false;
 
         private TimeoutClock m_timer;
         private long m_lastTotalBytesDownloaded = 0;
@@ -168,13 +169,14 @@ namespace amethyst_installer_gui.Pages {
             }
         }
 
-		private void downloadModule_Retry(object sender, RoutedEventArgs e) {
+        private void downloadModule_Retry(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
 
             // Attempt redownload
 
             // TODO: Track retry attempts
             DownloadItem downloadItem = (DownloadItem) sender;
+            Logger.Info($"Retrying to download module with id {InstallerStateManager.ModulesToInstall[( int ) downloadItem.Tag].Id}...");
             // DownloadModule(( int ) downloadItem.Tag);
             DownloadModule(( int ) downloadItem.Tag);
 
@@ -229,6 +231,7 @@ namespace amethyst_installer_gui.Pages {
                 m_downloadIndex++;
 
                 if ( m_downloadIndex == InstallerStateManager.ModulesToInstall.Count ) {
+                    m_nextButtonVisibile = true;
                     ActionButtonPrimary.Visibility = Visibility.Visible;
                     MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
                     Logger.Info("Downloaded all modules successfully!");
@@ -266,6 +269,8 @@ namespace amethyst_installer_gui.Pages {
                 Logger.Error($"Download \"{moduleToInstall.Remote.Filename}\" timed out!");
             }
 
+            // TODO: Track failure attempts, and auto-retry if under some threshold
+
             m_currentProgressControl.DownloadFailed = true;
             m_currentProgressControl.IsPending = false;
 
@@ -280,7 +285,7 @@ namespace amethyst_installer_gui.Pages {
 #if DEBUG
             ActionButtonPrimary.Visibility = Visibility.Visible;
 #else
-            ActionButtonPrimary.Visibility = Visibility.Hidden;
+            ActionButtonPrimary.Visibility = m_nextButtonVisibile ? Visibility.Visible : Visibility.Hidden;
 #endif
             MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
@@ -294,5 +299,5 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {}
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
-	}
+    }
 }
