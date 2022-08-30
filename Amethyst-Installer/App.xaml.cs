@@ -19,6 +19,7 @@ namespace amethyst_installer_gui {
     public partial class App : Application {
 
         public static InstallerState InitialPage = InstallerState.Welcome;
+        private static bool s_initialized = false;
 
         private void Application_Startup(object sender, StartupEventArgs e) {
 
@@ -88,6 +89,9 @@ namespace amethyst_installer_gui {
 
         public static void Init() {
 
+            if ( s_initialized )
+                return;
+
             // Initialize logger
             string logFileDate = DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff");
             Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
@@ -114,6 +118,7 @@ namespace amethyst_installer_gui {
                 FieldInfo handleField = typeof(OpenVRUtil).GetField("s_failedToInit", bindFlags);
                 handleField.SetValue(null, true);
             }
+            s_initialized = true;
         }
     }
 }
