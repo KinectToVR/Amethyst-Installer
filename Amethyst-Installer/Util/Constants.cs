@@ -78,7 +78,7 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// The domain pointing to the K2VR API
         /// </summary>
-        public static readonly string ApiDomain = "https://api.k2vr.tech";
+        public static readonly string ApiDomain = "https://api.k2vr.tech/v0/";
         
         /// <summary>
         /// The URL pointing to a JSON object full of locale codes supported on docs.
