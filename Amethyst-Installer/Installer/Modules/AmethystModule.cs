@@ -41,14 +41,14 @@ if upgrade no
 
                 bool overallSuccess =                   HandleDrivers(path, ref control);
                 overallSuccess      = overallSuccess && CreateRegistryEntry(path, ref control);
-                bool failureMinor   =                   CreateUninstallEntry(path, ref control);
-                failureMinor        = failureMinor   && AssignTrackerRoles(ref control);
+                bool sucessMinor    =                   CreateUninstallEntry(path, ref control);
+                sucessMinor         = sucessMinor    && AssignTrackerRoles(ref control);
                 overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
 
                 // TODO: If this is an upgrade change the message to a different one
                 Logger.Info(LogStrings.InstalledAmethystSuccess);
                 control.LogInfo(LogStrings.InstalledAmethystSuccess);
-                state = failureMinor ? TaskState.Warning : TaskState.Checkmark;
+                state = sucessMinor ? TaskState.Checkmark : TaskState.Warning;
                 return overallSuccess;
             }
 
