@@ -71,7 +71,7 @@ namespace amethyst_installer_gui {
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            Logger.Fatal(Util.FormatException(e.Exception));
+            Logger.PrivateDoNotUseLogExecption(Util.FormatException(e.Exception), $"Unhandled Exception: {e.Exception.GetType().Name} in {e.Exception.Source}: {e.Exception.Message}");
             e.Handled = true;
 
             if ( AppWindow.Instance == null ) {

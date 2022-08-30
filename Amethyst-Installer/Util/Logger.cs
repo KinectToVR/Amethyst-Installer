@@ -54,6 +54,10 @@ namespace amethyst_installer_gui {
             LogInternal(FormatToLogMessage(obj.ToString(), "F", lineNumber, filePath, memberName), ConsoleColor.DarkRed);
         }
 
+        internal static void PrivateDoNotUseLogExecption(string message, string displayString, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "") {
+            LogInternalUniqueMessage(FormatToLogMessage(message, "F", lineNumber, filePath, memberName), FormatToLogMessage(displayString, "F", lineNumber, filePath, memberName), ConsoleColor.DarkRed);
+        }
+
         #endregion
 
         #region Logger Internals
@@ -109,6 +113,16 @@ namespace amethyst_installer_gui {
             File.AppendAllLines(LogFilePath, new[] { message });
 
             PageLogs.LogLine(message, color);
+        }
+
+        private static void LogInternalUniqueMessage(string message, string messageUI, ConsoleColor color) {
+            if ( LogFilePath == null )
+                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
+            File.AppendAllLines(LogFilePath, new[] { message });
+
+            PageLogs.LogLine(messageUI, color);
         }
 
         #endregion
