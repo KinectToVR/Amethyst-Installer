@@ -1,0 +1,16 @@
+﻿{
+  "amethyst": {
+    "version": 1,
+    "version_string": "1.0.2.13",
+    "changelog": [
+      "Added the sus impostor"
+    ]
+  },
+  "installer": {
+    "version": 1,
+    "version_string": "1.0.0 PREVIEW",
+    "changelog": [
+      "Made it crash less"
+    ]
+  }
+}
