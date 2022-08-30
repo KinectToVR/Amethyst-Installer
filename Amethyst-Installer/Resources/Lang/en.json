@@ -8,18 +8,18 @@
 
   "EULA_Agree": "I agree",
   "EULA_DontAgree": "I do not agree",
-  "EULA_Licenses": "Follows is a long and boring list of licenses for crap, because unfortunately, licenses are a thing, and we have to show them to you.", /* We drop a lot of "copy pastas" here */
+  "EULA_Licenses": "Follows are licenses for libraries used by this installer, Amethyst and device plugins.\n\nYou must accept the Kinect for Windows related EULAs to continue with installation.", /* We drop a lot of "copy pastas" here */
   "EULA_Warranty": "By continuing with installation, you agree that this software, and every component bundled or installed by it are provided \"as-is\" and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability.", /* We are not reponsible for you being braindead */
 
   "InstallDestination_AmeInstallFound": "This folder already contains an installation of Amethyst, it will be overwritten.", /* Shown if the install folder is detected to have a copy of Amethyst */
-  "InstallDestination_AmethystInstallLocationFootnote": "Only Amethyst will be installed to this folder. Other items will install to their default locations.",
+  "InstallDestination_AmethystInstallLocationFootnote": "Only Amethyst will be installed to this folder. Other items will be installed to their default locations.",
   "InstallDestination_DiskLabelFormat": "{0} ({1})", /* {0} gets replaced with the disk label (eg "Local Disk") and {1} gets replaced with the drive letter {eg "C:" ) */
-  "InstallDestination_InvalidPathDescription": "The path you've entered is invalid. Please enter a valid path to continue.",
+  "InstallDestination_InvalidPathDescription": "The path you've entered is invalid. Please enter a valid path.",
   "InstallDestination_InvalidPathTitle": "Invalid Path",
   "InstallDestination_OpenFolder": "Open Folder",
   "InstallDestination_PathPlaceholder": "Please select a valid install folder",
   "InstallDestination_StorageFormatFree": "{0} free", /* {0} is required (it's going to get replaced with 420GB for example) */
-  "InstallDestination_CreateStartMenuShortcut": "Create a start menu entry",
+  "InstallDestination_CreateStartMenuShortcut": "Create a Start menu entry",
   "InstallDestination_CreateDesktopShortcut": "Create a desktop shortcut",
 
   /* Install Options download size and install size strings */
@@ -29,12 +29,12 @@
   "InstallOptions_TotalInstallSize": "Total Installed Size:",
 
   /* Shown on the System requirements page */
-  "InstallError_CloudPC": "Cloud PC detected. Amethyst does not support networked environments.", /* The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere */
+  "InstallError_CloudPC": "Cloud PC detected. Amethyst does not support remote or \"cloud\" PCs.", /* The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere */
   "InstallError_SteamVRNotFound": "Couldn't find SteamVR! Is it installed, and have you run it at least once?", /* The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once. */
-  "InstallError_WindowsVersionIsOld": "Windows version is too old to run Amethyst. Please update your copy of Windows from Settings to use Amethyst.", /* The message shown to a user when they have an old version of Windows that is not supported by Amethyst */
+  "InstallError_WindowsVersionIsOld": "Windows version is too old to run Amethyst. Please update Windows from the Settings app before using Amethyst.", /* The message shown to a user when they have an old version of Windows that is not supported by Amethyst */
 
   "InstallFailure_Modal_Title": "An unexpected error occured!",
-  "InstallFailure_Modal_Description": "An unexpected error occured while installing {0}. Please view the logs for more information, or join our Discord server for help. The installation cannot continue.", /* {0} gets replaced with the module that failed to install */
+  "InstallFailure_Modal_Description": "An unexpected error occured while installing {0}. Please view the logs for more information. Join our Discord server for help. The installation cannot continue.", /* {0} gets replaced with the module that failed to install */
 
   "Installer_Action_Back": "Back",
   "Installer_Action_CopyError": "Copy error",
@@ -43,9 +43,9 @@
   "Installer_Action_Next": "Next",
 
   "InstallProhibited_Title": "Cannot install Amethyst", /* The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window. */
-  "InstallProhibited_CloudPC": "Cloud PCs are unsupported. Please install Amethyst on actual hardware.", /* The error shown to users if they're running Amethyst Installer on a Cloud PC. */
-  "InstallProhibited_NoSteamVR": "SteamVR couldn't be found. Amethyst requires SteamVR to function properly. Please install SteamVR and re-run this installer to continue.", /* The error shown to users if they don't have SteamVR installed. */
-  "InstallProhibited_WindowsAncient": "Your copy of Windows is too old to work properly with Amethyst. Please update to a more recent version of Windows.", /* The error message shown to users if they have an unsupported Windows install . */
+  "InstallProhibited_CloudPC": "Cloud PCs are unsupported. Amethyst does not work on remote PCs.", /* The error shown to users if they're running Amethyst Installer on a Cloud PC. */
+  "InstallProhibited_NoSteamVR": "SteamVR couldn't be found. Amethyst requires SteamVR to function properly. Please install SteamVR then re-run this installer.", /* The error shown to users if they don't have SteamVR installed. */
+  "InstallProhibited_WindowsAncient": "Your version of Windows is too old to work with Amethyst. Please update to a more recent version of Windows.", /* The error message shown to users if they have an unsupported Windows install . */
 
   "Logs_DirectoryIsLocatedHere": "The log file is stored here:",
 
@@ -103,13 +103,13 @@
 
   "Done_InstallSuccess": "Amethyst has been successfully installed!",
   "Done_LaunchDesktop": "It can be launched from the desktop",
-  "Done_LaunchStartMenu": "It can be launched from the start menu",
+  "Done_LaunchStartMenu": "It can be launched from the Start menu",
   "Done_LaunchAmethyst": "Launch Amethyst after exiting the installer",
 
   "PostOp_Kinect_EnableMic_Title": "Kinect microphone disabled!",
-  "PostOp_Kinect_EnableMic_Description": "Please enable the Kinect microphone. It is required for the Kinect SDK to function properly.",
+  "PostOp_Kinect_EnableMic_Description": "Please enable the Kinect microphone. It is required for the Kinect for Windows SDK to function properly.",
 
-  "Updating_FailedReachApi": "Failed to connect to K2VR API. Please check your internet connection, and re-run the updater.", /* Shown if fetching the API failed */
+  "Updating_FailedReachApi": "Failed to connect to K2VR Web API. Please check your internet connection, and re-run the updater.", /* Shown if fetching the API failed */
   "Updating_InitFailed": "Failed to initialize updater",
   "Updating_UpdatingAmethyst": "Amethyst is being updated..."
 }
