@@ -5,19 +5,19 @@
         // amethyst
         public const string ExtractingAmethyst                  = "Extracting Amethyst to {0}...";
         public const string ExtractAmethystFailed               = "Failed to extract Amethyst";
-        public const string RegisteringAmethystDriver           = "Registering Amethyst driver...";
-        public const string CheckingAmethystDriverConflicts     = "Checking for conflicting SteamVR drivers...";
+        public const string RegisteringAmethystDriver           = "Registering Amethyst SteamVR add-on...";
+        public const string CheckingAmethystDriverConflicts     = "Checking for conflicting SteamVR add-ons...";
         public const string CreatingAmethystRegistryEntry       = "Creating registry entry...";
         public const string CreatingUninstallExecutable         = "Creating uninstall executable...";
         public const string CreateUninstallExecutableFail       = "Failed to create uninstall executable";
-        public const string CreatingUninstallEntry              = "Registering uninstall entry...";
+        public const string CreatingUninstallEntry              = "Registering Add/Remove Programs uninstall entry...";
         public const string CreateUninstallEntryFailed          = "Failed to register uninstall entry";
         public const string RemovingConflictingTrackerRoles     = "Removing conflicting tracker roles...";
         public const string FailRemoveConflictingTrackerRoles   = "Failed to remove conflicting tracker roles";
         public const string AssigningTrackerRoles               = "Assigning tracker roles...";
         public const string FailAssignTrackerRoles              = "Failed to assign tracker roles";
-        public const string CreatingStartMenuEntry              = "Creating start menu entry...";
-        public const string FailedCreateStartMenuEntry          = "Failed to create start menu entry";
+        public const string CreatingStartMenuEntry              = "Creating Start menu entry...";
+        public const string FailedCreateStartMenuEntry          = "Failed to create Start menu entry";
         public const string CreatingDesktopEntry                = "Creating desktop shortcut...";
         public const string FailedCreateDesktopEntry            = "Failed to create desktop shortcut";
         public const string InstalledAmethystSuccess            = "Successfully installed Amethyst!";
@@ -45,17 +45,17 @@
         public const string CheckingKinectMicrophone            = "Verifying that the Kinect microphone is on...";
         public const string KinectV1MicrophoneFound             = "Xbox 360 Kinect microphone found!";
         public const string KinectV2MicrophoneFound             = "Xbox One Kinect microphone found!";
-        public const string KinectMicrophoneDisabled            = "Kinect microphone is disabled! Kinect SDK will not function properly. Please enable the microphone...";
+        public const string KinectMicrophoneDisabled            = "The Kinect microphone is disabled! The Kinect for Windows SDK will not function properly. Please enable the microphone...";
 
         // Kinect auto-fixes
         public const string ApplyingKinectFixes                 = "Attempting fixes...";
         // Not Powered
-        public const string NotPoweredDetected                  = "Detected E_NUI_NOTPOWERED!";
-        public const string NotPoweredFixed                     = "Successfully fixed E_NUI_NOTPOWERED!";
-        public const string NotPoweredFixFailure                = "Failed to fix E_NUI_NOTPOWERED!";
+        public const string NotPoweredDetected                  = "Detected the error: E_NUI_NOTPOWERED!";
+        public const string NotPoweredFixed                     = "Successfully fixed: E_NUI_NOTPOWERED!";
+        public const string NotPoweredFixFailure                = "Failed to fix: E_NUI_NOTPOWERED!";
 
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";
-        public const string WaitingForExecution                 = "Waiting for previous tasks to finish...";
+        public const string WaitingForExecution                 = "Waiting on other tasks to finish...";
     }
 }
