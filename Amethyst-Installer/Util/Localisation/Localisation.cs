@@ -454,6 +454,16 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("PostOp_Kinect_EnableMic_Description");
             }
         }
+        public static string Updating_FailedReachApi {
+            get {
+                return LocaleManager.GetString("Updating_FailedReachApi");
+            }
+        }
+        public static string Updating_InitFailed {
+            get {
+                return LocaleManager.GetString("Updating_InitFailed");
+            }
+        }
         public static string Updating_UpdatingAmethyst {
             get {
                 return LocaleManager.GetString("Updating_UpdatingAmethyst");
