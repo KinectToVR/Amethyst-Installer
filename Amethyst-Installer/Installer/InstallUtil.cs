@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,29 @@ using System.Windows;
 
 namespace amethyst_installer_gui {
     public static class InstallUtil {
+
+        /// <summary>
+        /// Extracts a zip file to a specified directory. This is different from <see cref="System.IO.Compression.ZipFile.ExtractToDirectory(string, string)"/>
+        /// </summary>
+        public static void ExtractZipToDirectory(string sourceArchive, string destinationDirectory) {
+            using ( var zip = ZipFile.OpenRead(sourceArchive) ) {
+                foreach ( var archiveEntry in zip.Entries ) {
+
+                    // Check if we're handling a directory or a file
+                    if ( archiveEntry.Name.Length == 0 ) {
+                        // Directories' Name is an empty string
+                        string finalDir = Path.Combine(destinationDirectory, archiveEntry.FullName);
+                        if ( !Directory.Exists(finalDir) ) {
+                            Directory.CreateDirectory(finalDir);
+                        }
+                    } else {
+                        // If the entry Name is not empty, it's a file
+                        archiveEntry.ExtractToFile(Path.Combine(destinationDirectory, archiveEntry.FullName));
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Returns whether a copy of Amethyst is installed at a given path

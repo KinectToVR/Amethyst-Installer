@@ -72,7 +72,7 @@ if upgrade no
                     if ( !Directory.Exists(target) )
                         Directory.CreateDirectory(target);
 
-                    ZipFile.ExtractToDirectory(ameZip, target);
+                    InstallUtil.ExtractZipToDirectory(ameZip, target);
                     return true;
                 }
 

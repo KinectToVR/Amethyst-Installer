@@ -173,8 +173,13 @@ namespace amethyst_installer_gui {
             // Remove directories
             for ( int i = 0; i < uninstallList.Directories.Length; i++ ) {
                 string dir = Path.Combine(ameInstall, uninstallList.Directories[i]);
-                if (Directory.Exists(dir))
-                    Directory.Delete(dir);
+                if ( Directory.Exists(dir) ) {
+                    // Check to make sure the directory isn't empty
+                    if ( Directory.GetFiles(dir, "*", SearchOption.AllDirectories).Length == 0 &&
+                         Directory.GetDirectories(dir, "*", SearchOption.AllDirectories).Length == 0 ) {
+                        Directory.Delete(dir);
+                    }
+                }
             }
 
             // 3. If the directory is empty, remove it
