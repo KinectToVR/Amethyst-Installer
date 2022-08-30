@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TimeoutClock = System.Timers.Timer;
 
 namespace amethyst_installer_gui {
     public static class Download {
@@ -53,13 +55,13 @@ namespace amethyst_installer_gui {
                 onComplete();
         }
 
+        /// <summary>
+        /// Performs a GET request at the designated url
+        /// </summary>
         public static string GetStringAsync(string url) {
 
-            using ( var webClient = new WebClient() ) {
-
-                string final = webClient.DownloadString(url);
-                return final;
-            }
+            var response = s_httpClient.GetAsync(url).Result;
+            return response.Content.ReadAsStringAsync().Result;
         }
     }
 }
