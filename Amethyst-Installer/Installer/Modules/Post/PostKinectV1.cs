@@ -22,12 +22,12 @@ namespace amethyst_installer_gui.Installer.Modules {
             control.LogInfo(LogStrings.CheckingKinectMicrophone);
             Logger.Info(LogStrings.CheckingKinectMicrophone);
 
-            if ( KinectUtil.KinectV2MicrophonePresent() ) {
+            if ( KinectUtil.KinectV1MicrophonePresent() ) {
 
                 control.LogInfo(LogStrings.KinectV1MicrophoneFound);
                 Logger.Info(LogStrings.KinectV1MicrophoneFound);
 
-                if ( KinectUtil.KinectV2MicrophoneDisabled() ) {
+                if ( KinectUtil.KinectV1MicrophoneDisabled() ) {
 
                     control.LogInfo(LogStrings.KinectMicrophoneDisabled);
                     Logger.Info(LogStrings.KinectMicrophoneDisabled);
