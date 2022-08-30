@@ -186,7 +186,7 @@
     <Compile Include="Installer\Installer.Enums.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Core.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Requirements.cs" />
-    <Compile Include="Installer\JSON.cs" />
+    <Compile Include="Installer\JSON\ModulesJSON.cs" />
     <Compile Include="Installer\K2EXUtil.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Drivers.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Install.cs" />
@@ -214,8 +214,8 @@
     <Compile Include="Installer\OpenVR\OpenVRUtil.SteamVR.cs" />
     <Compile Include="Installer\CloudPCUtil.cs" />
     <Compile Include="Installer\OpenVR\OpenVRUtil.TrackerRoles.cs" />
-    <Compile Include="Installer\Uninstaller\UninstallListJSON.cs" />
-    <Compile Include="Installer\Updater\UpdateJSON.cs" />
+    <Compile Include="Installer\JSON\UninstallListJSON.cs" />
+    <Compile Include="Installer\JSON\UpdateJSON.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
     <Compile Include="Pages\PageDebug.xaml.cs">
       <DependentUpon>PageDebug.xaml</DependentUpon>
@@ -573,7 +573,7 @@
     <EmbeddedResource Include="Resources\Binaries\vrpathreg.exe" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ame-installer-sample-api-response-update.json" />
+    <EmbeddedResource Include="ame-installer-sample-api-response-update.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
