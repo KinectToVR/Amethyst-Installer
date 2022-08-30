@@ -300,10 +300,21 @@ if upgrade no
         }
 
         private void TryKillingConflictingProcesses() {
+
+            // K2EX
+            Util.ForceKillProcess("kinectv1process");
+            Util.ForceKillProcess("kinectv2process");
+            Util.ForceKillProcess("psmsprocess");
+            Util.ForceKillProcess("kinecttovr");
+
+            // Amethyst
+            Util.ForceKillProcess("amethyst");
+            Util.ForceKillProcess("k2crashhandler");
+
+            // SteamVR
             Util.ForceKillProcess("vrmonitor");
             Util.ForceKillProcess("vrserver");
-            Util.ForceKillProcess("Amethyst");
-            Util.ForceKillProcess("K2CrashHandler");
+            Util.ForceKillProcess("vrcompositor");
         }
     }
 }
