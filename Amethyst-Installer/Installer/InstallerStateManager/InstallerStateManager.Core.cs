@@ -94,9 +94,7 @@ namespace amethyst_installer_gui.Installer {
 
         private static void FetchInstallerJson() {
 
-            // TODO: Fetch JSON Response, and load it
-            // var txtResponse = File.ReadAllText(Path.GetFullPath("ame-installer-sample-api-response.json"));
-
+#if !DIST
             string txtResponse = string.Empty;
             using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("amethyst_installer_gui.ame-installer-sample-api-response.json") ) {
                 using ( StreamReader reader = new StreamReader(resource) ) {
@@ -105,6 +103,29 @@ namespace amethyst_installer_gui.Installer {
             }
 
             API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
+#else
+            try {
+
+                Logger.Info("Fetching latest packages...");
+                var packagesJson = Download.GetStringAsync(Constants.ApiDomain + "installer/en/packages");
+
+                API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(packagesJson);
+                Logger.Info("Fetched packages successfully!");
+
+            } catch ( Exception e ) {
+                Logger.Fatal("Failed to fetch packages!");
+                Logger.Fatal(Util.FormatException(e));
+
+                string txtResponse = string.Empty;
+                using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("amethyst_installer_gui.ame-installer-sample-api-response.json") ) {
+                    using ( StreamReader reader = new StreamReader(resource) ) {
+                        txtResponse = reader.ReadToEnd();
+                    }
+                }
+
+                API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
+            }
+#endif
         }
 
         private static void FetchLocaleCodes() {
