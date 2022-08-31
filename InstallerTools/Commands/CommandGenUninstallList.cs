@@ -33,12 +33,9 @@ namespace InstallerTools.Commands {
             List<string> filesList = new List<string>();
             List<string> directoryList = new List<string>();
 
-            // @TODO: Gen list
-
             foreach ( string file in Directory.GetFiles(directory, "*", SearchOption.AllDirectories) ) {
                 filesList.Add(new Uri(directory).MakeRelativeUri(new Uri(file)).ToString().Replace("/", "\\").Substring(dirName.Length + 1));
             }
-            
 
             foreach ( string dir in Directory.GetDirectories(directory, "*", SearchOption.AllDirectories) ) {
                 directoryList.Add(new Uri(directory).MakeRelativeUri(new Uri(dir)).ToString().Replace("/", "\\").Substring(dirName.Length + 1));
