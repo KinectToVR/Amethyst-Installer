@@ -78,6 +78,8 @@ namespace amethyst_installer_gui.Pages {
             Hyperlink discordLink = new Hyperlink()
             {
                 NavigateUri = new Uri(Constants.DiscordInvite),
+                Foreground = WindowsColorHelpers.AccentLight,
+                BaselineAlignment = BaselineAlignment.Center,
             };
             discordLink.Inlines.Add("K2VR Community Discord");
             discordLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;

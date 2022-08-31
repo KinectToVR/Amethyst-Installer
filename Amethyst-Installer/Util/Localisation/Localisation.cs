@@ -444,6 +444,26 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Done_LaunchAmethyst");
             }
         }
+        public static string Done_LinkDocumentation {
+            get {
+                return LocaleManager.GetString("Done_LinkDocumentation");
+            }
+        }
+        public static string Done_LinkDiscord {
+            get {
+                return LocaleManager.GetString("Done_LinkDiscord");
+            }
+        }
+        public static string Done_LinkGitHub {
+            get {
+                return LocaleManager.GetString("Done_LinkGitHub");
+            }
+        }
+        public static string Done_LinkDonations {
+            get {
+                return LocaleManager.GetString("Done_LinkDonations");
+            }
+        }
         public static string PostOp_Kinect_EnableMic_Title {
             get {
                 return LocaleManager.GetString("PostOp_Kinect_EnableMic_Title");

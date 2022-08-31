@@ -575,6 +575,12 @@
   <ItemGroup>
     <EmbeddedResource Include="ame-installer-sample-api-response-update.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\desktop_10.png" />
+    <Resource Include="Resources\Image\desktop_11.png" />
+    <Resource Include="Resources\Image\start_10.png" />
+    <Resource Include="Resources\Image\start_11.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

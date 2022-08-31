@@ -1,9 +1,13 @@
 using amethyst_installer_gui.Installer;
 using Microsoft.NodejsTools.SharedProject;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace amethyst_installer_gui.Pages {
     /// <summary>
@@ -38,6 +42,44 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnSelected() {
             MainWindow.Instance.StopSpeedrunTimer();
+            linksContainer.Inlines.Clear();
+
+            // Get platform string
+            string os_string = "10";
+            if ( WindowsUtils.GetVersion().Build >= (int) WindowsUtils.WindowsMajorReleases.Win11_21H2 ) {
+                os_string = "11";
+            }
+
+            // Default to start menu, else desktop
+            string launchImagePath = $"/Resources/Image/start_{os_string}.png";
+
+            if ( InstallerStateManager.CreateStartMenuEntry ) {
+                launchFromPlace.Text = Localisation.Done_LaunchStartMenu;
+                launchImagePath = $"/Resources/Image/desktop_{os_string}.png";
+            }
+            launchImage.Source = new BitmapImage(new Uri(launchImagePath, UriKind.Relative));
+
+            AddLink(Localisation.Done_LinkDocumentation + Environment.NewLine, Util.GenerateDocsURL(string.Empty));
+            AddLink(Localisation.Done_LinkDiscord + Environment.NewLine, Constants.DiscordInvite);
+            AddLink(Localisation.Done_LinkGitHub + Environment.NewLine, "https://github.com/KinectToVR");
+            AddLink(Localisation.Done_LinkDonations, "https://opencollective.com/k2vr");
+        }
+
+        private void AddLink(string displayString, string urlTarget) {
+
+            Hyperlink link = new Hyperlink()
+            {
+                NavigateUri = new Uri(urlTarget),
+                Foreground = WindowsColorHelpers.AccentLight,
+                BaselineAlignment = BaselineAlignment.Center,
+            };
+            link.Inlines.Add(displayString);
+            link.RequestNavigate += OpenURL;
+            linksContainer.Inlines.Add(link);
+        }
+        private void OpenURL(object sender, RequestNavigateEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            Process.Start(( sender as Hyperlink ).NavigateUri.ToString());
         }
 
         // Force only the first button to have focus
