@@ -9,33 +9,42 @@
              d:DesignHeight="447" d:DesignWidth="822">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Row="1" x:Name="updatingHeader" Orientation="Vertical">
-            <Grid MaxHeight="192">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Image Source="/Resources/Icons/4x/amethyst-icon.png" Grid.Row="0" />
-                <TextBlock Grid.Row="1" Text="{x:Static global:Localisation.Updating_UpdatingAmethyst}" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Center" FontSize="16" FontWeight="SemiBold" Margin="0,8" />
-            </Grid>
-        </StackPanel>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
 
-            <ContentPresenter x:Name="displayedItem" Grid.Column="1" />
-        </Grid>
-        <TextBlock Grid.Row="5" Text="{x:Static global:Util.InstallerVersionString}" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Margin="8"/>
+        <ScrollViewer Grid.Row="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1" x:Name="updatingHeader" Orientation="Vertical">
+                    <Grid MaxHeight="192">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Image Source="/Resources/Icons/4x/amethyst-icon.png" Grid.Row="0" />
+                        <TextBlock Grid.Row="1" Text="{x:Static global:Localisation.Updating_UpdatingAmethyst}" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Center" FontSize="16" FontWeight="SemiBold" Margin="0,8" />
+                    </Grid>
+                </StackPanel>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ContentPresenter x:Name="displayedItem" Grid.Column="1" />
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+
+        <TextBlock Grid.Row="1" Text="{x:Static global:Util.InstallerVersionString}" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Margin="8"/>
     </Grid>
 </UserControl>

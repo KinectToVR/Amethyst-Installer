@@ -1,14 +1,11 @@
 ﻿using amethyst_installer_gui.Installer;
+using amethyst_installer_gui.Pages;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using AmethystModule = amethyst_installer_gui.Installer.Module;
 
 namespace amethyst_installer_gui.Commands {
     public class CommandUpdate : ICommand {
@@ -20,6 +17,15 @@ namespace amethyst_installer_gui.Commands {
         private static Dictionary<string, UpdateJSON> UpdateEndpoint;
 
         public bool Execute(string parameters) {
+
+            string[] args = parameters.Split(' ');
+
+            foreach ( var argument in args ) {
+                if ( argument == "-o" ) {
+                    // Open Amethyst flag
+                    PageUpdating.OpenAmethystOnSuccess = true;
+                }
+            }
 
             App.Init();
 
@@ -34,7 +40,6 @@ namespace amethyst_installer_gui.Commands {
             }
 
             // Load the installer config
-            // @TODO: Amogus
             string installerConfigPath = Path.GetFullPath(Path.Combine(Constants.AmethystConfigDirectory, "Modules.json"));
             Dictionary<string, int> config;
             if ( !File.Exists(installerConfigPath) ) {
@@ -72,14 +77,22 @@ namespace amethyst_installer_gui.Commands {
                 }
             }
 
+            if ( modulesToUpdate.Count == 0 ) {
+                Util.ShowMessageBox("No applicable items had updates available! The updater will now close...", "Nothing to update");
+                Util.Quit(ExitCodes.NoUpdates);
+                return true;
+            }
+
             // Now queue the modules to the updater
-            // @TODO: Queue modules to updater
+            QueueModules(modulesToUpdate);
+
+            // Set Amethyst install directory
+            InstallerStateManager.AmethystInstallDirectory = InstallUtil.LocateAmethystInstall();
 
             App.InitialPage = InstallerState.Updating;
 
             return false;
         }
-
 
         private static void FetchUpdates() {
 
@@ -110,6 +123,49 @@ namespace amethyst_installer_gui.Commands {
                 throw new Exception();
             }
 #endif
+        }
+
+        private void QueueModules(List<string> modulesToUpdate) {
+
+            InstallerStateManager.ModulesToInstall.Clear();
+            List<AmethystModule> modulesPostBuffer = new List<AmethystModule>();
+
+            for ( int i = 0; i < modulesToUpdate.Count; i++ ) {
+
+                var module = InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT[modulesToUpdate[i]]];
+
+                // Go through dependencies
+                for ( int j = 0; j < module.Depends.Count; j++ ) {
+
+                    var thisModule = InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT[module.Depends[j]]];
+
+                    // For dependency in X
+                    Logger.Info($"Queueing dependency \"{thisModule.DisplayName}\"...");
+                    if ( !InstallerStateManager.ModulesToInstall.Contains(thisModule) ) {
+                        InstallerStateManager.ModulesToInstall.Add(thisModule);
+                    }
+                }
+
+                Logger.Info($"Queueing module \"{module.DisplayName}\"...");
+                modulesPostBuffer.Add(module);
+            }
+
+            // Merge the dependencies and modules lists together, so that dependencies are earlier than modules.
+            // This should resolve dependency chain issues where a module installs out of order
+            for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
+                for ( int j = 0; j < modulesPostBuffer.Count; j++ ) {
+                    var deps = InstallerStateManager.ModulesToInstall[i];
+                    var mod = modulesPostBuffer[j];
+
+                    if ( deps.Id == mod.Id ) {
+                        InstallerStateManager.ModulesToInstall.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+
+            // Add the list of modules which depend on other modules to the back of the modules to install vector
+            InstallerStateManager.ModulesToInstall.AddRange(modulesPostBuffer);
         }
     }
 }

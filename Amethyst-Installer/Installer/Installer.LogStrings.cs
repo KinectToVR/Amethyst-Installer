@@ -30,6 +30,8 @@
         public const string FailEnableSteamVrAdvancedSettings   = "Failed to enable SteamVR advanced settings";
         public const string RegisteringAmethystProtocolLink     = "Registering Amethyst protocol link...";
         public const string FailRegisterAmethystProtocolLink    = "Failed to register Amethyst protocol link";
+        public const string UpdateSuccessful                    = "Amethyst updated successfully!";
+        public const string OpeningAmethyst                     = "Opening Amethyst...";
 
         // exe-module
         public const string InstallingExe                       = "Installing {0}...";
