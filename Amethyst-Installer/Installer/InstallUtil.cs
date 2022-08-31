@@ -32,7 +32,7 @@ namespace amethyst_installer_gui {
                     } else {
                         // If the entry Name is not empty, it's a file
                         string fullPath = Path.Combine(destinationDirectory, archiveEntry.FullName);
-                        archiveEntry.ExtractToFile(fullPath);
+                        archiveEntry.ExtractToFile(fullPath, true);
                         
                         // Unblock all executable files
                         if ( Path.GetExtension(fullPath) == ".exe" ) {
