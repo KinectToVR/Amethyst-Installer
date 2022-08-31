@@ -43,7 +43,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" x:Name="launchFromPlace" Text="{x:Static global:Localisation.Done_LaunchDesktop}" Foreground="White" />
+                            <TextBlock Grid.Row="0" x:Name="launchFromPlace" Text="{x:Static global:Localisation.Done_LaunchStartMenu}" Foreground="White" />
                             <CheckBox Grid.Row="1" x:Name="launchAmeOnExit" Content="{x:Static global:Localisation.Done_LaunchAmethyst}" Margin="0,8,0,0" IsChecked="True" Checked="launchAmeOnExit_Checked" Unchecked="launchAmeOnExit_Checked" />
                             <TextBlock Grid.Row="3" x:Name="linksContainer">
                             </TextBlock>

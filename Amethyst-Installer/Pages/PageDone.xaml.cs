@@ -53,8 +53,8 @@ namespace amethyst_installer_gui.Pages {
             // Default to start menu, else desktop
             string launchImagePath = $"/Resources/Image/start_{os_string}.png";
 
-            if ( InstallerStateManager.CreateStartMenuEntry ) {
-                launchFromPlace.Text = Localisation.Done_LaunchStartMenu;
+            if ( InstallerStateManager.CreateDesktopShortcut && !InstallerStateManager.CreateStartMenuEntry ) {
+                launchFromPlace.Text = Localisation.Done_LaunchDesktop;
                 launchImagePath = $"/Resources/Image/desktop_{os_string}.png";
             }
             launchImage.Source = new BitmapImage(new Uri(launchImagePath, UriKind.Relative));
