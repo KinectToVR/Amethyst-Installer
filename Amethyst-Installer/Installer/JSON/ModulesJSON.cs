@@ -26,7 +26,7 @@ namespace amethyst_installer_gui.Installer {
         /// The version ID used internally, basically ends up boiling down to a build number
         /// </summary>
         [JsonProperty("version")]
-        public string InternalVersion;
+        public int InternalVersion;
 
         [JsonProperty("filesize")]
         public int FileSize;
