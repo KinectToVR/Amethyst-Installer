@@ -1,4 +1,5 @@
 ﻿using amethyst_installer_gui.Installer;
+using amethyst_installer_gui.PInvoke;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,13 @@ namespace amethyst_installer_gui {
                         }
                     } else {
                         // If the entry Name is not empty, it's a file
-                        archiveEntry.ExtractToFile(Path.Combine(destinationDirectory, archiveEntry.FullName));
+                        string fullPath = Path.Combine(destinationDirectory, archiveEntry.FullName);
+                        archiveEntry.ExtractToFile(fullPath);
+                        
+                        // Unblock all executable files
+                        if ( Path.GetExtension(fullPath) == ".exe" ) {
+                            Shell.Unblock(fullPath);
+                        }
                     }
                 }
             }
