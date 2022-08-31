@@ -59,9 +59,12 @@ namespace amethyst_installer_gui.Pages {
             }
             launchImage.Source = new BitmapImage(new Uri(launchImagePath, UriKind.Relative));
 
-            AddLink(Localisation.Done_LinkDocumentation + Environment.NewLine, Util.GenerateDocsURL(string.Empty));
-            AddLink(Localisation.Done_LinkDiscord + Environment.NewLine, Constants.DiscordInvite);
-            AddLink(Localisation.Done_LinkGitHub + Environment.NewLine, "https://github.com/KinectToVR");
+            AddLink(Localisation.Done_LinkDocumentation, Util.GenerateDocsURL(string.Empty));
+            linksContainer.Inlines.Add(Environment.NewLine);
+            AddLink(Localisation.Done_LinkDiscord, Constants.DiscordInvite);
+            linksContainer.Inlines.Add(Environment.NewLine);
+            AddLink(Localisation.Done_LinkGitHub, "https://github.com/KinectToVR");
+            linksContainer.Inlines.Add(Environment.NewLine);
             AddLink(Localisation.Done_LinkDonations, "https://opencollective.com/k2vr");
         }
 
