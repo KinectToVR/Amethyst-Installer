@@ -1,6 +1,7 @@
 ﻿using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.PInvoke;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -39,10 +40,18 @@ if upgrade no
 
             if ( ExtractAmethyst(sourceFile, path, ref control) ) {
 
+                if ( !HandleInstallerPersistence(ref control) ) {
+                    // If we can't install to appdata you have bigger problems to deal with
+                    state = TaskState.Error;
+                    return false;
+                }
+
                 bool overallSuccess =                   HandleDrivers(path, ref control);
                 overallSuccess      = overallSuccess && CreateRegistryEntry(path, ref control);
                 bool sucessMinor    =                   CreateUninstallEntry(path, ref control);
                 sucessMinor         = sucessMinor    && AssignTrackerRoles(ref control);
+                sucessMinor         = sucessMinor    && AdjustSteamVrSettings(ref control);
+                sucessMinor         = sucessMinor    && RegisterProtocolLink(path, ref control);
                 overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
 
                 // TODO: If this is an upgrade change the message to a different one
@@ -258,11 +267,6 @@ if upgrade no
                 // unblocked the installer executable or not, so let's fix that to be sure
                 Shell.Unblock(amethystInstallerExecutable);
 
-                // Dump the list of files to uninstall for this specific Amethyst build for later installer builds
-                // This list will be used during the uninstall process later
-                string uninstallListPath = Path.GetFullPath(Path.Combine(Constants.AmethystConfigDirectory, "UninstallList.json"));
-                Util.ExtractResourceToFile("UninstallList.json", uninstallListPath);
-
             } catch ( Exception e ) {
                 control.LogError($"{LogStrings.CreateUninstallExecutableFail}! {LogStrings.ViewLogs}");
                 Logger.Fatal($"{LogStrings.CreateUninstallExecutableFail}:\n{Util.FormatException(e)})");
@@ -315,6 +319,118 @@ if upgrade no
             Util.ForceKillProcess("vrmonitor");
             Util.ForceKillProcess("vrserver");
             Util.ForceKillProcess("vrcompositor");
+        }
+
+        private bool HandleInstallerPersistence(ref InstallModuleProgress control) {
+
+            try {
+
+                control.LogInfo(LogStrings.CreatingUpgradeList);
+                Logger.Info(LogStrings.CreatingUpgradeList);
+
+                // Write shit to appdata so that the installer will persist
+                string installerConfigPath = Path.GetFullPath(Path.Combine(Constants.AmethystConfigDirectory, "Modules.json"));
+                Dictionary<string, int> moduleList = new Dictionary<string, int>();
+                foreach ( var module in InstallerStateManager.ModulesToInstall ) {
+                    // Only track visible modules
+                    if ( module.Visible ) {
+                        moduleList.Add(module.Id, module.InternalVersion);
+                    }
+                }
+                string jsonModules = JsonConvert.SerializeObject(moduleList, Formatting.Indented);
+                File.WriteAllText(installerConfigPath, jsonModules);
+
+                control.LogInfo(LogStrings.CreatingUninstallList);
+                Logger.Info(LogStrings.CreatingUninstallList);
+
+                // Dump the list of files to uninstall for this specific Amethyst build for later installer builds
+                // This list will be used during the uninstall process later
+                string uninstallListPath = Path.GetFullPath(Path.Combine(Constants.AmethystConfigDirectory, "UninstallList.json"));
+                Util.ExtractResourceToFile("UninstallList.json", uninstallListPath);
+
+                return true;
+
+            } catch ( Exception e ) {
+                control.LogError($"{LogStrings.CreateInstallerListsFailed}! {LogStrings.ViewLogs}");
+                Logger.Fatal(LogStrings.CreateInstallerListsFailed);
+                Logger.Fatal(Util.FormatException(e));
+                return false;
+            }
+        }
+
+        private bool AdjustSteamVrSettings(ref InstallModuleProgress control) {
+
+            bool overallSuccess = true;
+
+            try {
+
+                control.LogInfo(LogStrings.DisablingSteamVrHome);
+                Logger.Info(LogStrings.DisablingSteamVrHome);
+
+                OpenVRUtil.DisableSteamVrHome();
+                overallSuccess = true;
+
+            } catch ( Exception e ) {
+                control.LogError($"{LogStrings.FailDisableSteamVrHome}! {LogStrings.ViewLogs}");
+                Logger.Fatal(LogStrings.FailDisableSteamVrHome);
+                Logger.Fatal(Util.FormatException(e));
+                overallSuccess = false;
+            }
+
+            try {
+
+                control.LogInfo(LogStrings.EnablingSteamVrAdvancedSettings);
+                Logger.Info(LogStrings.EnablingSteamVrAdvancedSettings);
+
+                OpenVRUtil.EnableAdvancedSettings();
+
+                overallSuccess = overallSuccess && true;
+
+            } catch ( Exception e ) {
+                control.LogError($"{LogStrings.FailEnableSteamVrAdvancedSettings}! {LogStrings.ViewLogs}");
+                Logger.Fatal(LogStrings.FailEnableSteamVrAdvancedSettings);
+                Logger.Fatal(Util.FormatException(e));
+                overallSuccess = overallSuccess && false;
+            }
+
+            return overallSuccess;
+        }
+
+        private bool RegisterProtocolLink(string target, ref InstallModuleProgress control) {
+
+            var amethystInstallerExecutable = Path.GetFullPath(Path.Combine(target, "Amethyst-Installer.exe"));
+
+            try {
+
+                control.LogInfo(LogStrings.RegisteringAmethystProtocolLink);
+                Logger.Info(LogStrings.RegisteringAmethystProtocolLink);
+
+                // Get root key
+                RegistryKey amethystKey = WindowsUtils.GetKey(Registry.ClassesRoot, "amethyst", true);
+
+                // Write to root key
+                amethystKey.SetValue(string.Empty,      $"URL:Amethyst Protocol",   RegistryValueKind.String);  // (Default)
+                amethystKey.SetValue("ProtocolVersion", 1,                          RegistryValueKind.DWord);   // ProtocolVersion
+                amethystKey.SetValue("URL Protocol",    string.Empty,               RegistryValueKind.String);
+
+                // Icon
+                RegistryKey iconKey = WindowsUtils.GetKey(amethystKey, "DefaultIcon", true);
+                iconKey.SetValue(string.Empty, "Amethyst.exe,0", RegistryValueKind.String);
+
+                // Command
+                RegistryKey shellKey    = WindowsUtils.GetKey(amethystKey, "shell", true);
+                RegistryKey openKey     = WindowsUtils.GetKey(shellKey, "open", true);
+                RegistryKey commandKey  = WindowsUtils.GetKey(openKey, "command", true);
+                commandKey.SetValue(string.Empty, $"\"{amethystInstallerExecutable}\" \"%1\" %*", RegistryValueKind.String);
+
+                return true;
+
+            } catch ( Exception e ) {
+                control.LogError($"{LogStrings.FailRegisterAmethystProtocolLink}! {LogStrings.ViewLogs}");
+                Logger.Fatal(LogStrings.FailRegisterAmethystProtocolLink);
+                Logger.Fatal(Util.FormatException(e));
+                return false;
+            }
         }
     }
 }

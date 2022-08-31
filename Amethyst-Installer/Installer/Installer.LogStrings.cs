@@ -21,6 +21,15 @@
         public const string CreatingDesktopEntry                = "Creating desktop shortcut...";
         public const string FailedCreateDesktopEntry            = "Failed to create desktop shortcut";
         public const string InstalledAmethystSuccess            = "Successfully installed Amethyst!";
+        public const string CreatingUpgradeList                 = "Creating upgrade list...";
+        public const string CreatingUninstallList               = "Creating uninstall list...";
+        public const string CreateInstallerListsFailed          = "Failed to write installer config";
+        public const string DisablingSteamVrHome                = "Disabling SteamVR home...";
+        public const string FailDisableSteamVrHome              = "Failed to disable SteamVR home";
+        public const string EnablingSteamVrAdvancedSettings     = "Enabling SteamVR advanced settings...";
+        public const string FailEnableSteamVrAdvancedSettings   = "Failed to enable SteamVR advanced settings";
+        public const string RegisteringAmethystProtocolLink     = "Registering Amethyst protocol link...";
+        public const string FailRegisterAmethystProtocolLink    = "Failed to register Amethyst protocol link";
 
         // exe-module
         public const string InstallingExe                       = "Installing {0}...";

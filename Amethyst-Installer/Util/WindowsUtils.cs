@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,6 +39,23 @@ namespace amethyst_installer_gui {
                 revNumAsInt32,
                 ( int ) ( buildNumber ?? int.MinValue )
             );
+        }
+
+        /// <summary>
+        /// Opens a registry, and creates it if it doesn't exist
+        /// </summary>
+        /// <param name="registryKey">Registry Key</param>
+        /// <param name="name">Name or path of the subkey to open.</param>
+        /// <param name="writable">Set to true if you need write access to the key.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RegistryKey GetKey(RegistryKey registryKey, string name, bool writable = false) {
+            
+            RegistryKey finalKey = registryKey.OpenSubKey(name, writable);
+            if ( finalKey == null ) {
+                finalKey = registryKey.CreateSubKey(name, writable);
+            }
+
+            return finalKey;
         }
 
         /// <summary>
