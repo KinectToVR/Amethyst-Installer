@@ -272,6 +272,22 @@ namespace amethyst_installer_gui {
 
             // Graceful close
             Application.Current.Shutdown(( int ) exitCode);
+
+#if !DEBUG
+            // Clear the temp directory
+            // Directory.Delete(Constants.AmethystTempDirectory, true);
+
+            // rmdir /Q /S nonemptydir
+
+            // yes we use taskkill, I don't want to deal with all the bullshit of "bad PID" using the P/Invoke approach
+            // besides taskkill is garuanteed to be on the current install anyway
+            var clearDirProc = Process.Start(new ProcessStartInfo() {
+                FileName = "cmd.exe",
+                Arguments = $"/C timeout 10 && rmdir /Q /S {Constants.AmethystTempDirectory}",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true
+            });
+#endif
         }
 
         // https://floating-point-gui.de/errors/comparison/
