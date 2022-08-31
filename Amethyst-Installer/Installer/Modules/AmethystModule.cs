@@ -345,8 +345,22 @@ if upgrade no
 
                 // Dump the list of files to uninstall for this specific Amethyst build for later installer builds
                 // This list will be used during the uninstall process later
+                // Attempt to grab the list from remote first
+
                 string uninstallListPath = Path.GetFullPath(Path.Combine(Constants.AmethystConfigDirectory, "UninstallList.json"));
-                Util.ExtractResourceToFile("UninstallList.json", uninstallListPath);
+                try {
+                    Logger.Info("Fetching uninstall list...");
+                    var uninstallList = Download.GetStringAsync(Constants.ApiDomain + $"amethyst/{Module.InternalVersion}/items");
+                    File.WriteAllText(uninstallListPath, uninstallList);
+                    Logger.Info("Fetched uninstall list!");
+
+                } catch ( Exception e ) {
+                    Logger.Fatal("Failed to fetch uninstall list!");
+                    Logger.Fatal(Util.FormatException(e));
+
+                    Logger.Warn("Using fallback, possibly out to date...");
+                    Util.ExtractResourceToFile("UninstallList.json", uninstallListPath);
+                }
 
                 return true;
 
