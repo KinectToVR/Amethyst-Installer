@@ -38,6 +38,7 @@ namespace amethyst_installer_gui.Pages {
 
             logsPathTextPre.Content = Localisation.Logs_DirectoryIsLocatedHere + " ";
             logsPathLink.Text = Constants.AmethystLogsDirectory;
+            logsPathLink.Foreground = WindowsColorHelpers.AccentLight;
 
             scrollToBottomQueued = true;
 
