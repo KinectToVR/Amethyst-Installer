@@ -13,7 +13,7 @@
         Background="#FF2B2B2B" Foreground="#FFFFFFFF"
         MinWidth="256"
         MaxWidth="679"
-        Title="WinUI3MessageBox" Height="450" Width="800">
+        Title="WinUI3MessageBox" Height="450" Width="679">
     <Border BorderThickness="1" BorderBrush="#FF3F3F3F" SnapsToDevicePixels="True" MouseDown="Border_MouseDown">
         <Grid>
             <Grid.RowDefinitions>
@@ -32,7 +32,7 @@
                 <Button x:Name="Close" Grid.Column="1" Width="33" Height="33" IsTabStop="False" Content="&#xE8BB;" Style="{StaticResource TitlebarButton}" Margin="0,0,33,0" VerticalAlignment="Bottom" Click="Close_Click"/>
             </Grid>
             <StackPanel Grid.Row="1" Orientation="Vertical" Margin="24,0,24,30" SnapsToDevicePixels="True">
-                <Label x:Name="message" TextOptions.TextRenderingMode="Grayscale" SnapsToDevicePixels="True" FontFamily="Segoe UI" FontSize="14">Lorem ipsum dolor sit amet, adispicing elit.</Label>
+                <TextBlock x:Name="message" TextOptions.TextRenderingMode="Grayscale" SnapsToDevicePixels="True" FontFamily="Segoe UI" FontSize="14" TextWrapping="WrapWithOverflow">Lorem ipsum dolor sit amet, adispicing elit.</TextBlock>
             </StackPanel>
             <Border Grid.Row="2" Background="#FF202020" Padding="24" BorderBrush="#FF1D1D1D" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
                 <Grid SnapsToDevicePixels="True">

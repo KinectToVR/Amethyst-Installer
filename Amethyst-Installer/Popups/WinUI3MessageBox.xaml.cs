@@ -17,7 +17,8 @@ namespace amethyst_installer_gui.Popups {
             titleContainer.Text = title;
             Title = title;
 
-            message.Content = caption;
+            message.Inlines.Clear();
+            message.Text = caption;
 
             dialogButton_Primary.Content = buttonPrimaryText;
             dialogButton_Secondary.Content = buttonSecondaryText;
