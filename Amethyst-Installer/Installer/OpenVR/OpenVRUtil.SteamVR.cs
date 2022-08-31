@@ -201,5 +201,73 @@ namespace amethyst_installer_gui.Installer {
 
             return new Vec2(sizeX, sizeY);
         }
+
+        /// <summary>
+        /// Disables SteamVR Home
+        /// </summary>
+        /// <returns>Whether SteamVR Home could be disabled successfully</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DisableSteamVrHome() {
+
+            try {
+                // Try loading steam vr settings in case
+                LoadSteamVRSettings();
+                if ( s_steamvrSettings == null ) {
+                    if ( s_steamvrSettings == null ) {
+                        Logger.Warn("SteamVR Settings doesn't exist! Has SteamVR been run at least once?");
+                        return false;
+                    }
+                }
+
+                // Now try force enabling the driver
+                if ( s_steamvrSettings["steamvr"] == null )
+                    s_steamvrSettings["steamvr"] = new JObject();
+
+                s_steamvrSettings["steamvr"]["enableHomeApp"] = false;
+                SaveSteamVrSettings();
+                return true;
+
+            } catch ( Exception ex ) {
+                // Oh no, the user has an antivirus probably
+                // This isn't a critical exception, so we catch it
+                Logger.Error(Util.FormatException(ex));
+                Logger.Warn("SteamVR home couldn't be disabled!");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Enables SteamVR advanced settings
+        /// </summary>
+        /// <returns>Whether SteamVR Advanced Settings could be enabled or not</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool EnableAdvancedSettings() {
+
+            try {
+                // Try loading steam vr settings in case
+                LoadSteamVRSettings();
+                if ( s_steamvrSettings == null ) {
+                    if ( s_steamvrSettings == null ) {
+                        Logger.Warn("SteamVR Settings doesn't exist! Has SteamVR been run at least once?");
+                        return false;
+                    }
+                }
+
+                // Now try force enabling the driver
+                if ( s_steamvrSettings["steamvr"] == null )
+                    s_steamvrSettings["steamvr"] = new JObject();
+
+                s_steamvrSettings["steamvr"]["showAdvancedSettings"] = true;
+                SaveSteamVrSettings();
+                return true;
+
+            } catch ( Exception ex ) {
+                // Oh no, the user has an antivirus probably
+                // This isn't a critical exception, so we catch it
+                Logger.Error(Util.FormatException(ex));
+                Logger.Warn("SteamVR advanced settings couldn't be enabled!");
+                return false;
+            }
+        }
     }
 }
