@@ -38,11 +38,13 @@ namespace amethyst_installer_gui.Commands {
 
             // Init command list from above list
             m_commandList = new ICommand[m_types.Length - 1]; // subtract 1 because the interface itself is to be excluded
+            int indexer = 0;
             for (int i = 0; i < m_types.Length; i++) {
                 // Can't implement the interface itself, skip it!
                 if ( m_types[i] == typeof(ICommand) )
                     continue;
-                m_commandList[i] = (ICommand) Activator.CreateInstance(m_types[i]);
+                m_commandList[indexer] = (ICommand) Activator.CreateInstance(m_types[i]);
+                indexer++;
             }
         }
 
