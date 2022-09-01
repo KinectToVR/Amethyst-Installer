@@ -42,55 +42,29 @@ namespace amethyst_installer_gui.Protocol {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ParseCommands(string[] args) {
 
+            // Is this even a protocol command?
+            if ( !args[0].ToLowerInvariant().StartsWith("amethyst://") ) {
+                return false;
+            }
+
+            // Remove amethyst:// from args
+            args[0] = args[0].Substring(11);
+            // Remove trailing /
+            args[args.Length - 1] = args[args.Length - 1].TrimEnd('/');
+
             for ( int i = 0; i < args.Length; i++ ) {
 
-                Console.WriteLine(args[i]);
+                // For each command
+                for ( int j = 0; j < m_commandList.Length; j++ ) {
 
-                // Check if this item matches a command or not
-                if ( IsCommand(ref args[i], out string cmd) ) {
-
-                    // For each command
-                    for ( int j = 0; j < m_commandList.Length; j++ ) {
-
-                        if ( ShouldExecute(ref m_commandList[j], ref cmd) ) {
-                            return m_commandList[j].Execute(ExtractParameters(ref args, i));
-                        }
+                    if ( ShouldExecute(ref m_commandList[j], ref args[i]) ) {
+                        return m_commandList[j].Execute(ExtractParameters(ref args, i));
                     }
                 }
             }
 
             Console.ReadKey();
             return false;
-        }
-
-        /// <summary>
-        /// Returns whether the input string is a command, and a formatted command (without a command prefix) if valid
-        /// </summary>
-        /// <param name="input">The input parameter</param>
-        /// <param name="formattedCommand">The command itself</param>
-        /// <returns>Whether the input is a valid command or not</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsCommand(ref string input, out string formattedCommand) {
-
-            formattedCommand = string.Empty;
-
-            // --XXXXX
-            if ( input.Length > 3 && input[0] == '-' && input[1] == '-' ) {
-
-                formattedCommand = input.Substring(2);
-
-                // -XXXXX
-            } else if ( input.Length > 2 && input[0] == '-' ) {
-
-                formattedCommand = input.Substring(1);
-
-                // /XXXXX
-            } else if ( input.Length > 2 && input[0] == '/' ) {
-
-                formattedCommand = input.Substring(1);
-            }
-            formattedCommand = formattedCommand.ToLowerInvariant();
-            return formattedCommand.Length > 0;
         }
 
         /// <summary>

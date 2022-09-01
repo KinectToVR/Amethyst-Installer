@@ -10,6 +10,7 @@ namespace amethyst_installer_gui.Protocol {
             Logger.Info("Received protocol command \"notpowered\"!");
             Logger.Info("Attempting to fix E_NUI_NOTPOWERED...");
             KinectUtil.FixNotPowered();
+            Logger.Info("Done!");
             return true;
         }
     }
