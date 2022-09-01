@@ -2,6 +2,7 @@ using amethyst_installer_gui.Commands;
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
 using amethyst_installer_gui.PInvoke;
+using amethyst_installer_gui.Protocol;
 using System;
 using System.IO;
 using System.Media;
@@ -40,7 +41,7 @@ namespace amethyst_installer_gui {
             }
 
             CommandParser parser = new CommandParser();
-            if ( !parser.ParseCommands(e.Args) ) {
+            if ( !ProtocolParser.ParseCommands(e.Args) && !parser.ParseCommands(e.Args) ) {
 
                 Init();
 

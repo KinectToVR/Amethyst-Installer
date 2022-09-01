@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2CB67156-4436-4DC2-B892-52B8F69B9591}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>amethyst_installer_gui</RootNamespace>
     <AssemblyName>Amethyst-Installer</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
@@ -303,6 +303,9 @@
     <Compile Include="Util\Localisation\LocaleManager.cs" />
     <Compile Include="Util\Localisation\Localisation.cs" />
     <Compile Include="Util\Logger.cs" />
+    <Compile Include="Util\Protocol\IProtocolCommand.cs" />
+    <Compile Include="Util\Protocol\ProtocolNotPowered.cs" />
+    <Compile Include="Util\Protocol\ProtocolParser.cs" />
     <Compile Include="Util\SoundPlayer.cs" />
     <Compile Include="Installer\Uninstaller\UninstallUtil.cs" />
     <Compile Include="Util\Util.cs" />
