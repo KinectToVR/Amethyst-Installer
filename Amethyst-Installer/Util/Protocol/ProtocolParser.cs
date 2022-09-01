@@ -43,7 +43,7 @@ namespace amethyst_installer_gui.Protocol {
         public static bool ParseCommands(string[] args) {
 
             // Is this even a protocol command?
-            if ( !args[0].ToLowerInvariant().StartsWith("amethyst://") ) {
+            if ( args.Length == 0 || !args[0].ToLowerInvariant().StartsWith("amethyst://") ) {
                 return false;
             }
 
