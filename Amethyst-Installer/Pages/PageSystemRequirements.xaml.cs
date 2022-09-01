@@ -112,9 +112,9 @@ namespace amethyst_installer_gui.Pages {
 
             vrSystemFootnote.Inlines.Clear();
             vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringFirstPart);
-            Hyperlink vrSystemFootnoteHyperlink = new Hyperlink()
-                {
-                NavigateUri = new Uri(Util.GenerateDocsURL("alvr")),
+            Hyperlink vrSystemFootnoteHyperlink = new Hyperlink() {
+                NavigateUri = new Uri(Util.GenerateDocsURL("standalones")),
+                Foreground = WindowsColorHelpers.AccentLight,
             };
             vrSystemFootnoteHyperlink.Inlines.Add(vrSystemFootnoteStringHyperlink);
 
@@ -188,7 +188,8 @@ namespace amethyst_installer_gui.Pages {
             minPlayspaceSizeDescription.Inlines.Add(compatibleDeviceDescriptionStringFirstPart);
             Hyperlink minPlayspaceSizeHyperLink = new Hyperlink()
                 {
-                NavigateUri = new Uri(Util.GenerateDocsURL("playspace"))
+                NavigateUri = new Uri(Util.GenerateDocsURL("playspace")),
+                Foreground = WindowsColorHelpers.AccentLight,
             };
             minPlayspaceSizeHyperLink.Inlines.Add(compatibleDeviceDescriptionStringHyperlink);
             // Disable tabbing if not link
