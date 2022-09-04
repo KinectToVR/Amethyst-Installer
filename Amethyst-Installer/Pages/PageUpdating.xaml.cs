@@ -34,12 +34,6 @@ namespace amethyst_installer_gui.Pages {
         private DownloadItem m_downloadControl;
         private InstallModuleProgress m_installingControl;
 
-        private int m_downloadIndex = 0;
-        private TimeoutClock m_timer;
-        private long m_lastTotalBytesDownloaded = 0;
-        private long m_totalBytesDownloaded = 0;
-        private long m_transferSpeed = 0;
-
         private int m_installedModuleCount = 0;
 
         #region Downloading
@@ -51,14 +45,6 @@ namespace amethyst_installer_gui.Pages {
         private void StartDownloadSequence() {
 
             MainWindow.Instance.sidebar_download.State = TaskState.Busy;
-
-            m_timer = new TimeoutClock(1000); // Update every second
-            m_timer.Elapsed += Timer_Elapsed;
-            m_timer.Start();
-
-            // TODO: Download progress in taskbar
-
-            // https://docs.microsoft.com/en-us/dotnet/api/system.windows.shell.taskbariteminfo?view=netframework-4.6.2
 
             // Reset progress bar
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
@@ -76,89 +62,67 @@ namespace amethyst_installer_gui.Pages {
 
             displayedItem.Content = m_downloadControl;
 
-            m_downloadIndex = 0;
-            DownloadModule(m_downloadIndex);
+            // Setup events
+            DownloadManager.OnDownloadingNewModule += DownloadNewModule;
+            DownloadManager.OnTransferSpeedChanged += TransferSpeedChanged;
+            DownloadManager.OnDownloadFailed += DownloadFailed;
+            DownloadManager.OnDownloadProgressChanged += DownloadProgressChanged;
+            DownloadManager.OnDownloadComplete += DownloadComplete;
+            DownloadManager.OnAllDownloadsComplete += DownloadedAllModules;
+
+            // Start downloading
+            DownloadManager.Init();
         }
 
-        private void DownloadModule(int index) {
+        private void DownloadNewModule(int index) {
+            Dispatcher.Invoke(() => {
+                Logger.Info(index);
+                MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
+                MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
-            Logger.Info(index);
-            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
-            MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
-
-            var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
-            m_downloadControl.Title = moduleToInstall.DisplayName;
-            m_downloadControl.TotalBytes = moduleToInstall.DownloadSize;
-            m_downloadControl.DownloadedBytes = 0;
-            m_downloadControl.IsPending = false;
-            m_downloadControl.DownloadFailed = false;
-            m_downloadControl.IsErrorCritical = moduleToInstall.IsCritical;
-            m_downloadControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Download_FailureCritical : Localisation.Download_Failure;
-            m_downloadControl.Completed = false;
-            m_downloadControl.Tag = index;
-
-            // Reset download progress state
-            m_timer.Stop();
-            m_timer.Start();
-            m_lastTotalBytesDownloaded = 0;
-            m_totalBytesDownloaded = 0;
-            m_transferSpeed = 0;
-
-            try {
-                Task.Run(() => {
-                    try {
-                        Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, OnDownloadComplete, m_downloadIndex).GetAwaiter().GetResult();
-                    } catch ( Exception e ) {
-                        Logger.Fatal($"Failed to download file {moduleToInstall.Remote.Filename}!");
-                        Logger.Fatal(Util.FormatException(e));
-                        m_downloadControl.Dispatcher.Invoke(() => OnDownloadFailed(index));
-                    }
-                });
-            } catch ( OperationCanceledException ) {
-                OnDownloadFailed(index);
-            } catch ( TimeoutException ) {
-                OnDownloadFailed(index);
-            }
+                var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
+                m_downloadControl.Title = moduleToInstall.DisplayName;
+                m_downloadControl.TotalBytes = moduleToInstall.DownloadSize;
+                m_downloadControl.DownloadedBytes = 0;
+                m_downloadControl.IsPending = false;
+                m_downloadControl.DownloadFailed = false;
+                m_downloadControl.IsErrorCritical = moduleToInstall.IsCritical;
+                m_downloadControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Download_FailureCritical : Localisation.Download_Failure;
+                m_downloadControl.Completed = false;
+                m_downloadControl.Tag = index;
+            });
         }
 
         private void downloadModule_Retry(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
 
             // Attempt redownload
-
-            // TODO: Track retry attempts
             DownloadItem downloadItem = (DownloadItem) sender;
             Logger.Info($"Retrying to download module with id {InstallerStateManager.ModulesToInstall[( int ) downloadItem.Tag].Id}...");
-            // DownloadModule(( int ) downloadItem.Tag);
-            DownloadModule(( int ) downloadItem.Tag);
+            DownloadManager.DownloadModule(( int ) downloadItem.Tag);
 
         }
 
         // Progress update
-        public void DownloadModule_ProgressCallback(long value, int identifier) {
+        public void DownloadProgressChanged(long value, int identifier) {
             m_downloadControl.Dispatcher.Invoke(() => {
-
                 // Check if we closed the app first, assume exit if instance is null
                 if ( MainWindow.Instance == null )
                     return;
 
-                // if ( identifier == m_downloadIndex && m_currentProgressControl != null ) {
                 if ( m_downloadControl != null ) {
-
                     m_downloadControl.DownloadedBytes = value;
-                    m_totalBytesDownloaded = value;
 
                     // Update taskbar progress
-                    if ( identifier == m_downloadIndex ) {
+                    if ( identifier == DownloadManager.DownloadIndex ) {
                         MainWindow.Instance.taskBarItemInfo.ProgressValue = m_downloadControl.DownloadedBytes / ( double ) m_downloadControl.TotalBytes;
                     }
                 }
             });
         }
 
-        private void OnDownloadComplete() {
+        private void DownloadComplete() {
             m_downloadControl.Dispatcher.Invoke(() => {
-
                 // Check if we closed the app first, assume exit if instance is null
                 if ( MainWindow.Instance == null )
                     return;
@@ -166,68 +130,44 @@ namespace amethyst_installer_gui.Pages {
                 // There is a VERY slim chance of a file not setting downloaded bytes to total bytes due to multithreading
                 // Hence we set it here to be safe
                 m_downloadControl.DownloadedBytes = m_downloadControl.TotalBytes;
-
-                // TODO: Verify checksum
-                string filePath = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, InstallerStateManager.ModulesToInstall[( int ) m_downloadControl.Tag].Remote.Filename));
-                if ( Util.GetChecksum(filePath) != InstallerStateManager.ModulesToInstall[m_downloadIndex].Remote.Checksum ) {
-
-                    m_downloadControl.DownloadFailed = true;
-                    Logger.Fatal("Invalid checksum!");
-                    OnDownloadFailed(m_downloadIndex);
-                    return;
-                }
-
                 m_downloadControl.Completed = true;
-                m_downloadIndex++;
-
-                if ( m_downloadIndex == InstallerStateManager.ModulesToInstall.Count ) {
-                    // ActionButtonPrimary.Visibility = Visibility.Visible;
-                    MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
-                    OnAllDownloadsComplete();
-                    Logger.Info("Downloaded all modules successfully!");
-                } else {
-                    Logger.Info("Download complete!");
-                    // DownloadModule(m_downloadIndex);
-                    DownloadModule(m_downloadIndex);
-                }
             });
         }
 
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+        private void DownloadedAllModules() {
+            m_downloadControl.Dispatcher.Invoke(() => {
+                // Check if we closed the app first, assume exit if instance is null
+                if ( MainWindow.Instance == null )
+                    return;
 
+                MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
+
+                MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
+                MainWindow.Instance.taskBarItemInfo.ProgressValue = 1.0;
+                
+                OnAllDownloadsComplete();
+            });
+        }
+
+        private void TransferSpeedChanged() {
             try {
-
-                // Calculate the transfer speed every second
-                m_transferSpeed = m_totalBytesDownloaded - m_lastTotalBytesDownloaded;
-                m_lastTotalBytesDownloaded = m_totalBytesDownloaded;
-
                 // Force update the UI on the UI thread
                 if ( m_downloadControl != null )
-                    m_downloadControl.Dispatcher.Invoke(() => m_downloadControl.TransferSpeed = m_transferSpeed);
+                    m_downloadControl.Dispatcher.Invoke(() => m_downloadControl.TransferSpeed = DownloadManager.TransferSpeed);
             } catch ( Exception ex ) {
                 Logger.Fatal(Util.FormatException(ex));
             }
         }
 
-        private void OnDownloadFailed(int index) {
+        private void DownloadFailed() {
+            m_downloadControl.Dispatcher.Invoke(() => {
 
-            var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
+                m_downloadControl.DownloadFailed = true;
+                m_downloadControl.IsPending = false;
 
-            if ( moduleToInstall.IsCritical ) {
-                Logger.Fatal($"Critical download \"{moduleToInstall.Remote.Filename}\" timed out! Halting downloads...");
-            } else {
-                Logger.Error($"Download \"{moduleToInstall.Remote.Filename}\" timed out!");
-            }
-
-            // TODO: Track failure attempts, and auto-retry if under some threshold
-
-            m_downloadControl.DownloadFailed = true;
-            m_downloadControl.IsPending = false;
-
-            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
-            MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
-
-            m_timer.Stop();
+                MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
+                MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
+            });
         }
 
         #endregion

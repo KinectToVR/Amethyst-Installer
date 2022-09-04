@@ -183,6 +183,7 @@
       <DependentUpon>TextView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Installer\AnalyticsData.cs" />
+    <Compile Include="Installer\DownloadManager.cs" />
     <Compile Include="Installer\Installer.Enums.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Core.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Requirements.cs" />
