@@ -41,7 +41,7 @@
 
         // extract-archive
         public const string ExtractingArchive                   = "Extracting archive {0}...";
-        public const string ExtractingArchiveSuccess            = "Successfully extracted {0}!...";
+        public const string ExtractingArchiveSuccess            = "Successfully extracted {0}!";
         public const string FailedExtractArchive                = "Failed to extract {0}";
 
         // dark-extract
