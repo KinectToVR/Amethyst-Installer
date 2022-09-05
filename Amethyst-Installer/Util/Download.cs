@@ -39,9 +39,11 @@ namespace amethyst_installer_gui {
             // Basically this is only here so that I can debug faster
             // If the file exists assume it's been downloaded properly and is cached
 
-            // C:\Users\hyblocker\dev\Amethyst-Installer\Amethyst-Installer\bin\x64\Debug\temp\amethyst-latest.zip
             if ( File.Exists(fullPath) ) {
-                progress.Invoke(long.MaxValue);
+                Logger.Info($"Using cached file {fullPath}...");
+                progress.Invoke(long.MaxValue, identifier);
+                if ( onComplete != null )
+                    onComplete();
                 return;
             }
 #endif

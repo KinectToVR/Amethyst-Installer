@@ -22,7 +22,8 @@ namespace amethyst_installer_gui.Installer.Modules {
                     if ( !Directory.Exists(tempDirectory) )
                         Directory.CreateDirectory(tempDirectory);
 
-                    ZipFile.ExtractToDirectory(sourceZip, tempDirectory);
+                    InstallUtil.ExtractZipToDirectory(sourceZip, tempDirectory);
+                    // ZipFile.ExtractToDirectory(sourceZip, tempDirectory);
 
                     Logger.Info(string.Format(LogStrings.ExtractingArchiveSuccess, sourceFile));
                     control.LogInfo(string.Format(LogStrings.ExtractingArchiveSuccess, sourceFile));
