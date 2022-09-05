@@ -2,6 +2,7 @@ using amethyst_installer_gui.Controls;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace amethyst_installer_gui.Installer.Modules {
     public class DarkModule : ModuleBase {
@@ -36,12 +37,50 @@ namespace amethyst_installer_gui.Installer.Modules {
                     Arguments = $"{inputFileFullPath} -x {Constants.AmethystTempDirectory}",
                     CreateNoWindow = true,
                     WindowStyle = ProcessWindowStyle.Hidden,
+
+                    // Verbose error handling
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    RedirectStandardInput = false,
+                    UseShellExecute = false,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8,
                 };
                 var proc = Process.Start(procStart);
+                // Redirecting process output so that we can log what happened
+                StringBuilder stdout = new StringBuilder();
+                StringBuilder stderr = new StringBuilder();
+                proc.OutputDataReceived += (sender, args) => {
+                    if ( args.Data != null )
+                        stdout.AppendLine(args.Data);
+                };
+                proc.ErrorDataReceived += (sender, args) => {
+                    if ( args.Data != null )
+                        stderr.AppendLine(args.Data);
+                };
+                proc.BeginErrorReadLine();
+                proc.BeginOutputReadLine();
                 proc.WaitForExit();
 
-                Logger.Info(string.Format(LogStrings.ExtractDarkSuccess, sourceFile));
-                control.LogInfo(string.Format(LogStrings.ExtractDarkSuccess, sourceFile));
+                if ( stdout.Length > 0 )
+                    Logger.Info(stdout.ToString().Trim());
+
+                // https://github.com/wixtoolset/wix3/blob/6b461364c40e6d1c487043cd0eae7c1a3d15968c/src/tools/dark/dark.cs#L54
+                // Exit codes for DARK:
+                // 
+                // 0 - Success
+                // 1 - Error
+                if ( proc.ExitCode == 1 ) {
+                    // Assume WiX failed
+                    if ( stderr.Length > 0 )
+                        Logger.Fatal(stderr.ToString().Trim());
+                    Logger.Fatal($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}!");
+                    control.LogError($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}! {LogStrings.ViewLogs}");
+                    return false;
+                } else {
+                    Logger.Info(string.Format(LogStrings.ExtractDarkSuccess, sourceFile));
+                    control.LogInfo(string.Format(LogStrings.ExtractDarkSuccess, sourceFile));
+                }
             } catch ( Exception e ) {
 
                 Logger.Fatal($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}:\n{Util.FormatException(e)})");
