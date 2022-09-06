@@ -81,7 +81,9 @@ namespace amethyst_installer_gui.Installer {
                         RedirectStandardOutput = true,
                         UseShellExecute = false,
                         CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        StandardOutputEncoding = System.Text.Encoding.UTF8,
+                        StandardErrorEncoding = System.Text.Encoding.UTF8
                     });
                     var output = vrpathregProc.StandardOutput.ReadToEnd();
                     vrpathregProc.WaitForExit();
@@ -150,7 +152,9 @@ namespace amethyst_installer_gui.Installer {
                         RedirectStandardOutput = true,
                         UseShellExecute = false,
                         CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        StandardOutputEncoding = System.Text.Encoding.UTF8,
+                        StandardErrorEncoding = System.Text.Encoding.UTF8
                     });
                     // var output = vrpathregProc.StandardOutput.ReadToEnd();
                     vrpathregProc.WaitForExit();
@@ -219,7 +223,9 @@ namespace amethyst_installer_gui.Installer {
                         RedirectStandardOutput = true,
                         UseShellExecute = false,
                         CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        StandardOutputEncoding = System.Text.Encoding.UTF8,
+                        StandardErrorEncoding = System.Text.Encoding.UTF8
                     });
                     // var output = vrpathregProc.StandardOutput.ReadToEnd();
                     vrpathregProc.WaitForExit();
