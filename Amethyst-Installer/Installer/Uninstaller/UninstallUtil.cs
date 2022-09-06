@@ -248,12 +248,13 @@ namespace amethyst_installer_gui {
 
                 var HKLMSoftware = Registry.LocalMachine.OpenSubKey(@"SOFTWARE", true);
                 var K2VRSoftware = HKLMSoftware.OpenSubKey("K2VR Team", true);
-                var Ame = K2VRSoftware.OpenSubKey("Amethyst", true);
-                if ( Ame != null ) {
-                    Ame.Close();
-                    K2VRSoftware.DeleteSubKey("Amethyst");
-                }
                 if ( K2VRSoftware != null ) {
+                    var Ame = K2VRSoftware.OpenSubKey("Amethyst", true);
+                    if ( Ame != null ) {
+                        Ame.Close();
+                        K2VRSoftware.DeleteSubKey("Amethyst");
+                    }
+
                     if ( K2VRSoftware.GetSubKeyNames().Length == 0 ) {
                         K2VRSoftware.Close();
                         HKLMSoftware.DeleteSubKey("K2VR Team");
