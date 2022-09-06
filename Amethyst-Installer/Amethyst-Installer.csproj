@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2CB67156-4436-4DC2-B892-52B8F69B9591}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>amethyst_installer_gui</RootNamespace>
     <AssemblyName>Amethyst-Installer</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
