@@ -32,6 +32,12 @@ namespace amethyst_installer_gui {
                     } else {
                         // If the entry Name is not empty, it's a file
                         string fullPath = Path.Combine(destinationDirectory, archiveEntry.FullName);
+
+                        // Ensure the directory exists, in case
+                        string dirName = Path.GetDirectoryName(fullPath);
+                        if ( !Directory.Exists(dirName) )
+                            Directory.CreateDirectory(dirName);
+
                         archiveEntry.ExtractToFile(fullPath, true);
                         
                         // Unblock all executable files
