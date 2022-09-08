@@ -68,11 +68,17 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
             MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
+            InstallManager.OnAllModulesComplete += OnInstalledAllModules;
+            // InstallManager.OnInstallingNewModule += OnInstalledAllModules;
+            InstallManager.OnModuleFailed += OnModuleFailed;
+            InstallManager.OnModuleInstalled += OnModuleInstalled;
+            InstallManager.Init();
+
             // Create controls
-            for (int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
+            for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
 
                 var module = InstallerStateManager.ModulesToInstall[i];
-                if ( !InstallerStateManager.ModuleTypes.ContainsKey(module.Install.Type )) {
+                if ( !InstallerStateManager.ModuleTypes.ContainsKey(module.Install.Type) ) {
                     Logger.Warn($"Module of type {module.Install.Type} couldn't be found! Skipping...");
                     continue;
                 }
@@ -105,71 +111,60 @@ namespace amethyst_installer_gui.Pages {
 
         private void InstallModule(int index) {
 
-            var module = InstallerStateManager.ModulesToInstall[index];
-            var moduleBase = InstallerStateManager.ModuleTypes[module.Install.Type];
-            moduleBase.Module = module; // This is for expected behaviour
+            // Setup the control
             var control =  m_installControls[index];
             control.ClearLog();
             control.State = TaskState.Busy;
             control.BringIntoView();
-            TaskState outState = TaskState.Question;
 
-            Task.Run(() => {
-                if ( moduleBase.Install(module.Remote.Filename, InstallerStateManager.AmethystInstallDirectory, ref control, out outState) ) {
-
-                    // Try executing post operations
-                    if ( module.Install.Post != null ) {
-                        if ( InstallerStateManager.ModulePostOps.ContainsKey(module.Install.Post) ) {
-                            var modulePost = InstallerStateManager.ModulePostOps[module.Install.Post];
-                            modulePost.OnPostOperation(ref control);
-                        } else {
-                            if ( module.Install.Post.Length > 0 ) {
-                                Logger.Warn($"Unknown post module {module.Install.Post}!");
-                            }
-                        }
-                    }
-
-                    // TODO: Handle failure
-                    
-                    ActionButtonPrimary.Dispatcher.Invoke(() => {
-                        OnModuleInstalled();
-                        control.State = outState;
-                    });
-                } else {
-                    control.Dispatcher.Invoke(() => OnModuleFailed(ref control));
-                }
-            });
+            // Execute the install process on a separate thread
+            Task.Run(() => InstallManager.InstallModule(index, ref control));
         }
 
-        private void OnModuleInstalled() {
-            m_installedModuleCount++;
-            if ( m_installedModuleCount == InstallerStateManager.ModulesToInstall.Count ) {
+        private void OnInstalledAllModules() {
+            Dispatcher.Invoke(() => {
+
                 m_nextButtonVisible = true;
                 ActionButtonPrimary.Visibility = Visibility.Visible;
                 MainWindow.Instance.sidebar_install.State = TaskState.Checkmark;
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0;
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
                 // SoundPlayer.PlaySound(SoundEffect.Focus);
-            } else {
-                InstallModule(m_installedModuleCount);
-            }
+            });
         }
 
-        private void OnModuleFailed(ref InstallModuleProgress control) {
-            m_failedToInstall = true;
-            control.State = TaskState.Error;
-            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
-            MainWindow.Instance.sidebar_install.State = TaskState.Error;
-            SoundPlayer.PlaySound(SoundEffect.Error);
+        private void OnModuleInstalled(TaskState state, int index) {
+            Dispatcher.Invoke(() => {
+                // Update UI state
+                var control =  m_installControls[index];
+                control.State = state;
 
-            m_nextButtonVisible = true;
-            ActionButtonPrimary.Visibility = Visibility.Visible;
-            ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
+                index++;
+                if ( index < InstallerStateManager.ModulesToInstall.Count )
+                    InstallModule(index);
+            });
+        }
 
-            ActionButtonSecondary.Visibility = Visibility.Visible;
-            ActionButtonSecondary.Content = Localisation.Installer_Action_Discord;
+        private void OnModuleFailed(int index) {
 
-            Util.ShowMessageBox(String.Format(Localisation.InstallFailure_Modal_Description, control.Title), Localisation.InstallFailure_Modal_Title, MessageBoxButton.OK);
+            var control =  m_installControls[index];
+
+            Dispatcher.Invoke(() => {
+                m_failedToInstall = true;
+                control.State = TaskState.Error;
+                MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
+                MainWindow.Instance.sidebar_install.State = TaskState.Error;
+                SoundPlayer.PlaySound(SoundEffect.Error);
+
+                m_nextButtonVisible = true;
+                ActionButtonPrimary.Visibility = Visibility.Visible;
+                ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
+
+                ActionButtonSecondary.Visibility = Visibility.Visible;
+                ActionButtonSecondary.Content = Localisation.Installer_Action_Discord;
+
+                Util.ShowMessageBox(String.Format(Localisation.InstallFailure_Modal_Description, control.Title), Localisation.InstallFailure_Modal_Title, MessageBoxButton.OK);
+            });
         }
 
         // Force only the first button to have focus
@@ -188,8 +183,8 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.SetButtonsHidden(true);
         }
 
-        public void OnButtonPrimary(object sender, RoutedEventArgs e) {}
-        public void OnButtonSecondary(object sender, RoutedEventArgs e) {}
+        public void OnButtonPrimary(object sender, RoutedEventArgs e) { }
+        public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
     }
 }

@@ -187,6 +187,7 @@
     <Compile Include="Installer\Installer.Enums.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Core.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.Requirements.cs" />
+    <Compile Include="Installer\InstallManager.cs" />
     <Compile Include="Installer\JSON\ModulesJSON.cs" />
     <Compile Include="Installer\K2EXUtil.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.Drivers.cs" />
