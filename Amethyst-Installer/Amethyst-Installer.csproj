@@ -197,6 +197,9 @@
     <Compile Include="Installer\KinectUtil\KinectUtil.NotReady.cs" />
     <Compile Include="Installer\KinectUtil\KinectUtil.SDK.cs" />
     <Compile Include="Installer\Modules\AmethystModule.cs" />
+    <Compile Include="Installer\Modules\Checks\CheckBase.cs" />
+    <Compile Include="Installer\Modules\Checks\CheckEnvVar.cs" />
+    <Compile Include="Installer\Modules\Checks\CheckVcredist.cs" />
     <Compile Include="Installer\Modules\DarkModule.cs" />
     <Compile Include="Installer\Modules\ExeModule.cs" />
     <Compile Include="Installer\Modules\ModuleBase.cs" />

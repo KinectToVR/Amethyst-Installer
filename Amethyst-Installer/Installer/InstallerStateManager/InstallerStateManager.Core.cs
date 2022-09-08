@@ -7,6 +7,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using amethyst_installer_gui.Installer.Modules;
+using amethyst_installer_gui.Installer.Modules.Checks;
 using amethyst_installer_gui.PInvoke;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -29,6 +30,7 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static Dictionary<string, int> ModuleIdLUT { get; private set; }
         public static Dictionary<string, PostBase> ModulePostOps { get; private set; }
+        public static Dictionary<string, CheckBase> ModuleCheckOps { get; private set; }
 
         public static string AmethystInstallDirectory;
 
@@ -62,6 +64,7 @@ namespace amethyst_installer_gui.Installer {
             ModuleTypes = new Dictionary<string, ModuleBase>();
             ModuleIdLUT = new Dictionary<string, int>();
             ModulePostOps = new Dictionary<string, PostBase>();
+            ModuleCheckOps = new Dictionary<string, CheckBase>();
 
             ModuleTypes.Add("amethyst", new AmethystModule());
             ModuleTypes.Add("exe", new ExeModule());
@@ -70,6 +73,8 @@ namespace amethyst_installer_gui.Installer {
 
             ModulePostOps.Add("kinectv1", new PostKinectV1());
             ModulePostOps.Add("kinectv2", new PostKinectV2());
+
+            ModuleCheckOps.Add("vcredist", new CheckVcredist());
 
             for ( int i = 0; i < API_Response.Modules.Count; i++ ) {
                 var module = API_Response.Modules[i];
