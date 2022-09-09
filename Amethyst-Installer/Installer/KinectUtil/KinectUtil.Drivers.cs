@@ -30,6 +30,26 @@ namespace amethyst_installer_gui.Installer {
         //
         // need to talk with Ella about this bit
 
+        /// <summary>
+        /// Returns whether an Xbox 360 Kinect is plugged in to the current machine
+        /// </summary>
+        public static bool IsKinectV1Present() {
+
+            // @TODO: Implement
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns whether an Xbox One Kinect is plugged in to the current machine
+        /// </summary>
+        public static bool IsKinectV2Present() {
+
+            // @TODO: Implement
+
+            return false;
+        }
+
         #endregion
     }
 }
