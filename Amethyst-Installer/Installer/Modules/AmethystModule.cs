@@ -327,8 +327,9 @@ if upgrade no
             Util.ForceKillProcess("pimaxclient");
 
             // WMR
-            // @TODO: Add WMR process names
-            // Util.ForceKillProcess("ReviveOverlay");
+            Util.ForceKillProcess("MixedRealityPortal.Brokered");
+            Util.ForceKillProcess("MixedRealityPortal");
+            Util.ForceKillProcess("WUDFHost");
 
             // Vive Wireless Software
             Util.ForceKillProcess("htcconnectionutility");
@@ -343,8 +344,29 @@ if upgrade no
 
             // SteamVR
             Util.ForceKillProcess("vrmonitor");
+            Util.ForceKillProcess("vrdashboard");
             Util.ForceKillProcess("vrserver");
+            Util.ForceKillProcess("vrservice");
+            Util.ForceKillProcess("vrserverhelper");
             Util.ForceKillProcess("vrcompositor");
+            Util.ForceKillProcess("vrstartup");
+            Util.ForceKillProcess("vrwebhelper");
+            Util.ForceKillProcess("overlay_viewer");
+            Util.ForceKillProcess("removeusbhelper");
+            Util.ForceKillProcess("restarthelper");
+            Util.ForceKillProcess("vrcmd");
+            Util.ForceKillProcess("vrpathreg");
+            Util.ForceKillProcess("vrprismhost");
+            Util.ForceKillProcess("vrurlhandler");
+
+            // SteamVR Lighthouse devices
+            Util.ForceKillProcess("vivelink");
+            Util.ForceKillProcess("vivetools");
+            Util.ForceKillProcess("vivebtdriver");
+            Util.ForceKillProcess("vivebtdriver_win10");
+            Util.ForceKillProcess("lighthouse_console");
+            Util.ForceKillProcess("lighthouse_watchman_update");
+            Util.ForceKillProcess("nrfutil");
 
             // VirtualDesktop
             Util.ForceKillProcess("virtualdesktop.streamer");
@@ -355,8 +377,29 @@ if upgrade no
 
             // SteamVR (again, just for good measure)
             Util.ForceKillProcess("vrmonitor");
+            Util.ForceKillProcess("vrdashboard");
             Util.ForceKillProcess("vrserver");
+            Util.ForceKillProcess("vrservice");
+            Util.ForceKillProcess("vrserverhelper");
             Util.ForceKillProcess("vrcompositor");
+            Util.ForceKillProcess("vrstartup");
+            Util.ForceKillProcess("vrwebhelper");
+            Util.ForceKillProcess("overlay_viewer");
+            Util.ForceKillProcess("removeusbhelper");
+            Util.ForceKillProcess("restarthelper");
+            Util.ForceKillProcess("vrcmd");
+            Util.ForceKillProcess("vrpathreg");
+            Util.ForceKillProcess("vrprismhost");
+            Util.ForceKillProcess("vrurlhandler");
+
+            // SteamVR Lighthouse devices (for good measure)
+            Util.ForceKillProcess("vivelink");
+            Util.ForceKillProcess("vivetools");
+            Util.ForceKillProcess("vivebtdriver");
+            Util.ForceKillProcess("vivebtdriver_win10");
+            Util.ForceKillProcess("lighthouse_console");
+            Util.ForceKillProcess("lighthouse_watchman_update");
+            Util.ForceKillProcess("nrfutil");
 
         }
 
