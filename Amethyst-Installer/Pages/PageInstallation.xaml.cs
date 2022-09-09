@@ -69,7 +69,6 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
             InstallManager.OnAllModulesComplete += OnInstalledAllModules;
-            // InstallManager.OnInstallingNewModule += OnInstalledAllModules;
             InstallManager.OnModuleFailed += OnModuleFailed;
             InstallManager.OnModuleInstalled += OnModuleInstalled;
             InstallManager.Init();
@@ -87,7 +86,6 @@ namespace amethyst_installer_gui.Pages {
 
                 InstallModuleProgress installControl = new InstallModuleProgress();
                 installControl.Title = module.DisplayName;
-                // installControl.State = ( TaskState ) (i % 5);
                 installControl.State = TaskState.Default;
                 if ( i != InstallerStateManager.ModulesToInstall.Count )
                     installControl.Margin = new Thickness(0, 0, 0, 8);
@@ -100,13 +98,6 @@ namespace amethyst_installer_gui.Pages {
             m_installedModuleCount = 0;
 
             InstallModule(m_installedModuleCount);
-
-            // TODO: Implement
-            // MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
-            // MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
-
-            // TODO: If installing Kinect 360 SDK, show EULA after extracting
-            // I have no fucking clue how that will even be implemented but that is a problem for future me!
         }
 
         private void InstallModule(int index) {

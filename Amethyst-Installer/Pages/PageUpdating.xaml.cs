@@ -2,22 +2,12 @@
 using amethyst_installer_gui.Installer;
 using Microsoft.NodejsTools.SharedProject;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shell;
-using TimeoutClock = System.Timers.Timer;
 
 namespace amethyst_installer_gui.Pages {
     /// <summary>
@@ -189,50 +179,30 @@ namespace amethyst_installer_gui.Pages {
 
             m_installedModuleCount = 0;
 
+            InstallManager.OnAllModulesComplete += OnInstalledAllModules;
+            InstallManager.OnModuleFailed += OnModuleFailed;
+            InstallManager.OnModuleInstalled += OnModuleInstalled;
+            InstallManager.Init();
+
             InstallModule(m_installedModuleCount);
         }
 
         private void InstallModule(int index) {
 
             var module = InstallerStateManager.ModulesToInstall[index];
-            var moduleBase = InstallerStateManager.ModuleTypes[module.Install.Type];
-            moduleBase.Module = module; // This is for expected behaviour
 
+            // Setup the control
             m_installingControl.ClearLog();
             m_installingControl.State = TaskState.Busy;
             m_installingControl.Title = module.DisplayName;
-            TaskState outState = TaskState.Busy;
+            m_installingControl.BringIntoView();
 
-            Task.Run(() => {
-                if ( moduleBase.Install(module.Remote.Filename, InstallerStateManager.AmethystInstallDirectory, ref m_installingControl, out outState) ) {
-
-                    // Try executing post operations
-                    if ( module.Install.Post != null ) {
-                        if ( InstallerStateManager.ModulePostOps.ContainsKey(module.Install.Post) ) {
-                            var modulePost = InstallerStateManager.ModulePostOps[module.Install.Post];
-                            modulePost.OnPostOperation(ref m_installingControl);
-                        } else {
-                            if ( module.Install.Post.Length > 0 ) {
-                                Logger.Warn($"Unknown post module {module.Install.Post}!");
-                            }
-                        }
-                    }
-
-                    // TODO: Handle failure
-
-                    m_installingControl.Dispatcher.Invoke(() => {
-                        OnModuleInstalled();
-                        m_installingControl.State = outState;
-                    });
-                } else {
-                    m_installingControl.Dispatcher.Invoke(() => OnModuleFailed(ref m_installingControl));
-                }
-            });
+            // Execute the install process on a separate thread
+            Task.Run(() => InstallManager.InstallModule(index, ref m_installingControl));
         }
 
-        private void OnModuleInstalled() {
-            m_installedModuleCount++;
-            if ( m_installedModuleCount == InstallerStateManager.ModulesToInstall.Count ) {
+        private void OnInstalledAllModules() {
+            Dispatcher.Invoke(() => {
                 MainWindow.Instance.sidebar_install.State = TaskState.Checkmark;
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0;
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.None;
@@ -252,27 +222,37 @@ namespace amethyst_installer_gui.Pages {
                             InstallerStateManager.AmethystInstallDirectory,
                             ShowWindow.SW_NORMAL);
 
+                        // Give the process time to start
                         Thread.Sleep(3000);
                     }
 
                     // Kill updater
                     m_installingControl.Dispatcher.Invoke(() => Util.Quit(ExitCodes.UpdateSuccess));
                 });
-
-            } else {
-                m_installingControl.State = TaskState.Busy;
-                InstallModule(m_installedModuleCount);
-            }
+            });
         }
 
-        private void OnModuleFailed(ref InstallModuleProgress control) {
-            control.State = TaskState.Error;
-            MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
-            MainWindow.Instance.sidebar_install.State = TaskState.Error;
-            SoundPlayer.PlaySound(SoundEffect.Error);
+        private void OnModuleInstalled(TaskState state, int index) {
+            Dispatcher.Invoke(() => {
+                // Update UI state
+                m_installingControl.State = state;
 
-            Util.ShowMessageBox(string.Format(Localisation.InstallFailure_Modal_Description, control.Title), Localisation.InstallFailure_Modal_Title, MessageBoxButton.OK);
-            Util.Quit(ExitCodes.ExceptionInstall);
+                index++;
+                if ( index < InstallerStateManager.ModulesToInstall.Count )
+                    InstallModule(index);
+            });
+        }
+
+        private void OnModuleFailed(int index) {
+            Dispatcher.Invoke(() => {
+                m_installingControl.State = TaskState.Error;
+                MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
+                MainWindow.Instance.sidebar_install.State = TaskState.Error;
+                SoundPlayer.PlaySound(SoundEffect.Error);
+
+                Util.ShowMessageBox(string.Format(Localisation.InstallFailure_Modal_Description, m_installingControl.Title), Localisation.InstallFailure_Modal_Title, MessageBoxButton.OK);
+                Util.Quit(ExitCodes.ExceptionInstall);
+            });
         }
 
         #endregion
