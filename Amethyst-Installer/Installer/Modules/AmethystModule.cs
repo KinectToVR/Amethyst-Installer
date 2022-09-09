@@ -303,6 +303,10 @@ if upgrade no
             return true;
         }
 
+        /// <summary>
+        /// Kills a long list of processes which are known to conflict with the installation process
+        /// due to them having a high chance of opening SteamVR during the install process.
+        /// </summary>
         private void TryKillingConflictingProcesses() {
 
             // K2EX
@@ -315,10 +319,45 @@ if upgrade no
             Util.ForceKillProcess("amethyst");
             Util.ForceKillProcess("k2crashhandler");
 
+            // ALVR
+            Util.ForceKillProcess("alvr launcher");
+
+            // PiTool
+            Util.ForceKillProcess("pitool");
+            Util.ForceKillProcess("pimaxclient");
+
+            // WMR
+            // @TODO: Add WMR process names
+            // Util.ForceKillProcess("ReviveOverlay");
+
+            // Vive Wireless Software
+            Util.ForceKillProcess("htcconnectionutility");
+
+            // Pico Neo Software
+            // @TODO: Pico Neo Software
+            // Util.ForceKillProcess("htcconnectionutility");
+
+            // Revive
+            Util.ForceKillProcess("reviveinjector");
+            Util.ForceKillProcess("reviveoverlay");
+
             // SteamVR
             Util.ForceKillProcess("vrmonitor");
             Util.ForceKillProcess("vrserver");
             Util.ForceKillProcess("vrcompositor");
+
+            // VirtualDesktop
+            Util.ForceKillProcess("virtualdesktop.streamer");
+
+            // Oculus processes
+            Util.ForceKillProcess("oculusclient");
+            Util.ForceKillProcess("oculusdash");
+
+            // SteamVR (again, just for good measure)
+            Util.ForceKillProcess("vrmonitor");
+            Util.ForceKillProcess("vrserver");
+            Util.ForceKillProcess("vrcompositor");
+
         }
 
         private bool HandleInstallerPersistence(ref InstallModuleProgress control) {
