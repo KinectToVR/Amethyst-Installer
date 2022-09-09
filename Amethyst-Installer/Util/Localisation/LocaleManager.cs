@@ -81,11 +81,10 @@ namespace amethyst_installer_gui {
         /// </summary>
         /// <param name="localeCode">Locale code to load</param>
         public static void LoadLocale(string localeCode) {
-            string localeJson = string.Empty;
             using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream($"amethyst_installer_gui.Resources.Lang.{localeCode}.json") ) {
                 if ( resource != null ) {
                     using ( StreamReader reader = new StreamReader(resource) ) {
-                        localeJson = reader.ReadToEnd();
+                        string localeJson = reader.ReadToEnd();
                         var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(localeJson);
                         foreach (var key in dictionary.Keys) {
                             if (m_loadedLocale.ContainsKey(key)) {

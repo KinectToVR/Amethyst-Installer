@@ -99,6 +99,7 @@ namespace amethyst_installer_gui.Installer {
 
         private static void FetchInstallerJson() {
 
+            Logger.Info("Fetching latest packages...");
 #if !DIST
             string txtResponse = string.Empty;
             using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("amethyst_installer_gui.ame-installer-sample-api-response.json") ) {
@@ -108,10 +109,10 @@ namespace amethyst_installer_gui.Installer {
             }
 
             API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(txtResponse);
+            Logger.Info("Loaded embedded package list successfully!");
 #else
             try {
 
-                Logger.Info("Fetching latest packages...");
                 var packagesJson = Download.GetStringAsync(Constants.ApiDomain + "installer/en/packages");
 
                 API_Response = JsonConvert.DeserializeObject<AmeInstallApiResponse>(packagesJson);
