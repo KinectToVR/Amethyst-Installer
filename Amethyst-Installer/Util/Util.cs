@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -272,6 +268,9 @@ namespace amethyst_installer_gui {
 
             // Graceful close
             Application.Current.Shutdown(( int ) exitCode);
+
+            // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
+            Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
 
 #if !DEBUG
             // Clear the temp directory
