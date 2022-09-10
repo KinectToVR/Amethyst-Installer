@@ -272,6 +272,37 @@ namespace amethyst_installer_gui {
 #endif
         }
 
+        public static bool HandleSpeedrun() {
+
+#if !DEBUG
+            if ( DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - Instance.TimeSinceLastCooldown < NextButtonCooldownMillis ) {
+                if ( !Instance.m_speedrunnerModeActive ) {
+                    Instance.m_speedrunnerModeActive = true;
+
+                    // Show prompt
+                    Util.ShowMessageBox(Localisation.Speedrunner_Description, Localisation.Speedrunner_Title, MessageBoxButton.OK);
+
+                    // In a perfect world, we would play Dream music here, but unfortunately, licensing is a thing, so oh no!
+
+                    // Speedrun timer
+                    Instance.m_dispatcherTimer.Tick += new EventHandler(Instance.speedunTimer_Tick);
+                    Instance.m_dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                    Instance.m_stopwatch.Start();
+                    Instance.m_dispatcherTimer.Start();
+                    Instance.speedrunTimer.Visibility = Visibility.Visible;
+
+                    // TODO: On install complete victory royale ??
+                    return false;
+                }
+            } else {
+#endif
+                Instance.TimeSinceLastCooldown = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+#if !DEBUG
+            }
+#endif
+            return true;
+        }
+
         private void ActionButtonSecondary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             CurrentInstallerPage.OnButtonSecondary(sender, e);

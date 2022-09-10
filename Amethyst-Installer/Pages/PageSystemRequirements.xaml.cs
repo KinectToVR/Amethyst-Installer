@@ -313,13 +313,15 @@ namespace amethyst_installer_gui.Pages {
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
 
-            if ( canContinue ) {
-                // Advance to next page
-                MainWindow.Instance.SetPage(InstallerState.Downloading);
-                SoundPlayer.PlaySound(SoundEffect.MoveNext);
-            } else {
-                // TODO: Ella pls tell me how to handle the UX part of this I'm not sure if straight up exiting is a good idea
-                MainWindow.Instance.Close();
+            if ( MainWindow.HandleSpeedrun() ) {
+                if ( canContinue ) {
+                    // Advance to next page
+                    MainWindow.Instance.SetPage(InstallerState.Downloading);
+                    SoundPlayer.PlaySound(SoundEffect.MoveNext);
+                } else {
+                    // TODO: Ella pls tell me how to handle the UX part of this I'm not sure if straight up exiting is a good idea
+                    MainWindow.Instance.Close();
+                }
             }
         }
     }

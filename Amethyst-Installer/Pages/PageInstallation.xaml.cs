@@ -42,6 +42,10 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
+
+            if ( !MainWindow.HandleSpeedrun() )
+                return;
+
             if ( m_failedToInstall ) {
 
                 // Exit
@@ -56,6 +60,10 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void ActionButtonSecondary_Click(object sender, RoutedEventArgs e) {
+
+            if ( !MainWindow.HandleSpeedrun() )
+                return;
+
             // Open Discord
             Process.Start(Constants.DiscordInvite);
             SoundPlayer.PlaySound(SoundEffect.Invoke);

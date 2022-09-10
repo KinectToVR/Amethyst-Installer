@@ -27,17 +27,21 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
+            Util.HandleKeyboardFocus(e);
 
-            if ( launchAmeOnExit.IsChecked.Value ) {
+            if ( MainWindow.HandleSpeedrun() ) {
 
-                SystemUtility.ExecuteProcessUnElevated(
-                    Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst.exe")),
-                    "",
-                    InstallerStateManager.AmethystInstallDirectory,
-                    ShowWindow.SW_NORMAL);
+                if ( launchAmeOnExit.IsChecked.Value ) {
+
+                    SystemUtility.ExecuteProcessUnElevated(
+                        Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst.exe")),
+                        "",
+                        InstallerStateManager.AmethystInstallDirectory,
+                        ShowWindow.SW_NORMAL);
+                }
+
+                Util.Quit(ExitCodes.OK);
             }
-
-            Util.Quit(ExitCodes.OK);
         }
 
         public void OnSelected() {

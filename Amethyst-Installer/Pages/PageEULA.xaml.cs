@@ -150,9 +150,11 @@ namespace amethyst_installer_gui.Pages {
 
         public void proceedButton_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
-            SoundPlayer.PlaySound(SoundEffect.MoveNext);
-            MainWindow.Instance.SetButtonsHidden(false);
-            MainWindow.Instance.SetPage(InstallerState.InstallOptions);
+            if ( MainWindow.HandleSpeedrun() ) {
+                SoundPlayer.PlaySound(SoundEffect.MoveNext);
+                MainWindow.Instance.SetButtonsHidden(false);
+                MainWindow.Instance.SetPage(InstallerState.InstallOptions);
+            }
         }
     }
 }

@@ -145,8 +145,10 @@ namespace amethyst_installer_gui.Pages {
         private void proceedButton_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
             // Advance to next page
-            MainWindow.Instance.SetPage(InstallerState.EULA, false);
-            SoundPlayer.PlaySound(SoundEffect.MoveNext);
+            if ( MainWindow.HandleSpeedrun() ) {
+                MainWindow.Instance.SetPage(InstallerState.EULA, false);
+                SoundPlayer.PlaySound(SoundEffect.MoveNext);
+            }
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e) {

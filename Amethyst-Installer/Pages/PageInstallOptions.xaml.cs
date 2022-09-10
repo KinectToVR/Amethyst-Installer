@@ -52,6 +52,11 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
+
+            Util.HandleKeyboardFocus(e);
+            if ( !MainWindow.HandleSpeedrun() )
+                return;
+            
             // Advance to next page
             SoundPlayer.PlaySound(SoundEffect.MoveNext);
             MainWindow.Instance.SetPage(InstallerState.InstallDestination);

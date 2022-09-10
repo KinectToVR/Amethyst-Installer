@@ -27,12 +27,16 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
-            DownloadManager.Stop();
+            Util.HandleKeyboardFocus(e);
 
-            // Advance to next page
-            MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
-            SoundPlayer.PlaySound(SoundEffect.MoveNext);
-            MainWindow.Instance.SetPage(InstallerState.Installation);
+            if ( MainWindow.HandleSpeedrun() ) {
+                DownloadManager.Stop();
+
+                // Advance to next page
+                MainWindow.Instance.sidebar_download.State = TaskState.Checkmark;
+                SoundPlayer.PlaySound(SoundEffect.MoveNext);
+                MainWindow.Instance.SetPage(InstallerState.Installation);
+            }
         }
 
         public void OnSelected() {

@@ -41,6 +41,9 @@ namespace amethyst_installer_gui.Pages {
 
         public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
 
+            if ( !MainWindow.HandleSpeedrun() )
+                return;
+
             // Ensure the directory is valid first
             try {
                 CheckPath();
