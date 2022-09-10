@@ -75,6 +75,7 @@ namespace amethyst_installer_gui.Pages {
             // Marquee progress
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
             MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
+            MainWindow.Instance.sidebar_install.State = Controls.TaskState.Busy;
 
             InstallManager.OnAllModulesComplete += OnInstalledAllModules;
             InstallManager.OnModuleFailed += OnModuleFailed;
@@ -176,7 +177,6 @@ namespace amethyst_installer_gui.Pages {
             ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
-            MainWindow.Instance.sidebar_install.State = Controls.TaskState.Busy;
 
             MainWindow.Instance.SetSidebarHidden(false);
             MainWindow.Instance.SetButtonsHidden(true);
