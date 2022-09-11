@@ -309,7 +309,9 @@
     <Compile Include="Util\Localisation\Localisation.cs" />
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\Protocol\IProtocolCommand.cs" />
+    <Compile Include="Util\Protocol\ProtocolInstallerFlags.cs" />
     <Compile Include="Util\Protocol\ProtocolNotPowered.cs" />
+    <Compile Include="Util\Protocol\ProtocolOpenVr.cs" />
     <Compile Include="Util\Protocol\ProtocolParser.cs" />
     <Compile Include="Util\SoundPlayer.cs" />
     <Compile Include="Installer\Uninstaller\UninstallUtil.cs" />

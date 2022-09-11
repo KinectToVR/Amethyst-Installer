@@ -138,5 +138,105 @@ namespace amethyst_installer_gui {
 
             return string.Empty;
         }
+
+        /// <summary>
+        /// Kills a long list of processes which are known to conflict with the installation process
+        /// due to them having a high chance of opening SteamVR during the install process.
+        /// </summary>
+        public static void TryKillingConflictingProcesses() {
+
+            // K2EX
+            Util.ForceKillProcess("kinectv1process");
+            Util.ForceKillProcess("kinectv2process");
+            Util.ForceKillProcess("psmsprocess");
+            Util.ForceKillProcess("kinecttovr");
+
+            // Amethyst
+            Util.ForceKillProcess("amethyst");
+            Util.ForceKillProcess("k2crashhandler");
+
+            // ALVR
+            Util.ForceKillProcess("alvr launcher");
+
+            // PiTool
+            Util.ForceKillProcess("pitool");
+            Util.ForceKillProcess("pimaxclient");
+
+            // WMR
+            Util.ForceKillProcess("MixedRealityPortal.Brokered");
+            Util.ForceKillProcess("MixedRealityPortal");
+            Util.ForceKillProcess("WUDFHost");
+
+            // Vive Wireless Software
+            Util.ForceKillProcess("htcconnectionutility");
+
+            // Pico Neo Software
+            // @TODO: Pico Neo Software
+            // Util.ForceKillProcess("htcconnectionutility");
+
+            // Revive
+            Util.ForceKillProcess("reviveinjector");
+            Util.ForceKillProcess("reviveoverlay");
+
+            // SteamVR
+            Util.ForceKillProcess("vrmonitor");
+            Util.ForceKillProcess("vrdashboard");
+            Util.ForceKillProcess("vrserver");
+            Util.ForceKillProcess("vrservice");
+            Util.ForceKillProcess("vrserverhelper");
+            Util.ForceKillProcess("vrcompositor");
+            Util.ForceKillProcess("vrstartup");
+            Util.ForceKillProcess("vrwebhelper");
+            Util.ForceKillProcess("overlay_viewer");
+            Util.ForceKillProcess("removeusbhelper");
+            Util.ForceKillProcess("restarthelper");
+            Util.ForceKillProcess("vrcmd");
+            Util.ForceKillProcess("vrpathreg");
+            Util.ForceKillProcess("vrprismhost");
+            Util.ForceKillProcess("vrurlhandler");
+
+            // SteamVR Lighthouse devices
+            Util.ForceKillProcess("vivelink");
+            Util.ForceKillProcess("vivetools");
+            Util.ForceKillProcess("vivebtdriver");
+            Util.ForceKillProcess("vivebtdriver_win10");
+            Util.ForceKillProcess("lighthouse_console");
+            Util.ForceKillProcess("lighthouse_watchman_update");
+            Util.ForceKillProcess("nrfutil");
+
+            // VirtualDesktop
+            Util.ForceKillProcess("virtualdesktop.streamer");
+
+            // Oculus processes
+            Util.ForceKillProcess("oculusclient");
+            Util.ForceKillProcess("oculusdash");
+
+            // SteamVR (again, just for good measure)
+            Util.ForceKillProcess("vrmonitor");
+            Util.ForceKillProcess("vrdashboard");
+            Util.ForceKillProcess("vrserver");
+            Util.ForceKillProcess("vrservice");
+            Util.ForceKillProcess("vrserverhelper");
+            Util.ForceKillProcess("vrcompositor");
+            Util.ForceKillProcess("vrstartup");
+            Util.ForceKillProcess("vrwebhelper");
+            Util.ForceKillProcess("overlay_viewer");
+            Util.ForceKillProcess("removeusbhelper");
+            Util.ForceKillProcess("restarthelper");
+            Util.ForceKillProcess("vrcmd");
+            Util.ForceKillProcess("vrpathreg");
+            Util.ForceKillProcess("vrprismhost");
+            Util.ForceKillProcess("vrurlhandler");
+
+            // SteamVR Lighthouse devices (for good measure)
+            Util.ForceKillProcess("vivelink");
+            Util.ForceKillProcess("vivetools");
+            Util.ForceKillProcess("vivebtdriver");
+            Util.ForceKillProcess("vivebtdriver_win10");
+            Util.ForceKillProcess("lighthouse_console");
+            Util.ForceKillProcess("lighthouse_watchman_update");
+            Util.ForceKillProcess("nrfutil");
+
+        }
     }
 }

@@ -18,7 +18,10 @@ namespace amethyst_installer_gui.Commands {
 
         public bool Execute(string parameters) {
 
-            string[] args = parameters.Split(' ');
+            string[] args = parameters.Split(' '); // @TODO: ugh proper parsing fuck
+
+            // @HACK: for determining the Amethyst path from the arguments
+            // Amethyst-Installer.exe --update -o -path="C:\Program Files\Amethyst"
 
             foreach ( var argument in args ) {
                 if ( argument == "-o" ) {

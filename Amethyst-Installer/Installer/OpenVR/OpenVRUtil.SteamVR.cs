@@ -22,6 +22,8 @@ namespace amethyst_installer_gui.Installer {
         private static string s_steamvrSettingsPath;
         private static string s_openvrPathsPath;
 
+        public static string OpenVrPathsPath { get { return s_openvrPathsPath; } }
+
         /// <summary>
         /// Returns whether SteamVR is currently running or not
         /// </summary>

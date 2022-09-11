@@ -10,6 +10,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Installer.Modules {
@@ -34,7 +35,7 @@ if upgrade no
         public override bool Install(string sourceFile, string path, ref InstallModuleProgress control, out TaskState state) {
 
             // TODO: Kill Amethyst, SteamVR
-            TryKillingConflictingProcesses();
+            InstallUtil.TryKillingConflictingProcesses();
 
             // TODO: Check for previous install of Amethyst, and if present, soft-uninstall (soft means only get rid of the install itself, don't touch configs or SteamVR)
 
@@ -46,14 +47,19 @@ if upgrade no
                     return false;
                 }
 
-                bool overallSuccess =                   HandleDrivers(path, ref control);
+                bool overallSuccess = true;
+                if ( !InstallerStateManager.IsUpdating ) {
+                    overallSuccess = HandleDrivers(path, ref control);
+                    // In some cases vrpathreg might open SteamVR, which we don't want; Kill it instantly!
+                    InstallUtil.TryKillingConflictingProcesses();
+                }
                 overallSuccess      = overallSuccess && CreateRegistryEntry(path, ref control);
                 bool sucessMinor    =                   CreateUninstallEntry(path, ref control);
                 sucessMinor         = sucessMinor    && AssignTrackerRoles(ref control);
-                sucessMinor         = sucessMinor    && AdjustSteamVrSettings(ref control);
                 sucessMinor         = sucessMinor    && RegisterProtocolLink(path, ref control);
                 
                 if ( !InstallerStateManager.IsUpdating ) {
+                    sucessMinor         = sucessMinor    && AdjustSteamVrSettings(ref control);
                     // Don't recreate shortcuts during an update!
                     overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
                 }
@@ -122,7 +128,7 @@ if upgrade no
             OpenVRUtil.RegisterSteamVrDriver(driverPath);
             OpenVRUtil.ForceEnableDriver("Amethyst");
 
-            // Shell.OpenFolderAndSelectItem(Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local", "openvr", "openvrpaths.vrpath")));
+            InstallUtil.TryKillingConflictingProcesses();
 
             return true;
         }
@@ -307,106 +313,6 @@ if upgrade no
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Kills a long list of processes which are known to conflict with the installation process
-        /// due to them having a high chance of opening SteamVR during the install process.
-        /// </summary>
-        private void TryKillingConflictingProcesses() {
-
-            // K2EX
-            Util.ForceKillProcess("kinectv1process");
-            Util.ForceKillProcess("kinectv2process");
-            Util.ForceKillProcess("psmsprocess");
-            Util.ForceKillProcess("kinecttovr");
-
-            // Amethyst
-            Util.ForceKillProcess("amethyst");
-            Util.ForceKillProcess("k2crashhandler");
-
-            // ALVR
-            Util.ForceKillProcess("alvr launcher");
-
-            // PiTool
-            Util.ForceKillProcess("pitool");
-            Util.ForceKillProcess("pimaxclient");
-
-            // WMR
-            Util.ForceKillProcess("MixedRealityPortal.Brokered");
-            Util.ForceKillProcess("MixedRealityPortal");
-            Util.ForceKillProcess("WUDFHost");
-
-            // Vive Wireless Software
-            Util.ForceKillProcess("htcconnectionutility");
-
-            // Pico Neo Software
-            // @TODO: Pico Neo Software
-            // Util.ForceKillProcess("htcconnectionutility");
-
-            // Revive
-            Util.ForceKillProcess("reviveinjector");
-            Util.ForceKillProcess("reviveoverlay");
-
-            // SteamVR
-            Util.ForceKillProcess("vrmonitor");
-            Util.ForceKillProcess("vrdashboard");
-            Util.ForceKillProcess("vrserver");
-            Util.ForceKillProcess("vrservice");
-            Util.ForceKillProcess("vrserverhelper");
-            Util.ForceKillProcess("vrcompositor");
-            Util.ForceKillProcess("vrstartup");
-            Util.ForceKillProcess("vrwebhelper");
-            Util.ForceKillProcess("overlay_viewer");
-            Util.ForceKillProcess("removeusbhelper");
-            Util.ForceKillProcess("restarthelper");
-            Util.ForceKillProcess("vrcmd");
-            Util.ForceKillProcess("vrpathreg");
-            Util.ForceKillProcess("vrprismhost");
-            Util.ForceKillProcess("vrurlhandler");
-
-            // SteamVR Lighthouse devices
-            Util.ForceKillProcess("vivelink");
-            Util.ForceKillProcess("vivetools");
-            Util.ForceKillProcess("vivebtdriver");
-            Util.ForceKillProcess("vivebtdriver_win10");
-            Util.ForceKillProcess("lighthouse_console");
-            Util.ForceKillProcess("lighthouse_watchman_update");
-            Util.ForceKillProcess("nrfutil");
-
-            // VirtualDesktop
-            Util.ForceKillProcess("virtualdesktop.streamer");
-
-            // Oculus processes
-            Util.ForceKillProcess("oculusclient");
-            Util.ForceKillProcess("oculusdash");
-
-            // SteamVR (again, just for good measure)
-            Util.ForceKillProcess("vrmonitor");
-            Util.ForceKillProcess("vrdashboard");
-            Util.ForceKillProcess("vrserver");
-            Util.ForceKillProcess("vrservice");
-            Util.ForceKillProcess("vrserverhelper");
-            Util.ForceKillProcess("vrcompositor");
-            Util.ForceKillProcess("vrstartup");
-            Util.ForceKillProcess("vrwebhelper");
-            Util.ForceKillProcess("overlay_viewer");
-            Util.ForceKillProcess("removeusbhelper");
-            Util.ForceKillProcess("restarthelper");
-            Util.ForceKillProcess("vrcmd");
-            Util.ForceKillProcess("vrpathreg");
-            Util.ForceKillProcess("vrprismhost");
-            Util.ForceKillProcess("vrurlhandler");
-
-            // SteamVR Lighthouse devices (for good measure)
-            Util.ForceKillProcess("vivelink");
-            Util.ForceKillProcess("vivetools");
-            Util.ForceKillProcess("vivebtdriver");
-            Util.ForceKillProcess("vivebtdriver_win10");
-            Util.ForceKillProcess("lighthouse_console");
-            Util.ForceKillProcess("lighthouse_watchman_update");
-            Util.ForceKillProcess("nrfutil");
-
         }
 
         private bool HandleInstallerPersistence(ref InstallModuleProgress control) {
