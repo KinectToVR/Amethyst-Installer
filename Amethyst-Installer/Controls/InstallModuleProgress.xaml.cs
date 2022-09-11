@@ -1,27 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-using AmeModule = amethyst_installer_gui.Installer.Module;
 
 namespace amethyst_installer_gui.Controls {
     /// <summary>
     /// Interaction logic for InstallModuleProgress.xaml
     /// </summary>
     public partial class InstallModuleProgress : UserControl {
-
-        public AmeModule module;
 
         public InstallModuleProgress() {
             InitializeComponent();
@@ -80,7 +68,7 @@ namespace amethyst_installer_gui.Controls {
 
         public void LogInfo(string message) {
             Dispatcher.Invoke(() => {
-                // TODO: Abstract into some other class for light mode support
+                // @TODO: Abstract into some other class for light mode support
                 LogLineInternal(message, new SolidColorBrush(Color.FromArgb(255, 165, 165, 165)));
             });
         }
