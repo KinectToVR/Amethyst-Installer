@@ -52,7 +52,11 @@ if upgrade no
                 sucessMinor         = sucessMinor    && AssignTrackerRoles(ref control);
                 sucessMinor         = sucessMinor    && AdjustSteamVrSettings(ref control);
                 sucessMinor         = sucessMinor    && RegisterProtocolLink(path, ref control);
-                overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
+                
+                if ( !InstallerStateManager.IsUpdating ) {
+                    // Don't recreate shortcuts during an update!
+                    overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
+                }
 
                 // TODO: If this is an upgrade change the message to a different one
                 Logger.Info(LogStrings.InstalledAmethystSuccess);
@@ -258,10 +262,12 @@ if upgrade no
             Logger.Info(LogStrings.CreatingUninstallExecutable);
 
             try {
-                // Try copying the installer from wherever the we are running from to the uninstall directory
-                string selfExecutable = Assembly.GetExecutingAssembly().Location;
-                Logger.Info("Installer at:: " + selfExecutable);
-                File.Copy(selfExecutable, amethystInstallerExecutable, true);
+                if ( !InstallerStateManager.IsUpdating ) {
+                    // Try copying the installer from wherever the we are running from to the uninstall directory
+                    string selfExecutable = Assembly.GetExecutingAssembly().Location;
+                    Logger.Info("Installer at:: " + selfExecutable);
+                    File.Copy(selfExecutable, amethystInstallerExecutable, true);
+                }
 
                 // Also unblock the installer in AME-DIR\Amethyst-Installer.exe, we have no clue whether the user
                 // unblocked the installer executable or not, so let's fix that to be sure

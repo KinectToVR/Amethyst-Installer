@@ -2,7 +2,9 @@
 using amethyst_installer_gui.Installer;
 using Microsoft.NodejsTools.SharedProject;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -227,7 +229,26 @@ namespace amethyst_installer_gui.Pages {
                     }
 
                     // Kill updater
-                    m_installingControl.Dispatcher.Invoke(() => Util.Quit(ExitCodes.UpdateSuccess));
+                    m_installingControl.Dispatcher.Invoke(() => {
+
+                        // If we are updating, start a separate cmd process to copy the installer to the target destination.
+                        // This solves the edge case of the updater being executed from the Amethyst install directory.
+                        if ( InstallerStateManager.IsUpdating ) {
+                            string selfExecutable = Assembly.GetExecutingAssembly().Location;
+                            var amethystInstallerExecutable = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst-Installer.exe"));
+                            
+                            // If we are updating, update the installer binary using cmd, then also clean the temp dir once we're done
+                            // We only clean temp here instead of through Util.Quit(); so that we don't encounter the *slim* chance of
+                            // cleaning temp while we're copying (not that it should ever occur)
+                            var clearDirProc = Process.Start(new ProcessStartInfo() {
+                                FileName = "cmd.exe",
+                                Arguments = $"/C timeout 10 && copy /Y /B /V {selfExecutable} /B {amethystInstallerExecutable} && timeout 5 && rmdir /Q /S {Constants.AmethystTempDirectory}",
+                                WindowStyle = ProcessWindowStyle.Hidden,
+                                CreateNoWindow = true
+                            });
+                        }
+                        Util.Quit(ExitCodes.UpdateSuccess, cleanTemp: !InstallerStateManager.IsUpdating);
+                    });
                 });
             });
         }

@@ -261,7 +261,7 @@ namespace amethyst_installer_gui {
         /// code that has to be run on all shutdown events.
         /// </summary>
         /// <param name="exitCode">The exitcode for this shutdown</param>
-        public static void Quit(ExitCodes exitCode) {
+        public static void Quit(ExitCodes exitCode, bool cleanTemp = true) {
 
             // TODO: Launch Ame on shutdown if necessary
             // This is required in the event of an upgrade for example
@@ -273,19 +273,21 @@ namespace amethyst_installer_gui {
             Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
 
 #if !DEBUG
-            // Clear the temp directory
-            // Directory.Delete(Constants.AmethystTempDirectory, true);
+            if (cleanTemp) {
+                // Clear the temp directory
+                // Directory.Delete(Constants.AmethystTempDirectory, true);
 
-            // rmdir /Q /S nonemptydir
+                // rmdir /Q /S nonemptydir
 
-            // yes we use taskkill, I don't want to deal with all the bullshit of "bad PID" using the P/Invoke approach
-            // besides taskkill is garuanteed to be on the current install anyway
-            var clearDirProc = Process.Start(new ProcessStartInfo() {
-                FileName = "cmd.exe",
-                Arguments = $"/C timeout 10 && rmdir /Q /S {Constants.AmethystTempDirectory}",
-                WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true
-            });
+                // yes we use taskkill, I don't want to deal with all the bullshit of "bad PID" using the P/Invoke approach
+                // besides taskkill is garuanteed to be on the current install anyway
+                var clearDirProc = Process.Start(new ProcessStartInfo() {
+                    FileName = "cmd.exe",
+                    Arguments = $"/C timeout 10 && rmdir /Q /S {Constants.AmethystTempDirectory}",
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true
+                });
+            }
 #endif
         }
 

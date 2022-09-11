@@ -35,9 +35,15 @@ namespace amethyst_installer_gui.Installer {
         public static string AmethystInstallDirectory;
 
         /// <summary>
-        /// Whether the current process is an upgrade, as some installation steps are handled differently during an upgrade
+        /// Whether the current process is an upgrade, as some installation steps are handled differently during an upgrade.
+        /// An upgrade is defined as a user upgrading from K2EX to Amethyst.
         /// </summary>
         public static bool IsUpgrading = false;
+
+        /// <summary>
+        /// Whether the current process is an update, as some installation steps are handled differently during an update
+        /// </summary>
+        public static bool IsUpdating = false;
 
         /// <summary>
         /// Whether to create a start menu entry or not

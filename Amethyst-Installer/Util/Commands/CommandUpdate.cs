@@ -89,6 +89,7 @@ namespace amethyst_installer_gui.Commands {
             // Set Amethyst install directory
             InstallerStateManager.AmethystInstallDirectory = InstallUtil.LocateAmethystInstall();
 
+            InstallerStateManager.IsUpdating = true;
             App.InitialPage = InstallerState.Updating;
 
             return false;
