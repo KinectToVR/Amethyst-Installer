@@ -105,6 +105,7 @@ namespace amethyst_installer_gui.Controls {
             paragraph.Inlines.Add(run);
             paragraph.LineHeight = detailedLog.FontSize * 0.5;
             detailedLog.Document.Blocks.Add(paragraph);
+            BringIntoView();
         }
     }
 }
