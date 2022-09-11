@@ -44,10 +44,26 @@ namespace amethyst_installer_gui {
 #if DEBUG
                     m_ameTmpDir = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "temp"));
 #else
-                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Local", "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
+                    // I know what you're thinking, why not just ask C# to give me a random folder in %TEMP%?
+                    // Two issues with that:
+                    // 1. It uses environment variables, which means we'll get an admin user's temp path when running from a standard user
+                    // 2. It adds the possibility of spaces being in the path (from what we've seen when having people's installs fail due to WiX,
+                    //      they all had spaces in their user folder. The user folder's name is the only "variable" we have in this.
+                    //
+                    // As a result of both environment variable hell and spaces causing WiX to fail unexpectedly, we' have moved temp to
+                    // WindowsDrive:\\temp\\amethyst-installer-XXXXXX
+
+                    // m_ameTmpDir = Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Local", "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
+
+                    var systemDriveLetter = Path.GetPathRoot( Environment.GetFolderPath( Environment.SpecialFolder.Windows ));
+                    m_ameTmpDir = Path.GetFullPath(Path.Combine(systemDriveLetter, "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
 #endif
 
-#if !(DEBUG && DOWNLOAD_CACHE)
+#if DEBUG && DOWNLOAD_CACHE
+                    if ( !Directory.Exists(m_ameTmpDir) ) {
+                        Directory.CreateDirectory(m_ameTmpDir);
+                    }
+#else
                     if ( Directory.Exists(m_ameTmpDir) ) {
                         Directory.Delete(m_ameTmpDir, true); // Clear previous temp dir if it exists
                     }

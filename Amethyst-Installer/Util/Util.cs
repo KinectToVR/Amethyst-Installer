@@ -263,17 +263,8 @@ namespace amethyst_installer_gui {
         /// <param name="exitCode">The exitcode for this shutdown</param>
         public static void Quit(ExitCodes exitCode, bool cleanTemp = true) {
 
-            // TODO: Launch Ame on shutdown if necessary
-            // This is required in the event of an upgrade for example
-
-            // Graceful close
-            Application.Current.Shutdown(( int ) exitCode);
-
-            // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
-            Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
-
-#if !DEBUG
-            if (cleanTemp) {
+#if !DEBUG && !DOWNLOAD_CACHE
+            if ( cleanTemp ) {
                 // Clear the temp directory
                 // Directory.Delete(Constants.AmethystTempDirectory, true);
 
@@ -281,14 +272,31 @@ namespace amethyst_installer_gui {
 
                 // yes we use taskkill, I don't want to deal with all the bullshit of "bad PID" using the P/Invoke approach
                 // besides taskkill is garuanteed to be on the current install anyway
+
+                string tempDir = Constants.AmethystTempDirectory;
+
+#if !DEBUG
+                string tmpDirRoot = Path.GetFullPath($"{Constants.AmethystTempDirectory}/..");
+                if (Directory.GetDirectories(tmpDirRoot).Length == 1 && Directory.GetFiles(tmpDirRoot).Length == 0) {
+                    // Only Ame installer, therefore nuke the upper temp folder too
+                    tempDir = tmpDirRoot;
+                }
+#endif
+
                 var clearDirProc = Process.Start(new ProcessStartInfo() {
                     FileName = "cmd.exe",
-                    Arguments = $"/C timeout 10 && rmdir /Q /S {Constants.AmethystTempDirectory}",
+                    Arguments = $"/C timeout 10 && rmdir /Q /S {tempDir}",
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true
                 });
             }
 #endif
+
+            // Graceful close
+            Application.Current.Shutdown(( int ) exitCode);
+
+            // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
+            Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
         }
 
         // https://floating-point-gui.de/errors/comparison/
