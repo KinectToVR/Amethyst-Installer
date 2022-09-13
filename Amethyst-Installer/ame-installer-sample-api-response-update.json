@@ -1,16 +1,25 @@
 ﻿{
   "amethyst": {
-    "version": 1,
-    "version_string": "1.0.2.13",
+    "version": 2,
+    "version_string": "1.0.3.0",
     "changelog": [
-      "Added the sus impostor"
+      "Light theme shouldn't now break the app! (Fixed calibration/offsets/device-settings/...)",
+      "Both the server driver and the API have been rewritten to use Google Protocol Buffers.",
+      "Amethyst now uses the native Win32 http client class for networking",
+      "Settings are handled by cereal, this should hopefully fix often config breaks",
+      "Filesystem handlers are operated by STL, this should decrease possible errors",
+      "Various string changes and interface stability updates"
     ]
   },
   "installer": {
-    "version": 1,
-    "version_string": "1.0.0 PREVIEW",
+    "version": 3,
+    "version_string": "1.0.2 PREVIEW",
     "changelog": [
-      "Made it crash less"
+      "Fixed vrpathreg not working properly",
+      "Fixed K2EX driver not getting removed properly",
+      "Fixed WiX causing installation to fail consistently",
+      "Fixed a potential crash while uninstalling",
+      "Hid the console window"
     ]
   }
 }
