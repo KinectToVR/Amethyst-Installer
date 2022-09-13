@@ -68,13 +68,21 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private static void LogLineInternal(string msg, ConsoleColor color) {
-            ( MainWindow.Instance.Pages[InstallerState.Logs] as PageLogs ).logMessagesBox.Dispatcher.Invoke(() => {
-                Paragraph paragraph = new Paragraph();
-                Run run = new Run(msg);
-                run.Foreground = Constants.ConsoleBrushColors[( int ) color];
-                paragraph.Inlines.Add(run);
-                ( MainWindow.Instance.Pages[InstallerState.Logs] as PageLogs ).logMessagesBox.Document.Blocks.Add(paragraph);
-            });
+
+            var loggingBox = ( MainWindow.Instance.Pages[InstallerState.Logs] as PageLogs ).logMessagesBox;
+
+            // Move to UI thread efficiently
+            if ( !loggingBox.Dispatcher.CheckAccess()) {
+                loggingBox.Dispatcher.BeginInvoke(new Action<string, ConsoleColor>(LogLineInternal), msg, color);
+                return;
+            }
+
+            Paragraph paragraph = new Paragraph();
+            Run run = new Run(msg) {
+                Foreground = Constants.ConsoleBrushColors[( int ) color]
+            };
+            paragraph.Inlines.Add(run);
+            loggingBox.Document.Blocks.Add(paragraph);
         }
 
         // Since this page can be opened at any time we can't trust this function
