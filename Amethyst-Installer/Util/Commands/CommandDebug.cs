@@ -7,7 +7,7 @@ namespace amethyst_installer_gui.Commands {
         public string Description { get => "Enables debug mode"; set { } }
         public string[] Aliases { get => new string[] { "d" }; set { } }
 
-        public bool Execute(string parameters) {
+        public bool Execute(ref string[] parameters) {
             
             // Abuse to override MainWindow.DebugMode while enforcing the private setter
             BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;

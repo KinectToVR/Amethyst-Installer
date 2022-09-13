@@ -15,7 +15,7 @@ namespace amethyst_installer_gui.Commands {
         public string Description { get => "Starts the uninstall workflow"; set { } }
         public string[] Aliases { get => new string[] { "x" }; set {  } }
 
-        public bool Execute(string parameters) {
+        public bool Execute(ref string[] parameters) {
             // @TODO: Rework whenever we have a better upgrade workflow
 
             // App.InitialPage = Installer.InstallerState.Uninstall;

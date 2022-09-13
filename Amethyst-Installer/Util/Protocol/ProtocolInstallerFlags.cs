@@ -13,7 +13,8 @@ namespace amethyst_installer_gui.Protocol {
         public bool Execute(string parameters) {
             App.Init();
             Logger.Info("Received protocol command \"uninstall\"!");
-            return new CommandUninstall().Execute(string.Empty);
+            string[] a = Array.Empty<string>();
+            return new CommandUninstall().Execute(ref a);
         }
     }
 

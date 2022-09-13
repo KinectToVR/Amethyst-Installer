@@ -1,5 +1,6 @@
 ﻿using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
+using Microsoft.Build.Framework.XamlTypes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,31 @@ namespace amethyst_installer_gui.Commands {
 
         private static Dictionary<string, UpdateJSON> UpdateEndpoint;
 
-        public bool Execute(string parameters) {
-
-            string[] args = parameters.Split(' '); // @TODO: ugh proper parsing fuck
+        public bool Execute(ref string[] args) {
 
             // @HACK: for determining the Amethyst path from the arguments
             // Amethyst-Installer.exe --update -o -path="C:\Program Files\Amethyst"
+
+            string location = string.Empty;
+
+            bool isExtractingPath = false;
 
             foreach ( var argument in args ) {
                 if ( argument == "-o" ) {
                     // Open Amethyst flag
                     PageUpdating.OpenAmethystOnSuccess = true;
                 }
+                else if ( argument == "-path" ) {
+                    isExtractingPath = true;
+                    continue;
+                }
+
+                if ( isExtractingPath ) {
+                    // Amethyst install directory
+                    location = argument;
+                }
+
+                isExtractingPath = false;
             }
 
             App.Init();
@@ -90,7 +104,10 @@ namespace amethyst_installer_gui.Commands {
             QueueModules(modulesToUpdate);
 
             // Set Amethyst install directory
-            InstallerStateManager.AmethystInstallDirectory = InstallUtil.LocateAmethystInstall();
+            if ( location.Length == 0 ) {
+                location = InstallUtil.LocateAmethystInstall();
+            }
+            InstallerStateManager.AmethystInstallDirectory = location;
 
             InstallerStateManager.IsUpdating = true;
             App.InitialPage = InstallerState.Updating;

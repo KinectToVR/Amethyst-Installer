@@ -68,7 +68,8 @@ namespace amethyst_installer_gui.Commands {
                     for ( int j = 0; j < m_commandList.Length; j++ ) {
 
                         if ( ShouldExecute(ref m_commandList[j], ref cmd) ) {
-                            return m_commandList[j].Execute(ExtractParameters(ref args, i));
+                            string[] parametersIn = ExtractParameters(ref args, i);
+                            return m_commandList[j].Execute(ref parametersIn);
                         }
                     }
                     ShowErrorMessage(ref cmd);
@@ -211,21 +212,16 @@ namespace amethyst_installer_gui.Commands {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private string ExtractParameters(ref string[] args, int index) {
+        private string[] ExtractParameters(ref string[] args, int index) {
 
             // If less than minimum parameters
             if (args.Length - index < 2 ) {
-                return "";
+                return Array.Empty<string>();
             }
 
-            // i + 1 is our first entry
-            StringBuilder stringBuffer = new StringBuilder();
-            for ( int i = index + 1; i < args.Length; i++ ) {
-                stringBuffer.Append(args[i] + " ");
-            }
-            stringBuffer.Remove(stringBuffer.Length - 1, 1);
-
-            return stringBuffer.ToString().Trim();
+            string[] final = new string[args.Length - 1];
+            Array.Copy(args, 1, final, 0, args.Length - 1);
+            return final;
         }
     }
 
@@ -235,7 +231,7 @@ namespace amethyst_installer_gui.Commands {
         public string Description { get => "Shows this command"; set { } }
         public string[] Aliases { get => new string[] { "h" }; set { } }
 
-        public bool Execute(string parameters) {
+        public bool Execute(ref string[] parameters) {
             return true;
         }
     }
