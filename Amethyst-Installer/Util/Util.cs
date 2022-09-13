@@ -297,6 +297,8 @@ namespace amethyst_installer_gui {
 
             // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
             Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
+
+            // ForceKillProcess("Amethyst-Installer");
         }
 
         // https://floating-point-gui.de/errors/comparison/

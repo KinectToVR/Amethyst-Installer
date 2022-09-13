@@ -119,6 +119,7 @@ namespace amethyst_installer_gui {
                 FieldInfo handleField = typeof(OpenVRUtil).GetField("s_failedToInit", bindFlags);
                 handleField.SetValue(null, true);
             }
+
             s_initialized = true;
         }
     }

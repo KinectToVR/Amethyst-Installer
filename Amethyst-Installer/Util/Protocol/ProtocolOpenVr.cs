@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace amethyst_installer_gui.Protocol {
     public class ProtocolRegister : IProtocolCommand {
@@ -22,7 +21,7 @@ namespace amethyst_installer_gui.Protocol {
             string ameDir = InstallUtil.LocateAmethystInstall();
             if (ameDir.Length == 0) {
                 Logger.Info("Failed to locate Amethyst install! Aborting...");
-                Util.ShowMessageBox("Failed to locate Amethyst install!");
+                Util.ShowMessageBox("Failed to locate Amethyst install!", "Oops");
                 return true;
             } else {
                 Logger.Info($"Amethyst install found at {ameDir}");
@@ -41,7 +40,6 @@ namespace amethyst_installer_gui.Protocol {
                 OpenVRUtil.RemoveDriversWithName("KinectToVR");
             }
 
-            // TODO: Skip this step during an upgrade
             Logger.Info(LogStrings.RegisteringAmethystDriver);
 
             string driverPath = Path.Combine(ameDir, "Amethyst");
@@ -56,6 +54,7 @@ namespace amethyst_installer_gui.Protocol {
             return true;
         }
     }
+
     public class ProtocolRemoveLegacyAddons : IProtocolCommand {
         public string Command { get => "removelegacyaddons"; set { } }
 
@@ -70,16 +69,44 @@ namespace amethyst_installer_gui.Protocol {
 
                 OpenVRUtil.ForceDisableDriver("KinectToVR");
                 OpenVRUtil.RemoveDriversWithName("KinectToVR");
+
+                InstallUtil.TryKillingConflictingProcesses();
                 Logger.Info("Successfully removed K2EX add-on!");
-                Util.ShowMessageBox("Successfully removed K2EX add-on!", "Success");
+                Util.ShowMessageBox("Successfully removed K2EX SteamVR add-on!", "Success");
             } else {
                 Logger.Info("Couldn't find K2EX add-on!");
-                Util.ShowMessageBox("Couldn't find K2EX add-on! Your Amethyst install can work properly.", "Success");
+                Util.ShowMessageBox("No conflicting SteamVR add-ons were found!\nAmethyst can work properly.", "Success");
             }
 
             return true;
         }
     }
+
+    public class ProtocolDisableOwotrack : IProtocolCommand {
+        public string Command { get => "disableowotrack"; set { } }
+
+        public bool Execute(string parameters) {
+            App.Init();
+            Logger.Info("Received protocol command \"disableowotrack\"!");
+
+            // Check for owoTrack add-on
+            if ( Directory.Exists(OpenVRUtil.GetDriverPath("owoTrack")) ) {
+                Logger.Info("Found owoTrack add-on! Disabling it...");
+                InstallUtil.TryKillingConflictingProcesses();
+
+                OpenVRUtil.ForceDisableDriver("owoTrack");
+
+                Logger.Info("Successfully disabled owoTrack add-on!");
+                Util.ShowMessageBox("Successfully disabled owoTrack add-on!", "Success");
+            } else {
+                Logger.Info("Couldn't find owoTrack add-on!");
+                Util.ShowMessageBox("No conflicting SteamVR add-ons were found!\nAmethyst can work properly.", "Success");
+            }
+
+            return true;
+        }
+    }
+
     public class ProtocolOpenVr : IProtocolCommand {
         public string Command { get => "openvrpaths"; set { } }
 
