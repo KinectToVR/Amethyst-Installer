@@ -1,6 +1,4 @@
-﻿using amethyst_installer_gui.Properties;
-using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -95,8 +93,8 @@ namespace amethyst_installer_gui.Controls {
             controlContainer = GetTemplateChild("controlContainer") as Border;
 
             // Apply props
-            // itemCheckbox.IsChecked = Checked;
             itemCheckbox.IsEnabled = !Disabled;
+            itemCheckbox.IsChecked = Checked;
             itemTitle.Text = Title;
             itemDescription.Text = Description;
 
@@ -120,6 +118,10 @@ namespace amethyst_installer_gui.Controls {
 
             if ( OnToggled != null)
                 OnToggled(this, e);
+        }
+
+        public void Click() {
+            container_MouseLeftButtonDown(this, null);
         }
     }
 }

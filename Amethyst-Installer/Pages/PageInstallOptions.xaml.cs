@@ -31,13 +31,6 @@ namespace amethyst_installer_gui.Pages {
         private long m_totalDownloadSize = 0;
         private long m_totalInstallSize = 0;
 
-        /*
-- Sometimes animations break, re-toggling the animation fixes it from my testing. I'm still looking for a solution for this.
-- Installing Amethyst on top of an existing Amethyst install explodes the installer. This is due to no uninstall workflow existing yet.
-- Visual C++ Redist isn't downloaded nor installed yet.
-- You cannot install anything Kinect. This is not implemented.
-        */
-
         public PageInstallOptions() {
             InitializeComponent();
             installableItemControls = new List<InstallableItem>();
@@ -135,14 +128,12 @@ namespace amethyst_installer_gui.Pages {
                 currentControl.Tag = currentModule;
                 currentControl.Focusable = false;
 
-                installOptionsContainer.Children.Add(currentControl);
                 installableItemControls.Add(currentControl);
-
-                // Select the first item, Amethyst
-                if ( i == 0 ) {
-                    InstallOptionMouseReleaseHandler(currentControl, null);
-                }
+                installOptionsContainer.Children.Add(currentControl);
             }
+
+            // Select the first item, Amethyst
+            installableItemControls[0].Click();
         }
 
         private void InstallOptionCheckToggledHandler(object sender, RoutedEventArgs e) {
@@ -170,7 +161,6 @@ namespace amethyst_installer_gui.Pages {
                 }
                 // @TODO: Travel through dependency chain and auto-select any visible dependencies
             }
-
 
             m_currentModule = selectedItem.Tag as Module;
 

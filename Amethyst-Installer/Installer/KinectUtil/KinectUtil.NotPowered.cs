@@ -14,16 +14,32 @@ namespace amethyst_installer_gui.Installer {
 
         private static DeviceTree s_deviceTree;
 
+        // P/Invoke fuckery to check Device Nodes
+
+        // Checking if the current Kinect Drivers setup is fucked::
+        // 1. SetupDiGetClassDevs => fuckery to get up to => Some Kinect Device::Check Status
+        //              OR
+        // 2. CM_Get_DevNode_Registry_Property_Ex type shit for each device => if class == GUID {0} and description includes "Kinect" probably E_NUI_NOTPOWERED
+        //        OR count number of devices under Kinect Device class GUID
+
+        // Removing drivers::
+        //     (effectively "Uninstall Device" without deleting the software
+        //     CM_Uninstall_DevNode
+        //
+        // Removing corrupt drivers::
+        //     (effectively "Uninstall Device" AND deleting the software
+        //     DiUninstallDevice followed by SetupUninstallOEMInf
+        //
+        // need to talk with Ella about this bit
+
         #region Not Powered Fix
 
         public static bool FixNotPowered() {
 
             // An automagic fix for E_NUI_NOTPOWERED
-            // This fix involves practically uninstalling all Kinect Drivers, using P/Invoke, then forcing a scan for hardware changes to trigger the drivers to re-scan
+            // This fix involves practically uninstalling all Unknown Kinect Drivers, using P/Invoke, then forcing a scan for hardware changes to trigger the drivers to re-scan
 
             // The method involved with fixing this is subject to change at this point
-
-            // TODO: For each unrecognised Xbox 360 device in XX, try uninstall then scan for hardware changes
 
             bool success = true;
 
@@ -33,8 +49,7 @@ namespace amethyst_installer_gui.Installer {
             foreach ( var device in s_deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.Unknown) ) {
 
                 // Device is a Kinect 360 Device
-                if (
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02B0&REV_0107"       || // Kinect for Windows Device
+                if (device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02B0&REV_0107"       || // Kinect for Windows Device
                     device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_00" || // Kinect for Windows Audio Array
                     device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_01" || // Kinect for Windows Security Device
                     device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02AE&REV_010;"          // Kinect for Windows Camera
@@ -59,8 +74,7 @@ namespace amethyst_installer_gui.Installer {
             foreach ( var device in s_deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.Unknown) ) {
 
                 // Device is a Kinect 360 Device
-                if (
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02B0&REV_0107"       || // Kinect for Windows Device
+                if (device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02B0&REV_0107"       || // Kinect for Windows Device
                     device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_00" || // Kinect for Windows Audio Array
                     device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_01" || // Kinect for Windows Security Device
                     device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02AE&REV_010;"          // Kinect for Windows Camera

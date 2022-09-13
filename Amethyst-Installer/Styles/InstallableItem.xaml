@@ -18,7 +18,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <CheckBox x:Name="itemCheckbox" Grid.Column="0" IsChecked="{Binding Checked}" />
+                            <CheckBox x:Name="itemCheckbox" Grid.Column="0" IsChecked="{Binding Checked, RelativeSource={RelativeSource Self}}" />
                             <StackPanel Grid.Column="1" Margin="8,0,0,0">
                                 <TextBlock TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" x:Name="itemTitle" Foreground="{DynamicResource BrushForeground}" FontWeight="SemiBold" FontFamily="Segoe UI Semibold" FontSize="12" />
                                 <TextBlock TextTrimming="CharacterEllipsis" x:Name="itemDescription" Foreground="{DynamicResource BrushForegroundAlt}" FontWeight="SemiBold" FontFamily="Segoe UI Semibold" FontSize="12" />

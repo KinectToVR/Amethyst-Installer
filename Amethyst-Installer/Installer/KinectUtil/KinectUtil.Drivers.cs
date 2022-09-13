@@ -1,4 +1,5 @@
-﻿using System;
+﻿using amethyst_installer_gui.PInvoke;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,32 +13,54 @@ namespace amethyst_installer_gui.Installer {
 
         #region Drivers
 
-        // P/Invoke fuckery to check Device Nodes
-
-        // Checking if the current Kinect Drivers setup is fucked::
-        // 1. SetupDiGetClassDevs => fuckery to get up to => Some Konct Device::Check Status
-        //              OR
-        // 2. CM_Get_DevNode_Registry_Property_Ex type shit for each device => if class == GUID {0} and description includes "Kinect" probably NOT_READY
-        //        OR count number of devices under kinect device class GUID
-
-        // Removing drivers::
-        //     (effectively "Uninstall Device" without deleting the software
-        //     CM_Uninstall_DevNode
-        //
-        // Removing corrupt drivers::
-        //     (effectively "Uninstall Device" AND deleting the software
-        //     DiUninstallDevice followed by SetupUninstallOEMInf
-        //
-        // need to talk with Ella about this bit
-
         /// <summary>
         /// Returns whether an Xbox 360 Kinect is plugged in to the current machine
         /// </summary>
         public static bool IsKinectV1Present() {
 
-            // @TODO: Implement
+            TryGetDeviceTree();
+
+            // Get Devices
+            foreach ( var device in s_deviceTree.DeviceNodes) {
+
+                // Device is a Kinect 360 Device
+                if (device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02B0&REV_0107"         || // Kinect for Windows Device
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_00"   || // Kinect for Windows Audio Array
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_01"   || // Kinect for Windows Security Device
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02AE&REV_010;"            // Kinect for Windows Camera
+                    ) {
+
+                    return true;
+                }
+            }
 
             return false;
+        }
+
+        /// <summary>
+        /// Returns whether an Xbox 360 Kinect is plugged in to the current machine and receiving power
+        /// </summary>
+        public static bool IsKinectV1Powered() {
+
+            TryGetDeviceTree();
+
+            int devices = 0;
+
+            // Get Devices
+            foreach ( var device in s_deviceTree.DeviceNodes) {
+
+                // Device is a Kinect 360 Device
+                if (device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02B0&REV_0107"         || // Kinect for Windows Device
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_00"   || // Kinect for Windows Audio Array
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_01"   || // Kinect for Windows Security Device
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02AE&REV_010;"            // Kinect for Windows Camera
+                    ) {
+
+                    devices++;
+                }
+            }
+
+            return devices > 3;
         }
 
         /// <summary>
@@ -45,7 +68,21 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool IsKinectV2Present() {
 
-            // @TODO: Implement
+            TryGetDeviceTree();
+
+            // Get Devices
+            foreach ( var device in s_deviceTree.DeviceNodes ) {
+
+                // Device is a Xbox One Kinect Device
+                if (device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02D8&REV_0100&MI_00"   || // WDF KinectSensor Interface 0
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02D8&MI_00"            || // WDF KinectSensor Interface 0
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02D8&REV_0100&MI_02"   || // Xbox One Kinect Audio Device
+                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02D8&MI_02"               // Xbox One Kinect Audio Device
+                    ) {
+
+                    return true;
+                }
+            }
 
             return false;
         }
