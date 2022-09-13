@@ -1,10 +1,5 @@
 ﻿using amethyst_installer_gui.Commands;
-using amethyst_installer_gui.Installer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Protocol {
     public class ProtocolUninstall : IProtocolCommand {

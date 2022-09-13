@@ -1,14 +1,7 @@
-﻿using amethyst_installer_gui.Commands;
-using amethyst_installer_gui.Installer;
+﻿using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.PInvoke;
-using amethyst_installer_gui.Protocol;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Protocol {
     public class ProtocolRegister : IProtocolCommand {

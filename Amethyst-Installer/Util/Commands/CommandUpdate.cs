@@ -1,6 +1,5 @@
 ﻿using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.Pages;
-using Microsoft.Build.Framework.XamlTypes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace amethyst_installer_gui.Commands {
         public bool Execute(ref string[] args) {
 
             // @HACK: for determining the Amethyst path from the arguments
-            // Amethyst-Installer.exe --update -o -path="C:\Program Files\Amethyst"
+            // Amethyst-Installer.exe --update -o -path "C:\Program Files\Amethyst"
 
             string location = string.Empty;
 
