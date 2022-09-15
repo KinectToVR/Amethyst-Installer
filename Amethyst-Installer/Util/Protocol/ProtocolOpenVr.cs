@@ -121,6 +121,17 @@ namespace amethyst_installer_gui.Protocol {
             return true;
         }
     }
+    
+    public class ProtocolCloseSteamVr : IProtocolCommand {
+        public string Command { get => "closeconflictingapps"; set { } }
+
+        public bool Execute(string parameters) {
+            App.Init();
+            Logger.Info("Received protocol command \"closeconflictingapps\"!");
+            InstallUtil.TryKillingConflictingProcesses();
+            return true;
+        }
+    }
 
     public class ProtocolOcusus : IProtocolCommand {
         public string Command { get => "ocusus"; set { } }
