@@ -269,10 +269,14 @@ if upgrade no
 
             try {
                 if ( !InstallerStateManager.IsUpdating ) {
-                    // Try copying the installer from wherever the we are running from to the uninstall directory
-                    string selfExecutable = Assembly.GetExecutingAssembly().Location;
-                    Logger.Info("Installer at:: " + selfExecutable);
-                    File.Copy(selfExecutable, amethystInstallerExecutable, true);
+                    // We check the paths by setting to lowercase as NTFS is case insensitive
+                    if ( Path.GetFullPath(target).ToLowerInvariant() != Path.GetFullPath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)).ToLowerInvariant() ) {
+
+                        // Try copying the installer from wherever the we are running from to the uninstall directory
+                        string selfExecutable = Assembly.GetExecutingAssembly().Location;
+                        Logger.Info("Installer at:: " + selfExecutable);
+                        File.Copy(selfExecutable, amethystInstallerExecutable, true);
+                    }
                 }
 
                 // Also unblock the installer in AME-DIR\Amethyst-Installer.exe, we have no clue whether the user
