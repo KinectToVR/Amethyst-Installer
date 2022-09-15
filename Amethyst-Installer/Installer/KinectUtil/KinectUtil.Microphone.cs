@@ -21,14 +21,7 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool KinectV1MicrophoneDisabled() {
             using ( var enumerator = new MMDeviceEnumerator() ) {
-                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.All) ) {
-                    // Skip devices which aren't plugged in (otherwise we'd get a COM Exception upon querying their friendly names)
-                    if ( wasapi.State == DeviceState.NotPresent )
-                        continue;
-                    // Skip "Render" devices, i.e. Playback devices like headphone, speakers, etc.
-                    if ( wasapi.DataFlow == DataFlow.Render )
-                        continue;
-
+                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Disabled | DeviceState.Unplugged) ) {
                     if ( wasapi.DeviceFriendlyName == KinectV1MicrophoneFriendlyName ) {
                         if ( wasapi.State != DeviceState.Active )
                             return true;
@@ -44,13 +37,7 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool KinectV2MicrophoneDisabled() {
             using ( var enumerator = new MMDeviceEnumerator() ) {
-                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.All) ) {
-                    // Skip devices which aren't plugged in (otherwise we'd get a COM Exception upon querying their friendly names)
-                    if ( wasapi.State == DeviceState.NotPresent )
-                        continue;
-                    // Skip "Render" devices, i.e. Playback devices like headphone, speakers, etc.
-                    if ( wasapi.DataFlow == DataFlow.Render )
-                        continue;
+                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Disabled | DeviceState.Unplugged) ) {
 
                     if ( wasapi.DeviceFriendlyName == KinectV2MicrophoneFriendlyName ) {
                         if ( wasapi.State != DeviceState.Active )
@@ -74,13 +61,7 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool KinectV1MicrophonePresent() {
             using ( var enumerator = new MMDeviceEnumerator() ) {
-                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.All) ) {
-                    // Skip devices which aren't plugged in (otherwise we'd get a COM Exception upon querying their friendly names)
-                    if ( wasapi.State == DeviceState.NotPresent )
-                        continue;
-                    // Skip "Render" devices, i.e. Playback devices like headphone, speakers, etc.
-                    if ( wasapi.DataFlow == DataFlow.Render )
-                        continue;
+                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Disabled | DeviceState.Unplugged | DeviceState.Active) ) {
 
                     if ( wasapi.DeviceFriendlyName == KinectV1MicrophoneFriendlyName )
                         return true;
@@ -95,13 +76,7 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool KinectV2MicrophonePresent() {
             using ( var enumerator = new MMDeviceEnumerator() ) {
-                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.All) ) {
-                    // Skip devices which aren't plugged in (otherwise we'd get a COM Exception upon querying their friendly names)
-                    if ( wasapi.State == DeviceState.NotPresent )
-                        continue;
-                    // Skip "Render" devices, i.e. Playback devices like headphone, speakers, etc.
-                    if ( wasapi.DataFlow == DataFlow.Render )
-                        continue;
+                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Disabled | DeviceState.Unplugged | DeviceState.Active) ) {
 
                     if ( wasapi.DeviceFriendlyName == KinectV2MicrophoneFriendlyName )
                         return true;

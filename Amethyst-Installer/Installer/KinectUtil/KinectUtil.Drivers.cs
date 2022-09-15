@@ -24,10 +24,10 @@ namespace amethyst_installer_gui.Installer {
             foreach ( var device in s_deviceTree.DeviceNodes) {
 
                 // Device is a Kinect 360 Device
-                if (device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02B0&REV_0107"         || // Kinect for Windows Device
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_00"   || // Kinect for Windows Audio Array
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_01"   || // Kinect for Windows Security Device
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02AE&REV_010;"            // Kinect for Windows Camera
+                if (device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02B0&REV_0107"         || // Kinect for Windows Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_00"   || // Kinect for Windows Audio Array
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_01"   || // Kinect for Windows Security Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;"            // Kinect for Windows Camera
                     ) {
 
                     return true;
@@ -50,10 +50,10 @@ namespace amethyst_installer_gui.Installer {
             foreach ( var device in s_deviceTree.DeviceNodes) {
 
                 // Device is a Kinect 360 Device
-                if (device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02B0&REV_0107"         || // Kinect for Windows Device
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_00"   || // Kinect for Windows Audio Array
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02BB&REV_0100&MI_01"   || // Kinect for Windows Security Device
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02AE&REV_010;"            // Kinect for Windows Camera
+                if (device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02B0&REV_0107"         || // Kinect for Windows Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_00"   || // Kinect for Windows Audio Array
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_01"   || // Kinect for Windows Security Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;"            // Kinect for Windows Camera
                     ) {
 
                     devices++;
@@ -74,10 +74,10 @@ namespace amethyst_installer_gui.Installer {
             foreach ( var device in s_deviceTree.DeviceNodes ) {
 
                 // Device is a Xbox One Kinect Device
-                if (device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02D8&REV_0100&MI_00"   || // WDF KinectSensor Interface 0
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02D8&MI_00"            || // WDF KinectSensor Interface 0
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02D8&REV_0100&MI_02"   || // Xbox One Kinect Audio Device
-                    device.DeviceProperties[( int ) DevRegProperty.HardwareId] == "USB\\VID_045E&PID_02D8&MI_02"               // Xbox One Kinect Audio Device
+                if (device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02D8&REV_0100&MI_00"   || // WDF KinectSensor Interface 0
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02D8&MI_00"            || // WDF KinectSensor Interface 0
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02D8&REV_0100&MI_02"   || // Xbox One Kinect Audio Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02D8&MI_02"               // Xbox One Kinect Audio Device
                     ) {
 
                     return true;

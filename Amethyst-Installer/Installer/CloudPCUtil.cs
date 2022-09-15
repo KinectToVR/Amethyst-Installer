@@ -1,10 +1,6 @@
 using NAudio.CoreAudioApi;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -15,10 +11,10 @@ namespace amethyst_installer_gui.Installer {
         /// Returns whether the current machine is a Shadow PC
         /// </summary>
         public static bool IsRunningOnShadow() {
-            bool ShadowVRDriverFound = ShadowVROpenVRDriverExists();
-            bool ShadowAudioDriverFound = DetectedShadowVirtualAudioDevice();
-
-            return ShadowVRDriverFound && ShadowAudioDriverFound;
+            if ( ShadowVROpenVRDriverExists() )
+                return DetectedShadowVirtualAudioDevice();
+            
+            return false;
         }
 
         /// <summary>
@@ -38,14 +34,7 @@ namespace amethyst_installer_gui.Installer {
             const string shadowVirtAudioDeviceName = "Shadow Virtual Audio Device";
 
             using ( var enumerator = new MMDeviceEnumerator() ) {
-                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.All) ) {
-                    // Skip devices which aren't plugged in (otherwise we'd get a COM Exception upon querying their friendly names)
-                    if ( wasapi.State == DeviceState.NotPresent )
-                        continue;
-                    // Skip "Render" devices, i.e. Playback devices like headphone, speakers, etc.
-                    if ( wasapi.DataFlow == DataFlow.Render )
-                        continue;
-
+                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active | DeviceState.Disabled | DeviceState.Unplugged) ) {
                     if ( wasapi.DeviceFriendlyName == shadowVirtAudioDeviceName )
                         return true;
                 }

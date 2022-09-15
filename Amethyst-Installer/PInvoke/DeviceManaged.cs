@@ -137,11 +137,11 @@ namespace amethyst_installer_gui.PInvoke {
             }
         }
 
-        public Dictionary<int, string> DeviceProperties {
-            get {
-                return _deviceProperties;
-            }
-        }
+        // public Dictionary<int, string> DeviceProperties {
+        //     get {
+        //         return _deviceProperties;
+        //     }
+        // }
 
         public List<DeviceNode> Children {
             get {
@@ -201,18 +201,30 @@ namespace amethyst_installer_gui.PInvoke {
             _machineHandle = machineHandle;
             _parentDevice = parentDevice;
 
-            EnumerateDeviceProperties();
+            // The function CM_Get_DevNode_Registry_Property_Ex is slow, and while not super slowon it's own, due to the sheer amount of devices
+            // we have to poll and the number of unique properties (64) a device could own, the time executing this adds up fast.
+            
+            // We *could* enumerate all properties, but we aren't even going to use most of them, so instead we poll on demand.
+            // This brings polling the entire device tree from ~470ms down to ~17ms
+
+            // EnumerateDeviceProperties();
             EnumerateChildren();
         }
 
-        private string GetProperty(DevRegProperty devRegProperty) {
+        public string GetProperty(DevRegProperty devRegProperty) {
             return GetProperty(( int ) devRegProperty);
         }
 
         private string GetProperty(int index) {
             string buffer;
             var result = _deviceProperties.TryGetValue(index, out buffer);
-            return result ? buffer : string.Empty;
+            if (!result) {
+                EnumerateDeviceProperty(index);
+                return _deviceProperties[index];
+            }
+            return buffer;
+            // return result ? buffer : EnumerateDeviceProperty(index);
+            // return result ? buffer : string.Empty;
         }
 
         public bool UninstallDevice() {
@@ -239,6 +251,18 @@ namespace amethyst_installer_gui.PInvoke {
 
                 Marshal.FreeHGlobal(buffer);
             }
+        }
+
+        private void EnumerateDeviceProperty(int index) {
+            uint bufsize = 2048;
+            IntPtr buffer = Marshal.AllocHGlobal((int)bufsize);
+
+            var result = CM_Get_DevNode_Registry_Property_Ex(_deviceHandle, index, IntPtr.Zero, buffer, ref bufsize, 0, _machineHandle);
+            var propertyString = result == 0 ? Marshal.PtrToStringAnsi(buffer) : string.Empty;
+
+            _deviceProperties.Add(index, propertyString);
+
+            Marshal.FreeHGlobal(buffer);
         }
 
         private void EnumerateChildren() {

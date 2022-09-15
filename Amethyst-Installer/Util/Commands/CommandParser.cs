@@ -26,6 +26,9 @@ namespace amethyst_installer_gui.Commands {
          */
 
         public CommandParser() {
+
+            // @TODO: THIS CONSTRUCTOR IS SLOW
+
             // Init command list
             try {
                 m_types = Assembly.GetExecutingAssembly().GetTypes();

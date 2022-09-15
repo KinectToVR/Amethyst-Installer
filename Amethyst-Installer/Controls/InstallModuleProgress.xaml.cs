@@ -61,28 +61,40 @@ namespace amethyst_installer_gui.Controls {
         }
 
         public void ClearLog() {
-            Dispatcher.Invoke(() => {
-                detailedLog.Document.Blocks.Clear();
-            });
+            if ( !Dispatcher.CheckAccess() ) {
+                Dispatcher.BeginInvoke(new Action(ClearLog));
+                return;
+            }
+
+            detailedLog.Document.Blocks.Clear();
         }
 
         public void LogInfo(string message) {
-            Dispatcher.Invoke(() => {
-                // @TODO: Abstract into some other class for light mode support
-                LogLineInternal(message, new SolidColorBrush(Color.FromArgb(255, 165, 165, 165)));
-            });
+            if ( !Dispatcher.CheckAccess() ) {
+                Dispatcher.BeginInvoke(new Action<string>(LogInfo), message);
+                return;
+            }
+
+            // @TODO: Abstract into some other class for light mode support
+            LogLineInternal(message, new SolidColorBrush(Color.FromArgb(255, 165, 165, 165)));
         }
 
         public void LogWarning(string message) {
-            Dispatcher.Invoke(() => {
-                LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.Yellow]);
-            });
+            if ( !Dispatcher.CheckAccess() ) {
+                Dispatcher.BeginInvoke(new Action<string>(LogWarning), message);
+                return;
+            }
+            
+            LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.Yellow]);
         }
 
         public void LogError(string message) {
-            Dispatcher.Invoke(() => {
-                LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.DarkRed]);
-            });
+            if ( !Dispatcher.CheckAccess() ) {
+                Dispatcher.BeginInvoke(new Action<string>(LogError), message);
+                return;
+            }
+
+            LogLineInternal(message, Constants.ConsoleBrushColors[( int ) ConsoleColor.DarkRed]);
         }
 
         private void LogLineInternal(string msg, SolidColorBrush color) {
