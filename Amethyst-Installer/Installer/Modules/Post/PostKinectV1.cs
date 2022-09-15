@@ -1,10 +1,6 @@
 ﻿using amethyst_installer_gui.Controls;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 
 namespace amethyst_installer_gui.Installer.Modules {
@@ -49,6 +45,9 @@ namespace amethyst_installer_gui.Installer.Modules {
 
             control.LogInfo(LogStrings.ApplyingKinectFixes);
             Logger.Info(LogStrings.ApplyingKinectFixes);
+
+            // Wait for 5 seconds so that the Kinect devices will show up, so that we can then check E_NUI_NOTPOWERED
+            Thread.Sleep(5000);
 
             if ( KinectUtil.MustFixNotPowered() ) {
 
