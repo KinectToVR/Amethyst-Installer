@@ -77,6 +77,16 @@
                     <Button x:Name="killProcTreeButton" Grid.Column="1" Content="Kill Process Tree" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="killProcTreeButton_Click" Height="{Binding ElementName=taskkillContainer, Path=ActualHeight}"/>
                 </Grid>
             </StackPanel>
+            <StackPanel x:Name="archiveCreateContainer" Orientation="Horizontal" Margin="0,10,0,0">
+                <Grid Width="{Binding ElementName=archiveCreateContainer, Path=ActualWidth}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="archiveCreateBox" Tag="Archive path..." Grid.Column="0"></TextBox>
+                    <Button x:Name="archiveCreateButton" Grid.Column="1" Content="Create archive" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="archiveCreateButton_Click" Height="{Binding ElementName=archiveCreateContainer, Path=ActualHeight}"/>
+                </Grid>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

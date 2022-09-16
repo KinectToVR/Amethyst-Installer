@@ -162,5 +162,14 @@ namespace amethyst_installer_gui.Pages {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox($"Is Elevated: {Util.IsCurrentProcessElevated()}", "Is process elevated");
         }
+
+        private void archiveCreateButton_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            string sourceDirectory = Path.GetFullPath(archiveCreateBox.Text);
+            string destinationFileName = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "archive.k2a"));
+            K2Archive.CompressArchive(sourceDirectory, destinationFileName, 5);
+            Util.ShowMessageBox($"Created archive archive.k2a ({new FileInfo(destinationFileName).Length} bytes)", "K2ArchiveResult");
+            Shell.OpenFolderAndSelectItem(destinationFileName);
+        }
     }
 }
