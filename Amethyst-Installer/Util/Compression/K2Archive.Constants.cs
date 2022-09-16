@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace amethyst_installer_gui {
+﻿namespace amethyst_installer_gui {
     public partial class K2Archive {
 
         private static readonly byte[] K2_ARCHIVE_MAGIC_NUMBER = new byte[32]{
             0x09, 0x5a, 0x83, 0x7c, 0xac, 0xef, 0x5d, 0x06, 0x88, 0xdd, 0x5b, 0xdb, 0xb1, 0xe1, 0x3c, 0xa5,
             0xad, 0x0e, 0xbb, 0x93, 0x87, 0x43, 0x82, 0xa3, 0x21, 0x16, 0x66, 0x31, 0xaa, 0x8d, 0x49, 0x7c,
         };
+
+        private const int FILE_COMPRESSOR_LEVEL = 6;
+        private const int DEFAULT_COMPRESSOR_LEVEL = 5;
     }
 }

@@ -87,6 +87,16 @@
                     <Button x:Name="archiveCreateButton" Grid.Column="1" Content="Create archive" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="archiveCreateButton_Click" Height="{Binding ElementName=archiveCreateContainer, Path=ActualHeight}"/>
                 </Grid>
             </StackPanel>
+            <StackPanel x:Name="archiveExtractContainer" Orientation="Horizontal" Margin="0,10,0,0">
+                <Grid Width="{Binding ElementName=archiveExtractContainer, Path=ActualWidth}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="archiveExtractBox" Tag="Archive path..." Grid.Column="0"></TextBox>
+                    <Button x:Name="archiveExtractButton" Grid.Column="1" Content="Extract archive" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Click="archiveExtractButton_Click" Height="{Binding ElementName=archiveExtractContainer, Path=ActualHeight}"/>
+                </Grid>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

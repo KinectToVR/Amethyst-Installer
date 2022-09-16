@@ -171,5 +171,14 @@ namespace amethyst_installer_gui.Pages {
             Util.ShowMessageBox($"Created archive archive.k2a ({new FileInfo(destinationFileName).Length} bytes)", "K2ArchiveResult");
             Shell.OpenFolderAndSelectItem(destinationFileName);
         }
+
+        private void archiveExtractButton_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            string sourceFile= Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "archive.k2a"));
+            string destinationDirectory = Path.GetFullPath(archiveExtractBox.Text);
+            K2Archive.ExtractArchive(sourceFile, destinationDirectory);
+            Util.ShowMessageBox($"Extracted archive archive.k2a to {destinationDirectory}", "K2ArchiveResult");
+            Shell.OpenFolderAndSelectItem(destinationDirectory);
+        }
     }
 }
