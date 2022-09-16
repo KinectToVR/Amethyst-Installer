@@ -5,18 +5,9 @@ using amethyst_installer_gui.PInvoke;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace amethyst_installer_gui {
@@ -171,13 +162,13 @@ namespace amethyst_installer_gui {
             if ( updateSidebar ) {
 
                 // Update checkmarks in sidebar
-                sidebar_welcome.State =         destinatonTab < InstallerState.Welcome ?                TaskState.Default : TaskState.Checkmark;
-                sidebar_installOptions.State =  destinatonTab < InstallerState.InstallOptions ?         TaskState.Default : TaskState.Checkmark;
-                sidebar_location.State =        destinatonTab < InstallerState.InstallDestination ?     TaskState.Default : TaskState.Checkmark;
-                sidebar_sysreq.State =          destinatonTab < InstallerState.SystemRequirements ?     TaskState.Default : TaskState.Checkmark;
-                sidebar_download.State =        destinatonTab < InstallerState.Downloading ?            TaskState.Default : TaskState.Checkmark;
-                sidebar_install.State =         destinatonTab < InstallerState.Installation ?           TaskState.Default : TaskState.Checkmark;
-                sidebar_done.State =            destinatonTab < InstallerState.Done ?                   TaskState.Default : TaskState.Checkmark;
+                sidebar_welcome.State           = destinatonTab < InstallerState.Welcome              ? TaskState.Default : TaskState.Checkmark;
+                sidebar_installOptions.State    = destinatonTab < InstallerState.InstallOptions       ? TaskState.Default : TaskState.Checkmark;
+                sidebar_location.State          = destinatonTab < InstallerState.InstallDestination   ? TaskState.Default : TaskState.Checkmark;
+                sidebar_sysreq.State            = destinatonTab < InstallerState.SystemRequirements   ? TaskState.Default : TaskState.Checkmark;
+                sidebar_download.State          = destinatonTab < InstallerState.Downloading          ? TaskState.Default : TaskState.Checkmark;
+                sidebar_install.State           = destinatonTab < InstallerState.Installation         ? TaskState.Default : TaskState.Checkmark;
+                sidebar_done.State              = destinatonTab < InstallerState.Done                 ? TaskState.Default : TaskState.Checkmark;
             }
 
 #pragma warning restore IDE0055
@@ -185,9 +176,9 @@ namespace amethyst_installer_gui {
             // Set the post one for funny transition
             if ( PageView.Content != null ) {
 
-                PageViewPost.Visibility = Visibility.Collapsed;
-                PageViewPre.Content = PageView.Content;
-                PageViewPre.Visibility = Visibility.Visible;
+                PageViewPost.Visibility     = Visibility.Collapsed;
+                PageViewPre.Content         = PageView.Content;
+                PageViewPre.Visibility      = Visibility.Visible;
             }
 
             CurrentInstallerPage = Pages[destinatonTab];
@@ -213,9 +204,9 @@ namespace amethyst_installer_gui {
             // Set the post one for funny transition
             if ( PageView.Content != null ) {
 
-                PageViewPre.Visibility = Visibility.Collapsed;
-                PageViewPost.Content = PageView.Content;
-                PageViewPost.Visibility = Visibility.Visible;
+                PageViewPre.Visibility      = Visibility.Collapsed;
+                PageViewPost.Content        = PageView.Content;
+                PageViewPost.Visibility     = Visibility.Visible;
             }
 
             pageStackPointer++;
@@ -232,9 +223,9 @@ namespace amethyst_installer_gui {
 
             if ( PageView.Content != null ) {
 
-                PageViewPre.Content = Pages[pageStack[pageStackPointer]];
-                PageViewPre.Visibility = Visibility.Visible;
-                PageViewPost.Visibility = Visibility.Collapsed;
+                PageViewPre.Content         = Pages[pageStack[pageStackPointer]];
+                PageViewPre.Visibility      = Visibility.Visible;
+                PageViewPost.Visibility     = Visibility.Collapsed;
             }
             CurrentInstallerPage = Pages[pageStack[pageStackPointer]];
             Logger.Info($"Changing view to previous page {pageStack[pageStackPointer]}...");
@@ -380,10 +371,10 @@ namespace amethyst_installer_gui {
 
             PageViewScroller.BeginAnimation(AnimatedScrollViewer.HorizontalOffsetProperty, null);
             DoubleAnimation horizontalAnimation = new DoubleAnimation();
-            horizontalAnimation.From = from;
-            horizontalAnimation.To = to;
-            horizontalAnimation.Duration = new Duration(Constants.PageTransitionAnimationDuration);
-            horizontalAnimation.Completed += HorizontalAnimation_Completed;
+            horizontalAnimation.From        = from;
+            horizontalAnimation.To          = to;
+            horizontalAnimation.Duration    = new Duration(Constants.PageTransitionAnimationDuration);
+            horizontalAnimation.Completed   += HorizontalAnimation_Completed;
             
             PageViewScroller.BeginAnimation (AnimatedScrollViewer.HorizontalOffsetProperty, horizontalAnimation);
 
@@ -393,10 +384,10 @@ namespace amethyst_installer_gui {
         }
 
         private void HorizontalAnimation_Completed(object sender, EventArgs e) {
-            PageViewPre.Visibility = Visibility.Collapsed;
-            PageViewPost.Visibility = Visibility.Collapsed;
-            PageViewPre.Content = null;
-            PageViewPost.Content = null;
+            PageViewPre.Visibility      = Visibility.Collapsed;
+            PageViewPost.Visibility     = Visibility.Collapsed;
+            PageViewPre.Content         = null;
+            PageViewPost.Content        = null;
         }
     }
 }
