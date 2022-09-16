@@ -49,7 +49,7 @@ namespace amethyst_installer_gui {
         }
 
         // Please read the shit
-        private const int NextButtonCooldownMillis  = 1000;
+        private const int NextButtonCooldownMillis  = 750;
         private long TimeSinceLastCooldown          = 0;
         private bool m_speedrunnerModeActive        = false;
         private DispatcherTimer m_dispatcherTimer   = new DispatcherTimer();
