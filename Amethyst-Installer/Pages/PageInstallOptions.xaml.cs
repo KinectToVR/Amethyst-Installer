@@ -120,7 +120,8 @@ namespace amethyst_installer_gui.Pages {
                 var currentControl = new InstallableItem();
                 currentControl.Title = currentModule.DisplayName;
                 currentControl.Description = currentModule.Summary;
-                currentControl.Checked = currentModule.Required;
+                // currentControl.Checked = currentModule.Required;
+                currentControl.Checked = ShouldAutoSelectModule(ref currentModule);
                 currentControl.Disabled = currentModule.Required;
                 currentControl.Margin = new Thickness(0, 0, 0, 8);
                 currentControl.OnMouseClickReleased += InstallOptionMouseReleaseHandler;
@@ -134,6 +135,20 @@ namespace amethyst_installer_gui.Pages {
 
             // Select the first item, Amethyst
             installableItemControls[0].Click();
+        }
+
+        private bool ShouldAutoSelectModule(ref Module module) {
+            if ( module.Required )
+                return true;
+
+            switch ( module.Id ) {
+                case "kinect-v1-sdk":
+                    return KinectUtil.IsKinectV1Present();
+                case "kinect-v2-sdk":
+                    return KinectUtil.IsKinectV2Present();
+            }
+
+            return false;
         }
 
         private void InstallOptionCheckToggledHandler(object sender, RoutedEventArgs e) {
