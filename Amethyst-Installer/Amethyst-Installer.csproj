@@ -485,6 +485,7 @@
     <Compile Include="Installer\Installer.LogStrings.cs" />
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.WMI.cs" />
     <None Include="packages.config" />
+    <Compile Include="PInvoke\DeviceManaged.Notifications.cs" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

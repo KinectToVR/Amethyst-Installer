@@ -291,6 +291,7 @@ namespace amethyst_installer_gui {
                 });
             }
 #endif
+            DeviceManaged.UnregisterDeviceNotifications();
 
             // Graceful close
             Application.Current.Shutdown(( int ) exitCode);

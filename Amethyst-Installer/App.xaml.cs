@@ -40,6 +40,8 @@ namespace amethyst_installer_gui {
                 return;
             }
 
+            DeviceManaged.RegisterDeviceNotificationHandler();
+
             CommandParser parser = new CommandParser();
             if ( !ProtocolParser.ParseCommands(e.Args) && !parser.ParseCommands(e.Args) ) {
 

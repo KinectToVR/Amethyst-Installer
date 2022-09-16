@@ -1,6 +1,8 @@
 ﻿using amethyst_installer_gui.Controls;
+using amethyst_installer_gui.PInvoke;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace amethyst_installer_gui.Installer.Modules {
@@ -46,9 +48,31 @@ namespace amethyst_installer_gui.Installer.Modules {
             control.LogInfo(LogStrings.ApplyingKinectFixes);
             Logger.Info(LogStrings.ApplyingKinectFixes);
 
-            // Wait for 5 seconds so that the Kinect devices will show up, so that we can then check E_NUI_NOTPOWERED
-            Thread.Sleep(5000);
+            // Wait until a USB device shows up, or for 30 seconds so that the Kinect devices will show up, so that we can then check E_NUI_NOTPOWERED
+            bool doWait = true;
 
+            var task = Task.Run(() => {
+                var timer = new System.Timers.Timer(30000);
+                timer.Elapsed += (sender, _) => {
+                    doWait = false;
+                    timer.Stop();
+                    timer.Dispose();
+                };
+                DeviceManaged.OnDeviceAdded += () => {
+                    Thread.Sleep(1000);
+                    doWait = false;
+                    timer.Stop();
+                    timer.Dispose();
+                };
+            });
+
+            while ( doWait ) { }
+            task.Dispose();
+
+            // Cleanup
+            DeviceManaged.OnDeviceAdded = null;
+
+            // The fix
             if ( KinectUtil.MustFixNotPowered() ) {
 
                 control.LogInfo(LogStrings.NotPoweredDetected);
@@ -66,7 +90,5 @@ namespace amethyst_installer_gui.Installer.Modules {
             }
 
         }
-
-
     }
 }
