@@ -20,6 +20,22 @@ namespace amethyst_installer_gui.Protocol {
             return true;
         }
     }
+    public class ProtocolNotPoweredSilent : IProtocolCommand {
+        public string Command { get => "notpowered/silent"; set { } }
+
+        public bool Execute(string parameters) {
+            App.Init();
+            Logger.Info("Received protocol command \"notpowered\"!");
+            Logger.Info("Attempting to fix E_NUI_NOTPOWERED...");
+            if ( KinectUtil.FixNotPowered() ) {
+                Logger.Info("Fixed E_NUI_NOTPOWERED successfully!");
+            } else {
+                Logger.Info("No devices with E_NUI_NOTPOWERED were found!");
+            }
+            Logger.Info("Done!");
+            return true;
+        }
+    }
 
     public class ProtocolFixMicrophone : IProtocolCommand {
         public string Command { get => "fixmicrophone"; set { } }
