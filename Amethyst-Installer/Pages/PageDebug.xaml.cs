@@ -163,6 +163,21 @@ namespace amethyst_installer_gui.Pages {
             Util.ShowMessageBox($"Is Elevated: {Util.IsCurrentProcessElevated()}", "Is process elevated");
         }
 
+        private void fixMic_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            KinectUtil.FixMicrophoneV1();
+        }
+
+        private void checkNotReady_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            Util.ShowMessageBox($"Must fix E_NUI_NOTREADY: {KinectUtil.MustFixNotReady()}", "Checking for E_NUI_NOTREADY...");
+        }
+
+        private void fixNotReady_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            KinectUtil.FixNotReady();
+        }
+
         private void archiveCreateButton_Click(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             string sourceDirectory = Path.GetFullPath(archiveCreateBox.Text);

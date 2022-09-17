@@ -64,6 +64,10 @@
         public const string NotPoweredDetected                  = "Detected the error: E_NUI_NOTPOWERED!";
         public const string NotPoweredFixed                     = "Successfully fixed: E_NUI_NOTPOWERED!";
         public const string NotPoweredFixFailure                = "Failed to fix: E_NUI_NOTPOWERED!";
+        // Not Ready
+        public const string NotReadyDetected                    = "Detected the error: E_NUI_NOREADY!";
+        public const string NotReadyFixed                       = "Successfully fixed: E_NUI_NOREADY!";
+        public const string NotReadyFixFailure                  = "Failed to fix: E_NUI_NOREADY!";
 
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";
