@@ -4,6 +4,7 @@ using amethyst_installer_gui.Pages;
 using amethyst_installer_gui.PInvoke;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
@@ -388,6 +389,10 @@ namespace amethyst_installer_gui {
             PageViewPost.Visibility     = Visibility.Collapsed;
             PageViewPre.Content         = null;
             PageViewPost.Content        = null;
+        }
+
+        private void Window_Shutdown(object sender, CancelEventArgs e) {
+            Util.Quit(ExitCodes.OK);
         }
     }
 }
