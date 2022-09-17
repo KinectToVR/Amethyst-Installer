@@ -14,14 +14,14 @@ namespace InstallerTools.Commands {
         public string Description { get => "Generates a JSON file of uninstallable items; Saves to ./list.json"; set { } }
         public string[] Aliases { get => new string[] { "ul" }; set { } }
 
-        public bool Execute(string parameters) {
+        public bool Execute(ref string[] parameters) {
 
             if ( parameters.Length == 0 ) {
                 Console.Error.WriteLine("Invalid parameter count!");
                 return true;
             }
 
-            string directory = Path.GetFullPath(parameters);
+            string directory = Path.GetFullPath(parameters[0]);
             string dirName = directory.Substring(directory.LastIndexOf("\\") + 1);
 
             if ( !Directory.Exists(directory) ) {

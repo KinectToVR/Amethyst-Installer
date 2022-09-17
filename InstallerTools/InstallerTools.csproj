@@ -81,7 +81,20 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -91,10 +104,18 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZstdNet, Version=1.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZstdNet.1.4.5\lib\net45\ZstdNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ame-Installer\AmeUtil.cs" />
+    <Compile Include="Ame-Installer\Compression\K2Archive.Compression.cs" />
+    <Compile Include="Ame-Installer\Compression\K2Archive.Constants.cs" />
+    <Compile Include="Ame-Installer\Compression\K2Archive.Decompression.cs" />
+    <Compile Include="Ame-Installer\Compression\K2Archive.PublicAPI.cs" />
     <Compile Include="Ame-Installer\UninstallListJSON.cs" />
+    <Compile Include="Commands\CommandArchive.cs" />
     <Compile Include="Commands\CommandChecksum.cs" />
     <Compile Include="Commands\CommandGenUninstallList.cs" />
     <Compile Include="Commands\CommandParser.cs" />
@@ -117,6 +138,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Resource.Embedder.2.2.0\build\Resource.Embedder.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Resource.Embedder.2.2.0\build\Resource.Embedder.props'))" />
     <Error Condition="!Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets'))" />
+    <Error Condition="!Exists('..\packages\ZstdNet.1.4.5\build\ZstdNet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ZstdNet.1.4.5\build\ZstdNet.targets'))" />
   </Target>
   <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets')" />
+  <Import Project="..\packages\ZstdNet.1.4.5\build\ZstdNet.targets" Condition="Exists('..\packages\ZstdNet.1.4.5\build\ZstdNet.targets')" />
 </Project>

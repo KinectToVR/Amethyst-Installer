@@ -25,7 +25,11 @@ namespace InstallerTools.Commands {
 
          */
 
+
         public CommandParser() {
+
+            // @TODO: THIS CONSTRUCTOR IS SLOW
+
             // Init command list
             try {
                 m_types = Assembly.GetExecutingAssembly().GetTypes();
@@ -36,11 +40,13 @@ namespace InstallerTools.Commands {
 
             // Init command list from above list
             m_commandList = new ICommand[m_types.Length - 1]; // subtract 1 because the interface itself is to be excluded
+            int indexer = 0;
             for ( int i = 0; i < m_types.Length; i++ ) {
                 // Can't implement the interface itself, skip it!
                 if ( m_types[i] == typeof(ICommand) )
                     continue;
-                m_commandList[i] = ( ICommand ) Activator.CreateInstance(m_types[i]);
+                m_commandList[indexer] = ( ICommand ) Activator.CreateInstance(m_types[i]);
+                indexer++;
             }
         }
 
@@ -64,7 +70,8 @@ namespace InstallerTools.Commands {
                     for ( int j = 0; j < m_commandList.Length; j++ ) {
 
                         if ( ShouldExecute(ref m_commandList[j], ref cmd) ) {
-                            return m_commandList[j].Execute(ExtractParameters(ref args, i));
+                            string[] parametersIn = ExtractParameters(ref args, i);
+                            return m_commandList[j].Execute(ref parametersIn);
                         }
                     }
                     ShowErrorMessage(ref cmd);
@@ -75,14 +82,6 @@ namespace InstallerTools.Commands {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ShowHelpMessage() {
-
-            // @HACK: MAKE THIS COMMAND ACTUALLY HANDLE MULTILINE PROPERLY
-
-            Console.WriteLine("--help, -h\t\tShows this message");
-            Console.WriteLine("--uninstalllist, -ul\tGenerates a JSON file of uninstallable items; Saves to ./list.json");
-            Console.WriteLine("--checksum, -c\t\tComputes the MD5 checksum of the given file");
-
-            return;
 
             var assemblyName = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title.ToUpperInvariant() + " - HELP";
             int minPaddingBetweenCommandAndDescription = 6;
@@ -215,21 +214,16 @@ namespace InstallerTools.Commands {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private string ExtractParameters(ref string[] args, int index) {
+        private string[] ExtractParameters(ref string[] args, int index) {
 
             // If less than minimum parameters
             if ( args.Length - index < 2 ) {
-                return "";
+                return Array.Empty<string>();
             }
 
-            // i + 1 is our first entry
-            StringBuilder stringBuffer = new StringBuilder();
-            for ( int i = index + 1; i < args.Length; i++ ) {
-                stringBuffer.Append(args[i] + " ");
-            }
-            stringBuffer.Remove(stringBuffer.Length - 1, 1);
-
-            return stringBuffer.ToString().Trim();
+            string[] final = new string[args.Length - 1];
+            Array.Copy(args, 1, final, 0, args.Length - 1);
+            return final;
         }
     }
 
@@ -239,7 +233,7 @@ namespace InstallerTools.Commands {
         public string Description { get => "Shows this command"; set { } }
         public string[] Aliases { get => new string[] { "h" }; set { } }
 
-        public bool Execute(string parameters) {
+        public bool Execute(ref string[] parameters) {
             return true;
         }
     }
