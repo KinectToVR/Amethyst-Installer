@@ -1,21 +1,13 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ZstdNet;
 
 namespace amethyst_installer_gui {
-	public partial class K2Archive {
+    public partial class K2Archive {
 
 		private static byte[] CreateFileBlock(string filePath, ref byte[] content, int compressionLevel) {
 
-			// Decompress the entire file block.
-			// var compressor = new Compressor(new CompressionOptions(compressionLevel));
-			// var compressedData = compressor.Wrap(content);
-			var compressedData = content;
+            // Decompress the entire file block.
+            var compressedData = content;
 
 			// Construct the block byte*
 			byte[] filePathAsBytes = Encoding.UTF8.GetBytes(filePath);

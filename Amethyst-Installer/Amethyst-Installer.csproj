@@ -599,6 +599,9 @@
     <Resource Include="Resources\Image\start_10.png" />
     <Resource Include="Resources\Image\start_11.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Binaries\libzstd.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

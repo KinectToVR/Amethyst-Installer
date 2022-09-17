@@ -239,6 +239,20 @@ namespace amethyst_installer_gui {
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static byte[] ExtractResourceAsBytes(string resourcePath) {
+            using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream($"amethyst_installer_gui.Resources.{resourcePath}") ) {
+                byte[] buffer = new byte[resource.Length];
+                using ( MemoryStream memStream = new MemoryStream() ) {
+                    int read;
+                    while ( ( read = resource.Read(buffer, 0, buffer.Length) ) > 0 ) {
+                        memStream.Write(buffer, 0, read);
+                    }
+                    return memStream.ToArray();
+                }
+            }
+        }
+
         public static bool IsLaptop() {
             return PowerProvider.SystemPowerCapabilites.LidPresent;
         }
@@ -395,6 +409,17 @@ namespace amethyst_installer_gui {
             };
 
             Process.Start(procInfo);
+        }
+
+        /// <summary>
+        /// Gets a path relative to some directory
+        /// </summary>
+        /// <param name="path">The base path</param>
+        /// <param name="relativePathStart">The length of the base path</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ReadOnlyMemory<char> RelativePath(this ReadOnlyMemory<char> path, int relativePathStart) {
+            return path.Slice(relativePathStart, path.Length - relativePathStart);
         }
     }
 }
