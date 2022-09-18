@@ -138,7 +138,8 @@ namespace InstallerTools.Commands {
                 whitespaceFirst = Math.Max(minPaddingBetweenCommandAndDescription, maxLength - command.Command.Length - command.Aliases.Length * 4);
                 line.Append(new string(' ', whitespaceFirst));
                 line.Append(command.Description);
-                line.Append(new string(' ', windowWidth - borderPaddingX - 4 - whitespaceFirst - command.Command.Length - command.Aliases.Length * 4 - command.Description.Length));
+                // line.Append(new string(' ', windowWidth - borderPaddingX - 4 - whitespaceFirst - command.Command.Length - command.Aliases.Length * 4 - command.Description.Length));
+                line.Append(new string(' ', 2));
                 line.Append("|");
                 Console.WriteLine(line.ToString());
             }

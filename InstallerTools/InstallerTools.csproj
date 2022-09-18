@@ -117,6 +117,7 @@
     <Compile Include="Ame-Installer\UninstallListJSON.cs" />
     <Compile Include="Commands\CommandArchive.cs" />
     <Compile Include="Commands\CommandChecksum.cs" />
+    <Compile Include="Commands\CommandExtract.cs" />
     <Compile Include="Commands\CommandGenUninstallList.cs" />
     <Compile Include="Commands\CommandParser.cs" />
     <Compile Include="Commands\ICommand.cs" />

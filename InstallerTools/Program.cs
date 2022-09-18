@@ -1,8 +1,5 @@
 ﻿using InstallerTools.Commands;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -50,37 +47,13 @@ namespace InstallerTools {
             Console.OutputEncoding = Encoding.Unicode;
             EnableAnsiCmd();
 
-#if DEBUG
-            Console.WriteLine(@"  ╭─────────────────────────────────────────────────────────────╮
-  |                                                             |
-  |   AMETHYST INSTALLER                                        |
-  |                                                             |
-  |   --help, -h          Shows help                            |
-  |   --update -u         Attempts to update Amethyst           |
-  |   --uninstall -x      Attempts to uninstall Amethyst        |
-  |   --modify -m         Attempts to modify an existing        |
-  |                       Amethyst install                      |
-  |   --silent -s         Executes the installer silently       |
-  |   --install-dir       Sets the install directory,           |
-  |   --debug             Forces the installer to run in Debug  |
-  |                       mode                                  |
-  |                                                             |
-  ╘═════════════════════════════════════════════════════════════╛");
-
-            args = @"--checksum F:\Downloads\Amethyst-Release-22a89a9.zip".Split();
-            // args = @"--help checksum".Split();
-#endif
-
             CommandParser parser = new CommandParser();
+            args = new string[] { "--help" };
             if ( !parser.ParseCommands(args) ) {
                 // Woo command!
             } else {
                 // Regular execution
             }
-#if DEBUG
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
-#endif
         }
     }
 }

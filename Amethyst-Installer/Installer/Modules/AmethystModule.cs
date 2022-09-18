@@ -335,6 +335,27 @@ if upgrade no
                         moduleList.Add(module.Id, module.InternalVersion);
                     }
                 }
+
+                // Concat with existing JSON
+                if ( File.Exists(installerConfigPath) ) {
+
+                    // The file exists! Try reading it
+                    try {
+
+                        string fileContents = File.ReadAllText(installerConfigPath);
+                        Dictionary<string, int> config = JsonConvert.DeserializeObject<Dictionary<string, int>>(fileContents);
+                        foreach (var item in config) {
+                            if (!moduleList.ContainsKey(item.Key)) {
+                                moduleList.Add(item.Key, item.Value);
+                            }
+                        }
+
+                    } catch ( Exception e ) {
+                        Logger.Fatal($"Failed to load or parse file \"{installerConfigPath}\"!");
+                        Logger.Fatal(Util.FormatException(e));
+                    }
+                }
+
                 string jsonModules = JsonConvert.SerializeObject(moduleList, Formatting.Indented);
                 File.WriteAllText(installerConfigPath, jsonModules);
 

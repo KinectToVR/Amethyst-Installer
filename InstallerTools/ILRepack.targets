@@ -7,6 +7,10 @@
 		<ItemGroup>
 			<InputAssemblies Include="$(OutputPath)$(TargetName)$(TargetExt)"/>
 			<InputAssemblies Include="$(OutputPath)Newtonsoft.Json.dll" />
+			<InputAssemblies Include="$(OutputPath)System.Memory.dll" />
+			<InputAssemblies Include="$(OutputPath)System.Runtime.CompilerServices.Unsafe.dll" />
+			<InputAssemblies Include="$(OutputPath)System.Buffers.dll" />
+			<InputAssemblies Include="$(OutputPath)ZstdNet.dll" />
 		</ItemGroup>
 
 		<PropertyGroup>

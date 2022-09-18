@@ -3,10 +3,10 @@ using System.IO;
 using amethyst_installer_gui;
 
 namespace InstallerTools.Commands {
-    public class CommandArchive : ICommand {
-        public string Command { get => "archive"; set { } }
-        public string Description { get => "Archives a directory using the k2a archive format"; set { } }
-        public string[] Aliases { get => new string[] { "a" }; set { } }
+    public class CommandExtract : ICommand {
+        public string Command { get => "extract"; set { } }
+        public string Description { get => "Extracts an archive using the k2a archive format to a directory"; set { } }
+        public string[] Aliases { get => new string[] { "x" }; set { } }
 
         public bool Execute(ref string[] parameters) {
 
@@ -20,8 +20,8 @@ namespace InstallerTools.Commands {
 
             for ( int i = 0; i < parameters.Length; i++ ) {
                 switch ( parameters[i] ) {
-                    case "-dir":
-                    case "-d":
+                    case "-file":
+                    case "-f":
                         directoryPath = parameters[i + 1];
                         i++;
                         break;
@@ -44,7 +44,10 @@ namespace InstallerTools.Commands {
             if ( !Directory.Exists(directoryPath) )
                 throw new ArgumentException("Invalid directory path!");
 
-            K2Archive.CompressArchive(directoryPath, filePath, 5);
+            if ( !File.Exists(filePath) )
+                throw new ArgumentException("File doesn't exist!");
+
+            K2Archive.ExtractArchive(filePath, directoryPath);
 
             return true;
         }

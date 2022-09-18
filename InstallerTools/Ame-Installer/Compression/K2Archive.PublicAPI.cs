@@ -1,5 +1,4 @@
-﻿using amethyst_installer_gui.PInvoke;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -7,24 +6,6 @@ using ZstdNet;
 
 namespace amethyst_installer_gui {
     public partial class K2Archive {
-
-        public static void Init() {
-
-            // Load the ZStandard native library
-            var zstdDll = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, "libzstd.dll"));
-
-            // Extract the libzstd.dll binary to our temp directory
-            Util.ExtractResourceToFile("Binaries.libzstd.dll", zstdDll);
-
-            // Load the libzstd.dll unmanaged library using P/Invoke
-            var result = Kernel.LoadLibrary(zstdDll);
-            if ( result == IntPtr.Zero ) {
-                Logger.Fatal("Failed to load libzstd.dll!");
-            } else {
-                Logger.Info("Successfully loaded libzstd.dll!");
-            }
-        }
-
         public static void ExtractArchive(string sourceFile, string target) {
             sourceFile = Path.GetFullPath(sourceFile);
             target = Path.GetFullPath(target);
@@ -163,7 +144,7 @@ namespace amethyst_installer_gui {
                     // Write to file
                     fs.Write(finalCompressedFile, 0, finalCompressedFile.Length);
                     fs.Flush();
-                    Logger.Info($"Wrote archive to {target}");
+                    // Logger.Info($"Wrote archive to {target}");
                 }
             }
 
