@@ -165,7 +165,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void fixMic_Click(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
-            KinectUtil.FixMicrophoneV1();
+            Util.ShowMessageBox($"Fixed mic: {KinectUtil.FixMicrophoneV1()}", "Fix");
         }
 
         private void checkNotReady_Click(object sender, RoutedEventArgs e) {

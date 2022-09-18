@@ -1,11 +1,16 @@
+using amethyst_installer_gui.PInvoke;
+using Microsoft.Win32;
 using NAudio.CoreAudioApi;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -120,7 +125,20 @@ namespace amethyst_installer_gui.Installer {
                         // Grab the GUID so that we don't search the registry
                         string microphoneGUID = wasapi.ID.Substring(wasapi.ID.IndexOf('{', 1));
 
+                        AdvApi.EnablePrivilege("SeTakeOwnershipPrivilege");
 
+                        using ( var audioDeviceReg = Registry.LocalMachine.OpenSubKey($"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\MMDevices\\Audio\\Capture\\{microphoneGUID}", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.TakeOwnership) ) {
+
+                            // Take-own
+                            var admins = new NTAccount("Administrators");
+                            var ac = audioDeviceReg.GetAccessControl();
+                            ac.SetOwner(admins);
+                            ac.AddAccessRule(new RegistryAccessRule(admins, RegistryRights.FullControl, AccessControlType.Allow));
+                            audioDeviceReg.SetAccessControl(ac);
+
+                            // Force disable
+
+                        }
 
                         return true;
                     }

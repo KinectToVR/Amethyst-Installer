@@ -14,9 +14,6 @@ namespace amethyst_installer_gui.Installer.Modules {
         private static bool doWait = false;
         private static Task task;
 
-        const int DEVICE_ENABLED    = 0x00000001;
-        const int DEVICE_DISABLED   = 0x10000001;
-
         public static void Listen() {
             if ( doWait )
                 return;
