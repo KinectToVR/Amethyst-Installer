@@ -75,7 +75,7 @@ if upgrade no
             return false;
         }
 
-        private bool ExtractAmethyst(string zip, string target, ref InstallModuleProgress control) {
+        private bool ExtractAmethyst(string archive, string target, ref InstallModuleProgress control) {
             try {
 
                 Logger.Info(string.Format(LogStrings.ExtractingAmethyst, target));
@@ -85,13 +85,17 @@ if upgrade no
                     UninstallUtil.UninstallAmethyst(false, target);
                 }
 
-                string ameZip = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, zip));
-                if ( File.Exists(ameZip) ) {
+                string ameArchive = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, archive));
+                if ( File.Exists(ameArchive) ) {
 
                     if ( !Directory.Exists(target) )
                         Directory.CreateDirectory(target);
 
-                    InstallUtil.ExtractZipToDirectory(ameZip, target);
+                    if ( Module.Install.Format != null && Module.Install.Format == "k2a" ) {
+                        K2Archive.ExtractArchive(ameArchive, target);
+                    } else {
+                        InstallUtil.ExtractZipToDirectory(ameArchive, target);
+                    }
                     return true;
                 }
 

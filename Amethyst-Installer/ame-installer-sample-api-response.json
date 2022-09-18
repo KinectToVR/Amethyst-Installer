@@ -22,7 +22,8 @@
 				"checksum": "61819060F745624E1A3448BB305FEE0E"
 			},
 			"install": {
-				"type": "amethyst"
+				"type": "amethyst",
+				"format": "zip"
 			},
 			"detect": {
 				"type": "amethyst",

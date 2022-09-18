@@ -17,6 +17,9 @@ namespace amethyst_installer_gui.Installer {
 
         const string KinectV1MicrophoneFriendlyName = "Kinect USB Audio";
         const string KinectV2MicrophoneFriendlyName = "Xbox NUI Sensor";
+        
+        const int DEVICE_ENABLED    = 0x00000001;
+        const int DEVICE_DISABLED   = 0x10000001;
 
         /// <summary>
         /// Check if the Kinect 360 microphone is muted
@@ -116,6 +119,8 @@ namespace amethyst_installer_gui.Installer {
                     if ( wasapi.DeviceFriendlyName == "AMD Audio Device" ) {
                         // Grab the GUID so that we don't search the registry
                         string microphoneGUID = wasapi.ID.Substring(wasapi.ID.IndexOf('{', 1));
+
+
 
                         return true;
                     }

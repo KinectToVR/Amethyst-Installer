@@ -84,6 +84,9 @@ namespace amethyst_installer_gui.Installer {
 
         [JsonProperty("post")]
         public string Post;
+
+        [JsonProperty("format")]
+        public string Format;
     }
 
     public class ModuleRemoteConfig {
