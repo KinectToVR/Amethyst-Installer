@@ -149,6 +149,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void DisplayCompatibleDevices() {
+            compatDevices.State = canContinue ? Controls.TaskState.Checkmark : Controls.TaskState.Error;
 
             StringBuilder compatibilityString = new StringBuilder();
             // Check if your setup is fucked (this should never be encountered, but better safe than sorry)
@@ -178,13 +179,18 @@ namespace amethyst_installer_gui.Pages {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
                 compatibilityString.Append(Localisation.Device_XboxOneKinect);
+
+                if ( OpenVRUtil.TrackingType == VRTrackingType.Lighthouse ) {
+                    // Oh no...
+                    compatDevices.State = Controls.TaskState.Warning;
+                    // @TODO: Warning because WHY DID YOU BUY AN XBOX ONE KINECT WITH LIGHTHOUSES AAAAAAAAAAAAA
+                }
             }
 
             if ( compatibilityString.Length == 0 )
                 compatibilityString.Append(Localisation.Device_NotDetected);
 
             compatDevicesDescription.Text = compatibilityString.ToString();
-            compatDevices.State = canContinue ? Controls.TaskState.Checkmark : Controls.TaskState.Error;
         }
         
         private void DisplayPlayspaceSize() {
