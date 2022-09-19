@@ -137,6 +137,10 @@ namespace amethyst_installer_gui.Pages {
                 OpenVRUtil.HmdType == VRHmdType.PicoNeo ||
                 OpenVRUtil.HmdType == VRHmdType.PicoNeo2 ||
                 OpenVRUtil.HmdType == VRHmdType.PicoNeo3 ) {
+                // OK, are they using ALVR?
+                if ( OpenVRUtil.ConnectionType == VRConnectionType.ALVR ) {
+                    vrSystemFootnote.Visibility = Visibility.Collapsed;
+                }
                 vrSystemFootnote.Visibility = Visibility.Visible;
             }
         }
