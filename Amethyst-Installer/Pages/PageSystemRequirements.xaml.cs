@@ -204,8 +204,8 @@ namespace amethyst_installer_gui.Pages {
             minPlayspaceSizeDescription.Inlines.Add(minPlayspaceSizeHyperLink);
             minPlayspaceSizeDescription.Inlines.Add(compatibleDeviceDescriptionStringLastPart);
 
-            minPlayspaceSize.State = minAxis == 0 ? Controls.TaskState.Question :
-                ( minAxis < Constants.MinimumPlayspaceSize ? Controls.TaskState.Error : Controls.TaskState.Checkmark );
+            minPlayspaceSize.State = minAxis == 0 ? Controls.TaskState.Warning :
+                ( minAxis < Constants.MinimumPlayspaceSize ? Controls.TaskState.Question : Controls.TaskState.Checkmark );
         }
 
         private string GetVRHeadsetString() {
