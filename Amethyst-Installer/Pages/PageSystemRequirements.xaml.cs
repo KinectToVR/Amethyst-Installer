@@ -59,6 +59,8 @@ namespace amethyst_installer_gui.Pages {
             canContinue = InstallerStateManager.CanInstall;
             if ( !canContinue ) {
                 SoundPlayer.PlaySound(SoundEffect.Error);
+                MainWindow.Instance.sidebar_sysreq.State = Controls.TaskState.Error;
+                ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
             }
         }
 
