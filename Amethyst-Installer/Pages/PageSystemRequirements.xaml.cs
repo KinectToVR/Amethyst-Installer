@@ -113,7 +113,6 @@ namespace amethyst_installer_gui.Pages {
                 vrSystem.State = Controls.TaskState.Error;
             }
 
-            // TODO: Change depending on connection type
             string vrSystemFootnoteStringSrc = Localisation.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
 
             string vrSystemFootnoteStringFirstPart = vrSystemFootnoteStringSrc.Substring(0, vrSystemFootnoteStringSrc.IndexOf('['));
@@ -169,8 +168,20 @@ namespace amethyst_installer_gui.Pages {
                 compatibilityString.Append(Localisation.InstallError_CloudPC);
             }
 
+            // Check for Kinects
+            if ( KinectUtil.IsKinectV1Present() ) {
+                if ( compatibilityString.Length > 0 )
+                    compatibilityString.Append(Environment.NewLine);
+                compatibilityString.Append(Localisation.Device_Xbox360Kinect);
+            }
+            if ( KinectUtil.IsKinectV2Present() ) {
+                if ( compatibilityString.Length > 0 )
+                    compatibilityString.Append(Environment.NewLine);
+                compatibilityString.Append(Localisation.Device_XboxOneKinect);
+            }
+
             if ( compatibilityString.Length == 0 )
-                compatibilityString.Append("Not implemented yet.");
+                compatibilityString.Append(Localisation.Device_NotDetected);
 
             compatDevicesDescription.Text = compatibilityString.ToString();
             compatDevices.State = canContinue ? Controls.TaskState.Checkmark : Controls.TaskState.Error;
