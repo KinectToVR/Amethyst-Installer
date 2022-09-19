@@ -5,9 +5,12 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using amethyst_installer_gui.Installer;
 using amethyst_installer_gui.PInvoke;
 using amethyst_installer_gui.Popups;
@@ -308,13 +311,26 @@ namespace amethyst_installer_gui {
             DeviceManaged.UnregisterDeviceNotifications();
 
             // Graceful close
-            Application.Current.MainWindow?.Close();
-            Application.Current.Shutdown(( int ) exitCode);
 
-            // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
-            Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
+            // Hack to hide the window, then actually close it
+            // This is so that we make it seem like the app closes instantly, when in reality we have lots of threads in the background which I
+            // can't be bothered to cleanup (Windows will clean them up anyway so I don't really care). Due to all these threads, the app takes
+            // a few seconds until it fully closes
+            Application.Current.MainWindow.Visibility = Visibility.Hidden;
+            Application.Current.MainWindow.ShowInTaskbar = false;
 
-            // ForceKillProcess("Amethyst-Installer");
+            Task.Run(() => {
+
+                // Wait a few 250ms first, otherwise the window will hang
+                Thread.Sleep(250);
+
+                Application.Current.Dispatcher.InvokeAsync(new Action(() => Application.Current.Shutdown(( int ) exitCode)), DispatcherPriority.ContextIdle);
+
+                // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
+                Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
+
+                // ForceKillProcess("Amethyst-Installer");
+            });
         }
 
         // https://floating-point-gui.de/errors/comparison/
