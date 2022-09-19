@@ -120,24 +120,30 @@ namespace amethyst_installer_gui.Installer {
 
             using ( var enumerator = new MMDeviceEnumerator() ) {
                 foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Disabled | DeviceState.Unplugged | DeviceState.Active) ) {
-                    // if ( wasapi.DeviceFriendlyName == KinectV1MicrophoneFriendlyName ) {
-                    if ( wasapi.DeviceFriendlyName == "AMD Audio Device" ) {
+                    if ( wasapi.DeviceFriendlyName == KinectV1MicrophoneFriendlyName ) {
                         // Grab the GUID so that we don't search the registry
                         string microphoneGUID = wasapi.ID.Substring(wasapi.ID.IndexOf('{', 1));
 
-                        AdvApi.EnablePrivilege("SeTakeOwnershipPrivilege");
 
-                        using ( var audioDeviceReg = Registry.LocalMachine.OpenSubKey($"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\MMDevices\\Audio\\Capture\\{microphoneGUID}", RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.TakeOwnership) ) {
+                        AdvApi.EnablePrivilege("SeTakeOwnershipPrivilege");
+                        using ( var audioDeviceReg = Registry.LocalMachine.OpenSubKey($"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\MMDevices\\Audio\\Capture\\{microphoneGUID}", RegistryKeyPermissionCheck.ReadWriteSubTree) ) {
 
                             // Take-own
-                            var admins = new NTAccount("Administrators");
+                            AdvApi.EnablePrivilege(audioDeviceReg.Handle.DangerousGetHandle(), "SeTakeOwnershipPrivilege");
+
+                            RegistrySecurity rs = audioDeviceReg.GetAccessControl();
+                            string currentUserStr = Environment.UserDomainName + "\\" + Environment.UserName;
+                            // rs.AddAccessRule(new RegistryAccessRule(currentUserStr, RegistryRights.WriteKey | RegistryRights.ReadKey | RegistryRights.Delete | RegistryRights.FullControl, AccessControlType.Allow));
+
+                            // var admins = new NTAccount("Administrators");
+                            var myAcc = new NTAccount(Environment.UserDomainName, Environment.UserName);
                             var ac = audioDeviceReg.GetAccessControl();
-                            ac.SetOwner(admins);
-                            ac.AddAccessRule(new RegistryAccessRule(admins, RegistryRights.FullControl, AccessControlType.Allow));
+                            ac.SetOwner(myAcc);
+                            ac.AddAccessRule(new RegistryAccessRule(myAcc, RegistryRights.ReadKey | RegistryRights.SetValue | RegistryRights.QueryValues | RegistryRights.FullControl, AccessControlType.Allow));
                             audioDeviceReg.SetAccessControl(ac);
 
                             // Force disable
-
+                            audioDeviceReg.SetValue("DeviceState", DEVICE_ENABLED, RegistryValueKind.DWord);
                         }
 
                         return true;
