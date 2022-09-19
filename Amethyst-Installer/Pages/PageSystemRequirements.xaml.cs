@@ -108,6 +108,10 @@ namespace amethyst_installer_gui.Pages {
                 ( OpenVRUtil.HmdType == VRHmdType.Quest || OpenVRUtil.HmdType == VRHmdType.Quest2 )) {
                 vrSystem.State = Controls.TaskState.Question;
             }
+            // If it's a mobile VR headset, WEE WOO YOU CAN'T INSTALL ERROR ERROR SOUND THE ALARM!!!
+            if ( OpenVRUtil.HmdType == VRHmdType.Phone ) {
+                vrSystem.State = Controls.TaskState.Error;
+            }
 
             // TODO: Change depending on connection type
             string vrSystemFootnoteStringSrc = Localisation.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
