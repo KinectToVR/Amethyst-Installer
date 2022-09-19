@@ -32,6 +32,10 @@
   "InstallError_CloudPC": "Cloud PC detected. Amethyst does not support remote or \"cloud\" PCs.", /* The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere */
   "InstallError_SteamVRNotFound": "Couldn't find SteamVR! Is it installed, and have you run it at least once?", /* The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once. */
   "InstallError_WindowsVersionIsOld": "Windows version is too old to run Amethyst. Please update Windows from the Settings app before using Amethyst.", /* The message shown to a user when they have an old version of Windows that is not supported by Amethyst */
+  
+  "Device_NotDetected": "No compatible devices detected",
+  "Device_Xbox360Kinect": "Xbox 360 Kinect",
+  "Device_XboxOneKinect": "Xbox One Kinect",
 
   "InstallFailure_Modal_Title": "An unexpected error occured!",
   "InstallFailure_Modal_Description": "An unexpected error occured while installing {0}. Please view the logs for more information. Join our Discord server for help. The installation cannot continue.", /* {0} gets replaced with the module that failed to install */

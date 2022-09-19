@@ -134,6 +134,21 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("InstallError_WindowsVersionIsOld");
             }
         }
+        public static string Device_NotDetected {
+            get {
+                return LocaleManager.GetString("Device_NotDetected");
+            }
+        }
+        public static string Device_Xbox360Kinect {
+            get {
+                return LocaleManager.GetString("Device_Xbox360Kinect");
+            }
+        }
+        public static string Device_XboxOneKinect {
+            get {
+                return LocaleManager.GetString("Device_XboxOneKinect");
+            }
+        }
         public static string InstallFailure_Modal_Title {
             get {
                 return LocaleManager.GetString("InstallFailure_Modal_Title");
