@@ -308,6 +308,7 @@ namespace amethyst_installer_gui {
             DeviceManaged.UnregisterDeviceNotifications();
 
             // Graceful close
+            Application.Current.MainWindow?.Close();
             Application.Current.Shutdown(( int ) exitCode);
 
             // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
