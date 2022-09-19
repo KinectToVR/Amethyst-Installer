@@ -121,7 +121,7 @@ namespace amethyst_installer_gui.Installer {
                     if ( hmdModel.Contains("pro") ) {
                         HmdType = VRHmdType.VivePro;
                     } else if ( hmdModel.Contains("cosmos") ) {
-                        TrackingType = UsesLighthouseTracking() ? VRTrackingType.MixedReality : VRTrackingType.Lighthouse;
+                        TrackingType = UsesLighthouseTracking() ? VRTrackingType.Lighthouse : VRTrackingType.MixedReality;
                         HmdType = VRHmdType.ViveCosmos;
                     } else {
                         HmdType = VRHmdType.Vive;
@@ -139,7 +139,7 @@ namespace amethyst_installer_gui.Installer {
                 // Hell (Oculus)
                 case "oculus":
                     ConnectionType = VRConnectionType.Tethered;
-                    TrackingType = VRTrackingType.Oculus;
+                    TrackingType = UsesLighthouseTracking() ? VRTrackingType.Lighthouse : VRTrackingType.Oculus;
                     switch ( hmdModel ) {
                         case "oculus rift cv1":
                             HmdType = VRHmdType.Rift;
@@ -149,14 +149,14 @@ namespace amethyst_installer_gui.Installer {
                             return;
                         case "oculus quest":
                             HmdType = VRHmdType.Quest;
-                            TrackingType = VRTrackingType.Quest;
+                            TrackingType = UsesLighthouseTracking() ? VRTrackingType.Lighthouse : VRTrackingType.Quest;
                             DetectQuestConnectionMethod();
                             return;
                         case "miramar": // Most common HMD name I've seen when using ALVR, ALVR is special and I fucking hate it
                         case "oculus quest2":
                         case "oculus quest 2":
                             HmdType = VRHmdType.Quest2;
-                            TrackingType = VRTrackingType.Quest;
+                            TrackingType = UsesLighthouseTracking() ? VRTrackingType.Lighthouse : VRTrackingType.Quest;
                             DetectQuestConnectionMethod();
                             return;
                     }
@@ -166,7 +166,7 @@ namespace amethyst_installer_gui.Installer {
                 case "pico":
                     // TODO: Revise further because yeahhhhh
                     ConnectionType = VRConnectionType.Tethered;
-                    TrackingType = VRTrackingType.Oculus;
+                    TrackingType = UsesLighthouseTracking() ? VRTrackingType.Lighthouse : VRTrackingType.Oculus;
                     switch ( hmdModel ) {
                         case "pico neo":
                             HmdType = VRHmdType.PicoNeo;
