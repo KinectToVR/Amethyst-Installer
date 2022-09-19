@@ -7,7 +7,6 @@ namespace InstallerTools {
 
     internal class Program {
 
-
         #region ANSI CMD
         private const int STD_OUTPUT_HANDLE = -11;
         private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;

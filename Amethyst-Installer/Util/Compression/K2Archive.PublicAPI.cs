@@ -116,7 +116,6 @@ namespace amethyst_installer_gui {
                 }
             }
 
-
             using ( var memStream = new MemoryStream() ) {
                 // Create header block
 
@@ -154,7 +153,7 @@ namespace amethyst_installer_gui {
                 fileItems = null;
 
                 // Compress the entire file block.
-                using ( FileStream fs = File.OpenWrite(target) ) {
+                using ( FileStream fs = File.Create(target) ) {
 
                     // Decompress the entire file block.
                     var compressor = new Compressor(new CompressionOptions(FILE_COMPRESSOR_LEVEL));
@@ -166,58 +165,6 @@ namespace amethyst_installer_gui {
                     Logger.Info($"Wrote archive to {target}");
                 }
             }
-
-            /*
-            // @TODO: Stream?
-            List<byte> archiveBytes = new List<byte>(40);
-
-            // Create header block
-
-            // MagicNumber
-            for ( int i = 0; i < 32; i++ ) {
-                archiveBytes.Add(K2_ARCHIVE_MAGIC_NUMBER[i]);
-            }
-            archiveBytes.AddRange(BitConverter.GetBytes(fileItems.Count + directoryItems.Count));   // FileCount
-
-
-            // Add directory entries
-            byte[] dirBytes = new byte[] { };
-            string rootDirName = Path.GetFileName(rootDirectory);
-            foreach ( var dir in directoryItems ) {
-
-                // Relative path
-                string relativePath = new Uri(rootDirectory).MakeRelativeUri(new Uri(dir)).ToString().Replace("\\", "/").Substring(rootDirName.Length + 1);
-                byte[] compressedFile = CreateFileBlock(relativePath, ref dirBytes, compressionLevel);
-                archiveBytes.AddRange(compressedFile);
-            }
-
-            // Compress each file
-            foreach ( var file in fileItems ) {
-                // Relative path
-                string relativePath = new Uri(rootDirectory).MakeRelativeUri(new Uri(file)).ToString().Replace("\\", "/").Substring(rootDirName.Length + 1);
-                byte[] fileBytes = File.ReadAllBytes(file);
-                byte[] compressedFile = CreateFileBlock(relativePath, ref fileBytes, compressionLevel);
-                archiveBytes.AddRange(compressedFile);
-            }
-
-            // Decompress the entire file block.
-            var compressor = new Compressor(new CompressionOptions(FILE_COMPRESSOR_LEVEL));
-            var finalCompressedFile = compressor.Wrap(archiveBytes.ToArray());
-
-            // Write to file
-            File.WriteAllBytes(target, finalCompressedFile);
-            Logger.Info($"Wrote archive to {target}");
-
-            // Cleanup
-            compressor.Dispose();
-            compressor = null;
-            directoryItems.Clear();
-            directoryItems = null;
-            fileItems.Clear();
-            fileItems = null;
-            archiveBytes.Clear();
-            archiveBytes = null;
-            */
         }
 
         public static void CompressArchive(string directory, string target, int compressionLevel = DEFAULT_COMPRESSOR_LEVEL) {

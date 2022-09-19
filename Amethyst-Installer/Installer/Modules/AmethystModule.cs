@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace amethyst_installer_gui.Installer.Modules {
     public class AmethystModule : ModuleBase {
