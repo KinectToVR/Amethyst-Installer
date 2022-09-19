@@ -1,3 +1,4 @@
+using amethyst_installer_gui.PInvoke;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace amethyst_installer_gui {
         // Extended from
         // https://stackoverflow.com/a/50848113
         public static Color GetAccentColor() {
+
             const string DWM_KEY = @"Software\Microsoft\Windows\DWM";
             using ( RegistryKey dwmKey = Registry.CurrentUser.OpenSubKey(DWM_KEY, RegistryKeyPermissionCheck.ReadSubTree) ) {
                 if ( dwmKey is null ) {

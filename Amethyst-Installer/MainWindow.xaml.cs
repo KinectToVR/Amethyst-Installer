@@ -8,6 +8,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
@@ -34,9 +36,11 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static MainWindow Instance {
             get {
-                return
-                    Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow as MainWindow);
-                // ( Application.Current.MainWindow as MainWindow ); 
+                if ( !Application.Current.Dispatcher.CheckAccess() ) {
+                    return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow as MainWindow);
+                }
+
+                return Application.Current.MainWindow as MainWindow; 
             }
         }
 
@@ -56,6 +60,7 @@ namespace amethyst_installer_gui {
             // DebugMode = DebugMode && 
 
             InitializeComponent();
+            ContentRendered += Window_ContentRendered;
 
             // Init pages
             Pages.Add(InstallerState.Welcome, new PageWelcome());
@@ -75,10 +80,6 @@ namespace amethyst_installer_gui {
             // Set default page to welcome
             SetPage(App.InitialPage);
 
-            // Fix corners on Win11
-            DWM.SetWindowCorners(this, CornerPreference.Round);
-            DWM.SetWindowAccentColor(this, WindowsColorHelpers.GetAccentColor());
-
             PrepareAnalytics();
 
             // Prepare animations
@@ -91,6 +92,28 @@ namespace amethyst_installer_gui {
             m_fadeOutAnimation.From = 1;
             m_fadeOutAnimation.To = 0;
             m_fadeOutAnimation.Duration = new Duration(Constants.PageTransitionAnimationDuration);
+        }
+
+        // Setup theme related stuff using DWM
+        private void Window_ContentRendered(object sender, EventArgs e) {
+
+            // Fix corners on Win11
+            DWM.SetWindowCorners(this, CornerPreference.Round);
+            DWM.SetWindowAccentColor(this, WindowsColorHelpers.GetAccentColor());
+
+            // @TODO: Theming!!
+            // Dark / Light mode
+            DWM.SetDarkMode(this, true);
+
+            // Mica some bitches
+            if (DWM.EnableBackdropBlur(this)) {
+
+                DWM.ExtendWindowChrome(this);
+            } else {
+                var color = ( ( SolidColorBrush ) Background ).Color;
+                color.A = 255;
+                Background = new SolidColorBrush(color);
+            }
         }
 
         private void PrepareAnalytics() {

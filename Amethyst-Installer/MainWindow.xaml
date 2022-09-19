@@ -16,9 +16,16 @@
     Title="Amethyst Installer"
     MinHeight="502" MinWidth="822"
     Height="502" Width="822"
-    Background="#FF282828" Foreground="White"
+    Background="{StaticResource BrushBackgroundWindow}" Foreground="White"
     Closing="Window_Shutdown"
     KeyUp="Window_KeyUp">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="20"
+            ResizeBorderThickness="8"
+            GlassFrameThickness="-1"
+            UseAeroCaptionButtons="True" />
+    </WindowChrome.WindowChrome>
 
     <Border Name="ContentRoot" BorderThickness="1" BorderBrush="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" MouseDown="ContentRoot_MouseDown">
         <DockPanel>
