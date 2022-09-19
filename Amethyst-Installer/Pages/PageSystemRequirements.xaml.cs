@@ -66,7 +66,6 @@ namespace amethyst_installer_gui.Pages {
 
         private void DisplayStorage() {
 
-            // TODO: Check storage
             diskSpaceDescription.Text = string.Format(Localisation.SystemRequirement_Description_Storage, Util.SizeSuffix(RequiredStorage)); // TODO: String format
             diskSpace.State = Controls.TaskState.Checkmark;
 
@@ -100,10 +99,15 @@ namespace amethyst_installer_gui.Pages {
 
             // Check VR headset
             vrSystemDescription.Text = GetVRHeadsetString();
-            vrSystem.State =
-                ( ( OpenVRUtil.ConnectionType == VRConnectionType.Tethered || OpenVRUtil.ConnectionType == VRConnectionType.OculusLink ) &&
-                    ( OpenVRUtil.HmdType == VRHmdType.Quest || OpenVRUtil.HmdType == VRHmdType.Quest2 )   // If it's a Quest
-                ) ? Controls.TaskState.Question : Controls.TaskState.Checkmark;
+            
+            vrSystem.State = Controls.TaskState.Checkmark;
+
+            // If we aren't wireless
+            if (( OpenVRUtil.ConnectionType == VRConnectionType.Tethered || OpenVRUtil.ConnectionType == VRConnectionType.OculusLink ) &&
+                // If it's a Quest
+                ( OpenVRUtil.HmdType == VRHmdType.Quest || OpenVRUtil.HmdType == VRHmdType.Quest2 )) {
+                vrSystem.State = Controls.TaskState.Question;
+            }
 
             // TODO: Change depending on connection type
             string vrSystemFootnoteStringSrc = Localisation.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
@@ -127,6 +131,7 @@ namespace amethyst_installer_gui.Pages {
             vrSystemFootnote.Inlines.Add(vrSystemFootnoteHyperlink);
             vrSystemFootnote.Inlines.Add(vrSystemFootnoteStringLastPart);
 
+            // Could the headset have wireless?
             if ( OpenVRUtil.HmdType == VRHmdType.Quest ||
                 OpenVRUtil.HmdType == VRHmdType.Quest2 ||
                 OpenVRUtil.HmdType == VRHmdType.PicoNeo ||
@@ -138,8 +143,8 @@ namespace amethyst_installer_gui.Pages {
 
         private void DisplayCompatibleDevices() {
 
-            // TODO: Check target device
             StringBuilder compatibilityString = new StringBuilder();
+            // Check if your setup is fucked (this should never be encountered, but better safe than sorry)
             if ( InstallerStateManager.IsWindowsAncient ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
@@ -160,7 +165,6 @@ namespace amethyst_installer_gui.Pages {
                 compatibilityString.Append("Not implemented yet.");
 
             compatDevicesDescription.Text = compatibilityString.ToString();
-            // compatDevices.State = Controls.TaskState.Question;
             compatDevices.State = canContinue ? Controls.TaskState.Checkmark : Controls.TaskState.Error;
         }
         
@@ -170,7 +174,6 @@ namespace amethyst_installer_gui.Pages {
             string compatibleDeviceDescriptionStringSrc =
                     minAxis == 0 ? Localisation.SystemRequirement_Description_Playspace_Unknown :
                     (minAxis < Constants.MinimumPlayspaceSize ? Localisation.SystemRequirement_Description_Playspace_Small : Localisation.SystemRequirement_Description_Playspace_Good);
-
 
             // Subtitute playspace bounds into string
             compatibleDeviceDescriptionStringSrc = string.Format(compatibleDeviceDescriptionStringSrc,
