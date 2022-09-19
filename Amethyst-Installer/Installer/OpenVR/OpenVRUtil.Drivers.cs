@@ -28,7 +28,7 @@ namespace amethyst_installer_gui.Installer {
             if ( !s_failedToInit ) {
                 if ( File.Exists(s_vrpathreg) ) {
                     // TODO: vrpathreg now returns error codes! use it for driver handling
-                    var args = $"adddriver {driverPath}";
+                    var args = $"adddriver \"{driverPath}\"";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
                         FileName = s_vrpathreg,
                         Arguments = args,
@@ -73,7 +73,7 @@ namespace amethyst_installer_gui.Installer {
 
             if ( !s_failedToInit ) {
                 if ( File.Exists(s_vrpathreg) ) {
-                    var args = $"finddriver {drivername}";
+                    var args = $"finddriver \"{drivername}\"";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
                         FileName = s_vrpathreg,
                         Arguments = args,
@@ -144,7 +144,7 @@ namespace amethyst_installer_gui.Installer {
 
             if ( !s_failedToInit ) {
                 if ( File.Exists(s_vrpathreg) ) {
-                    var args = $"removedriver {path}";
+                    var args = $"removedriver \"{path}\"";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
                         FileName = s_vrpathreg,
                         Arguments = args,
@@ -215,7 +215,7 @@ namespace amethyst_installer_gui.Installer {
 
             if ( !s_failedToInit ) {
                 if ( File.Exists(s_vrpathreg) ) {
-                    var args = $"removedriverswithname {driverName}";
+                    var args = $"removedriverswithname \"{driverName}\"";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
                         FileName = s_vrpathreg,
                         Arguments = args,
