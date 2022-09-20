@@ -36,6 +36,8 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static MainWindow Instance {
             get {
+                return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow as MainWindow);
+
                 if ( !Application.Current.Dispatcher.CheckAccess() ) {
                     return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow as MainWindow);
                 }
