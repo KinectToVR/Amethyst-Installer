@@ -187,9 +187,6 @@ namespace amethyst_installer_gui.Installer {
                 for ( int i = 0; i < steamVrChaperone.Universes.Count; i++ ) {
                     if ( steamVrChaperone.Universes[i].UniverseID != null && steamVrChaperone.Universes[i].PlayArea != null ) {
                         // reset
-                        latestSuccess = false;
-                        currentSuccess = false;
-
                         latestSuccess = ulong.TryParse(steamVrChaperone.Universes[latestChaperoneIndex].UniverseID, out latestID);
                         currentSuccess = ulong.TryParse(steamVrChaperone.Universes[i].UniverseID, out currentID);
                         if ( latestSuccess && currentSuccess && currentID > latestID ) {
