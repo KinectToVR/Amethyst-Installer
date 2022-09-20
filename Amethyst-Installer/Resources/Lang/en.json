@@ -32,7 +32,7 @@
   "InstallError_CloudPC": "Cloud PC detected. Amethyst does not support remote or \"cloud\" PCs.", /* The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere */
   "InstallError_SteamVRNotFound": "Couldn't find SteamVR! Is it installed, and have you run it at least once?", /* The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once. */
   "InstallError_WindowsVersionIsOld": "Windows version is too old to run Amethyst. Please update Windows from the Settings app before using Amethyst.", /* The message shown to a user when they have an old version of Windows that is not supported by Amethyst */
-  
+
   "Device_NotDetected": "No compatible devices detected",
   "Device_Xbox360Kinect": "Xbox 360 Kinect",
   "Device_XboxOneKinect": "Xbox One Kinect",
@@ -116,6 +116,9 @@
 
   "PostOp_Kinect_EnableMic_Title": "Kinect microphone disabled!",
   "PostOp_Kinect_EnableMic_Description": "Please enable the Kinect microphone. It is required for the Kinect for Windows SDK to function properly.",
+
+  "MustDisableMemoryIntegrity_Title": "Memory Integrity Detected!",
+  "MustDisableMemoryIntegrity_Description": "The Kinect for Windows drivers do not support Memory Integrity. Please disable Memory Integrity to be able to use your Kinect.",
 
   "Updating_FailedReachApi": "Failed to connect to K2VR Web API. Please check your internet connection, and re-run the updater.", /* Shown if fetching the API failed */
   "Updating_InitFailed": "Failed to initialize updater",

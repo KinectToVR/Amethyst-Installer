@@ -489,6 +489,16 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("PostOp_Kinect_EnableMic_Description");
             }
         }
+        public static string MustDisableMemoryIntegrity_Title {
+            get {
+                return LocaleManager.GetString("MustDisableMemoryIntegrity_Title");
+            }
+        }
+        public static string MustDisableMemoryIntegrity_Description {
+            get {
+                return LocaleManager.GetString("MustDisableMemoryIntegrity_Description");
+            }
+        }
         public static string Updating_FailedReachApi {
             get {
                 return LocaleManager.GetString("Updating_FailedReachApi");
