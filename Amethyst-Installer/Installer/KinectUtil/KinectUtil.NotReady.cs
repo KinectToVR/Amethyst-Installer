@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,14 +22,40 @@ namespace amethyst_installer_gui.Installer {
         //    this usually means that the microphone driver is missing. (We are not sure regarding how to fix this yet)
 
         public static void FixNotReady() {
+            
+            // Try fixing the microphone
+            KinectUtil.FixMicrophoneV1();
 
+            // Check if Memory Integrity is enabled, and if so, early exit
+            // (We don't know if this is going to be fixed until we restart the machine, let the user know that a restart is required!)
+            if (IsMemoryIntegrityEnabled()) {
+                Util.ShowMessageBox(Localisation.MustDisableMemoryIntegrity_Description, Localisation.MustDisableMemoryIntegrity_Title);
+
+                // Open Windows Security on the Core Isolation page
+                Process.Start("windowsdefender://coreisolation");
+            }
+
+            // Attempt to reinstall the Kinect Drivers
+
+            // Force enable all known Kinect devices
+
+            // Check again
+
+            // If it persists, pnputil!
+
+            // Once we have silent installations, chain load the installer into a silent install with a callback to this if necessary
         }
 
         public static bool MustFixNotReady() {
 
             // Load Kinect10.dll (if installed and check for E_NUI_NOTREADY)
             // It should be in System32 as the user should've installed it to reach this point
-            string kinect10dllPath = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Kinect10.dll"));
+            // string kinect10dllPath = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Kinect10.dll"));
+
+            if ( KinectSensor.KinectSensors.Count > 0 ) {
+                KinectSensor kinect = KinectSensor.KinectSensors[0];
+                return kinect.Status == KinectStatus.NotReady;
+            }
 
             return false;
         }
