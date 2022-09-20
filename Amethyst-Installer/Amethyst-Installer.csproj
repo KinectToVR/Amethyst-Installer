@@ -287,6 +287,7 @@
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Role.cs" />
     <Compile Include="PInvoke\CurrentUser.cs" />
     <Compile Include="PInvoke\DeviceManaged.cs" />
+    <Compile Include="PInvoke\DevicePolicy.cs" />
     <Compile Include="PInvoke\DWM.cs" />
     <Compile Include="PInvoke\Kernel.cs" />
     <Compile Include="PInvoke\openvr_api.cs" />

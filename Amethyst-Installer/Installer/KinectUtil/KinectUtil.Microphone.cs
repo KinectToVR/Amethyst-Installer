@@ -22,9 +22,6 @@ namespace amethyst_installer_gui.Installer {
 
         const string KinectV1MicrophoneFriendlyName = "Kinect USB Audio";
         const string KinectV2MicrophoneFriendlyName = "Xbox NUI Sensor";
-        
-        const int DEVICE_ENABLED    = 0x00000001;
-        const int DEVICE_DISABLED   = 0x10000001;
 
         /// <summary>
         /// Check if the Kinect 360 microphone is muted
@@ -106,10 +103,11 @@ namespace amethyst_installer_gui.Installer {
             // Fixing an Audio device is hell lmfao
 
             // EW MANUAL METHOD!!!
-            Util.ShowMessageBox(Localisation.PostOp_Kinect_EnableMic_Description, Localisation.PostOp_Kinect_EnableMic_Title, MessageBoxButton.OK);
+            // Util.ShowMessageBox(Localisation.PostOp_Kinect_EnableMic_Description, Localisation.PostOp_Kinect_EnableMic_Title, MessageBoxButton.OK);
 
-            // Open sound control panel on the recording tab
-            Process.Start("rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1");
+            // Open sound control panel on the recording tab, and tell the user to enable the microphone since we can't simulate the keystrokes
+            // ourselves
+            // Process.Start("rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1");
 
             // Automatic method :Amelia_PewPew:
 
@@ -117,15 +115,28 @@ namespace amethyst_installer_gui.Installer {
             // HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture\XXXX
             //
             // Yeah OK you see where this is going now...
+            // 
+            // I pulled your leg it obviously would not be that easy...
+            // If you try writing to any key there you will get an exception.
+            //
+            // So turns out: YOU CAN NOT CHANGE THE STATE OF AUDIO DEVICES PROGRAMMATICALLY USING PUBLIC FACING WINDOWS APIS
+            // WANNA DO IT ANYWAY? GO REVERSE ENGINEER THE PRIVATE API!!
+            //
+            // Now you would say, why don't we open the control panel one, and use cursed Windows API stuff to automatically send all the
+            // keystrokes necessary to disable the microphone programmatically?
+            // 
+            // Yeah no you can't get the window handles in Windows 11 (I haven't checked on 10, but probably the same thing) :D
+            // 
+            // So yeah let's just reverse engineer the Windows API and abuse COM to import the PolicyStore and change the AudioEndpointVisibility
+            // to true :D
+            //
+            // Please send help I spent 3 whole days to get to this point...
 
             using ( var enumerator = new MMDeviceEnumerator() ) {
                 foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Disabled | DeviceState.Unplugged | DeviceState.Active) ) {
                     if ( wasapi.DeviceFriendlyName == KinectV1MicrophoneFriendlyName ) {
-                        // Grab the GUID so that we don't search the registry
-                        string microphoneGUID = wasapi.ID.Substring(wasapi.ID.IndexOf('{', 1));
-
-
-
+                        // Private windows API jumpscare
+                        DevicePolicy.SetAudioEndpointState(wasapi.ID, true);
                         return true;
                     }
                 }
