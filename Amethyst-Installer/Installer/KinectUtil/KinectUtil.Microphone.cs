@@ -133,7 +133,7 @@ namespace amethyst_installer_gui.Installer {
             // Please send help I spent 3 whole days to get to this point...
 
             using ( var enumerator = new MMDeviceEnumerator() ) {
-                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Disabled | DeviceState.Unplugged | DeviceState.Active) ) {
+                foreach ( MMDevice wasapi in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Disabled) ) {
                     if ( wasapi.DeviceFriendlyName == KinectV1MicrophoneFriendlyName ) {
                         // Private windows API jumpscare
                         DevicePolicy.SetAudioEndpointState(wasapi.ID, true);
