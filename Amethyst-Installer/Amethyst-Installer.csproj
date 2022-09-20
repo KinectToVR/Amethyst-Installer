@@ -264,7 +264,6 @@
     <Compile Include="Pages\PageWelcome.xaml.cs">
       <DependentUpon>PageWelcome.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PInvoke\AdvApi.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\DataFlow.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\DeviceState.cs" />
     <Compile Include="PInvoke\CoreAudioAPI-Minimal\Interfaces\Blob.cs" />

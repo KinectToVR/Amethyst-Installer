@@ -106,10 +106,10 @@ namespace amethyst_installer_gui.Installer {
             // Fixing an Audio device is hell lmfao
 
             // EW MANUAL METHOD!!!
-            // Util.ShowMessageBox(Localisation.PostOp_Kinect_EnableMic_Description, Localisation.PostOp_Kinect_EnableMic_Title, MessageBoxButton.OK);
+            Util.ShowMessageBox(Localisation.PostOp_Kinect_EnableMic_Description, Localisation.PostOp_Kinect_EnableMic_Title, MessageBoxButton.OK);
 
             // Open sound control panel on the recording tab
-            // Process.Start("rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1");
+            Process.Start("rundll32.exe", "shell32.dll,Control_RunDLL mmsys.cpl,,1");
 
             // Automatic method :Amelia_PewPew:
 
@@ -125,26 +125,6 @@ namespace amethyst_installer_gui.Installer {
                         string microphoneGUID = wasapi.ID.Substring(wasapi.ID.IndexOf('{', 1));
 
 
-                        AdvApi.EnablePrivilege("SeTakeOwnershipPrivilege");
-                        using ( var audioDeviceReg = Registry.LocalMachine.OpenSubKey($"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\MMDevices\\Audio\\Capture\\{microphoneGUID}", RegistryKeyPermissionCheck.ReadWriteSubTree) ) {
-
-                            // Take-own
-                            AdvApi.EnablePrivilege(audioDeviceReg.Handle.DangerousGetHandle(), "SeTakeOwnershipPrivilege");
-
-                            RegistrySecurity rs = audioDeviceReg.GetAccessControl();
-                            string currentUserStr = Environment.UserDomainName + "\\" + Environment.UserName;
-                            // rs.AddAccessRule(new RegistryAccessRule(currentUserStr, RegistryRights.WriteKey | RegistryRights.ReadKey | RegistryRights.Delete | RegistryRights.FullControl, AccessControlType.Allow));
-
-                            // var admins = new NTAccount("Administrators");
-                            var myAcc = new NTAccount(Environment.UserDomainName, Environment.UserName);
-                            var ac = audioDeviceReg.GetAccessControl();
-                            ac.SetOwner(myAcc);
-                            ac.AddAccessRule(new RegistryAccessRule(myAcc, RegistryRights.ReadKey | RegistryRights.SetValue | RegistryRights.QueryValues | RegistryRights.FullControl, AccessControlType.Allow));
-                            audioDeviceReg.SetAccessControl(ac);
-
-                            // Force disable
-                            audioDeviceReg.SetValue("DeviceState", DEVICE_ENABLED, RegistryValueKind.DWord);
-                        }
 
                         return true;
                     }
