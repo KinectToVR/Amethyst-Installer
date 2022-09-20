@@ -10,10 +10,17 @@
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
-        Background="#FF2B2B2B" Foreground="#FFFFFFFF"
+        Background="{StaticResource BrushBackgroundWindow}" Foreground="#FFFFFFFF"
         MinWidth="256"
         MaxWidth="679"
         Title="WinUI3MessageBox" Height="450" Width="679">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="20"
+            ResizeBorderThickness="8"
+            GlassFrameThickness="-1"
+            UseAeroCaptionButtons="True" />
+    </WindowChrome.WindowChrome>
     <Border BorderThickness="1" BorderBrush="#FF3F3F3F" SnapsToDevicePixels="True" MouseDown="Border_MouseDown">
         <Grid>
             <Grid.RowDefinitions>
@@ -34,7 +41,7 @@
             <StackPanel Grid.Row="1" Orientation="Vertical" Margin="24,0,24,30" SnapsToDevicePixels="True">
                 <TextBlock x:Name="message" TextOptions.TextRenderingMode="Grayscale" SnapsToDevicePixels="True" FontFamily="Segoe UI" FontSize="14" TextWrapping="WrapWithOverflow">Lorem ipsum dolor sit amet, adispicing elit.</TextBlock>
             </StackPanel>
-            <Border Grid.Row="2" Background="#FF202020" Padding="24" BorderBrush="#FF1D1D1D" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
+            <Border Grid.Row="2" Background="{StaticResource BrushBackgroundAlt}" Padding="24" BorderBrush="#FF1D1D1D" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
                 <Grid SnapsToDevicePixels="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
