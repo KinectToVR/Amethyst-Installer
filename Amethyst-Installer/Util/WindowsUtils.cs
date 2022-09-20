@@ -62,6 +62,7 @@ namespace amethyst_installer_gui {
         /// List of Windows versions
         /// </summary>
         public enum WindowsMajorReleases : int {
+            Win11_22H2 = 22621,
             Win11_21H2 = 22000,
             Win10_21H2 = 19044,
             Win10_21H1 = 19043,
