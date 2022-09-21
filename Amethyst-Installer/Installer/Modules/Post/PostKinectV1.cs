@@ -22,9 +22,10 @@ namespace amethyst_installer_gui.Installer.Modules {
             int deviceCount = deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.KinectForWindows).Count();
             deviceTree.Dispose();
 
-            // If we don't have ALL Kinect devices available, wait
+            // If we don't have ALL Kinect devices available, wait until we have an update...
             if ( deviceCount < 4 ) {
-                // Wait until a USB device shows up, or for 30 seconds so that the Kinect devices will show up, so that we can then check E_NUI_NOTPOWERED
+                // Wait until a USB device shows up, or for 30 seconds so that the Kinect devices will show up, so that we can then check
+                // for errors during the install and attempt to fix them
                 int timer = 0;
 
                 DeviceManaged.OnDeviceAdded += () => {
@@ -32,7 +33,10 @@ namespace amethyst_installer_gui.Installer.Modules {
                     timer = int.MaxValue;
                 };
 
-                while ( timer < 3000 ) { Thread.Sleep(10); }
+                while ( timer < 3000 ) {
+                    Thread.Sleep(10);
+                    timer++;
+                }
 
                 // Cleanup
                 DeviceManaged.OnDeviceAdded = null;
