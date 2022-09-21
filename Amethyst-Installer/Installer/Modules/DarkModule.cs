@@ -93,9 +93,6 @@ namespace amethyst_installer_gui.Installer.Modules {
 
         private bool InstallFiles(ref InstallModuleProgress control) {
             
-            // In case
-            PostKinectV1.Listen();
-
             // Execute each installer
             for ( int i = 0; i < Module.Install.Items.Count; i++ ) {
                 var installFile = (string) Module.Install.Items[i];

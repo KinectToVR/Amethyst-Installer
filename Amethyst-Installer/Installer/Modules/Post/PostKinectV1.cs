@@ -2,47 +2,41 @@
 using amethyst_installer_gui.PInvoke;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace amethyst_installer_gui.Installer.Modules {
     public class PostKinectV1 : PostBase {
 
-        // Wait until a USB device shows up, or for 30 seconds so that the Kinect devices will show up, so that we can then check E_NUI_NOTPOWERED
-        private static bool doWait = false;
-        private static Task task;
-
-        public static void Listen() {
-            if ( doWait )
-                return;
-
-            doWait = true;
-
-            task = Task.Run(() => {
-                var timer = new System.Timers.Timer(30000);
-                timer.Elapsed += (sender, _) => {
-                    doWait = false;
-                    timer.Stop();
-                    timer.Dispose();
-                };
-                DeviceManaged.OnDeviceAdded += () => {
-                    Thread.Sleep(1000);
-                    doWait = false;
-                    timer.Stop();
-                    timer.Dispose();
-                };
-            });
-        }
-
         public override void OnPostOperation(ref InstallModuleProgress control) {
 
             control.LogInfo(LogStrings.ApplyingKinectFixes);
             Logger.Info(LogStrings.ApplyingKinectFixes);
 
-            while ( doWait ) { }
-            task.Dispose();
+            // Get Kinect Devices
+            var deviceTree = new DeviceTree();
+            int deviceCount = deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.KinectForWindows).Count();
+            deviceTree.Dispose();
+
+            // If we don't have ALL Kinect devices available, wait
+            if ( deviceCount < 4 ) {
+                // Wait until a USB device shows up, or for 30 seconds so that the Kinect devices will show up, so that we can then check E_NUI_NOTPOWERED
+                int timer = 0;
+
+                DeviceManaged.OnDeviceAdded += () => {
+                    Thread.Sleep(1000);
+                    timer = int.MaxValue;
+                };
+
+                while ( timer < 3000 ) { Thread.Sleep(10); }
+
+                // Cleanup
+                DeviceManaged.OnDeviceAdded = null;
+            }
 
             // Not powered fix
             TryFixNotPowered(ref control);
