@@ -108,14 +108,18 @@ namespace amethyst_installer_gui.Installer {
         }
 
         private static void DetectCloudPc() {
-            bool isPluto = CloudPCUtil.IsOnPlutoSphere();
-            bool isShadow = CloudPCUtil.IsRunningOnShadow();
-            IsCloudPC = isPluto || isShadow;
+            bool isPluto    = CloudPCUtil.IsOnPlutoSphere();
+            bool isShadow   = CloudPCUtil.IsRunningOnShadow();
+            bool isNBVR     = CloudPCUtil.IsOnNBVR();
+            IsCloudPC = isPluto || isShadow || isNBVR;
             if ( isPluto ) {
                 Logger.Info($"Detected Plutosphere! Amethyst does not work in a networked environment!");
             }
             if ( isShadow ) {
                 Logger.Info($"Detected Shadow! Amethyst does not work in a networked environment!");
+            }
+            if ( isNBVR ) {
+                Logger.Info($"Detected NBVR! Amethyst does not work in a networked environment!");
             }
         }
 

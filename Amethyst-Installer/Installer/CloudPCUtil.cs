@@ -51,5 +51,14 @@ namespace amethyst_installer_gui.Installer {
             var plutosphereDriverPath = OpenVRUtil.GetDriverPath("CloudXRRemoteHMD");
             return plutosphereDriverPath.Length > 0 && Directory.Exists(plutosphereDriverPath);
         }
+
+        /// <summary>
+        /// Returns whether the current machine is running on NBVR
+        /// </summary>
+        public static bool IsOnNBVR() {
+            // According to the PlutoSphere FAQ, "CloudXRRemoteHMD" is a necessary driver for PlutoSphere
+            var nbvrDriverPath = OpenVRUtil.GetDriverPath("nbvr_server");
+            return nbvrDriverPath.Length > 0 && Directory.Exists(nbvrDriverPath);
+        }
     }
 }
