@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,8 +18,14 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static string GetDisplayVersion() {
             RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
-            var buildNumber = registryKey.GetValue("DisplayVersion").ToString();
-            return buildNumber ?? Environment.Version.Build.ToString();
+            object buildNumber;
+
+            buildNumber = registryKey.GetValue("DisplayVersion");
+            if (buildNumber == null) {
+                buildNumber = registryKey.GetValue("CurrentBuildNumber");
+            }
+
+            return buildNumber == null ? Environment.Version.Build.ToString() : buildNumber.ToString();
         }
 
         /// <summary>
@@ -34,10 +41,10 @@ namespace amethyst_installer_gui {
             int revNumAsInt32 = 0;
             int.TryParse(( string ) revisionNumber ?? "0", out revNumAsInt32);
             return new Version(
-                ( int ) ( majorNumber ?? int.MinValue ),
-                ( int ) ( minorNumber ?? int.MinValue ),
+                ( int ) ( majorNumber ?? 0 ),
+                ( int ) ( minorNumber ?? 0 ),
                 revNumAsInt32,
-                ( int ) ( buildNumber ?? int.MinValue )
+                ( int ) ( buildNumber ?? 0 )
             );
         }
 
