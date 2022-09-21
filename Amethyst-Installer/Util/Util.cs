@@ -324,12 +324,15 @@ namespace amethyst_installer_gui {
                 // Wait a few 250ms first, otherwise the window will hang
                 Thread.Sleep(250);
 
-                Application.Current.Dispatcher.InvokeAsync(new Action(() => Application.Current.Shutdown(( int ) exitCode)), DispatcherPriority.ContextIdle);
+                Application.Current.Dispatcher.InvokeAsync(new Action(() => {
+                    Application.Current.Shutdown(( int ) exitCode);
 
-                // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
-                Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
+                    // @HACK: We should figure out *why* some other threads are keeping the process alive in some scenarios, and fix that behaviour.
+                    Environment.Exit(( int ) exitCode); // Sometimes we would have a background thread resulting in a zombie process
 
-                // ForceKillProcess("Amethyst-Installer");
+
+                    // ForceKillProcess("Amethyst-Installer");
+                }), DispatcherPriority.ContextIdle);
             });
         }
 
