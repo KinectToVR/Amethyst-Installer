@@ -316,8 +316,10 @@ namespace amethyst_installer_gui {
             // This is so that we make it seem like the app closes instantly, when in reality we have lots of threads in the background which I
             // can't be bothered to cleanup (Windows will clean them up anyway so I don't really care). Due to all these threads, the app takes
             // a few seconds until it fully closes
-            Application.Current.MainWindow.Visibility = Visibility.Hidden;
-            Application.Current.MainWindow.ShowInTaskbar = false;
+            if ( Application.Current.MainWindow != null ) {
+                Application.Current.MainWindow.Visibility = Visibility.Hidden;
+                Application.Current.MainWindow.ShowInTaskbar = false;
+            }
 
             Task.Run(() => {
 
