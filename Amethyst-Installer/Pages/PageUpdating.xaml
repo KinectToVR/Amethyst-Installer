@@ -183,7 +183,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="0">
+        <ScrollViewer Grid.Row="0" FocusVisualStyle="{x:Null}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
