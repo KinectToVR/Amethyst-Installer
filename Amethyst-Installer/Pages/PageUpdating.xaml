@@ -7,6 +7,176 @@
              xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="447" d:DesignWidth="822">
+
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded" >
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot0" Storyboard.TargetProperty="Opacity" RepeatBehavior="Forever">
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.00" Value="0"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.66" Value="1"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:1.33" Value="0"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:1.83" Value="0"/>
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot1" Storyboard.TargetProperty="Opacity" RepeatBehavior="Forever" BeginTime="0:0:0.33">
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.00" Value="0"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.66" Value="1"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:1.33" Value="0"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:1.83" Value="0"/>
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot2" Storyboard.TargetProperty="Opacity" RepeatBehavior="Forever" BeginTime="0:0:0.66">
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.00" Value="0"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.66" Value="1"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:1.33" Value="0"/>
+                        <LinearDoubleKeyFrame KeyTime="0:0:1.83" Value="0"/>
+                    </DoubleAnimationUsingKeyFrames>
+
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot0_transform" Storyboard.TargetProperty="ScaleX" RepeatBehavior="Forever">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.00" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.66" Value="1.0">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.33" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.83" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot1_transform" Storyboard.TargetProperty="ScaleX" RepeatBehavior="Forever" BeginTime="0:0:0.33">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.00" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.66" Value="1.0">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.33" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.83" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot2_transform" Storyboard.TargetProperty="ScaleX" RepeatBehavior="Forever" BeginTime="0:0:0.66">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.00" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.66" Value="1.0">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.33" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.83" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                    </DoubleAnimationUsingKeyFrames>
+
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot0_transform" Storyboard.TargetProperty="ScaleY" RepeatBehavior="Forever">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.00" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.66" Value="1.0">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.33" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.83" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot1_transform" Storyboard.TargetProperty="ScaleY" RepeatBehavior="Forever" BeginTime="0:0:0.33">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.00" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.66" Value="1.0">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.33" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.83" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ameLogoDot2_transform" Storyboard.TargetProperty="ScaleY" RepeatBehavior="Forever" BeginTime="0:0:0.66">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.00" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.66" Value="1.0">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseOut"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.33" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.83" Value="0.5">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <ExponentialEase Exponent="6" EasingMode="EaseIn"/>
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -29,7 +199,31 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Image Source="/Resources/Icons/4x/amethyst-icon.png" Grid.Row="0" />
+                        <Border x:Name="logoContainer" Grid.Row="0" Focusable="false" IsHitTestVisible="False" FocusVisualStyle="{x:Null}" MinHeight="96">
+                            <Grid Height="{Binding ElementName=logoContainer, Path=ActualHeight}" Width="{Binding ElementName=logoContainer, Path=ActualHeight}" ClipToBounds="True">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Image Source="/Resources/Icons/4x/amethyst-icon.png" Grid.RowSpan="3" />
+                                <Border x:Name="ameLogoDot0" Background="White" Grid.Row="1" Height="18.75" Width="18.75" CornerRadius="9.375" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="9,0,0,0" Opacity="0" >
+                                    <Border.RenderTransform>
+                                        <ScaleTransform x:Name="ameLogoDot0_transform" CenterX="9.375" CenterY="9.375" ScaleX="1" ScaleY="1" />
+                                    </Border.RenderTransform>
+                                </Border>
+                                <Border x:Name="ameLogoDot1" Background="White" Grid.Row="1" Height="18.75" Width="18.75" CornerRadius="9.375" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="42,0,0,0" Opacity="0" >
+                                    <Border.RenderTransform>
+                                        <ScaleTransform x:Name="ameLogoDot1_transform" CenterX="9.375" CenterY="9.375" ScaleX="1" ScaleY="1" />
+                                    </Border.RenderTransform>
+                                </Border>
+                                <Border x:Name="ameLogoDot2" Background="White" Grid.Row="1" Height="18.75" Width="18.75" CornerRadius="9.375" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="68,0,0,0" Opacity="0" >
+                                    <Border.RenderTransform>
+                                        <ScaleTransform x:Name="ameLogoDot2_transform" CenterX="9.375" CenterY="9.375" ScaleX="1" ScaleY="1" />
+                                    </Border.RenderTransform>
+                                </Border>
+                            </Grid>
+                        </Border>
                         <TextBlock Grid.Row="1" Text="{x:Static global:Localisation.Updating_UpdatingAmethyst}" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Center" FontSize="16" FontWeight="SemiBold" Margin="0,8" />
                     </Grid>
                 </StackPanel>

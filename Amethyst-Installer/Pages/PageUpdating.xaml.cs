@@ -18,6 +18,8 @@ namespace amethyst_installer_gui.Pages {
     public partial class PageUpdating : UserControl, IInstallerPage {
 
         private void UpdateHandler () {
+            if ( InstallerStateManager.ModulesToInstall == null || InstallerStateManager.ModulesToInstall.Count == 0 )
+                return;
             StartDownloadSequence();
         }
 
@@ -67,7 +69,11 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void DownloadNewModule(int index) {
-            Dispatcher.Invoke(() => {
+            if ( Dispatcher.CheckAccess() ) {
+                Dispatcher.BeginInvoke(new Action<int>(DownloadNewModule), index);
+                return;
+            }
+            // Dispatcher.Invoke(() => {
                 Logger.Info(index);
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
@@ -82,7 +88,7 @@ namespace amethyst_installer_gui.Pages {
                 m_downloadControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Download_FailureCritical : Localisation.Download_Failure;
                 m_downloadControl.Completed = false;
                 m_downloadControl.Tag = index;
-            });
+            // });
         }
 
         private void downloadModule_Retry(object sender, RoutedEventArgs e) {
