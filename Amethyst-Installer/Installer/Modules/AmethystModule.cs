@@ -35,10 +35,7 @@ if upgrade no
 
         public override bool Install(string sourceFile, string path, ref InstallModuleProgress control, out TaskState state) {
 
-            // TODO: Kill Amethyst, SteamVR
             InstallUtil.TryKillingConflictingProcesses();
-
-            // TODO: Check for previous install of Amethyst, and if present, soft-uninstall (soft means only get rid of the install itself, don't touch configs or SteamVR)
 
             if ( ExtractAmethyst(sourceFile, path, ref control) ) {
 
@@ -203,7 +200,7 @@ if upgrade no
                     OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/2");
                     OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/3");
 
-                    // For most of K2EX's lifespan we tried mimicking Vive Trackers
+                    // For most of K2EX's lifespan we tried mimicking Vive Trackers, sorry cnlohr (pls don't look at the OpenVrUtils files k thx)
                     OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB11ABEC");
                     OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB1441A7");
                     OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T0");
