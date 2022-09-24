@@ -47,7 +47,7 @@ namespace amethyst_installer_gui.Installer {
                             Logger.Fatal($"Failed to register using vrpathreg:: Configuration or permission problem");
                             break;
                         case -2: // Argument problem (wtf??)
-                            Logger.Fatal($"vrpathreg failed:\n\tCode: -2\n\tArgs: \"{args}\"");
+                            Logger.Fatal($"vrpathreg failed:\n\tCode: {vrpathregProc.ExitCode}\n\tArgs: \"{args}\"");
                             break;
                     }
                 }
@@ -97,7 +97,7 @@ namespace amethyst_installer_gui.Installer {
                             return output;
                         case -1: // Configuration or permission problem
                         case -2: // Argument problem (wtf??)
-                            Logger.Fatal($"vrpathreg failed:\n\tCode: -2\n\tArgs: \"{args}\"");
+                            Logger.Fatal($"vrpathreg failed:\n\tCode: {vrpathregProc.ExitCode}\n\tArgs: \"{args}\"");
                             break;
                     }
                 }
@@ -168,7 +168,7 @@ namespace amethyst_installer_gui.Installer {
                             return;
                         case -1: // Configuration or permission problem
                         case -2: // Argument problem (wtf??)
-                            Logger.Fatal($"vrpathreg failed:\n\tCode: -2\n\tArgs: \"{args}\"");
+                            Logger.Fatal($"vrpathreg failed:\n\tCode: {vrpathregProc.ExitCode}\n\tArgs: \"{args}\"");
                             break;
                     }
                 }
@@ -239,7 +239,7 @@ namespace amethyst_installer_gui.Installer {
                             return;
                         case -1: // Configuration or permission problem
                         case -2: // Argument problem (wtf??)
-                            Logger.Fatal($"vrpathreg failed:\n\tCode: -2\n\tArgs: \"{args}\"");
+                            Logger.Fatal($"vrpathreg failed:\n\tCode: {vrpathregProc.ExitCode}\n\tArgs: \"{args}\"");
                             break;
                     }
                 }
