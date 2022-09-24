@@ -52,9 +52,11 @@ namespace amethyst_installer_gui {
                 SetTheme(true);
                 Init();
 
-                // MainWindow
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.ShowDialog();
+                if ( InstallerStateManager.CanInstall ) {
+                    // MainWindow
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.ShowDialog();
+                }
             } else {
                 Util.Quit(ExitCodes.Command);
             }
@@ -67,13 +69,13 @@ namespace amethyst_installer_gui {
                     // If Cloud PC
                     Util.ShowMessageBox(LocaleStrings.InstallProhibited_CloudPC, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
                     Util.Quit(ExitCodes.IncompatibleSetup);
-                } else if ( !InstallerStateManager.SteamVRInstalled ) {
-                    // If no SteamVR
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_NoSteamVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
-                    Util.Quit(ExitCodes.IncompatibleSetup);
                 } else if ( InstallerStateManager.IsWindowsAncient ) {
                     // If Windows version is not supported
                     Util.ShowMessageBox(LocaleStrings.InstallProhibited_WindowsAncient, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.Quit(ExitCodes.IncompatibleSetup);
+                } else if ( !InstallerStateManager.SteamVRInstalled ) {
+                    // If no SteamVR
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_NoSteamVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 }
             }
