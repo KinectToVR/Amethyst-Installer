@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AmethystUtils")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Amethyst Utils")]
+[assembly: AssemblyDescription("Utilities for Amethyst")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AmethystUtils")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCompany("K2VR Team")]
+[assembly: AssemblyProduct("Amethyst Utils")]
+[assembly: AssemblyCopyright("Copyright © K2VR Team 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
