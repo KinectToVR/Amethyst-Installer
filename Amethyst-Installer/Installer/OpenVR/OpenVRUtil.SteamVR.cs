@@ -40,24 +40,33 @@ namespace amethyst_installer_gui.Installer {
         public static string RuntimePath() {
             if ( !s_initialized )
                 throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
-            if ( s_failedToInit ) {
 
-                // Try reading openvrpaths, and grab the runtime field.
-                // From there: for each entry, try checking if the directory exists, and, if so, return it
-                if ( s_openvrpaths != null ) {
-                    try {
-                        for ( int i = 0; i < s_openvrpaths.runtime.Count; i++ ) {
-                            if ( Directory.Exists(s_openvrpaths.runtime[i]) )
-                                return s_openvrpaths.runtime[i];
-                        }
-                    } catch ( Exception ) {
-                        Logger.Error($"Failed to fetch runtime argument from OpenVR Paths, is OpenVR Paths corrupt?");
-                    }
+            if ( !s_failedToInit ) {
+                if ( Valve.VR.OpenVR.IsRuntimeInstalled() ) {
+                    return Valve.VR.OpenVR.RuntimePath();
+                } else {
+                    // Disable vrpathreg
+                    s_failedToInit = true;
                 }
+            }
 
-                return string.Empty;
-            } else
-                return Valve.VR.OpenVR.IsRuntimeInstalled() ? Valve.VR.OpenVR.RuntimePath() : string.Empty;
+            // Try reading openvrpaths, and grab the runtime field.
+            // From there: for each entry, try checking if the directory exists, and, if so, return it
+            if ( s_openvrpaths != null ) {
+                try {
+                    for ( int i = 0; i < s_openvrpaths.runtime.Count; i++ ) {
+                        if ( Directory.Exists(s_openvrpaths.runtime[i]) )
+                            return s_openvrpaths.runtime[i];
+                    }
+                } catch ( Exception ) {
+                    Logger.Error($"Failed to fetch runtime argument from OpenVR Paths, is OpenVR Paths corrupt?");
+                }
+            }
+
+            // vrpaths is fucked AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            // Disable vrpathreg
+            s_failedToInit = true;
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Steam", "steamapps", "common", "SteamVR");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

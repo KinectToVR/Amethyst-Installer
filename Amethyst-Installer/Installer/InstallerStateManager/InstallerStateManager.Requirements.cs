@@ -62,6 +62,7 @@ namespace amethyst_installer_gui.Installer {
             // Determine SteamVR playspace bounds
             PlayspaceBounds = OpenVRUtil.GetPlayspaceBounds();
 
+            Logger.Info($"Detected SteamVR Install at \"{OpenVRUtil.RuntimePath()}\"");
             Logger.Info($"Detected VR headset type {OpenVRUtil.HmdType}, connected using {OpenVRUtil.ConnectionType}; tracking type: {OpenVRUtil.TrackingType}");
             Logger.Info($"Playspace bounds: {PlayspaceBounds}");
         }
