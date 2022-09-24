@@ -433,7 +433,7 @@ if upgrade no
 
         private bool RegisterProtocolLink(string target, ref InstallModuleProgress control) {
 
-            var amethystInstallerExecutable = Path.GetFullPath(Path.Combine(target, "Amethyst-Installer.exe"));
+            var amethystInstallerExecutable = Path.GetFullPath(Path.Combine(target, "AmethystUtils.exe"));
 
             try {
 
