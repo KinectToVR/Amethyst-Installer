@@ -47,7 +47,6 @@ namespace InstallerTools {
             EnableAnsiCmd();
 
             CommandParser parser = new CommandParser();
-            args = new string[] { "--help" };
             if ( !parser.ParseCommands(args) ) {
                 // Woo command!
             } else {
