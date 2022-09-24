@@ -203,5 +203,14 @@ namespace amethyst_installer_gui {
             // convert to byte and return
             return ( byte ) ( col * 255f );
         }
+
+        public static bool IsDarkTheme() {
+            try {
+                int res = (int)Registry.CurrentUser.GetValue("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", 0);
+                return res == 0;
+            } catch {
+                return true;
+            }
+        }
     }
 }

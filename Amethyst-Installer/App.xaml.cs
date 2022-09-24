@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Media;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Windows;
 
@@ -45,6 +46,10 @@ namespace amethyst_installer_gui {
             CommandParser parser = new CommandParser();
             if ( !ProtocolParser.ParseCommands(e.Args) && !parser.ParseCommands(e.Args) ) {
 
+                // @NOTE: Yes, we technically do support light theme, but right now it's an unfinished mess, so we'll keep on forcing
+                // dark mode for the time being
+                // SetTheme(WindowsColorHelpers.IsDarkTheme());
+                SetTheme(true);
                 Init();
 
                 // MainWindow
@@ -126,6 +131,21 @@ namespace amethyst_installer_gui {
             }
 
             s_initialized = true;
+        }
+
+
+        public ResourceDictionary ThemeDictionary {
+            // You could probably get it via its name with some query logic as well.
+            get { return Resources.MergedDictionaries[0]; }
+        }
+
+        private void SetTheme(bool darkMode) {
+            ThemeDictionary.MergedDictionaries.Clear();
+            if (!darkMode) {
+                ThemeDictionary.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("Styles/ColoursLight.xaml", UriKind.Relative) });
+            } else {
+                ThemeDictionary.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("Styles/ColoursDark.xaml", UriKind.Relative) });
+            }
         }
     }
 }
