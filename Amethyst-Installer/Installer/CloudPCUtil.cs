@@ -22,8 +22,8 @@ namespace amethyst_installer_gui.Installer {
         /// This method checks for it's presence
         /// </summary>
         private static bool ShadowVROpenVRDriverExists() {
-            string ShadowVRPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Blade Group", "ShadowVR");
-            return Directory.Exists(ShadowVRPath);
+            var shadowVRDriverPath = OpenVRUtil.GetDriverPath("ShadowVR");
+            return shadowVRDriverPath.Length > 0 && Directory.Exists(shadowVRDriverPath);
         }
 
         /// <summary>
@@ -56,7 +56,6 @@ namespace amethyst_installer_gui.Installer {
         /// Returns whether the current machine is running on NBVR
         /// </summary>
         public static bool IsOnNBVR() {
-            // According to the PlutoSphere FAQ, "CloudXRRemoteHMD" is a necessary driver for PlutoSphere
             var nbvrDriverPath = OpenVRUtil.GetDriverPath("nbvr_server");
             return nbvrDriverPath.Length > 0 && Directory.Exists(nbvrDriverPath);
         }
