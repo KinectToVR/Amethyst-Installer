@@ -4,6 +4,8 @@ This is the installer for [Amethyst](https://github.com/KinectToVR/Amethyst), an
 
 The installer is currently in an **UNFINISHED** state, and actively being developed.
 
+## For users: [downloads are here](https://github.com/kinecttovr/amethyst-installer-releases)
+
 ## Translations
 
 If you would like to contribute to this project by translating strings for other languages, you may do the following:
