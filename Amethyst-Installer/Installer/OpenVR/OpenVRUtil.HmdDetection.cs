@@ -49,7 +49,7 @@ namespace amethyst_installer_gui.Installer {
                 return true;
             } else if ( hmdModel == "pvrserver" || hmdManufacturer == "viritualis res" ) { // PhoneVR (yeah look it up on GitHub its a real thing)
                 return true;
-            } // TODO: More hell whenever we find more phone "vr" headset apps people use
+            } // @TODO: More hell whenever we find more phone "vr" headset apps people use
 
             return false;
         }
@@ -132,7 +132,7 @@ namespace amethyst_installer_gui.Installer {
                 case "pimax":
                     ConnectionType = VRConnectionType.Tethered;
                     TrackingType = VRTrackingType.Lighthouse;
-                    HmdType = VRHmdType.Pimax; // TODO: Specific models?
+                    HmdType = VRHmdType.Pimax; // @TODO: Specific models?
                     return;
 
 
@@ -164,7 +164,7 @@ namespace amethyst_installer_gui.Installer {
 
                 // Pico Neo
                 case "pico":
-                    // TODO: Revise further because yeahhhhh
+                    // TODO: @Revise further because yeahhhhh
                     ConnectionType = VRConnectionType.Tethered;
                     TrackingType = UsesLighthouseTracking() ? VRTrackingType.Lighthouse : VRTrackingType.Oculus;
                     switch ( hmdModel ) {
@@ -210,7 +210,7 @@ namespace amethyst_installer_gui.Installer {
                     }
                 }
 
-                // TODO: Compare last access time?
+                // @TODO: Compare last access time?
                 // Is this even a good idea?
                 // Given based on what I'm reading this is prone to false positives...
                 // ONLY ONE WAY TO FIND OUT: TEST AND THROW IT IN THE WILD

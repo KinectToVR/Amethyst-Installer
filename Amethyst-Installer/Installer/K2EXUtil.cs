@@ -17,7 +17,7 @@ namespace amethyst_installer_gui.Installer {
             // If this fails, we attempt to locate the KinectToVR driver, and go up a directory and return that
             // If the above fails as well, we assume that K2EX is not present on the current system
 
-            // TODO: Implement K2EX detection
+            // @TODO: Implement K2EX detection
 
 
 

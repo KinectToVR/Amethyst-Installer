@@ -64,11 +64,11 @@ namespace amethyst_installer_gui.Controls {
             if ( m_isDirty )
                 RecomputeTextInternal();
 
-            // TODO: Rewrite the text rendering using this sample as a base
+            // @TODO: Rewrite the text rendering using this sample as a base
             // https://github.com/microsoft/WPF-Samples/blob/master/PerMonitorDPI/TextFormatting/
 
             // Draw the formatted text string to the DrawingContext of the control.
-            // TODO: Render a small portion of the text, we know 90% of it is out of view anyway so why bother rendering the rest of the massive string
+            // @TODO: Render a small portion of the text, we know 90% of it is out of view anyway so why bother rendering the rest of the massive string
             drawingContext.DrawText(m_computedTextFormatting, new Point(0, HeightOffset));
         }
 

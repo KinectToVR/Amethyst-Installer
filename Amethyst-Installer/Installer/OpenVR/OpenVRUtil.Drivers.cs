@@ -27,7 +27,6 @@ namespace amethyst_installer_gui.Installer {
             if ( !s_failedToInit ) {
                 if ( File.Exists(s_vrpathreg) ) {
                     Logger.Info("Using vrpathreg...");
-                    // TODO: vrpathreg now returns error codes! use it for driver handling
                     var args = $"adddriver \"{driverPath}\"";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
                         FileName = s_vrpathreg,

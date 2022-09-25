@@ -52,9 +52,6 @@ namespace amethyst_installer_gui {
         private DoubleAnimation m_fadeOutAnimation;
 
         public MainWindow() {
-            // TODO: Launch args can set debug mode
-            // DebugMode = DebugMode && 
-
             InitializeComponent();
             ContentRendered += Window_ContentRendered;
 
@@ -272,7 +269,7 @@ namespace amethyst_installer_gui {
                     m_dispatcherTimer.Start();
                     speedrunTimer.Visibility = Visibility.Visible;
 
-                    // TODO: On install complete victory royale ??
+                    // @TODO: On install complete victory royale ??
                 }
             } else {
 #endif
@@ -302,7 +299,7 @@ namespace amethyst_installer_gui {
                     Instance.m_dispatcherTimer.Start();
                     Instance.speedrunTimer.Visibility = Visibility.Visible;
 
-                    // TODO: On install complete victory royale ??
+                    // @TODO: On install complete victory royale ??
                     return false;
                 }
             } else {
@@ -387,7 +384,7 @@ namespace amethyst_installer_gui {
 
         public void AnimateScroller(double from, double to) {
 
-            // TODO: Figure out why the fuck hiding buttons makes logs fucking work??????
+            // @TODO: Figure out why the fuck hiding buttons makes logs fucking work??????
 
             PageViewScroller.BeginAnimation(AnimatedScrollViewer.HorizontalOffsetProperty, null);
             DoubleAnimation horizontalAnimation = new DoubleAnimation();

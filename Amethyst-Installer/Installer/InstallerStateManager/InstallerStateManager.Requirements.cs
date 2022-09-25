@@ -25,7 +25,7 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool SteamVRInstalled = false;
 
-        // TODO: Detect if using Shadow, prevent an install because Ame doesn't support networked environments
+        // @TODO: Detect if using Shadow, prevent an install because Ame doesn't support networked environments
         public static bool IsCloudPC = false;
         public static bool IsWindowsAncient = false;
 
@@ -41,7 +41,7 @@ namespace amethyst_installer_gui.Installer {
 
         private static void ComputeRequirements() {
 
-            // TODO: actually compute the requirements for installing amethyst
+            // @TODO: actually compute the requirements for installing amethyst
 
             CheckSteamVR();
             CheckAmethyst();
@@ -126,7 +126,7 @@ namespace amethyst_installer_gui.Installer {
         }
 
         private static void DetectLaptop() {
-            // TODO: YEET!
+            // @TODO: YEET!
             // This is temp, just to see if this is reliable for now
             Logger.Warn($"PowerButtonPresent: {PowerProvider.SystemPowerCapabilites.PowerButtonPresent}");
             Logger.Warn($"SleepButtonPresent: {PowerProvider.SystemPowerCapabilites.SleepButtonPresent}");
@@ -177,7 +177,7 @@ namespace amethyst_installer_gui.Installer {
                 this.Name = device.Description;
             }
 
-            // TODO: Regex :D
+            // @TODO: Regex :D
             this.FriendlyString = this.Name;
 
             /*
@@ -256,7 +256,7 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
             this.FriendlyString = this.FriendlyString.Trim();
 
             // this.IsGoodController = false;
-            // TODO: Blacklist / whitelist
+            // @TODO: Blacklist / whitelist
             KinectV1_Compatible = false;
             KinectV2_Compatible = false;
         }

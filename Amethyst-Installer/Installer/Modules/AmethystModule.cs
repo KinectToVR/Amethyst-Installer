@@ -62,7 +62,7 @@ if upgrade no
                     overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
                 }
 
-                // TODO: If this is an upgrade change the message to a different one
+                // @TODO: If this is an upgrade change the message to a different one
                 Logger.Info(LogStrings.InstalledAmethystSuccess);
                 control.LogInfo(LogStrings.InstalledAmethystSuccess);
                 state = sucessMinor ? TaskState.Checkmark : TaskState.Warning;
@@ -108,7 +108,7 @@ if upgrade no
 
             string driverPath = Path.Combine(path, "Amethyst");
 
-            // TODO: Skip this step during an upgrade
+            // @TODO: Skip this step during an upgrade
             Logger.Info(LogStrings.CheckingAmethystDriverConflicts);
             control.LogInfo(LogStrings.CheckingAmethystDriverConflicts);
 
@@ -123,7 +123,7 @@ if upgrade no
                 OpenVRUtil.RemoveDriversWithName("KinectToVR");
             }
 
-            // TODO: Skip this step during an upgrade
+            // @TODO: Skip this step during an upgrade
             Logger.Info(LogStrings.RegisteringAmethystDriver);
             control.LogInfo(LogStrings.RegisteringAmethystDriver);
 

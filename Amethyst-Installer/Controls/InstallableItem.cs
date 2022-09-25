@@ -104,7 +104,7 @@ namespace amethyst_installer_gui.Controls {
         }
 
         private void container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            // TODO: Abstract for light mode?
+            // @TODO: Abstract for light mode?
             // Background = #FF474444
             Background = new SolidColorBrush(Color.FromRgb(0x47, 0x44, 0x44));
 

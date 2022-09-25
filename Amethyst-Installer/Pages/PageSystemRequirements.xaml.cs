@@ -66,7 +66,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void DisplayStorage() {
 
-            diskSpaceDescription.Text = string.Format(Localisation.SystemRequirement_Description_Storage, Util.SizeSuffix(RequiredStorage)); // TODO: String format
+            diskSpaceDescription.Text = string.Format(Localisation.SystemRequirement_Description_Storage, Util.SizeSuffix(RequiredStorage)); // @TODO: String format
             diskSpace.State = Controls.TaskState.Checkmark;
 
             // If less than 2GB free on drive
@@ -78,7 +78,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void DisplayUSBControllers() {
 
-            // TODO: Check USB controllers
+            // @TODO: Check USB controllers
             int goodControllerCount = 0;
             StringBuilder controllerStringBuffer = new StringBuilder();
 
@@ -349,7 +349,7 @@ namespace amethyst_installer_gui.Pages {
                     MainWindow.Instance.SetPage(InstallerState.Downloading);
                     SoundPlayer.PlaySound(SoundEffect.MoveNext);
                 } else {
-                    // TODO: Ella pls tell me how to handle the UX part of this I'm not sure if straight up exiting is a good idea
+                    // @TODO: Ella pls tell me how to handle the UX part of this I'm not sure if straight up exiting is a good idea
                     MainWindow.Instance.Close();
                 }
             }
