@@ -30,4 +30,5 @@
             Shell.OpenFolderAndSelectItem(installDirectory);
             return true;
         }
+    }
 }
