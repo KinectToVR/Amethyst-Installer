@@ -21,4 +21,13 @@
         }
     }
     */
+
+    public class ProtocolInstallLocation : IProtocolCommand {
+        public string Command { get => "installfolder"; set { } }
+
+        public bool Execute(string parameters) {
+            string installDirectory = InstallUtil.LocateAmethystInstall();
+            Shell.OpenFolderAndSelectItem(installDirectory);
+            return true;
+        }
 }

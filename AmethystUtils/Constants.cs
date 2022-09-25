@@ -57,5 +57,9 @@ namespace AmethystUtils {
             }
         }
 
+        /// <summary>
+        /// Amethyst registry key location
+        /// </summary>
+        public const string AmethystRegsitryKey = @"Software\K2VR Team\Amethyst";
     }
 }
