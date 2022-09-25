@@ -12,7 +12,6 @@ namespace AmethystUtils {
                 FileName = Constants.AmethystInstallerExecutablePath,
                 Arguments = argument
             });
-            process.WaitForExit();
         }
 
         public static void PassToAmethyst(string argument) {
@@ -20,7 +19,6 @@ namespace AmethystUtils {
                 FileName = Constants.AmethystExecutablePath,
                 Arguments = argument
             });
-            process.WaitForExit();
         }
     }
 }
