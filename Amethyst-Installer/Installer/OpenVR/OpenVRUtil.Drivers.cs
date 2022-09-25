@@ -27,6 +27,7 @@ namespace amethyst_installer_gui.Installer {
 
             if ( !s_failedToInit ) {
                 if ( File.Exists(s_vrpathreg) ) {
+                    Logger.Info("Using vrpathreg...");
                     // TODO: vrpathreg now returns error codes! use it for driver handling
                     var args = $"adddriver \"{driverPath}\"";
                     var vrpathregProc = Process.Start(new ProcessStartInfo() {
@@ -37,6 +38,8 @@ namespace amethyst_installer_gui.Installer {
                         WindowStyle = ProcessWindowStyle.Hidden
                     });
                     vrpathregProc.WaitForExit();
+                    Logger.Info("Waiting for vrpathreg...");
+                    Logger.Info("Done!");
                     switch ( vrpathregProc.ExitCode ) {
                         case 0: // Success
                         case 2: // Driver installed more than once
@@ -57,7 +60,9 @@ namespace amethyst_installer_gui.Installer {
                 if ( !s_openvrpaths.external_drivers.Contains(driverPath) ) {
                     // Driver is not registered!
                     s_openvrpaths.external_drivers.Add(driverPath);
+                    Logger.Info("Saving openvrpaths...");
                     SaveOpenVrPaths();
+                    Logger.Info("Done!");
                 }
             }
         }

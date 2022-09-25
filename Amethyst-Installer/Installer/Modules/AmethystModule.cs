@@ -128,9 +128,12 @@ if upgrade no
             control.LogInfo(LogStrings.RegisteringAmethystDriver);
 
             OpenVRUtil.RegisterSteamVrDriver(driverPath);
+            Logger.Info("Force enabling addon");
             OpenVRUtil.ForceEnableDriver("Amethyst");
 
+            Logger.Info("Killing conflicting processes (thanks Valve)");
             InstallUtil.TryKillingConflictingProcesses();
+            Logger.Info("Killed all conflicting processes!");
 
             return true;
         }
