@@ -24,7 +24,6 @@ namespace amethyst_installer_gui.Installer {
                 throw new InvalidOperationException("Tried to execute an OpenVR method before initialization!");
 
             string driverDirectory = Path.GetDirectoryName(driverPath);
-
             if ( !s_failedToInit ) {
                 if ( File.Exists(s_vrpathreg) ) {
                     Logger.Info("Using vrpathreg...");
@@ -37,8 +36,8 @@ namespace amethyst_installer_gui.Installer {
                         CreateNoWindow = true,
                         WindowStyle = ProcessWindowStyle.Hidden
                     });
-                    vrpathregProc.WaitForExit();
                     Logger.Info("Waiting for vrpathreg...");
+                    vrpathregProc.WaitForExit(10000);
                     Logger.Info("Done!");
                     switch ( vrpathregProc.ExitCode ) {
                         case 0: // Success
@@ -88,10 +87,9 @@ namespace amethyst_installer_gui.Installer {
                         CreateNoWindow = true,
                         WindowStyle = ProcessWindowStyle.Hidden,
                         StandardOutputEncoding = System.Text.Encoding.UTF8,
-                        StandardErrorEncoding = System.Text.Encoding.UTF8
                     });
                     var output = vrpathregProc.StandardOutput.ReadToEnd();
-                    vrpathregProc.WaitForExit();
+                    vrpathregProc.WaitForExit(10000);
                     output = output.Split(Environment.NewLine[0])[0];
                     switch ( vrpathregProc.ExitCode ) {
                         case 0: // Success
@@ -158,12 +156,8 @@ namespace amethyst_installer_gui.Installer {
                         UseShellExecute = false,
                         CreateNoWindow = true,
                         WindowStyle = ProcessWindowStyle.Hidden,
-                        StandardOutputEncoding = System.Text.Encoding.UTF8,
-                        StandardErrorEncoding = System.Text.Encoding.UTF8
                     });
-                    // var output = vrpathregProc.StandardOutput.ReadToEnd();
-                    vrpathregProc.WaitForExit();
-                    // output = output.Split(Environment.NewLine[0])[0];
+                    vrpathregProc.WaitForExit(10000);
                     switch ( vrpathregProc.ExitCode ) {
                         case 0: // Success
                             return;
@@ -229,12 +223,8 @@ namespace amethyst_installer_gui.Installer {
                         UseShellExecute = false,
                         CreateNoWindow = true,
                         WindowStyle = ProcessWindowStyle.Hidden,
-                        StandardOutputEncoding = System.Text.Encoding.UTF8,
-                        StandardErrorEncoding = System.Text.Encoding.UTF8
                     });
-                    // var output = vrpathregProc.StandardOutput.ReadToEnd();
-                    vrpathregProc.WaitForExit();
-                    // output = output.Split(Environment.NewLine[0])[0];
+                    vrpathregProc.WaitForExit(10000);
                     switch ( vrpathregProc.ExitCode ) {
                         case 0: // Success
                             return;

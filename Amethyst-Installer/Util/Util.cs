@@ -398,7 +398,7 @@ namespace amethyst_installer_gui {
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true
                     });
-                    taskkillProc.WaitForExit();
+                    taskkillProc.WaitForExit(10000);
                 }
             }
         }

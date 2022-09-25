@@ -60,7 +60,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                 };
                 proc.BeginErrorReadLine();
                 proc.BeginOutputReadLine();
-                proc.WaitForExit();
+                proc.WaitForExit(10000);
 
                 if ( stdout.Length > 0 )
                     Logger.Info(stdout.ToString().Trim());
@@ -113,7 +113,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                         WindowStyle = ProcessWindowStyle.Hidden,
                     };
                     var msiExecutable = Process.Start(msiExecutableStart);
-                    msiExecutable.WaitForExit();
+                    msiExecutable.WaitForExit(60000);
 
                     Logger.Info(string.Format(LogStrings.InstallDarkSuccess, installFile));
                     control.LogInfo(string.Format(LogStrings.InstallDarkSuccess, installFile));

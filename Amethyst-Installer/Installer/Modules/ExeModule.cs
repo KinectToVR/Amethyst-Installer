@@ -41,7 +41,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                     Logger.Info(string.Format(LogStrings.InstallingExe, Module.DisplayName));
                     control.LogInfo(string.Format(LogStrings.InstallingExe, Module.DisplayName));
                     var executableInstall = Process.Start(procInfo);
-                    executableInstall.WaitForExit();
+                    executableInstall.WaitForExit(300000);
                     int[] exitCodeSuccess = new int [] { 0 };
 
                     // Try fetch exit code from JSON
