@@ -15,4 +15,22 @@ namespace AmethystUtils.Protocol {
             return true;
         }
     }
+
+    public class ProtocolLogsInstaller : IProtocolCommand {
+        public string Command { get => "logs/installer"; set { } }
+
+        public bool Execute(string parameters) {
+            Shell.OpenFolderAndSelectItem(Constants.AmethystLogsDirectory + Path.DirectorySeparatorChar + "installer" + Path.DirectorySeparatorChar);
+            return true;
+        }
+    }
+
+    public class ProtocolLogsAmethystApp : IProtocolCommand {
+        public string Command { get => "logs/amethyst"; set { } }
+
+        public bool Execute(string parameters) {
+            Shell.OpenFolderAndSelectItem(Constants.AmethystLogsDirectory + Path.DirectorySeparatorChar + "amethyst" + Path.DirectorySeparatorChar);
+            return true;
+        }
+    }
 }
