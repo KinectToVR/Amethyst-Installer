@@ -31,7 +31,7 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static string AmethystLogsDirectory {
             get {
-                return Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Roaming", "Amethyst", "logs"));
+                return Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Roaming", "Amethyst", "logs", "installer"));
             }
         }
 
