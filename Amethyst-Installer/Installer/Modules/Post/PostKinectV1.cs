@@ -31,8 +31,8 @@ namespace amethyst_installer_gui.Installer.Modules {
                 int timer = 0;
 
                 DeviceManaged.OnDeviceAdded += () => {
-                    Thread.Sleep(1000);
-                    timer = int.MaxValue;
+                    Thread.Sleep(100);
+                    timer = 50000;
                 };
 
                 while ( timer < 3000 ) {
