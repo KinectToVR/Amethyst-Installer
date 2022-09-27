@@ -103,7 +103,7 @@ namespace amethyst_installer_gui {
                 return;
 
             // Initialize logger
-            string logFileDate = DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff");
+            string logFileDate = DateTime.Now.ToString("yyyyMMdd-HHmmss.ffffff");
             Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
             Logger.Info(Util.InstallerVersionString);
 

@@ -67,7 +67,7 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static void Init(string filePath = "") {
             if ( filePath == "" )
-                LogFilePath = $"{Assembly.GetCallingAssembly().GetName()}_{DateTime.Now.ToString("yyyyMMdd-hhmmss.ffffff")}.log";
+                LogFilePath = $"{Assembly.GetCallingAssembly().GetName()}_{DateTime.Now.ToString("yyyyMMdd-HHmmss.ffffff")}.log";
             else
                 LogFilePath = filePath;
 
@@ -85,14 +85,14 @@ namespace amethyst_installer_gui {
 
             if ( loggingPathDidntExist )
                 LogInternal($"Created logging directory at \"{dir}\"");
-            LogInternal($"Log file created at: {DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss")}");
+            LogInternal($"Log file created at: {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}");
             LogInternal($"Running on machine: {Environment.MachineName}");
             LogInternal("Running duration (h:mm:ss): 0:00:00");
-            LogInternal("Log line format: [IWEF]yyyyMMdd hh:mm:ss.ffffff threadid file::member:line] msg");
+            LogInternal("Log line format: [IWEF]yyyyMMdd HH:mm:ss.ffffff threadid file::member:line] msg");
         }
 
         private static string FormatToLogMessage(string message, string level, int lineNumber, string filePath, string memberName) {
-            return $"{level}{DateTime.Now.ToString("yyyyMMdd hh:mm:ss.ffffff")} {GetCurrentWin32ThreadId()} {Path.GetFileName(filePath)}::{memberName}:{lineNumber}] {message}";
+            return $"{level}{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.ffffff")} {GetCurrentWin32ThreadId()} {Path.GetFileName(filePath)}::{memberName}:{lineNumber}] {message}";
         }
 
         private static void LogInternal(string message) {
