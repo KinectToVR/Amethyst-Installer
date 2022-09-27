@@ -95,6 +95,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\IProtocolCommand.cs" />
+    <Compile Include="Protocol\ProtocolAme.cs" />
     <Compile Include="Protocol\ProtocolInstallerFlags.cs" />
     <Compile Include="Protocol\ProtocolKinect.cs" />
     <Compile Include="Protocol\ProtocolOpenVr.cs" />

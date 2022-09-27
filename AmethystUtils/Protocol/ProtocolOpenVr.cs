@@ -34,16 +34,7 @@ namespace AmethystUtils.Protocol {
 
         public bool Execute(string parameters) {
             string openvrpaths = Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local", "openvr", "openvrpaths.vrpath"));
-            Shell.OpenFolderAndSelectItem(Path.GetDirectoryName(openvrpaths));
-            return true;
-        }
-    }
-
-    public class ProtocolLogs : IProtocolCommand {
-        public string Command { get => "logs"; set { } }
-
-        public bool Execute(string parameters) {
-            Shell.OpenFolderAndSelectItem(Constants.AmethystLogsDirectory);
+            Shell.OpenFolderAndSelectItem(Path.GetDirectoryName(openvrpaths) + Path.DirectorySeparatorChar);
             return true;
         }
     }
