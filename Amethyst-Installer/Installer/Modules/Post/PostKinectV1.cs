@@ -14,16 +14,18 @@ namespace amethyst_installer_gui.Installer.Modules {
 
         public override void OnPostOperation(ref InstallModuleProgress control) {
 
-            control.LogInfo(LogStrings.ApplyingKinectFixes);
-            Logger.Info(LogStrings.ApplyingKinectFixes);
-
             // Get Kinect Devices
             var deviceTree = new DeviceTree();
             int deviceCount = deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.KinectForWindows).Count();
             deviceTree.Dispose();
 
+            Logger.Info($"Found {deviceCount} Kinect devices");
+
             // If we don't have ALL Kinect devices available, wait until we have an update...
             if ( deviceCount < 4 ) {
+
+                control.LogInfo(LogStrings.WaitingForDeviceApi);
+                Logger.Info(LogStrings.WaitingForDeviceApi);
                 // Wait until a USB device shows up, or for 30 seconds so that the Kinect devices will show up, so that we can then check
                 // for errors during the install and attempt to fix them
                 int timer = 0;
@@ -42,27 +44,45 @@ namespace amethyst_installer_gui.Installer.Modules {
                 DeviceManaged.OnDeviceAdded = null;
             }
 
+            control.LogInfo(LogStrings.ApplyingKinectFixes);
+            Logger.Info(LogStrings.ApplyingKinectFixes);
+
+            bool result = true;
+
             // Not powered fix
-            TryFixNotPowered(ref control);
+            result |= TryFixNotPowered(ref control);
 
             // Not ready fix
-            TryFixNotReady(ref control);
+            result |= TryFixNotReady(ref control);
+
+            if ( result ) {
+                control.LogInfo(LogStrings.ApplyingKinectFixesSuccess);
+                Logger.Info(LogStrings.ApplyingKinectFixesSuccess);
+            } else {
+                control.LogError($"{LogStrings.ApplyingKinectFixesFailure} {LogStrings.ViewLogs}");
+                Logger.Info($"{LogStrings.ApplyingKinectFixesFailure} {LogStrings.ViewLogs}");
+            }
         }
 
-        private void TryFixNotReady(ref InstallModuleProgress control) {
+        private bool TryFixNotReady(ref InstallModuleProgress control) {
+
+            control.LogInfo(LogStrings.TestNotReady);
+            Logger.Info(LogStrings.TestNotReady);
 
             // The fix
+            bool result = true;
             if ( KinectUtil.MustFixNotPowered() ) {
 
                 control.LogInfo(LogStrings.NotReadyDetected);
                 Logger.Info(LogStrings.NotReadyDetected);
 
-
-                CheckMicrophone(ref control);
+                result |= CheckMicrophone(ref control);
             }
+
+            return result;
         }
 
-        private void CheckMicrophone(ref InstallModuleProgress control) {
+        private bool CheckMicrophone(ref InstallModuleProgress control) {
 
             control.LogInfo(LogStrings.CheckingKinectMicrophone);
             Logger.Info(LogStrings.CheckingKinectMicrophone);
@@ -77,13 +97,19 @@ namespace amethyst_installer_gui.Installer.Modules {
                     control.LogInfo(LogStrings.KinectMicrophoneDisabled);
                     Logger.Info(LogStrings.KinectMicrophoneDisabled);
 
-                    KinectUtil.FixMicrophoneV1();
+                    return KinectUtil.FixMicrophoneV1();
 
                 }
             }
+
+            return true;
         }
 
-        private void TryFixNotPowered(ref InstallModuleProgress control) {
+        private bool TryFixNotPowered(ref InstallModuleProgress control) {
+
+            control.LogInfo(LogStrings.TestNotPowered);
+            Logger.Info(LogStrings.TestNotPowered);
+
             // The fix
             if ( KinectUtil.MustFixNotPowered() ) {
 
@@ -93,11 +119,15 @@ namespace amethyst_installer_gui.Installer.Modules {
                 if ( KinectUtil.FixNotPowered() ) {
                     control.LogInfo(LogStrings.NotPoweredFixed);
                     Logger.Info(LogStrings.NotPoweredFixed);
+                    return true;
                 } else {
                     control.LogError(LogStrings.NotPoweredFixFailure);
                     Logger.Fatal(LogStrings.NotPoweredFixFailure);
+                    return false;
                 }
             }
+
+            return true;
         }
     }
 }

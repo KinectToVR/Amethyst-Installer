@@ -59,12 +59,17 @@
         public const string KinectMicrophoneDisabled            = "The Kinect microphone is disabled! The Kinect for Windows SDK will not function properly. Please enable the microphone...";
 
         // Kinect auto-fixes
+        public const string WaitingForDeviceApi                 = "Waiting (up to 30 seconds) for device driver update...";
         public const string ApplyingKinectFixes                 = "Attempting fixes...";
+        public const string ApplyingKinectFixesSuccess          = "Successfully applied fixes!";
+        public const string ApplyingKinectFixesFailure          = "Failed to apply fixes!";
         // Not Powered
+        public const string TestNotPowered                      = "Checking for error: E_NUI_NOTPOWERED!";
         public const string NotPoweredDetected                  = "Detected the error: E_NUI_NOTPOWERED!";
         public const string NotPoweredFixed                     = "Successfully fixed: E_NUI_NOTPOWERED!";
         public const string NotPoweredFixFailure                = "Failed to fix: E_NUI_NOTPOWERED!";
         // Not Ready
+        public const string TestNotReady                        = "Checking for error: E_NUI_NOREADY!";
         public const string NotReadyDetected                    = "Detected the error: E_NUI_NOREADY!";
         public const string NotReadyFixed                       = "Successfully fixed: E_NUI_NOREADY!";
         public const string NotReadyFixFailure                  = "Failed to fix: E_NUI_NOREADY!";
