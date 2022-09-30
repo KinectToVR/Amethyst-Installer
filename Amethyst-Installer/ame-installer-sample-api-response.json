@@ -160,6 +160,9 @@
 				"variable": "KINECT_TOOLKIT_DIR"
 			}
 		}
+
+		/* XBONE https://download.microsoft.com/download/E/6/8/E688A436-5937-41CB-AF76-498E99E19191/KinectRuntime-v2.2_1905.zip */
+		/* PissServiceEx https://github.com/Timocop/PSMoveServiceEx/releases/download/v0.16.1/PSMoveService.zip */
 	],
 	"splashes": [
 		"🎵 I'M HAN SOLO! I'M HAN SOLO! I'M HAN SOLO SOLO! 🎵",
