@@ -159,10 +159,33 @@
 				"type": "env-var",
 				"variable": "KINECT_TOOLKIT_DIR"
 			}
+		},
+		{
+			"id": "psmsex",
+			"display_name": "PSMoveServiceEx",
+			"summary": "A fork of PSMoveService, which aims to improve stability and so on.",
+			"description": "A fork of PSMoveService, which aims to improve stability and so on.",
+			"display_version": "0.16.1",
+			"version": 1,
+			"filesize": 47106596,
+			"downloadsize": 18780002,
+			"required": false,
+			"visible": true,
+			"critical": false,
+			"depends": [],
+			"remote": {
+				"main_url": "https://github.com/Timocop/PSMoveServiceEx/releases/download/v0.16.1/PSMoveService.zip",
+				"mirror_url": "https://api.k2vr.tech/mirrors/PSMoveService-latest.zip",
+				"filename": "PSMoveService-latest.zip",
+				"checksum": "289142299369C81A9FC62C9134204F91"
+			},
+			"install": {
+				"type": "archive",
+				"items": [
+					"PSMoveService-latest.zip"
+				]
+			}
 		}
-
-		/* XBONE https://download.microsoft.com/download/E/6/8/E688A436-5937-41CB-AF76-498E99E19191/KinectRuntime-v2.2_1905.zip */
-		/* PissServiceEx https://github.com/Timocop/PSMoveServiceEx/releases/download/v0.16.1/PSMoveService.zip */
 	],
 	"splashes": [
 		"🎵 I'M HAN SOLO! I'M HAN SOLO! I'M HAN SOLO SOLO! 🎵",
