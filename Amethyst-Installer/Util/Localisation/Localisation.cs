@@ -149,6 +149,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Device_XboxOneKinect");
             }
         }
+        public static string DeviceInfo_XboxOneKinectLighthouseIncompatible {
+            get {
+                return LocaleManager.GetString("DeviceInfo_XboxOneKinectLighthouseIncompatible");
+            }
+        }
         public static string InstallFailure_Modal_Title {
             get {
                 return LocaleManager.GetString("InstallFailure_Modal_Title");

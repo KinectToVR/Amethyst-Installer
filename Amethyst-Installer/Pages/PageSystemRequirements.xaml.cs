@@ -183,7 +183,7 @@ namespace amethyst_installer_gui.Pages {
                 if ( OpenVRUtil.TrackingType == VRTrackingType.Lighthouse ) {
                     // Oh no...
                     compatDevices.State = Controls.TaskState.Warning;
-                    // @TODO: Warning because WHY DID YOU BUY AN XBOX ONE KINECT WITH LIGHTHOUSES AAAAAAAAAAAAA
+                    compatDevicesCard.Visibility = Visibility.Visible;
                 }
             }
 

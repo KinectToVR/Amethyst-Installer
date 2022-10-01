@@ -43,8 +43,8 @@
                         <controls:ItemTask x:Name="compatDevices" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_Compatibility}" Margin="0,0,0,16" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                                 <TextBlock x:Name="compatDevicesDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
-                                <Border x:Name="compatDevicesCard" Background="{StaticResource BrushBackgroundAlt}" Padding="8" CornerRadius="4" Margin="0,4,0,0">
-                                    <TextBlock x:Name="compatDevicesCardText" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">Among us</TextBlock>
+                                <Border x:Name="compatDevicesCard" Background="{StaticResource BrushBackgroundAlt}" Padding="8" CornerRadius="4" Margin="0,4,0,0" Visibility="Collapsed">
+                                    <TextBlock x:Name="compatDevicesCardText" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow" Text="{x:Static global:Localisation.DeviceInfo_XboxOneKinectLighthouseIncompatible}" />
                                 </Border>
                             </StackPanel>
                         </controls:ItemTask>

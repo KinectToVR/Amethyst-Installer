@@ -36,7 +36,7 @@
   "Device_NotDetected": "No compatible devices detected",
   "Device_Xbox360Kinect": "Xbox 360 Kinect",
   "Device_XboxOneKinect": "Xbox One Kinect",
-  "DeviceInfo_XboxOneKinectLighthouseIncompatible": "The Xbox One Kinect is not compatible with any base station tracked devices. This is due to a hardware flaw which causes base station tracked devices to not track properly when an Xbox One Kinect is plugged in. Your tracking quality will suffer as a result.",
+  "DeviceInfo_XboxOneKinectLighthouseIncompatible": "Base station tracked devices will not work when an Xbox One Kinect is turned on. They interpret it as an invalid base station, and will stop tracking entirely.",
 
   "InstallFailure_Modal_Title": "An unexpected error occured!",
   "InstallFailure_Modal_Description": "An unexpected error occured while installing {0}. Please view the logs for more information. Join our Discord server for help. The installation cannot continue.", /* {0} gets replaced with the module that failed to install */
