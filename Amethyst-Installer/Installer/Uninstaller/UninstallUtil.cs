@@ -160,6 +160,8 @@ namespace amethyst_installer_gui {
                 return;
             }
 
+            InstallUtil.TryKillingConflictingProcesses();
+
             // 2. Now that we have the install directory, check in %APPDATA% for an uninstall list. If we find one, load it and use it
             // Now based on said uninstall list, clean the directory
             UninstallListJSON uninstallList = FetchUninstallList();
