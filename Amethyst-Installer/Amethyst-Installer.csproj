@@ -290,6 +290,7 @@
     <Compile Include="PInvoke\DevicePolicy.cs" />
     <Compile Include="PInvoke\DWM.cs" />
     <Compile Include="PInvoke\Kernel.cs" />
+    <Compile Include="PInvoke\NtDll.cs" />
     <Compile Include="PInvoke\openvr_api.cs" />
     <Compile Include="PInvoke\PowerProvider.cs" />
     <Compile Include="PInvoke\Shell.cs" />

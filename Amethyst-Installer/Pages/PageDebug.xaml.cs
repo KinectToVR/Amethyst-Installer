@@ -194,5 +194,9 @@ namespace amethyst_installer_gui.Pages {
             Util.ShowMessageBox($"Extracted archive archive.k2a to {destinationDirectory}", "K2ArchiveResult");
             Shell.OpenFolderAndSelectItem(destinationDirectory);
         }
+        private void codeIntegrityCheck_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            Util.ShowMessageBox($"HVCI STATE: {NtDll.IsCodeIntegrityEnabled()}", "HVCI");
+        }
     }
 }
