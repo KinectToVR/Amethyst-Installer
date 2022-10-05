@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using amethyst_installer_gui.PInvoke;
 using Microsoft.Kinect;
 
 namespace amethyst_installer_gui.Installer {
@@ -60,14 +62,14 @@ namespace amethyst_installer_gui.Installer {
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsMemoryIntegrityEnabled () {
 
-            // Check whether memory integrity is enabled or not in Windows Defender / Windows Security via the registry
-            // https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity
-
-
-
-            return false;
+            // Check whether memory integrity is enabled or not in Windows Defender / Windows Security.
+            // We use NtQuerySystemInformation to get an accurate measurement, as despite the MSDN docs recommending you
+            // to use the registry, the registry is not reliable (the value might not exist, and the memory isolation
+            // state is independent from the registry. The registry value only serves as an override).
+            return NtDll.IsCodeIntegrityEnabled();
         }
     }
 }

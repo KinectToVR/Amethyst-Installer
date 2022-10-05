@@ -1,24 +1,20 @@
-﻿using NAudio.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
 namespace amethyst_installer_gui.PInvoke {
     public static class NtDll {
 
         [DllImport("ntdll.dll")]
-        private static extern uint NtQuerySystemInformation(SYSTEM_INFORMATION_CLASS SystemInformationClass, ref SYSTEM_CODEINTEGRITY_INFORMATION SystemInformation, int SystemInformationLength, ref int ReturnLength);
+        private static extern uint NtQuerySystemInformation(uint SystemInformationClass, ref SYSTEM_CODEINTEGRITY_INFORMATION SystemInformation, int SystemInformationLength, ref int ReturnLength);
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct SYSTEM_CODEINTEGRITY_INFORMATION
 {
             public uint Length;
-            public CODEINTEGRITY_OPTIONS CodeIntegrityOptions;
+            public uint CodeIntegrityOptions;
         }
+
+        private const uint SystemCodeIntegrityInformation = 0x67;
+        private const uint CODEINTEGRITY_OPTION_HVCI_KMCI_ENABLED = 0x400;
 
         public static bool IsCodeIntegrityEnabled() {
 
@@ -33,82 +29,39 @@ namespace amethyst_installer_gui.PInvoke {
             try {
                 int tries = 5;
                 int len = 0;
-                while ( (ntStatus = NtQuerySystemInformation(SYSTEM_INFORMATION_CLASS.SystemCodeIntegrityInformation, ref codeIntegrityInfo, handleSize, ref len)) == 0xc0000004 ) { // InfoLengthMismatch
+                while ( (ntStatus = NtQuerySystemInformation(SystemCodeIntegrityInformation, ref codeIntegrityInfo, handleSize, ref len)) == 0xc0000004 ) { // InfoLengthMismatch
                     handleSize = len;
                     tries--;
                     if ( tries < 0 )
-                        throw new Exception($"Failed to execute NtQuerySystemInformation! ({ntStatus})");
+                        Logger.Fatal($"Failed to execute NtQuerySystemInformation! ({ntStatus})");
                 }
-                codeIntegrityState = codeIntegrityInfo.CodeIntegrityOptions == CODEINTEGRITY_OPTIONS.UNDOCUMENTED_CODEINTEGRITY_ON;
-                Logger.Info($"Memory Integrity state: {codeIntegrityInfo.CodeIntegrityOptions.ToString()}");
-            } finally {
-            }
+                codeIntegrityState = (codeIntegrityInfo.CodeIntegrityOptions & CODEINTEGRITY_OPTION_HVCI_KMCI_ENABLED ) == CODEINTEGRITY_OPTION_HVCI_KMCI_ENABLED;
+                Logger.Info($"Memory Integrity state: 0x{codeIntegrityInfo.CodeIntegrityOptions.ToString("X")} ; Active {codeIntegrityState}");
+            } finally {}
 
             return codeIntegrityState;
         }
 
-        public enum CODEINTEGRITY_OPTIONS : uint {
-            /// <summary>
-            /// Enforcement of kernel mode Code Integrity is enabled.
-            /// </summary>
-            CODEINTEGRITY_OPTION_ENABLED = 0x01,
-            /// <summary>
-            /// Test signed content is allowed by Code Integrity.
-            /// </summary>
-            CODEINTEGRITY_OPTION_TESTSIGN = 0x02,
-            /// <summary>
-            /// Enforcement of user mode Code Integrity is enabled.
-            /// </summary>
-            CODEINTEGRITY_OPTION_UMCI_ENABLED = 0x04,
-            /// <summary>
-            /// Enforcement of user mode Code Integrity is enabled in audit mode. Executables will be allowed to run/load; however, audit events will be recorded. 
-            /// </summary>
-            CODEINTEGRITY_OPTION_UMCI_AUDITMODE_ENABLED = 0x08,
-            /// <summary>
-            /// User mode binaries being run from certain paths are allowed to run even if they fail code integrity checks.
-            /// </summary>
-            CODEINTEGRITY_OPTION_UMCI_EXCLUSIONPATHS_ENABLED = 0x10,
-            /// <summary>
-            /// The build of Code Integrity is from a test build.
-            /// </summary>
-            CODEINTEGRITY_OPTION_TEST_BUILD = 0x20,
-            /// <summary>
-            /// The build of Code Integrity is from a pre-production build.
-            /// </summary>
-            CODEINTEGRITY_OPTION_PREPRODUCTION_BUILD = 0x40,
-            /// <summary>
-            /// The kernel debugger is attached and Code Integrity may allow unsigned code to load.
-            /// </summary>
-            CODEINTEGRITY_OPTION_DEBUGMODE_ENABLED = 0x80,
-            /// <summary>
-            /// The build of Code Integrity is from a flight build.
-            /// </summary>
-            CODEINTEGRITY_OPTION_FLIGHT_BUILD = 0x100,
-            /// <summary>
-            /// Flight signed content is allowed by Code Integrity. Flight signed content is content signed by the Microsoft Development Root Certificate Authority 2014. 
-            /// </summary>
-            CODEINTEGRITY_OPTION_FLIGHTING_ENABLED = 0x200,
-            /// <summary>
-            /// Hypervisor enforced Code Integrity is enabled for kernel mode components.
-            /// </summary>
-            CODEINTEGRITY_OPTION_HVCI_KMCI_ENABLED = 0x400,
-            /// <summary>
-            /// Hypervisor enforced Code Integrity is enabled in audit mode. Audit events will be recorded for kernel mode components that are not compatible with HVCI. This bit can be set whether CODEINTEGRITY_OPTION_HVCI_KMCI_ENABLED is set or not.
-            /// </summary>
-            CODEINTEGRITY_OPTION_HVCI_KMCI_AUDITMODE_ENABLED = 0x800,
-            /// <summary>
-            /// Hypervisor enforced Code Integrity is enabled for kernel mode components, but in strict mode.
-            /// </summary>
-            CODEINTEGRITY_OPTION_HVCI_KMCI_STRICTMODE_ENABLED = 0x1000,
-            /// <summary>
-            /// Hypervisor enforced Code Integrity is enabled with enforcement of Isolated User Mode component signing.
-            /// </summary>
-            CODEINTEGRITY_OPTION_HVCI_IUM_ENABLED = 0x2000,
+        private enum CODEINTEGRITY_OPTIONS : uint {
+            CODEINTEGRITY_OPTION_ENABLED                        = 0x01,   // 0000 0000 0000 0001
+            CODEINTEGRITY_OPTION_TESTSIGN                       = 0x02,   // 0000 0000 0000 0010
+            CODEINTEGRITY_OPTION_UMCI_ENABLED                   = 0x04,   // 0000 0000 0000 0100
+            CODEINTEGRITY_OPTION_UMCI_AUDITMODE_ENABLED         = 0x08,   // 0000 0000 0000 1000
 
-            /// <summary>
-            /// Seems like what we're looking for
-            /// </summary>
-            UNDOCUMENTED_CODEINTEGRITY_ON = 13313,
+            CODEINTEGRITY_OPTION_UMCI_EXCLUSIONPATHS_ENABLED    = 0x10,   // 0000 0000 0001 0000
+            CODEINTEGRITY_OPTION_TEST_BUILD                     = 0x20,   // 0000 0000 0010 0000
+            CODEINTEGRITY_OPTION_PREPRODUCTION_BUILD            = 0x40,   // 0000 0000 0100 0000
+            CODEINTEGRITY_OPTION_DEBUGMODE_ENABLED              = 0x80,   // 0000 0000 1000 0000
+
+            CODEINTEGRITY_OPTION_FLIGHT_BUILD                   = 0x100,  // 0000 0001 0000 0000
+            CODEINTEGRITY_OPTION_FLIGHTING_ENABLED              = 0x200,  // 0000 0010 0000 0000
+            CODEINTEGRITY_OPTION_HVCI_KMCI_ENABLED              = 0x400,  // 0000 0100 0000 0000
+            CODEINTEGRITY_OPTION_HVCI_KMCI_AUDITMODE_ENABLED    = 0x800,  // 0000 1000 0000 0000
+
+            CODEINTEGRITY_OPTION_HVCI_KMCI_STRICTMODE_ENABLED   = 0x1000, // 0001 0000 0000 0000
+            CODEINTEGRITY_OPTION_HVCI_IUM_ENABLED               = 0x2000, // 0010 0000 0000 0000
+            CODEINTEGRITY_OPTION_WHQL_ENFORCEMENT_ENABLED       = 0x4000, // 0100 0000 0000 0000
+            CODEINTEGRITY_OPTION_WHQL_AUDITMODE_ENABLED         = 0x8000, // 1000 0000 0000 0000
         }
 
         private enum SYSTEM_INFORMATION_CLASS {
