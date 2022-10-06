@@ -163,8 +163,8 @@
 		{
 			"id": "psmsex",
 			"display_name": "PSMoveServiceEx",
-			"summary": "A fork of PSMoveService, which aims to improve stability and so on.",
-			"description": "A fork of PSMoveService, which aims to improve stability and so on.",
+			"summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
+			"description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
 			"display_version": "0.16.1",
 			"version": 1,
 			"filesize": 47106596,
