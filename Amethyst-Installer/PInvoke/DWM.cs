@@ -14,6 +14,9 @@ namespace amethyst_installer_gui.PInvoke {
         [DllImport("Dwmapi.dll", SetLastError = true)]
         private static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData attribute);
+
         private enum DWMWINDOWATTRIBUTE : uint {
             DWMWA_NCRENDERING_ENABLED = 1,
             DWMWA_NCRENDERING_POLICY,
@@ -53,6 +56,18 @@ namespace amethyst_installer_gui.PInvoke {
             DWMSBT_ACRYLLICWINDOW = 3,  // Acryllic
         }
 
+        private enum AccentState {
+            ACCENT_DISABLED,
+            ACCENT_ENABLE_GRADIENT,
+            ACCENT_ENABLE_TRANSPARENTGRADIENT,
+            ACCENT_ENABLE_BLURBEHIND,
+            ACCENT_INVALID_STATE,
+        }
+
+        private enum WindowCompositionAttribute {
+            WCA_ACCENT_POLICY = 19,
+        }
+
         private const int S_OK = 0x0;
         private const int S_FALSE = 0x1;
 
@@ -64,6 +79,21 @@ namespace amethyst_installer_gui.PInvoke {
             public int cyBottomHeight;   // height of bottom border that retains its size
         };
 
+        [StructLayout(LayoutKind.Sequential)]
+        private struct AccentPolicy {
+            public AccentState AccentState;
+            public int AccentFlags;
+            public int GradientColor;
+            public int AnimationId;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct WindowCompositionAttributeData {
+            public WindowCompositionAttribute Attribute;
+            public IntPtr Data;
+            public int SizeOfData;
+        }
+
         /// <summary>
         /// Enables Acryllic on Windows 10, Mica on Windows 11
         /// </summary>
@@ -73,7 +103,7 @@ namespace amethyst_installer_gui.PInvoke {
                 if ( windowsVersion.Major > 9 ) {
 
                     uint value;
-                    var windowHandle = new WindowInteropHelper(window).EnsureHandle();
+                    IntPtr windowHandle = new WindowInteropHelper(window).EnsureHandle();
 
                     if ( windowsVersion.Build >= ( int ) WindowsUtils.WindowsMajorReleases.Win11_21H2 ) {
                         value = ( uint ) DWM_SYSTEMBACKDROP_TYPE.DWMSBT_MICAWINDOW;
@@ -86,6 +116,23 @@ namespace amethyst_installer_gui.PInvoke {
                             return DwmSetWindowAttribute(windowHandle, ( uint ) DWMWINDOWATTRIBUTE.DWMWA_MICA_EFFECT, ref value, ( uint ) Marshal.SizeOf(value)) == S_OK;
                         }
                     } else {
+                        // Win 10
+                        AccentPolicy accent = new AccentPolicy {
+                            AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND
+                        };
+                        int accentSize = Marshal.SizeOf(accent);
+                        IntPtr accentPtr = Marshal.AllocHGlobal(accentSize);
+                        Marshal.StructureToPtr(accent, accentPtr, false);
+                        WindowCompositionAttributeData data = new WindowCompositionAttributeData{
+                            Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                            SizeOfData = accentSize,
+                            Data = accentPtr
+                        };
+
+                        int result = SetWindowCompositionAttribute(windowHandle, ref data);
+                        Marshal.FreeHGlobal(accentPtr);
+                        return false; // @TODO: Temporary since we need to rework the theme to work better with acrylic on win 10
+                        return result == 1;
                     }
 
                 }
