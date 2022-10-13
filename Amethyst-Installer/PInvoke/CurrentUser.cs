@@ -14,19 +14,24 @@ namespace amethyst_installer_gui.PInvoke {
             WTSDomainName = 7,
         }
 
-        public static string GetUsername(int sessionId, bool prependDomain = false) {
+        public static string GetUsername(int sessionId) {
             IntPtr buffer;
             int strLen;
             string username = "SYSTEM";
             if ( WTSQuerySessionInformation(IntPtr.Zero, sessionId, WtsInfoClass.WTSUserName, out buffer, out strLen) && strLen > 1 ) {
                 username = Marshal.PtrToStringAnsi(buffer);
                 WTSFreeMemory(buffer);
-                if ( prependDomain ) {
-                    if ( WTSQuerySessionInformation(IntPtr.Zero, sessionId, WtsInfoClass.WTSDomainName, out buffer, out strLen) && strLen > 1 ) {
-                        username = Marshal.PtrToStringAnsi(buffer) + "\\" + username;
-                        WTSFreeMemory(buffer);
-                    }
-                }
+            }
+            return username;
+        }
+
+        public static string GetDomain(int sessionId) {
+            IntPtr buffer;
+            int strLen;
+            string username = "SYSTEM";
+            if ( WTSQuerySessionInformation(IntPtr.Zero, sessionId, WtsInfoClass.WTSDomainName, out buffer, out strLen) && strLen > 1 ) {
+                username = Marshal.PtrToStringAnsi(buffer);
+                WTSFreeMemory(buffer);
             }
             return username;
         }
@@ -47,7 +52,19 @@ namespace amethyst_installer_gui.PInvoke {
 
         public static string GetCurrentlyLoggedInUsername() {
             try {
-                return GetUsername(( int ) GetCurrentSessionID(), false);
+                return GetUsername(( int ) GetCurrentSessionID());
+            } catch ( InvalidOperationException ) {
+                return Environment.UserName;
+            }
+        }
+
+        public static string GetProfileName() {
+            try {
+
+                // If domain users have a username with this account name uhh FUCK
+
+                string username = GetUsername(( int ) GetCurrentSessionID());
+                return username;
             } catch ( InvalidOperationException ) {
                 return Environment.UserName;
             }
