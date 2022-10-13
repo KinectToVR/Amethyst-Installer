@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using amethyst_installer_gui.PInvoke;
 using Microsoft.Kinect;
-using WUApiLib;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
