@@ -64,6 +64,33 @@ namespace amethyst_installer_gui.Installer.Modules {
             }
         }
 
+        private bool TryFixNotPowered(ref InstallModuleProgress control) {
+
+            control.LogInfo(LogStrings.TestNotPowered);
+            Logger.Info(LogStrings.TestNotPowered);
+
+            // The fix
+            if ( KinectUtil.MustFixNotPowered() ) {
+
+                control.LogInfo(LogStrings.NotPoweredDetected);
+                Logger.Info(LogStrings.NotPoweredDetected);
+
+                if ( KinectUtil.FixNotPowered() ) {
+                    control.LogInfo(LogStrings.NotPoweredFixed);
+                    Logger.Info(LogStrings.NotPoweredFixed);
+                    return true;
+                } else {
+                    control.LogError(LogStrings.NotPoweredFixFailure);
+                    Logger.Fatal(LogStrings.NotPoweredFixFailure);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        #region E_NUI_NOTREADY
+
         private bool TryFixNotReady(ref InstallModuleProgress control) {
 
             control.LogInfo(LogStrings.TestNotReady);
@@ -71,15 +98,40 @@ namespace amethyst_installer_gui.Installer.Modules {
 
             // The fix
             bool result = true;
-            if ( KinectUtil.MustFixNotPowered() ) {
+            if ( KinectUtil.MustFixNotReady() ) {
 
                 control.LogInfo(LogStrings.NotReadyDetected);
                 Logger.Info(LogStrings.NotReadyDetected);
 
+                result |= CheckCoreIntegrity(ref control);
                 result |= CheckMicrophone(ref control);
+                result |= DumpDrivers(ref control);
+                result |= InstallDrivers(ref control);
             }
 
             return result;
+        }
+
+        private bool CheckCoreIntegrity(ref InstallModuleProgress control) {
+
+            control.LogInfo(LogStrings.CheckingMemoryIntegrity);
+            Logger.Info(LogStrings.CheckingMemoryIntegrity);
+
+            // Check if Memory Integrity is enabled, and if so, early exit
+            // (We don't know if this is going to be fixed until we restart the machine, let the user know that a restart is required!)
+            if ( KinectUtil.IsMemoryIntegrityEnabled() ) {
+
+                control.LogError(LogStrings.MemoryIntegrityEnabled);
+                Logger.Error(LogStrings.MemoryIntegrityEnabled);
+
+                Util.ShowMessageBox(Localisation.MustDisableMemoryIntegrity_Description, Localisation.MustDisableMemoryIntegrity_Title);
+
+                // Open Windows Security on the Core Isolation page
+                Process.Start("windowsdefender://coreisolation");
+
+                return false;
+            }
+            return true;
         }
 
         private bool CheckMicrophone(ref InstallModuleProgress control) {
@@ -105,29 +157,26 @@ namespace amethyst_installer_gui.Installer.Modules {
             return true;
         }
 
-        private bool TryFixNotPowered(ref InstallModuleProgress control) {
+        private bool DumpDrivers(ref InstallModuleProgress control) {
 
-            control.LogInfo(LogStrings.TestNotPowered);
-            Logger.Info(LogStrings.TestNotPowered);
+            control.LogInfo(LogStrings.DumpingDrivers);
+            Logger.Info(LogStrings.DumpingDrivers);
 
-            // The fix
-            if ( KinectUtil.MustFixNotPowered() ) {
 
-                control.LogInfo(LogStrings.NotPoweredDetected);
-                Logger.Info(LogStrings.NotPoweredDetected);
-
-                if ( KinectUtil.FixNotPowered() ) {
-                    control.LogInfo(LogStrings.NotPoweredFixed);
-                    Logger.Info(LogStrings.NotPoweredFixed);
-                    return true;
-                } else {
-                    control.LogError(LogStrings.NotPoweredFixFailure);
-                    Logger.Fatal(LogStrings.NotPoweredFixFailure);
-                    return false;
-                }
-            }
 
             return true;
         }
+
+        private bool InstallDrivers(ref InstallModuleProgress control) {
+
+            control.LogInfo(LogStrings.InstallingDrivers);
+            Logger.Info(LogStrings.InstallingDrivers);
+
+
+
+            return true;
+        }
+
+        #endregion
     }
 }

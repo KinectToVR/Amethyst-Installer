@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using amethyst_installer_gui.PInvoke;
 using Microsoft.Kinect;
+using static amethyst_installer_gui.PInvoke.SetupApi;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -40,7 +42,26 @@ namespace amethyst_installer_gui.Installer {
             // I hate the Kinect drivers WHY DOES THIS HAPPEN
             DownloadAndInstallGenericAudioDriver();
 
-            // Attempt to reinstall the Kinect Drivers
+            // Check if we installed the SDK, we need the files to dump the driver files from to reinstall them manually
+            bool hasInstalledKinectSDK = false;
+            for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
+                switch ( InstallerStateManager.ModulesToInstall[i].Id ) {
+                    case "kinect-v1-sdk":
+                        hasInstalledKinectSDK = true;
+                        break;
+                }
+            }
+            if ( hasInstalledKinectSDK ) {
+                // Attempt to manually install all the Kinect Drivers
+                
+                // Setup a temp directory for the currently staged driver
+                
+
+                DumpKinectDriverFiles();
+
+                // Install drivers manually
+
+            }
 
             // Force enable all known Kinect devices
 
@@ -49,6 +70,10 @@ namespace amethyst_installer_gui.Installer {
             // If it persists, pnputil!
 
             // Once we have silent installations, chain load the installer into a silent install with a callback to this if necessary
+        }
+
+        private static void DumpKinectDriverFiles() {
+            throw new NotImplementedException();
         }
 
         public static bool MustFixNotReady() {
@@ -66,7 +91,7 @@ namespace amethyst_installer_gui.Installer {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsMemoryIntegrityEnabled () {
+        public static bool IsMemoryIntegrityEnabled () {
 
             // Check whether memory integrity is enabled or not in Windows Defender / Windows Security.
             // We use NtQuerySystemInformation to get an accurate measurement, as despite the MSDN docs recommending you
@@ -110,6 +135,21 @@ namespace amethyst_installer_gui.Installer {
             // InstallHinfSection(NULL,NULL,TEXT("DefaultInstall 132 path-to-inf\infname.inf"),0); 
 
             
+        }
+
+        // Assigns a driver to a device programmatically
+        public static bool AssignDriverToDeviceId(string deviceID) {
+            // Based on sample at https://web.archive.org/web/20221013072029/https://www.betaarchive.com/wiki/index.php/Microsoft_KB_Archive/889763
+
+            IntPtr DeviceInfoSet = SetupApi.SetupDiCreateDeviceInfoList(IntPtr.Zero, IntPtr.Zero);
+            if (DeviceInfoSet == SetupApi.INVALID_HANDLE_VALUE) {
+                return false;
+            }
+
+            SP_DEVINFO_DATA DeviceInfoData = new SP_DEVINFO_DATA();
+            DeviceInfoData.cbSize = Marshal.SizeOf(DeviceInfoData);
+
+            return false;
         }
     }
 }

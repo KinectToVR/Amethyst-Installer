@@ -73,6 +73,14 @@
         public const string NotReadyDetected                    = "Detected the error: E_NUI_NOREADY!";
         public const string NotReadyFixed                       = "Successfully fixed: E_NUI_NOREADY!";
         public const string NotReadyFixFailure                  = "Failed to fix: E_NUI_NOREADY!";
+        
+        // Memory Integrity
+        public const string CheckingMemoryIntegrity             = "Checking if Memory Integrity is enabled...";
+        public const string MemoryIntegrityEnabled              = "Memory Integrity detected! Please disable it, restart Windows, and re-run the installer.";
+        
+        // Memory Integrity
+        public const string DumpingDrivers                      = "Dumping Kinect for Windows drivers...";
+        public const string InstallingDrivers                   = "Installing Kinect for Windows drivers...";
 
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";
