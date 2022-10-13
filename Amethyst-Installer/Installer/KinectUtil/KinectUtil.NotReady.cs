@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using amethyst_installer_gui.PInvoke;
 using Microsoft.Kinect;
+using WUApiLib;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -36,6 +37,9 @@ namespace amethyst_installer_gui.Installer {
                 // Open Windows Security on the Core Isolation page
                 Process.Start("windowsdefender://coreisolation");
             }
+
+            // I hate the Kinect drivers WHY DOES THIS HAPPEN
+            DownloadAndInstallGenericAudioDriver();
 
             // Attempt to reinstall the Kinect Drivers
 
@@ -70,6 +74,43 @@ namespace amethyst_installer_gui.Installer {
             // to use the registry, the registry is not reliable (the value might not exist, and the memory isolation
             // state is independent from the registry. The registry value only serves as an override).
             return NtDll.IsCodeIntegrityEnabled();
+        }
+
+        public static void DownloadAndInstallGenericAudioDriver() {
+
+            // Somehow the Microphone driver can be missing (I have no fucking clue why this happens, but it happens)
+            // The microphone uses "(Generic USB Audio)", which is provided by Microsoft.
+            // We do NOT want to bundle the driver files with the installer for multiple reasons:
+            // 1. That is really suspicious ඞ
+            // 2. The drivers on my machine most likely will not be compatible with an end user's machine
+            // 3. Since this is a *generic* audio driver, it is bound to break other devices. I do not want to deal with
+            //    that
+            // 4. The license (and probably something in the Windows TOS and EULA which prohibits us form doing this too)
+            // 
+            // Therefore what we tell users to do is to keep updating Windows until it one day decides to download the 
+            // (Generic USB Audio) drive from Microsoft's servers, which only then fixes the Kinect.
+            // 
+            // So basically what we do instead is check if the driver is missing, if so, we tell the Windows Update API to
+            // search for the driver, and if found, download it.
+            // 
+            // AHAHA YOU THOUGHT IT WOULD BE EASY RIGHT?
+            // WRONG!
+            // 
+            // WE'RE DEALING WITH KINECT DRIVERS HERE
+            // TURNS OUT:
+            // - THE AUDIO DRIVER THE KINECT USES IS BUNDLED WITH ALL WINDOWS INSTALLS!
+            // - THE INF FILE CAN BE FOUND AT %SYSTEMROOT%\INF\wdma_usb.inf
+            // SO NEW COURSE OF ACTION:
+            // 1. Locate this inf file
+            // 2. Locate the device node for the Kinect microphone
+            // 3. Tell Windows to use wdma_usb.inf as the driver    
+            // 4. Pray and hope Windows doesn't shit itself
+
+
+            // 
+            // InstallHinfSection(NULL,NULL,TEXT("DefaultInstall 132 path-to-inf\infname.inf"),0); 
+
+            
         }
     }
 }

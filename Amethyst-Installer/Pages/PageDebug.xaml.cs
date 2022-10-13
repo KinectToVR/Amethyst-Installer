@@ -198,5 +198,12 @@ namespace amethyst_installer_gui.Pages {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Util.ShowMessageBox($"HVCI STATE: {NtDll.IsCodeIntegrityEnabled()}", "HVCI");
         }
+        private void installUsbAudioDriver_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            System.Threading.Tasks.Task.Run(() => {
+                KinectUtil.DownloadAndInstallGenericAudioDriver();
+                Util.ShowMessageBox($"Your logs. Check them.\n\nNow.", "LOGS LOGS LOGS LOGS LOGS LOGS");
+            });
+        }
     }
 }
