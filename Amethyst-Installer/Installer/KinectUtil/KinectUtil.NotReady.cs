@@ -73,7 +73,7 @@ namespace amethyst_installer_gui.Installer {
         }
 
         private static void DumpKinectDriverFiles() {
-            throw new NotImplementedException();
+
         }
 
         public static bool MustFixNotReady() {

@@ -2,7 +2,9 @@
 using amethyst_installer_gui.PInvoke;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -102,10 +104,12 @@ namespace amethyst_installer_gui.Installer.Modules {
 
                 control.LogInfo(LogStrings.NotReadyDetected);
                 Logger.Info(LogStrings.NotReadyDetected);
+                
+                string pathToDriversInstaller = Path.Combine(Constants.AmethystTempDirectory, "AttachedContainer", "KinectDrivers-v1.8-x64.WHQL.msi");
 
                 result |= CheckCoreIntegrity(ref control);
                 result |= CheckMicrophone(ref control);
-                result |= DumpDrivers(ref control);
+                result |= DumpDrivers(pathToDriversInstaller, ref control);
                 result |= InstallDrivers(ref control);
             }
 
@@ -157,12 +161,81 @@ namespace amethyst_installer_gui.Installer.Modules {
             return true;
         }
 
-        private bool DumpDrivers(ref InstallModuleProgress control) {
+        private bool DumpDrivers(string sourceFile, ref InstallModuleProgress control) {
 
             control.LogInfo(LogStrings.DumpingDrivers);
             Logger.Info(LogStrings.DumpingDrivers);
 
+            try {
 
+                // Execute on file first
+                string darkExecutablePath = Path.GetFullPath(Path.Combine(
+                        Constants.AmethystTempDirectory,
+                        (string)InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT["wix"]].Install.Items[0],
+                        "dark.exe"));
+
+                string inputFileFullPath = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, sourceFile));
+
+                Logger.Info(string.Format(LogStrings.ExtractingDark, sourceFile));
+                control.LogInfo(string.Format(LogStrings.ExtractingDark, sourceFile));
+
+                // dark.exe {sourceFile} -x {outDir}
+                var procStart = new ProcessStartInfo() {
+                    FileName = darkExecutablePath,
+                    WorkingDirectory = Constants.AmethystTempDirectory,
+                    Arguments = $"{inputFileFullPath} -x {Constants.AmethystTempDirectory}",
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+
+                    // Verbose error handling
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    RedirectStandardInput = false,
+                    UseShellExecute = false,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8,
+                };
+                var proc = Process.Start(procStart);
+                // Redirecting process output so that we can log what happened
+                StringBuilder stdout = new StringBuilder();
+                StringBuilder stderr = new StringBuilder();
+                proc.OutputDataReceived += (sender, args) => {
+                    if ( args.Data != null )
+                        stdout.AppendLine(args.Data);
+                };
+                proc.ErrorDataReceived += (sender, args) => {
+                    if ( args.Data != null )
+                        stderr.AppendLine(args.Data);
+                };
+                proc.BeginErrorReadLine();
+                proc.BeginOutputReadLine();
+                proc.WaitForExit(10000);
+
+                if ( stdout.Length > 0 )
+                    Logger.Info(stdout.ToString().Trim());
+
+                // https://github.com/wixtoolset/wix3/blob/6b461364c40e6d1c487043cd0eae7c1a3d15968c/src/tools/dark/dark.cs#L54
+                // Exit codes for DARK:
+                // 
+                // 0 - Success
+                // 1 - Error
+                if ( proc.ExitCode == 1 ) {
+                    // Assume WiX failed
+                    if ( stderr.Length > 0 )
+                        Logger.Fatal(stderr.ToString().Trim());
+                    Logger.Fatal($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}!");
+                    control.LogError($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}! {LogStrings.ViewLogs}");
+                    return false;
+                } else {
+                    Logger.Info(string.Format(LogStrings.ExtractDarkSuccess, sourceFile));
+                    control.LogInfo(string.Format(LogStrings.ExtractDarkSuccess, sourceFile));
+                }
+            } catch ( Exception e ) {
+
+                Logger.Fatal($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}:\n{Util.FormatException(e)})");
+                control.LogError($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}! {LogStrings.ViewLogs}");
+                return false;
+            }
 
             return true;
         }
@@ -172,7 +245,105 @@ namespace amethyst_installer_gui.Installer.Modules {
             control.LogInfo(LogStrings.InstallingDrivers);
             Logger.Info(LogStrings.InstallingDrivers);
 
+            string pathToDriversDirectory = Path.Combine(Constants.AmethystTempDirectory, "File");
+            string driverTemp = Path.Combine(Constants.AmethystTempDirectory, "File", "Temp");
 
+            Directory.CreateDirectory(driverTemp);
+
+            // Device Driver
+            {
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Device_cat"),            Path.Combine(driverTemp, "kinect.cat"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Device_inf"),            Path.Combine(driverTemp, "kinectdevice.inf"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Device_WdfCo"),          Path.Combine(driverTemp, "WdfCoInstaller01009.dll"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Device_WinUsbCo"),       Path.Combine(driverTemp, "WinUSBCoInstaller.dll"));
+
+                control.LogInfo(LogStrings.InstallDeviceDriver);
+                Logger.Info(LogStrings.InstallDeviceDriver);
+                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectdevice.inf"));
+                control.LogInfo(LogStrings.InstallDeviceDriverSuccess);
+                Logger.Info(LogStrings.InstallDeviceDriverSuccess);
+
+                File.Move(Path.Combine(driverTemp, "kinect.cat"),                               Path.Combine(pathToDriversDirectory, "Driver_Device_cat"));
+                File.Move(Path.Combine(driverTemp, "kinectdevice.inf"),                         Path.Combine(pathToDriversDirectory, "Driver_Device_inf"));
+                File.Move(Path.Combine(driverTemp, "WdfCoInstaller01009.dll"),                  Path.Combine(pathToDriversDirectory, "Driver_Device_WdfCo"));
+                File.Move(Path.Combine(driverTemp, "WinUSBCoInstaller.dll"),                    Path.Combine(pathToDriversDirectory, "Driver_Device_WinUsbCo"));
+            }
+
+            // Audio Driver
+            {
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Audio_cat"),             Path.Combine(driverTemp, "kinect.cat"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Audio_inf"),             Path.Combine(driverTemp, "kinectaudio.inf"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Audio_WdfCo"),           Path.Combine(driverTemp, "WdfCoInstaller01009.dll"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Audio_WinUsbCo"),        Path.Combine(driverTemp, "WinUSBCoInstaller.dll"));
+
+                control.LogInfo(LogStrings.InstallAudioDriver);
+                Logger.Info(LogStrings.InstallAudioDriver);
+                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectaudio.inf"));
+                control.LogInfo(LogStrings.InstallAudioDriverSuccess);
+                Logger.Info(LogStrings.InstallAudioDriverSuccess);
+
+                File.Move(Path.Combine(driverTemp, "kinect.cat"),                               Path.Combine(pathToDriversDirectory, "Driver_Audio_cat"));
+                File.Move(Path.Combine(driverTemp, "kinectaudio.inf"),                          Path.Combine(pathToDriversDirectory, "Driver_Audio_inf"));
+                File.Move(Path.Combine(driverTemp, "WdfCoInstaller01009.dll"),                  Path.Combine(pathToDriversDirectory, "Driver_Audio_WdfCo"));
+                File.Move(Path.Combine(driverTemp, "WinUSBCoInstaller.dll"),                    Path.Combine(pathToDriversDirectory, "Driver_Audio_WinUsbCo"));
+            }
+
+            // Audio Array Driver
+            {
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_AudioArray_cat"),        Path.Combine(driverTemp, "kinect.cat"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_AudioArray_inf"),        Path.Combine(driverTemp, "kinectaudioarray.inf"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_AudioArray_WdfCo"),      Path.Combine(driverTemp, "WdfCoInstaller01009.dll"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_AudioArray_WinUsbCo"),   Path.Combine(driverTemp, "WinUSBCoInstaller.dll"));
+
+                control.LogInfo(LogStrings.InstallAudioArrayDriver);
+                Logger.Info(LogStrings.InstallAudioArrayDriver);
+                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectaudioarray.inf"));
+                control.LogInfo(LogStrings.InstallAudioArrayDriverSuccess);
+                Logger.Info(LogStrings.InstallAudioArrayDriverSuccess);
+
+                File.Move(Path.Combine(driverTemp, "kinect.cat"),                               Path.Combine(pathToDriversDirectory, "Driver_AudioArray_cat"));
+                File.Move(Path.Combine(driverTemp, "kinectaudioarray.inf"),                     Path.Combine(pathToDriversDirectory, "Driver_AudioArray_inf"));
+                File.Move(Path.Combine(driverTemp, "WdfCoInstaller01009.dll"),                  Path.Combine(pathToDriversDirectory, "Driver_AudioArray_WdfCo"));
+                File.Move(Path.Combine(driverTemp, "WinUSBCoInstaller.dll"),                    Path.Combine(pathToDriversDirectory, "Driver_AudioArray_WinUsbCo"));
+            }
+
+            // Camera Driver
+            {
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_cat"),            Path.Combine(driverTemp, "kinect.cat"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_inf"),            Path.Combine(driverTemp, "kinectcamera.inf"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_WdfCo"),          Path.Combine(driverTemp, "WdfCoInstaller01009.dll"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_WinUsbCo"),       Path.Combine(driverTemp, "WinUSBCoInstaller.dll"));
+
+                control.LogInfo(LogStrings.InstallCameraDriver);
+                Logger.Info(LogStrings.InstallCameraDriver);
+                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectcamera.inf"));
+                control.LogInfo(LogStrings.InstallCameraDriverSuccess);
+                Logger.Info(LogStrings.InstallCameraDriverSuccess);
+
+                File.Move(Path.Combine(driverTemp, "kinect.cat"),                               Path.Combine(pathToDriversDirectory, "Driver_Camera_cat"));
+                File.Move(Path.Combine(driverTemp, "kinectcamera.inf"),                         Path.Combine(pathToDriversDirectory, "Driver_Camera_inf"));
+                File.Move(Path.Combine(driverTemp, "WdfCoInstaller01009.dll"),                  Path.Combine(pathToDriversDirectory, "Driver_Camera_WdfCo"));
+                File.Move(Path.Combine(driverTemp, "WinUSBCoInstaller.dll"),                    Path.Combine(pathToDriversDirectory, "Driver_Camera_WinUsbCo"));
+               }
+
+            // Security Driver
+            {
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Security_cat"),          Path.Combine(driverTemp, "kinect.cat"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Security_inf"),          Path.Combine(driverTemp, "kinectsecurity.inf"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Security_WdfCo"),        Path.Combine(driverTemp, "WdfCoInstaller01009.dll"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Security_WinUsbCo"),     Path.Combine(driverTemp, "WinUSBCoInstaller.dll"));
+
+                control.LogInfo(LogStrings.InstallSecurityDriver);
+                Logger.Info(LogStrings.InstallSecurityDriver);
+                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectsecurity.inf"));
+                control.LogInfo(LogStrings.InstallSecurityDriverSuccess);
+                Logger.Info(LogStrings.InstallSecurityDriverSuccess);
+
+                File.Move(Path.Combine(driverTemp, "kinect.cat"),                               Path.Combine(pathToDriversDirectory, "Driver_Security_cat"));
+                File.Move(Path.Combine(driverTemp, "kinectsecurity.inf"),                       Path.Combine(pathToDriversDirectory, "Driver_Security_inf"));
+                File.Move(Path.Combine(driverTemp, "WdfCoInstaller01009.dll"),                  Path.Combine(pathToDriversDirectory, "Driver_Security_WdfCo"));
+                File.Move(Path.Combine(driverTemp, "WinUSBCoInstaller.dll"),                    Path.Combine(pathToDriversDirectory, "Driver_Security_WinUsbCo"));
+            }
 
             return true;
         }

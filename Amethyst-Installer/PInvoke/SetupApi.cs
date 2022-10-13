@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -138,5 +139,14 @@ namespace amethyst_installer_gui.PInvoke {
         [DllImport("newdev.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool InstallSelectedDriver(IntPtr HwndParent, IntPtr DeviceInfoSet, string Reserved, [MarshalAs(UnmanagedType.Bool)] bool Backup, out uint Reboot);
+
+        [DllImport("Setupapi.dll", SetLastError = true, EntryPoint = "InstallHinfSection", CharSet = CharSet.Auto)]
+        private static extern void InstallHinfSection([In] IntPtr hwnd, [In] IntPtr ModuleHandle, [In, MarshalAs(UnmanagedType.LPWStr)] string CmdLineBuffer, int nCmdShow);
+
+        public static void InstallDriverFromInf(string infPath) {
+            if ( !File.Exists(infPath) )
+                throw new ArgumentException($"Invalid file {infPath}!");
+            InstallHinfSection(IntPtr.Zero, IntPtr.Zero, $"DefaultInstall 128 {infPath}", 0);
+        }
     }
 }

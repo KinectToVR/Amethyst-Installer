@@ -78,9 +78,20 @@
         public const string CheckingMemoryIntegrity             = "Checking if Memory Integrity is enabled...";
         public const string MemoryIntegrityEnabled              = "Memory Integrity detected! Please disable it, restart Windows, and re-run the installer.";
         
-        // Memory Integrity
+        // Drivers
         public const string DumpingDrivers                      = "Dumping Kinect for Windows drivers...";
         public const string InstallingDrivers                   = "Installing Kinect for Windows drivers...";
+
+        public const string InstallAudioDriver                  = "Installing Kinect for Windows Audio Control...";
+        public const string InstallAudioDriverSuccess           = "Successfully installed Kinect for Windows Audio Control!";
+        public const string InstallAudioArrayDriver             = "Installing Kinect for Windows Audio Array Control...";
+        public const string InstallAudioArrayDriverSuccess      = "Successfully installed Kinect for Windows Audio Array Control!";
+        public const string InstallDeviceDriver                 = "Installing Kinect for Windows Device...";
+        public const string InstallDeviceDriverSuccess          = "Successfully installed Kinect for Windows Device!";
+        public const string InstallCameraDriver                 = "Installing Kinect for Windows Camera...";
+        public const string InstallCameraDriverSuccess          = "Successfully installed Kinect for Windows Camera!";
+        public const string InstallSecurityDriver               = "Installing Kinect for Windows Security Controller...";
+        public const string InstallSecurityDriverSuccess        = "Successfully installed Kinect for Windows Security Controller!";
 
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";
