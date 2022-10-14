@@ -259,7 +259,7 @@ namespace amethyst_installer_gui.Installer.Modules {
 
                 control.LogInfo(LogStrings.InstallDeviceDriver);
                 Logger.Info(LogStrings.InstallDeviceDriver);
-                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectdevice.inf"));
+                KinectUtil.AssignDriverToDeviceId("USB\\VID_045E&PID_02B0&REV_0107", Path.Combine(driverTemp, "kinectdevice.inf"));
                 control.LogInfo(LogStrings.InstallDeviceDriverSuccess);
                 Logger.Info(LogStrings.InstallDeviceDriverSuccess);
 
@@ -297,7 +297,7 @@ namespace amethyst_installer_gui.Installer.Modules {
 
                 control.LogInfo(LogStrings.InstallAudioArrayDriver);
                 Logger.Info(LogStrings.InstallAudioArrayDriver);
-                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectaudioarray.inf"));
+                KinectUtil.AssignDriverToDeviceId("USB\\VID_045E&PID_02BB&REV_0100&MI_00", Path.Combine(driverTemp, "kinectaudioarray.inf"));
                 control.LogInfo(LogStrings.InstallAudioArrayDriverSuccess);
                 Logger.Info(LogStrings.InstallAudioArrayDriverSuccess);
 
@@ -311,17 +311,19 @@ namespace amethyst_installer_gui.Installer.Modules {
             {
                 File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_cat"),            Path.Combine(driverTemp, "kinect.cat"));
                 File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_inf"),            Path.Combine(driverTemp, "kinectcamera.inf"));
+                File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_sys"),            Path.Combine(driverTemp, "kinectcamera.sys"));
                 File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_WdfCo"),          Path.Combine(driverTemp, "WdfCoInstaller01009.dll"));
                 File.Move(Path.Combine(pathToDriversDirectory, "Driver_Camera_WinUsbCo"),       Path.Combine(driverTemp, "WinUSBCoInstaller.dll"));
 
                 control.LogInfo(LogStrings.InstallCameraDriver);
                 Logger.Info(LogStrings.InstallCameraDriver);
-                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectcamera.inf"));
+                KinectUtil.AssignDriverToDeviceId("USB\\VID_045E&PID_02AE&REV_010;", Path.Combine(driverTemp, "kinectcamera.inf"));
                 control.LogInfo(LogStrings.InstallCameraDriverSuccess);
                 Logger.Info(LogStrings.InstallCameraDriverSuccess);
 
                 File.Move(Path.Combine(driverTemp, "kinect.cat"),                               Path.Combine(pathToDriversDirectory, "Driver_Camera_cat"));
                 File.Move(Path.Combine(driverTemp, "kinectcamera.inf"),                         Path.Combine(pathToDriversDirectory, "Driver_Camera_inf"));
+                File.Move(Path.Combine(driverTemp, "kinectcamera.sys"),                         Path.Combine(pathToDriversDirectory, "Driver_Camera_sys"));
                 File.Move(Path.Combine(driverTemp, "WdfCoInstaller01009.dll"),                  Path.Combine(pathToDriversDirectory, "Driver_Camera_WdfCo"));
                 File.Move(Path.Combine(driverTemp, "WinUSBCoInstaller.dll"),                    Path.Combine(pathToDriversDirectory, "Driver_Camera_WinUsbCo"));
                }
@@ -335,7 +337,7 @@ namespace amethyst_installer_gui.Installer.Modules {
 
                 control.LogInfo(LogStrings.InstallSecurityDriver);
                 Logger.Info(LogStrings.InstallSecurityDriver);
-                SetupApi.InstallDriverFromInf(Path.Combine(driverTemp, "kinectsecurity.inf"));
+                KinectUtil.AssignDriverToDeviceId("USB\\VID_045E&PID_02BB&REV_0100&MI_01", Path.Combine(driverTemp, "kinectsecurity.inf"));
                 control.LogInfo(LogStrings.InstallSecurityDriverSuccess);
                 Logger.Info(LogStrings.InstallSecurityDriverSuccess);
 
@@ -344,6 +346,10 @@ namespace amethyst_installer_gui.Installer.Modules {
                 File.Move(Path.Combine(driverTemp, "WdfCoInstaller01009.dll"),                  Path.Combine(pathToDriversDirectory, "Driver_Security_WdfCo"));
                 File.Move(Path.Combine(driverTemp, "WinUSBCoInstaller.dll"),                    Path.Combine(pathToDriversDirectory, "Driver_Security_WinUsbCo"));
             }
+
+            // Microphone driver
+            KinectUtil.AssignGenericAudioDriver();
+            // We don't assign the endpoint driver because it's device ID is VERY GENERIC ( MMDEVAPI\AudioEndpoints )
 
             return true;
         }

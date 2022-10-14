@@ -201,7 +201,7 @@ namespace amethyst_installer_gui.Pages {
         private void installUsbAudioDriver_Click(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             System.Threading.Tasks.Task.Run(() => {
-                KinectUtil.DownloadAndInstallGenericAudioDriver();
+                KinectUtil.AssignGenericAudioDriver();
                 Util.ShowMessageBox($"Your logs. Check them.\n\nNow.", "LOGS LOGS LOGS LOGS LOGS LOGS");
             });
         }

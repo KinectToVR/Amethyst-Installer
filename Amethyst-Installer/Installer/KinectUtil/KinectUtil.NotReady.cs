@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using amethyst_installer_gui.PInvoke;
 using Microsoft.Kinect;
-using static amethyst_installer_gui.PInvoke.SetupApi;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -40,7 +40,7 @@ namespace amethyst_installer_gui.Installer {
             }
 
             // I hate the Kinect drivers WHY DOES THIS HAPPEN
-            DownloadAndInstallGenericAudioDriver();
+            AssignGenericAudioDriver();
 
             // Check if we installed the SDK, we need the files to dump the driver files from to reinstall them manually
             bool hasInstalledKinectSDK = false;
@@ -100,7 +100,7 @@ namespace amethyst_installer_gui.Installer {
             return NtDll.IsCodeIntegrityEnabled();
         }
 
-        public static void DownloadAndInstallGenericAudioDriver() {
+        public static void AssignGenericAudioDriver() {
 
             // Somehow the Microphone driver can be missing (I have no fucking clue why this happens, but it happens)
             // The microphone uses "(Generic USB Audio)", which is provided by Microsoft.
@@ -125,31 +125,44 @@ namespace amethyst_installer_gui.Installer {
             // - THE AUDIO DRIVER THE KINECT USES IS BUNDLED WITH ALL WINDOWS INSTALLS!
             // - THE INF FILE CAN BE FOUND AT %SYSTEMROOT%\INF\wdma_usb.inf
             // SO NEW COURSE OF ACTION:
-            // 1. Locate this inf file
-            // 2. Locate the device node for the Kinect microphone
-            // 3. Tell Windows to use wdma_usb.inf as the driver    
+            // 1. Locate the desired audio device
+            // 2. Enumerate all drivers, and select the wdma_usb.inf one titled (Generic USB Audio)
+            // 3. Assign it to the device
             // 4. Pray and hope Windows doesn't shit itself
 
+            // Fetch device instance ID
+            string instanceId = string.Empty;
 
-            // 
-            // InstallHinfSection(NULL,NULL,TEXT("DefaultInstall 132 path-to-inf\infname.inf"),0); 
+            TryGetDeviceTree();
 
-            
-        }
-
-        // Assigns a driver to a device programmatically
-        public static bool AssignDriverToDeviceId(string deviceID) {
-            // Based on sample at https://web.archive.org/web/20221013072029/https://www.betaarchive.com/wiki/index.php/Microsoft_KB_Archive/889763
-
-            IntPtr DeviceInfoSet = SetupApi.SetupDiCreateDeviceInfoList(IntPtr.Zero, IntPtr.Zero);
-            if (DeviceInfoSet == SetupApi.INVALID_HANDLE_VALUE) {
-                return false;
+            // Get Kinect Devices
+            foreach ( var device in s_deviceTree.DeviceNodes ) {
+                if ( device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_02" ) {
+                    instanceId = device.GetInstanceId();
+                    break;
+                }
             }
 
-            SP_DEVINFO_DATA DeviceInfoData = new SP_DEVINFO_DATA();
-            DeviceInfoData.cbSize = Marshal.SizeOf(DeviceInfoData);
+            SetupApi.AssignExistingDriverViaInfToDeviceId(instanceId, "wdma_usb.inf", "(Generic USB Audio)", "USB Audio Device");
+        }
+        
+        // Assigns a driver to a device programmatically
+        public static bool AssignDriverToDeviceId(string deviceID, string infPath) {
 
-            return false;
+            // Fetch device instance ID
+            string instanceId = string.Empty;
+
+            TryGetDeviceTree();
+
+            // Get Kinect Devices
+            foreach ( var device in s_deviceTree.DeviceNodes ) {
+                if ( device.GetProperty(DevRegProperty.HardwareId) == deviceID ) {
+                    instanceId = device.GetInstanceId();
+                    break;
+                }
+            }
+
+            return SetupApi.AssignDriverToDeviceId(instanceId, infPath);
         }
     }
 }

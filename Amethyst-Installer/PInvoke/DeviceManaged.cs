@@ -227,6 +227,16 @@ namespace amethyst_installer_gui.PInvoke {
             // return result ? buffer : string.Empty;
         }
 
+        public string GetInstanceId() {
+            StringBuilder instanceIdBuffer = new StringBuilder(256);
+            var wasSuccessful = CM_Get_Device_ID(_deviceHandle, instanceIdBuffer, 256);
+            if (wasSuccessful != 0) {
+                Logger.Fatal("Failed to fetch device instance ID!");
+                return string.Empty;
+            }
+            return instanceIdBuffer.ToString();
+        }
+
         public bool UninstallDevice() {
             var wasRemoved = CM_Query_And_Remove_SubTree_Ex(_deviceHandle, out _, null, 0, 0, _machineHandle);
             if ( wasRemoved != 0 )
@@ -302,6 +312,8 @@ namespace amethyst_installer_gui.PInvoke {
 
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Get_Child_Ex(ref IntPtr childDeviceHandle, IntPtr parentDeviceHandle, uint flags, IntPtr machineHandle);
+        [DllImport("setupapi.dll", SetLastError = true)]
+        private static extern int CM_Get_Device_ID(IntPtr deviceHandle, StringBuilder buffer, int bufferLen, int flags = 0);
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Get_Sibling_Ex(ref IntPtr siblingDeviceHandle, IntPtr deviceHandle, uint flags, IntPtr machineHandle);
         [DllImport("cfgmgr32.dll")]
