@@ -142,6 +142,20 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void InstallOptionCheckToggledHandler(object sender, RoutedEventArgs e) {
+            InstallableItem selectedItem = sender as InstallableItem;
+            m_currentModule = selectedItem.Tag as Module;
+
+            // Auto-select dependencies
+            bool doSelect = selectedItem?.itemCheckbox?.IsChecked ?? false;
+            if ( doSelect ) {
+                for ( int i = 0; i < installableItemControls.Count; i++ ) {
+                    for ( int j = 0; j < m_currentModule.Depends.Count; j++ ) {
+                        if ( ( ( Module ) installableItemControls[i].Tag ).Id == m_currentModule.Depends[j] ) {
+                            installableItemControls[i].itemCheckbox.IsChecked = doSelect;
+                        }
+                    }
+                }
+            }
 
             // Update right hand side
             CalculateInstallSize(m_currentModule);
@@ -158,16 +172,21 @@ namespace amethyst_installer_gui.Pages {
             if ( e != null )
                 SoundPlayer.PlaySound(SoundEffect.Invoke);
             InstallableItem selectedItem = sender as InstallableItem;
+            m_currentModule = selectedItem.Tag as Module;
 
-            // Handle background
             for ( int i = 0; i < installableItemControls.Count; i++ ) {
                 if ( installableItemControls[i] != selectedItem ) {
+                    // Handle background
                     installableItemControls[i].Background = new SolidColorBrush(Colors.Transparent);
+                } else {
+                    // Auto-select dependencies
+                    for ( int j = 0; j < m_currentModule.Depends.Count; j++ ) {
+                        if ( ( ( Module ) installableItemControls[i].Tag ).Id == m_currentModule.Depends[j] ) {
+                            installableItemControls[i].Checked = selectedItem.Checked;
+                        }
+                    }
                 }
-                // @TODO: Travel through dependency chain and auto-select any visible dependencies
             }
-
-            m_currentModule = selectedItem.Tag as Module;
 
             // Update right hand side
             CalculateInstallSize(m_currentModule);
