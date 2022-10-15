@@ -13,7 +13,7 @@ namespace amethyst_installer_gui {
         /// </summary>
         public static string Userprofile {
             get {
-                return Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", CurrentUser.GetCurrentlyLoggedInUsername()));
+                return CurrentUser.GetUserProfileDirectory();
             }
         }
 
