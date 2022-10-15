@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -33,6 +34,7 @@ namespace amethyst_installer_gui.PInvoke {
         // An alternative to:
         //      Process.Start("explorer.exe", $"/select,{filePath}");
         // P/Invoke version allows us to do the same task without spawning a new instance of explorer.exe
+        // If the WINAPI function fails for whatever reason we'll spawn a new explorer instance
         public static void OpenFolderAndSelectItem(string filePath) {
 
             filePath = Path.GetFullPath(filePath); // Resolve absolute path
@@ -61,7 +63,10 @@ namespace amethyst_installer_gui.PInvoke {
                 fileArray = new IntPtr[] { nativeFile };
             }
 
-            SHOpenFolderAndSelectItems(nativeFolder, ( uint ) fileArray.Length, fileArray, 0);
+            // #define FAILED(hr) (((HRESULT)(hr)) < 0)
+            if (SHOpenFolderAndSelectItems(nativeFolder, ( uint ) fileArray.Length, fileArray, 0) < 0) {
+                Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+            }
 
             Marshal.FreeCoTaskMem(nativeFolder);
             if ( nativeFile != IntPtr.Zero ) {
