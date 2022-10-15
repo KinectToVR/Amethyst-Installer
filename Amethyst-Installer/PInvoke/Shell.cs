@@ -34,7 +34,8 @@ namespace amethyst_installer_gui.PInvoke {
         // An alternative to:
         //      Process.Start("explorer.exe", $"/select,{filePath}");
         // P/Invoke version allows us to do the same task without spawning a new instance of explorer.exe
-        // If the WINAPI function fails for whatever reason we'll spawn a new explorer instance
+        // If the WINAPI function fails for whatever reason we'll spawn a new explorer instance instead
+        // (the WINAPI function fails in multi-account setups :)
         public static void OpenFolderAndSelectItem(string filePath) {
 
             filePath = Path.GetFullPath(filePath); // Resolve absolute path
