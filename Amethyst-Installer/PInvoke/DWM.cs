@@ -116,6 +116,7 @@ namespace amethyst_installer_gui.PInvoke {
                             return DwmSetWindowAttribute(windowHandle, ( uint ) DWMWINDOWATTRIBUTE.DWMWA_MICA_EFFECT, ref value, ( uint ) Marshal.SizeOf(value)) == S_OK;
                         }
                     } else {
+                        return false; // @TODO: Temporary since we need to rework the theme to work better with acrylic on win 10
                         // Win 10
                         AccentPolicy accent = new AccentPolicy {
                             AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND
@@ -131,7 +132,6 @@ namespace amethyst_installer_gui.PInvoke {
 
                         int result = SetWindowCompositionAttribute(windowHandle, ref data);
                         Marshal.FreeHGlobal(accentPtr);
-                        return false; // @TODO: Temporary since we need to rework the theme to work better with acrylic on win 10
                         return result == 1;
                     }
 
