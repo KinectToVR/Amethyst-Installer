@@ -92,7 +92,7 @@ namespace amethyst_installer_gui {
         }
 
         private static string FormatToLogMessage(string message, string level, int lineNumber, string filePath, string memberName) {
-            return $"{level}{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.ffffff")} {GetCurrentWin32ThreadId()} {Path.GetFileName(filePath)}::{memberName}:{lineNumber}] {message}";
+            return $"{level}{DateTime.Now.ToString("yyyyMMdd HH:mm:ss.ffffff")} {string.Format( "{0,5:#####}", GetCurrentWin32ThreadId())} {Path.GetFileName(filePath)}::{memberName}:{lineNumber}] {message}";
         }
 
         private static void LogInternal(string message) {
