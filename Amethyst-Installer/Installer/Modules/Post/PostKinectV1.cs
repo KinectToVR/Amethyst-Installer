@@ -348,7 +348,11 @@ namespace amethyst_installer_gui.Installer.Modules {
             }
 
             // Microphone driver
+            control.LogInfo(LogStrings.AssignMicrophoneDriver);
+            Logger.Info(LogStrings.AssignMicrophoneDriver);
             KinectUtil.AssignGenericAudioDriver();
+            control.LogInfo(LogStrings.AssignMicrophoneDriverSuccess);
+            Logger.Info(LogStrings.AssignMicrophoneDriverSuccess);
             // We don't assign the endpoint driver because it's device ID is VERY GENERIC ( MMDEVAPI\AudioEndpoints )
 
             return true;

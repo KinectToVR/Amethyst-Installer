@@ -92,6 +92,8 @@
         public const string InstallCameraDriverSuccess          = "Successfully installed Kinect for Windows Camera!";
         public const string InstallSecurityDriver               = "Installing Kinect for Windows Security Controller...";
         public const string InstallSecurityDriverSuccess        = "Successfully installed Kinect for Windows Security Controller!";
+        public const string AssignMicrophoneDriver              = "Assigning driver \"(Generic USB Audio)\" for Kinect USB Audio!";
+        public const string AssignMicrophoneDriverSuccess       = "Successfully assigned driver \"(Generic USB Audio)\" to Kinect USB Audio!";
 
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";
