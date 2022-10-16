@@ -41,7 +41,7 @@
             <Button x:Name="openDirectory" Content="{x:Static global:Localisation.InstallDestination_OpenFolder}" Grid.Column="1" Click="openDirectory_Click" />
         </Grid>
 
-        <Label Grid.Row="2" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Padding="0" Content="{x:Static global:Localisation.InstallDestination_AmethystInstallLocationFootnote}" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Padding="0" Text="{x:Static global:Localisation.InstallDestination_AmethystInstallLocationFootnote}" TextWrapping="WrapWithOverflow" />
 
         <!-- TODO: Better UI for this card ; also hide it! -->
         <Border x:Name="installFoundCard" Background="{StaticResource BrushBackgroundAlt}" Grid.Row="3" Padding="8" CornerRadius="4" Margin="0,8,0,0">
@@ -52,7 +52,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Source="/Resources/Icons/4x/Warning.png" Width="20" Grid.Column="0"/>
-                <TextBlock Margin="8,0,0,0" Grid.Column="1" Foreground="White" Text="{x:Static global:Localisation.InstallDestination_AmeInstallFound}" />
+                <TextBlock Margin="8,0,0,0" Grid.Column="1" Foreground="White" Text="{x:Static global:Localisation.InstallDestination_AmeInstallFound}" TextWrapping="WrapWithOverflow" />
             </Grid>
         </Border>
 
