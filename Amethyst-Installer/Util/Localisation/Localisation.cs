@@ -99,6 +99,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("InstallDestination_CreateDesktopShortcut");
             }
         }
+        public static string InstallOptions_ClickToViewSummary {
+            get {
+                return LocaleManager.GetString("InstallOptions_ClickToViewSummary");
+            }
+        }
         public static string InstallOptions_DownloadSize {
             get {
                 return LocaleManager.GetString("InstallOptions_DownloadSize");

@@ -26,7 +26,7 @@
                 </Border.Effect>
                 <ScrollViewer x:Name="installableScroller" Focusable="false" HorizontalScrollBarVisibility="Hidden" Padding="6,8,0,8">
                     <StackPanel x:Name="installOptionsContainer" Width="{Binding ElementName=installableScroller, Path=ViewportWidth}" Margin="0,0,0,-8">
-
+                        <TextBlock Text="{x:Static global:Localisation.InstallOptions_ClickToViewSummary}" FontSize="12" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="{DynamicResource BrushForegroundAlt}" Margin="2,0,0,6" />
                     </StackPanel>
                 </ScrollViewer>
             </Border>

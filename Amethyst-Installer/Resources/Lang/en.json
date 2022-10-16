@@ -23,6 +23,7 @@
   "InstallDestination_CreateDesktopShortcut": "Create a desktop shortcut",
 
   /* Install Options download size and install size strings */
+  "InstallOptions_ClickToViewSummary": "Click an item to see details.",
   "InstallOptions_DownloadSize": "Download Size:",
   "InstallOptions_InstallSize": "Installed Size:",
   "InstallOptions_TotalDownloadSize": "Total Download Size:",
