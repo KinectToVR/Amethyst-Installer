@@ -28,6 +28,10 @@
         /// The installer has updated all modules successfully.
         /// </summary>
         UpdateSuccess               =  5,
+        /// <summary>
+        /// Invalid Startup directory
+        /// </summary>
+        InvalidStartupDirectory     =  7,
 
 
         // =====================================================

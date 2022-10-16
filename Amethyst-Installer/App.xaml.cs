@@ -4,10 +4,10 @@ using amethyst_installer_gui.Pages;
 using amethyst_installer_gui.PInvoke;
 using amethyst_installer_gui.Protocol;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Media;
 using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using System.Windows;
 
@@ -43,6 +43,9 @@ namespace amethyst_installer_gui {
 
             DeviceManaged.RegisterDeviceNotificationHandler();
 
+            // Make sure we aren't running from within an ame install
+            EnsureNotInAmeDirectory();
+
             CommandParser parser = new CommandParser();
             if ( !ProtocolParser.ParseCommands(e.Args) && !parser.ParseCommands(e.Args) ) {
 
@@ -59,6 +62,25 @@ namespace amethyst_installer_gui {
                 }
             } else {
                 Util.Quit(ExitCodes.Command);
+            }
+        }
+
+        private void EnsureNotInAmeDirectory() {
+            if (InstallUtil.IsAmethystInstalledInDirectory(Directory.GetCurrentDirectory()) ) {
+                // We WILL encounter issues during an install / uninstall.
+                // This is due to how Windows loads binaries (namely openvr_api.dll)
+                // As a terrible horrible solution: bootstrap into a copy of the installer elsewhere
+                string processPath = Process.GetCurrentProcess().MainModule.FileName;
+                string newPath = Path.Combine(Constants.AmethystTempDirectory, "Amethyst-Installer.exe");
+                File.Copy(processPath, newPath, true);
+                var taskkillProc = Process.Start(new ProcessStartInfo() {
+                    FileName = newPath,
+                    WorkingDirectory = Constants.AmethystTempDirectory,
+                    Arguments = string.Join(" ", Environment.GetCommandLineArgs()),
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true
+                });
+                Util.Quit(ExitCodes.InvalidStartupDirectory);
             }
         }
 
