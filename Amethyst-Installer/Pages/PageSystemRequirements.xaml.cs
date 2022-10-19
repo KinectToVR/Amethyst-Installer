@@ -244,7 +244,10 @@ namespace amethyst_installer_gui.Pages {
                     vrConnectionType = "Virtual Desktop Streamer";
                     break;
                 case VRConnectionType.OculusLink:
-                    vrConnectionType = "Oculus Link / Air Link";
+                    vrConnectionType = "Oculus Link";
+                    break;
+                case VRConnectionType.OculusAirLink:
+                    vrConnectionType = "Oculus Air Link";
                     break;
             }
 

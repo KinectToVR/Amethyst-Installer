@@ -211,6 +211,7 @@
     <Compile Include="Installer\Modules\Post\PostKinectV1.cs" />
     <Compile Include="Installer\Modules\Post\PostKinectV2.cs" />
     <Compile Include="Installer\Modules\TempArchiveModule.cs" />
+    <Compile Include="Installer\OpenVR\OculusDeviceCache.cs" />
     <Compile Include="Installer\OpenVR\OpenVrDriverManifest.cs" />
     <Compile Include="Installer\OpenVR\OpenVrPaths.cs" />
     <Compile Include="Installer\OpenVR\OpenVrPlayspace.cs" />

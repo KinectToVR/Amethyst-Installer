@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using amethyst_installer_gui.Installer.OpenVR;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -210,7 +212,7 @@ namespace amethyst_installer_gui.Installer {
                     }
                 }
 
-                // @TODO: Compare last access time?
+                // Compare last access time?
                 // Is this even a good idea?
                 // Given based on what I'm reading this is prone to false positives...
                 // ONLY ONE WAY TO FIND OUT: TEST AND THROW IT IN THE WILD
@@ -230,7 +232,27 @@ namespace amethyst_installer_gui.Installer {
                     ConnectionType = VRConnectionType.VirtualDesktop;
                 } else {
                     Logger.Info($"Couldn't find a Virtual Desktop or ALVR install, assuming Oculus Link / Air Link!");
+                    
+                    // We are able to distinguish between Oculus Link and Oculus Air Link
                     ConnectionType = VRConnectionType.OculusLink;
+
+                    string oculusCachePath = Path.GetFullPath(Path.Combine(Constants.Userprofile, "AppData", "Local", "Oculus", "DeviceCache.json"));
+                    if ( File.Exists(oculusCachePath) ) {
+                        OculusDeviceCache deviceCache = JsonConvert.DeserializeObject<OculusDeviceCache>(File.ReadAllText(oculusCachePath));
+                        if (deviceCache != null && deviceCache.Devices != null && deviceCache.Devices.Count > 0) {
+                            for ( int i = 0; i < deviceCache.Devices.Count; i++ ) {
+                                var device = deviceCache.Devices[i];
+                                if ( device != null) {
+                                    if ( device.Type == "headset" && // If the device is an HMD
+                                        device.SupportsOculusLink == true) {
+                                        // Assume we have a Quest if it supports Oculus Link
+                                        ConnectionType = device.IsUsingAirLink ? VRConnectionType.OculusAirLink : VRConnectionType.OculusLink;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                 }
             } catch ( Exception e ) {
                 Logger.Error("Failed to detect Quest connection method!");

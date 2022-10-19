@@ -105,7 +105,8 @@
     /// </summary>
     public enum VRConnectionType {
         /// <summary>
-        /// Most headsets use this. Even wireless headsets like the HTC Vive with the wireless kit will use this.
+        /// Most headsets use this. Even wireless headsets like the HTC Vive with the wireless kit will use this (the fact that they're
+        /// wireless doesn't affect the way Amethyst functions in any way).
         /// </summary>
         Tethered,
         /// <summary>
@@ -120,6 +121,10 @@
         /// You probably bought the official Link cable.
         /// </summary>
         OculusLink,
+        /// <summary>
+        /// I am hoping that you didn't get the D-Link Air Bridge, it seems like shit.
+        /// </summary>
+        OculusAirLink,
         /// <summary>
         /// Stop using Riftcat.
         /// </summary>
