@@ -1,4 +1,5 @@
 ﻿using amethyst_installer_gui.PInvoke;
+using Microsoft.Kinect;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,8 @@ namespace amethyst_installer_gui.Installer {
                 if (device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02B0&REV_0107"       || // Kinect for Windows Device
                     device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_00" || // Kinect for Windows Audio Array
                     device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_01" || // Kinect for Windows Security Device
-                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;"          // Kinect for Windows Camera
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;"       || // Kinect for Windows Camera
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_02"    // Kinect USB Audio
                     ) {
 
                     Logger.Info($"Found faulty Kinect device!  {{ Name: {device.Description} }}");
@@ -68,25 +70,17 @@ namespace amethyst_installer_gui.Installer {
 
         public static bool MustFixNotPowered() {
 
-            TryGetDeviceTree();
+            // Load Kinect10.dll (if installed and check for E_NUI_NOTREADY)
+            // It should be in System32 as the user should've installed it to reach this point
+            // string kinect10dllPath = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Kinect10.dll"));
 
-            // Get Kinect Devices
-            foreach ( var device in s_deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.Unknown) ) {
-
-                // Device is a Kinect 360 Device
-                if (device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02B0&REV_0107"       || // Kinect for Windows Device
-                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_00" || // Kinect for Windows Audio Array
-                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_01" || // Kinect for Windows Security Device
-                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;"          // Kinect for Windows Camera
-                    ) {
-                    
-                    Logger.Info($"Found broken Kinect device: Name: {device.FriendlyName}; Location: {device.LocationInfo}; Description: {device.Description}");
-                    return true;
-                }
+            if ( KinectSensor.KinectSensors.Count > 0 ) {
+                KinectSensor kinect = KinectSensor.KinectSensors[0];
+                return kinect.Status == KinectStatus.NotPowered;
             }
 
             return false;
-        }
+        }   
 
         private static void TryGetDeviceTree() {
             if ( s_deviceTree == null)
