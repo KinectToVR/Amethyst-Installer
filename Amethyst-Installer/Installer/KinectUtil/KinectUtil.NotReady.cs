@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using amethyst_installer_gui.PInvoke;
 using Microsoft.Kinect;
@@ -155,6 +157,44 @@ namespace amethyst_installer_gui.Installer {
             }
 
             return SetupApi.AssignDriverToDeviceId(instanceId, infPath);
+        }
+
+        public static bool PreFixUnknownDevices() {
+
+
+            // An automagic fix for E_NUI_NOTPOWERED
+            // This fix involves practically uninstalling all Unknown Kinect Drivers, using P/Invoke, then forcing a scan for hardware changes to trigger the drivers to re-scan
+
+            // The method involved with fixing this is subject to change at this point
+
+            bool success = true;
+
+            TryGetDeviceTree();
+
+            // Get Kinect Devices
+            foreach ( var device in s_deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.Unknown) ) {
+
+                // Device is a Kinect 360 Device
+                if ( device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02B0&REV_0107"         || // Kinect for Windows Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_00"    || // Kinect for Windows Audio Array
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_01"    || // Kinect for Windows Security Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;"          || // Kinect for Windows Camera
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_02"       // Kinect USB Audio
+                    ) {
+
+                    Logger.Info($"Found faulty Kinect device!  {{ Name: {device.Description} }}");
+                    Logger.Info($"Attemping to fix device {device.Description}...");
+
+                    success = success && device.UninstallDevice();
+                }
+            }
+
+            return success;
+        }
+
+        public static bool RescanDevices() {
+            TryGetDeviceTree();
+            return s_deviceTree.RescanDevices();
         }
     }
 }

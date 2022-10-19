@@ -109,8 +109,10 @@ namespace amethyst_installer_gui.Installer.Modules {
 
                 result |= CheckCoreIntegrity(ref control);
                 result |= CheckMicrophone(ref control);
+                result |= KinectUtil.PreFixUnknownDevices();
                 result |= DumpDrivers(pathToDriversInstaller, ref control);
                 result |= InstallDrivers(ref control);
+                result |= KinectUtil.RescanDevices();
             }
 
             return result;
