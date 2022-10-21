@@ -1,14 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -96,8 +91,12 @@ namespace amethyst_installer_gui.Installer {
                 ComputeSteamVRSettingsPath();
 
                 if ( s_steamvrSettingsExists ) {
-                    var steamVRSettingsTxt = File.ReadAllText(s_steamvrSettingsPath);
-                    s_steamvrSettings = JObject.Parse(steamVRSettingsTxt);
+                    try {
+                        var steamVRSettingsTxt = File.ReadAllText(s_steamvrSettingsPath);
+                        s_steamvrSettings = JObject.Parse(steamVRSettingsTxt);
+                    } catch {
+                        s_steamvrSettingsExists = false;
+                    }
                 }
             }
         }
