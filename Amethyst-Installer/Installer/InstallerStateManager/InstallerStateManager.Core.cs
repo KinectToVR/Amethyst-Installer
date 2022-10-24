@@ -35,6 +35,11 @@ namespace amethyst_installer_gui.Installer {
         public static string AmethystInstallDirectory;
 
         /// <summary>
+        /// Whether the installer is in the middle of the install process. This prevents the user from closing the installer mid-download or install.
+        /// </summary>
+        public static bool CanClose = true;
+
+        /// <summary>
         /// Whether the current process is an upgrade, as some installation steps are handled differently during an upgrade.
         /// An upgrade is defined as a user upgrading from K2EX to Amethyst.
         /// </summary>

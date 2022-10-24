@@ -524,5 +524,15 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Updating_UpdatingAmethyst");
             }
         }
+        public static string Installer_QuitVerify_Modal_Title {
+            get {
+                return LocaleManager.GetString("Installer_QuitVerify_Modal_Title");
+            }
+        }
+        public static string Installer_QuitVerify_Modal_Description {
+            get {
+                return LocaleManager.GetString("Installer_QuitVerify_Modal_Description");
+            }
+        }
     }
 }

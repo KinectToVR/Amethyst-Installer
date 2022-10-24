@@ -131,8 +131,15 @@ namespace amethyst_installer_gui {
         // Titlebar buttons
         private void Close_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
-            Logger.Info($"User closed installer!");
-            Util.Quit(ExitCodes.OK);
+            if ( InstallerStateManager.CanClose ) {
+                Logger.Info($"User closed installer!");
+                Util.Quit(ExitCodes.OK);
+            } else {
+                if (Util.ShowMessageBox(Localisation.Installer_QuitVerify_Modal_Title, Localisation.Installer_QuitVerify_Modal_Description, MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+                    Logger.Info($"User closed installer during a download or install!");
+                    Util.Quit(ExitCodes.OK);
+                }
+            }
         }
 
         private void Minimise_Click(object sender, RoutedEventArgs e) {

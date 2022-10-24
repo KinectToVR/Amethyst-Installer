@@ -3,18 +3,9 @@ using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Shell;
 
 namespace amethyst_installer_gui.Pages {
@@ -116,6 +107,7 @@ namespace amethyst_installer_gui.Pages {
             control.ClearLog();
             control.State = TaskState.Busy;
             control.BringIntoView();
+            InstallerStateManager.CanClose = false;
 
             // Execute the install process on a separate thread
             Task.Run(() => InstallManager.InstallModule(index, ref control));
@@ -124,6 +116,7 @@ namespace amethyst_installer_gui.Pages {
         private void OnInstalledAllModules() {
             Dispatcher.Invoke(() => {
 
+                InstallerStateManager.CanClose = true;
                 m_nextButtonVisible = true;
                 ActionButtonPrimary.Visibility = Visibility.Visible;
                 MainWindow.Instance.sidebar_install.State = TaskState.Checkmark;
@@ -136,7 +129,7 @@ namespace amethyst_installer_gui.Pages {
         private void OnModuleInstalled(TaskState state, int index) {
             Dispatcher.Invoke(() => {
                 // Update UI state
-                var control =  m_installControls[index];
+                var control = m_installControls[index];
                 control.State = state;
 
                 index++;
@@ -147,9 +140,10 @@ namespace amethyst_installer_gui.Pages {
 
         private void OnModuleFailed(int index) {
 
-            var control =  m_installControls[index];
+            var control = m_installControls[index];
 
             Dispatcher.Invoke(() => {
+                InstallerStateManager.CanClose = true;
                 m_failedToInstall = true;
                 control.State = TaskState.Error;
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;

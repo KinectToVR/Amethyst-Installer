@@ -124,5 +124,8 @@
 
   "Updating_FailedReachApi": "Failed to connect to K2VR Web API. Please check your internet connection, and re-run the updater.", /* Shown if fetching the API failed */
   "Updating_InitFailed": "Failed to initialize updater",
-  "Updating_UpdatingAmethyst": "Amethyst is being updated…"
+  "Updating_UpdatingAmethyst": "Amethyst is being updated…",
+
+  "Installer_QuitVerify_Modal_Title": "If you exit now, Amethyst will not be installed.\nAre you sure you want to close the installer?",
+  "Installer_QuitVerify_Modal_Description": "Close Amethyst Installer?"
 }

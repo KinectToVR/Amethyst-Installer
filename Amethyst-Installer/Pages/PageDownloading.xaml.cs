@@ -82,6 +82,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void DownloadNewModule(int index) {
             Dispatcher.Invoke(() => {
+                InstallerStateManager.CanClose = false;
                 Logger.Info(index);
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
@@ -107,6 +108,7 @@ namespace amethyst_installer_gui.Pages {
             // Attempt redownload
             DownloadItem downloadItem = (DownloadItem) sender;
             Logger.Info($"Retrying to download module with id {InstallerStateManager.ModulesToInstall[( int ) downloadItem.Tag].Id}...");
+            InstallerStateManager.CanClose = false;
             DownloadManager.DownloadModule(( int ) downloadItem.Tag);
         }
 
@@ -148,6 +150,7 @@ namespace amethyst_installer_gui.Pages {
                 // Check if we closed the app first, assume exit if instance is null
                 if ( MainWindow.Instance == null )
                     return;
+                InstallerStateManager.CanClose = false;
 
                 m_nextButtonVisibile = true;
                 ActionButtonPrimary.Visibility = Visibility.Visible;
@@ -173,6 +176,7 @@ namespace amethyst_installer_gui.Pages {
                 m_currentProgressControl.DownloadFailed = true;
                 m_currentProgressControl.IsPending = false;
 
+                InstallerStateManager.CanClose = true;
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
             });

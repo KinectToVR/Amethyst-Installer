@@ -73,8 +73,10 @@ namespace amethyst_installer_gui.Pages {
                 Dispatcher.BeginInvoke(new Action<int>(DownloadNewModule), index);
                 return;
             }
+
+            InstallerStateManager.CanClose = false;
             // Dispatcher.Invoke(() => {
-                Logger.Info(index);
+            Logger.Info(index);
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
@@ -97,6 +99,7 @@ namespace amethyst_installer_gui.Pages {
             // Attempt redownload
             DownloadItem downloadItem = (DownloadItem) sender;
             Logger.Info($"Retrying to download module with id {InstallerStateManager.ModulesToInstall[( int ) downloadItem.Tag].Id}...");
+            InstallerStateManager.CanClose = false;
             DownloadManager.DownloadModule(( int ) downloadItem.Tag);
 
         }
@@ -160,6 +163,8 @@ namespace amethyst_installer_gui.Pages {
         private void DownloadFailed() {
             m_downloadControl.Dispatcher.Invoke(() => {
 
+                InstallerStateManager.CanClose = true;
+
                 m_downloadControl.DownloadFailed = true;
                 m_downloadControl.IsPending = false;
 
@@ -173,6 +178,8 @@ namespace amethyst_installer_gui.Pages {
         #region Updating
 
         private void StartUpdateSequence() {
+
+            InstallerStateManager.CanClose = false;
 
             // Marquee progress
             MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
@@ -197,6 +204,8 @@ namespace amethyst_installer_gui.Pages {
 
         private void InstallModule(int index) {
 
+            InstallerStateManager.CanClose = false;
+
             var module = InstallerStateManager.ModulesToInstall[index];
 
             // Setup the control
@@ -217,6 +226,8 @@ namespace amethyst_installer_gui.Pages {
                 // SoundPlayer.PlaySound(SoundEffect.Focus);
 
                 m_installingControl.LogInfo(LogStrings.UpdateSuccessful);
+
+                InstallerStateManager.CanClose = true;
                 // Wait 3 seconds
                 Task.Run(() => {
                     Thread.Sleep(3000);
@@ -272,6 +283,8 @@ namespace amethyst_installer_gui.Pages {
 
         private void OnModuleFailed(int index) {
             Dispatcher.Invoke(() => {
+
+                InstallerStateManager.CanClose = true;
                 m_installingControl.State = TaskState.Error;
                 MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
                 MainWindow.Instance.sidebar_install.State = TaskState.Error;
