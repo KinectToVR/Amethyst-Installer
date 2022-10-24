@@ -185,6 +185,9 @@
     <Compile Include="Controls\TextView.xaml.cs">
       <DependentUpon>TextView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UsbControllerItem.xaml.cs">
+      <DependentUpon>UsbControllerItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Installer\AnalyticsData.cs" />
     <Compile Include="Installer\DownloadManager.cs" />
     <Compile Include="Installer\Installer.Enums.cs" />
@@ -342,6 +345,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\TextView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\UsbControllerItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

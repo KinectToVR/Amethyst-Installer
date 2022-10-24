@@ -159,6 +159,14 @@ namespace amethyst_installer_gui.Installer {
 
     }
 
+    public enum UsbControllerQuality {
+        Unknown,
+        Good,
+        OK,
+        Unusable,
+        Ignore,
+    }
+
     public struct UsbControllerData {
         /// <summary>
         /// Actual string name as seen in device manager
@@ -168,8 +176,7 @@ namespace amethyst_installer_gui.Installer {
         /// A cleaned up version of the string to display in UI
         /// </summary>
         public string FriendlyString;
-        public bool KinectV1_Compatible;
-        public bool KinectV2_Compatible;
+        public UsbControllerQuality ControllerQuality;
 
         public UsbControllerData(DeviceNode device) : this() {
             this.Name = device.FriendlyName;
@@ -179,7 +186,7 @@ namespace amethyst_installer_gui.Installer {
 
             // @TODO: Regex :D
             this.FriendlyString = this.Name;
-
+            this.ControllerQuality = UsbControllerQuality.Unknown;
             /*
 
 RAW DATA:
@@ -250,15 +257,51 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
                     }
                 }
                 this.FriendlyString = this.FriendlyString.Substring(0, indexBuffer);
-
             }
 
             this.FriendlyString = this.FriendlyString.Trim();
 
             // this.IsGoodController = false;
             // @TODO: Blacklist / whitelist
-            KinectV1_Compatible = false;
-            KinectV2_Compatible = false;
+            // KinectV1_Compatible = false;
+            // KinectV2_Compatible = false;
+
+            // This is slow as shit, but I don't see any other way of making this faster and more performant
+            ReadOnlySpan<char> usbControllerTitleAsSpan = this.Name.AsSpan();
+
+            if ( usbControllerTitleAsSpan.Contains("intel".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                if ( usbControllerTitleAsSpan.Contains("3.1".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ||
+                    usbControllerTitleAsSpan.Contains("3.2".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                    this.ControllerQuality = UsbControllerQuality.Good;
+                } else if ( usbControllerTitleAsSpan.Contains("3.0".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                    this.ControllerQuality = UsbControllerQuality.OK;
+                }
+            } else if ( usbControllerTitleAsSpan.Contains("amd".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                if ( usbControllerTitleAsSpan.Contains("3.1".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ||
+                    usbControllerTitleAsSpan.Contains("3.2".AsSpan(), StringComparison.InvariantCultureIgnoreCase)) {
+                    this.ControllerQuality = UsbControllerQuality.Good;
+                } else if ( usbControllerTitleAsSpan.Contains("3.0".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                    this.ControllerQuality = UsbControllerQuality.Unusable;
+                }
+            } else if ( usbControllerTitleAsSpan.Contains("asmedia".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                this.ControllerQuality = UsbControllerQuality.Good;
+                if ( usbControllerTitleAsSpan.Contains("3.0".AsSpan(), StringComparison.InvariantCultureIgnoreCase)) {
+                    this.ControllerQuality = UsbControllerQuality.Unusable;
+                }
+            } else if ( usbControllerTitleAsSpan.Contains("renesas".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ||
+                 usbControllerTitleAsSpan.Contains("nec".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                this.ControllerQuality = UsbControllerQuality.Good;
+            } else if ( usbControllerTitleAsSpan.Contains("fresco".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ||
+                 usbControllerTitleAsSpan.Contains("via".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                this.ControllerQuality = UsbControllerQuality.Unusable;
+            } else if ( usbControllerTitleAsSpan.Contains("nvidia".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                this.ControllerQuality = UsbControllerQuality.Ignore;
+            } else if ( usbControllerTitleAsSpan.Contains("openhcd".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                this.ControllerQuality = UsbControllerQuality.OK;
+            } else if ( usbControllerTitleAsSpan.Contains("generic".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                this.ControllerQuality = UsbControllerQuality.OK;
+            }
         }
     }
 }
+

@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="amethyst_installer_gui.Controls.UsbControllerItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:amethyst_installer_gui.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="19" d:DesignWidth="467">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="24" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="16"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Image x:Name="taskStateIcon" Grid.Row="0" Source="/Resources/Icons/4x/Default.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <Border Grid.Row="1" Background="Transparent" Margin="0" />
+        </Grid>
+        <TextBlock x:Name="content" Grid.Column="1" Text="when the impostor is sus 😳" Foreground="{StaticResource BrushForeground}"/>
+    </Grid>
+</UserControl>

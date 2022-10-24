@@ -1,3 +1,4 @@
+using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
@@ -78,21 +79,52 @@ namespace amethyst_installer_gui.Pages {
 
         private void DisplayUSBControllers() {
 
-            // @TODO: Check USB controllers
             int goodControllerCount = 0;
-            StringBuilder controllerStringBuffer = new StringBuilder();
 
-            foreach ( var usbController in InstallerStateManager.UsbControllers ) {
-                if ( controllerStringBuffer.Length > 0 )
-                    controllerStringBuffer.Append(", ");
-                controllerStringBuffer.Append(usbController.FriendlyString);
-                goodControllerCount++;
+            Dictionary<string, int> usbControllerCount = new Dictionary<string, int>();
+            Dictionary<string, int> usbControllerIdMapping = new Dictionary<string, int>();
+
+            bool overallQuality = false;
+
+            // Go through each controller and determine how we should treat it visually
+            // This is a separate loop so that we can group multiple controllers together
+            for ( int i = 0; i < InstallerStateManager.UsbControllers.Count; i++ ) {
+
+                switch ( InstallerStateManager.UsbControllers[i].ControllerQuality ) {
+                    case UsbControllerQuality.Ignore:
+                        break;
+                    case UsbControllerQuality.Good:
+                    case UsbControllerQuality.OK:
+                    case UsbControllerQuality.Unknown:
+                        goodControllerCount++;
+                        overallQuality = overallQuality || true;
+                        goto default;
+                    case UsbControllerQuality.Unusable:
+                        overallQuality = overallQuality || false;
+                        goto default;
+                    default:
+                        
+                        if (usbControllerCount.ContainsKey(InstallerStateManager.UsbControllers[i].FriendlyString) ) {
+                            usbControllerCount[InstallerStateManager.UsbControllers[i].FriendlyString]++;
+                        } else {
+                            usbControllerCount.Add(InstallerStateManager.UsbControllers[i].FriendlyString, 1);
+                            usbControllerIdMapping.Add(InstallerStateManager.UsbControllers[i].FriendlyString, i);
+                        }
+
+                        break;
+                }
             }
 
-            usbControllersDescription.Text = string.Format(Localisation.SystemRequirement_Description_UsbControllers,
-                goodControllerCount, controllerStringBuffer.ToString());
+            // Actually spawn the controls
+            foreach (var entry in usbControllerIdMapping ) {
+                UsbControllerItem controllerItem = new UsbControllerItem(InstallerStateManager.UsbControllers[entry.Value], usbControllerCount[entry.Key]);
+                controllerItem.Margin = new Thickness(0, 6, 0, 0);
+                usbControllersContainer.Children.Add(controllerItem);
+            }
 
-            usbControllers.State = Controls.TaskState.Question;
+            usbControllersDescription.Text = string.Format(Localisation.SystemRequirement_Description_UsbControllers, goodControllerCount);
+
+            usbControllers.State = overallQuality ? TaskState.Checkmark : TaskState.Error;
         }
 
         private void DisplayVRSystem() {

@@ -30,7 +30,7 @@
                             </StackPanel>
                         </controls:ItemTask>
                         <controls:ItemTask x:Name="usbControllers" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_UsbControllers}" Margin="0,0,0,16" Focusable="False">
-                            <StackPanel Margin="10,0,0,0" Orientation="Vertical">
+                            <StackPanel Margin="10,0,0,0" Orientation="Vertical" x:Name="usbControllersContainer">
                                 <TextBlock x:Name="usbControllersDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                             </StackPanel>
                         </controls:ItemTask>
