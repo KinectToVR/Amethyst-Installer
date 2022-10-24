@@ -48,7 +48,7 @@
                                 </Border>
                             </StackPanel>
                         </controls:ItemTask>
-                        <controls:ItemTask x:Name="minPlayspaceSize" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_Playspace}" Margin="0,0,0,16" Focusable="False">
+                        <controls:ItemTask x:Name="minPlayspaceSize" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_Playspace}" Margin="0" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                                 <TextBlock x:Name="minPlayspaceSizeDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                             </StackPanel>
