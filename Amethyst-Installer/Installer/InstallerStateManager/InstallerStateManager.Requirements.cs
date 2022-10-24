@@ -273,7 +273,9 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
                 if ( usbControllerTitleAsSpan.Contains("3.1".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ||
                     usbControllerTitleAsSpan.Contains("3.2".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
                     this.ControllerQuality = UsbControllerQuality.Good;
-                } else if ( usbControllerTitleAsSpan.Contains("3.0".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+                } else if ( usbControllerTitleAsSpan.Contains("3.0".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ||
+                    ( usbControllerTitleAsSpan.Contains("chipset".AsSpan(), StringComparison.InvariantCultureIgnoreCase)
+                    && usbControllerTitleAsSpan.Contains("family".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) ) {
                     this.ControllerQuality = UsbControllerQuality.OK;
                 }
             } else if ( usbControllerTitleAsSpan.Contains("amd".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
@@ -296,9 +298,8 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
                 this.ControllerQuality = UsbControllerQuality.Unusable;
             } else if ( usbControllerTitleAsSpan.Contains("nvidia".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
                 this.ControllerQuality = UsbControllerQuality.Ignore;
-            } else if ( usbControllerTitleAsSpan.Contains("openhcd".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
-                this.ControllerQuality = UsbControllerQuality.OK;
-            } else if ( usbControllerTitleAsSpan.Contains("generic".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
+            } else if ( usbControllerTitleAsSpan.Contains("openhcd".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ||
+                usbControllerTitleAsSpan.Contains("generic".AsSpan(), StringComparison.InvariantCultureIgnoreCase) ) {
                 this.ControllerQuality = UsbControllerQuality.OK;
             }
         }
