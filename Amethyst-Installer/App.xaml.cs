@@ -128,6 +128,7 @@ namespace amethyst_installer_gui {
             string logFileDate = DateTime.Now.ToString("yyyyMMdd-HHmmss.ffffff");
             Logger.Init(Path.GetFullPath(Path.Combine(Constants.AmethystLogsDirectory, $"Amethyst_Installer_{logFileDate}.log")));
             Logger.Info(Util.InstallerVersionString);
+            Logger.Info($"Running as {CurrentUser.GetCurrentlyLoggedInUsername()}...");
 
             // Init OpenVR
             OpenVRUtil.InitOpenVR();
