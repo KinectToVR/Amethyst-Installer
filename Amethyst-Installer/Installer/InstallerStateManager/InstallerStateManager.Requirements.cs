@@ -235,7 +235,6 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
             // Generate a cleaned up string for USB devices
 
             // Most USB Controllers have the string "(Microsoft)" in their name, handle those first
-            this.FriendlyString = "Standardowy rozszerzony kontroler hosta PCI do USB";
             if ( this.FriendlyString.Contains("(Microsoft)") ) {
                 this.FriendlyString = this.FriendlyString.Substring(0, this.FriendlyString.IndexOf("eXtensible"));
             } else {
