@@ -241,22 +241,24 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
                 // Oh god oh fuck
                 // Try being "smart" and cut till we find USB, and include any numerics if the next "word" is a number (i.e. version)
                 int lastChar = this.FriendlyString.IndexOf("USB") + 3;
-                int indexBuffer = this.FriendlyString.IndexOf(' ', lastChar + 1);
-                if ( indexBuffer == -1 )
-                    indexBuffer = lastChar;
-                else {
-                    // Try checking if the word is a number
-                    string tmp = this.FriendlyString.Substring(lastChar, indexBuffer - lastChar);
-                    int ind = indexBuffer;
-                    indexBuffer = lastChar;
-                    if (double.TryParse(tmp.Trim(), out _) ) {
-                        indexBuffer = ind;
-                    } else if (tmp.ToLowerInvariant().Contains("type") && tmp.ToLowerInvariant().Contains('c')) {
-                        // Type-C
-                        indexBuffer = ind;
+                if ( lastChar != -1 ) {
+                    int indexBuffer = this.FriendlyString.IndexOf(' ', lastChar + 1);
+                    if ( indexBuffer == -1 )
+                        indexBuffer = lastChar;
+                    else {
+                        // Try checking if the word is a number
+                        string tmp = this.FriendlyString.Substring(lastChar, indexBuffer - lastChar);
+                        int ind = indexBuffer;
+                        indexBuffer = lastChar;
+                        if ( double.TryParse(tmp.Trim(), out _) ) {
+                            indexBuffer = ind;
+                        } else if ( tmp.ToLowerInvariant().Contains("type") && tmp.ToLowerInvariant().Contains('c') ) {
+                            // Type-C
+                            indexBuffer = ind;
+                        }
                     }
+                    this.FriendlyString = this.FriendlyString.Substring(0, indexBuffer);
                 }
-                this.FriendlyString = this.FriendlyString.Substring(0, indexBuffer);
             }
 
             this.FriendlyString = this.FriendlyString.Trim();
