@@ -242,7 +242,7 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
                 // Oh god oh fuck
                 // Try being "smart" and cut till we find USB, and include any numerics if the next "word" is a number (i.e. version)
                 int lastChar = this.FriendlyString.IndexOf("USB") + 3;
-                if ( lastChar != -1 && lastChar > (this.FriendlyString.Length - 1) ) {
+                if ( lastChar != -1 && lastChar < this.FriendlyString.Length ) {
                     int indexBuffer = this.FriendlyString.IndexOf(' ', lastChar + 1);
                     if ( indexBuffer == -1 )
                         indexBuffer = lastChar;
