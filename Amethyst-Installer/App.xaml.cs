@@ -99,6 +99,10 @@ namespace amethyst_installer_gui {
                     // If no SteamVR
                     Util.ShowMessageBox(LocaleStrings.InstallProhibited_NoSteamVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
                     Util.Quit(ExitCodes.IncompatibleSetup);
+                } else if ( OpenVRUtil.HmdType == VRHmdType.Phone ) {
+                    // If using a phone
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_PhoneVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.Quit(ExitCodes.IncompatibleSetup);
                 }
             }
         }

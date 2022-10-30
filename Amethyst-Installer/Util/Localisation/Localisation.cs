@@ -214,6 +214,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("InstallProhibited_WindowsAncient");
             }
         }
+        public static string InstallProhibited_PhoneVR {
+            get {
+                return LocaleManager.GetString("InstallProhibited_PhoneVR");
+            }
+        }
         public static string Logs_DirectoryIsLocatedHere {
             get {
                 return LocaleManager.GetString("Logs_DirectoryIsLocatedHere");

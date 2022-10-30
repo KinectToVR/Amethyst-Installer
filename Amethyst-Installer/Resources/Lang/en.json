@@ -52,6 +52,7 @@
   "InstallProhibited_CloudPC": "Cloud PCs are unsupported. Amethyst does not work on remote PCs.", /* The error shown to users if they're running Amethyst Installer on a Cloud PC. */
   "InstallProhibited_NoSteamVR": "SteamVR couldn't be found. Amethyst requires SteamVR to function properly. Please install SteamVR then re-run this installer.", /* The error shown to users if they don't have SteamVR installed. */
   "InstallProhibited_WindowsAncient": "Your version of Windows is too old to work with Amethyst. Please update to a more recent version of Windows.", /* The error message shown to users if they have an unsupported Windows install . */
+  "InstallProhibited_PhoneVR": "Amethyst requires a roomscale tracked VR headset to work properly, and is incompatible with mobile phone-based VR headsets.", /* The error message shown to users if they try using Amethyst with a phone. */
 
   "Logs_DirectoryIsLocatedHere": "The log file is stored here:",
 
