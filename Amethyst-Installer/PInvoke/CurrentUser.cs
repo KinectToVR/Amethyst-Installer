@@ -57,10 +57,14 @@ namespace amethyst_installer_gui.PInvoke {
 
             var procs = Process.GetProcesses();
             foreach ( var process in procs ) {
-                if ( process.SessionId == currentSessionId ) {
-                    if ( OpenProcessToken(process.Handle, TOKEN_QUERY, out finalHandle) ) {
-                        break;
+                try {
+                    if ( process.SessionId == currentSessionId ) {
+                        if ( process.HandleCount > 0 && OpenProcessToken(process.Handle, TOKEN_QUERY, out finalHandle) ) {
+                            break;
+                        }
                     }
+                } catch ( Exception e ) {
+                    Logger.PrivateDoNotUseLogExecption(Util.FormatException(e), $"Unhandled Exception: {e.GetType().Name} in {e.Source}: {e.Message}");
                 }
             }
 
