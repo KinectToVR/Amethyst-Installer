@@ -96,30 +96,30 @@ namespace amethyst_installer_gui {
         }
 
         private static void LogInternal(string message) {
-            if ( LogFilePath == null )
-                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
             Console.ResetColor();
             Console.WriteLine(message);
+            if ( LogFilePath == null )
+                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
             File.AppendAllLines(LogFilePath, new[] { message });
 
             PageLogs.LogLine(message, ConsoleColor.White);
         }
 
         private static void LogInternal(string message, ConsoleColor color) {
-            if ( LogFilePath == null )
-                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
             Console.ForegroundColor = color;
             Console.WriteLine(message);
+            if ( LogFilePath == null )
+                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
             File.AppendAllLines(LogFilePath, new[] { message });
 
             PageLogs.LogLine(message, color);
         }
 
         private static void LogInternalUniqueMessage(string message, string messageUI, ConsoleColor color) {
-            if ( LogFilePath == null )
-                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
             Console.ForegroundColor = color;
             Console.WriteLine(message);
+            if ( LogFilePath == null )
+                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
             File.AppendAllLines(LogFilePath, new[] { message });
 
             PageLogs.LogLine(messageUI, color);
