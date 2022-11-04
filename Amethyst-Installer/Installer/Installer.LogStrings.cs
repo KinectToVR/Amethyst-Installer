@@ -32,6 +32,9 @@
         public const string FailRegisterAmethystProtocolLink    = "Failed to register Amethyst protocol link";
         public const string UpdateSuccessful                    = "Amethyst updated successfully!";
         public const string OpeningAmethyst                     = "Opening Amethyst...";
+        public const string UpdatingFirewallRules               = "Updating Firewall rules...";
+        public const string UpdatingFirewallRulesSuccess        = "Updated Firewall rules successfully!";
+        public const string UpdatingFirewallRulesFailure        = "Failed to update firewall rules";
 
         // exe-module
         public const string InstallingExe                       = "Installing {0}...";

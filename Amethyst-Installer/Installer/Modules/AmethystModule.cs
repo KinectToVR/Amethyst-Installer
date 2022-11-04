@@ -55,6 +55,7 @@ if upgrade no
                 bool sucessMinor    =                   CreateUninstallEntry(path, ref control);
                 sucessMinor         = sucessMinor    && AssignTrackerRoles(ref control);
                 sucessMinor         = sucessMinor    && RegisterProtocolLink(path, ref control);
+                sucessMinor         = sucessMinor    && UpdateFirewallRules(ref control);
                 
                 if ( !InstallerStateManager.IsUpdating ) {
                     sucessMinor         = sucessMinor    && AdjustSteamVrSettings(ref control);
@@ -466,6 +467,37 @@ if upgrade no
             } catch ( Exception e ) {
                 control.LogError($"{LogStrings.FailRegisterAmethystProtocolLink}! {LogStrings.ViewLogs}");
                 Logger.Fatal(LogStrings.FailRegisterAmethystProtocolLink);
+                Logger.Fatal(Util.FormatException(e));
+                return false;
+            }
+        }
+
+        private bool UpdateFirewallRules(ref InstallModuleProgress control) {
+
+            control.LogInfo(LogStrings.UpdatingFirewallRules);
+
+            try {
+
+                // Amethyst gRPC protocol ports
+                // @FIXME: Let's see if we need to open UDP ports in prod
+                // Process.Start("netsh advfirewall firewall add rule name=\"Amethyst SteamVR Addon UDP IN\" dir=in action=allow protocol=UDP localport=7135").WaitForExit(10000);
+                // Process.Start("netsh advfirewall firewall add rule name=\"Amethyst SteamVR Addon UDP OUT\" dir=out action=allow protocol=UDP localport=7135").WaitForExit(10000);
+                Process.Start("netsh advfirewall firewall add rule name=\"Amethyst SteamVR Addon TCP IN\" dir=in action=allow protocol=TCP localport=7135").WaitForExit(10000);
+                Process.Start("netsh advfirewall firewall add rule name=\"Amethyst SteamVR Addon TCP OUT\" dir=out action=allow protocol=TCP localport=7135").WaitForExit(10000);
+
+                // Rotational data default port
+                Process.Start("netsh advfirewall firewall add rule name=\"owoTrack Rotation IN\" dir=in action=allow protocol=UDP localport=6969").WaitForExit(10000);
+                Process.Start("netsh advfirewall firewall add rule name=\"owoTrack Rotation OUT\" dir=out action=allow protocol=UDP localport=6969").WaitForExit(10000);
+                
+                // Info server allowing automatic discovery
+                Process.Start("netsh advfirewall firewall add rule name=\"owoTrack discovery IN\" dir=in action=allow protocol=UDP localport=35903").WaitForExit(10000);
+                Process.Start("netsh advfirewall firewall add rule name=\"owoTrack discovery OUT\" dir=out action=allow protocol=UDP localport=35903").WaitForExit(10000);
+
+                control.LogInfo(LogStrings.UpdatingFirewallRulesSuccess);
+                return true;
+            } catch ( Exception e ) {
+                control.LogError($"{LogStrings.UpdatingFirewallRulesFailure}! {LogStrings.ViewLogs}");
+                Logger.Fatal(LogStrings.UpdatingFirewallRulesFailure);
                 Logger.Fatal(Util.FormatException(e));
                 return false;
             }
