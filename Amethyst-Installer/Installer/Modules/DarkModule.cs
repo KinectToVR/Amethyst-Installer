@@ -34,7 +34,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                 var procStart = new ProcessStartInfo() {
                     FileName = darkExecutablePath,
                     WorkingDirectory = Constants.AmethystTempDirectory,
-                    Arguments = $"{inputFileFullPath} -x {Constants.AmethystTempDirectory}",
+                    Arguments = $"\"{inputFileFullPath}\" -x \"{Constants.AmethystTempDirectory}\"",
                     CreateNoWindow = true,
                     WindowStyle = ProcessWindowStyle.Hidden,
 
@@ -60,7 +60,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                 };
                 proc.BeginErrorReadLine();
                 proc.BeginOutputReadLine();
-                proc.WaitForExit(10000);
+                proc.WaitForExit(60000);
 
                 if ( stdout.Length > 0 )
                     Logger.Info(stdout.ToString().Trim());
@@ -70,6 +70,8 @@ namespace amethyst_installer_gui.Installer.Modules {
                 // 
                 // 0 - Success
                 // 1 - Error
+                // Just in case
+                Logger.Info(string.Format(LogStrings.DarkExitCode, proc.ExitCode));
                 if ( proc.ExitCode == 1 ) {
                     // Assume WiX failed
                     if ( stderr.Length > 0 )

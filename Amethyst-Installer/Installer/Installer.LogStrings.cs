@@ -51,6 +51,7 @@
         public const string InstallingDark                      = "Installing {0}...";
         public const string InstallDarkSuccess                  = "Successfully installed {0}!";
         public const string FailedInstallDark                   = "Failed to install {0}";
+        public const string DarkExitCode                        = "Received exit code {0}.";
 
         // Kinect Microphone status
         public const string CheckingKinectMicrophone            = "Verifying that the Kinect microphone is on...";
