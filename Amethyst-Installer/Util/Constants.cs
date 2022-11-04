@@ -53,10 +53,10 @@ namespace amethyst_installer_gui {
                     // As a result of both environment variable hell and spaces causing WiX to fail unexpectedly, we' have moved temp to
                     // WindowsDrive:\\temp\\amethyst-installer-XXXXXX
 
-                    // m_ameTmpDir = Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Local", "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
+                    m_ameTmpDir = Path.GetFullPath(Path.Combine(Userprofile, "AppData", "Local", "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
 
-                    var systemDriveLetter = Path.GetPathRoot( Environment.GetFolderPath( Environment.SpecialFolder.Windows ));
-                    m_ameTmpDir = Path.GetFullPath(Path.Combine(systemDriveLetter, "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
+                    // var systemDriveLetter = Path.GetPathRoot( Environment.GetFolderPath( Environment.SpecialFolder.Windows ));
+                    // m_ameTmpDir = Path.GetFullPath(Path.Combine(systemDriveLetter, "Temp", $"amethyst-installer-{Path.GetRandomFileName().Replace(".", "")}"));
 #endif
 
 #if DEBUG && DOWNLOAD_CACHE
