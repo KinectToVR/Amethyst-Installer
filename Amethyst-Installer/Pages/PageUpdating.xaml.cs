@@ -259,7 +259,7 @@ namespace amethyst_installer_gui.Pages {
                             // cleaning temp while we're copying (not that it should ever occur)
                             var clearDirProc = Process.Start(new ProcessStartInfo() {
                                 FileName = "cmd.exe",
-                                Arguments = $"/C timeout 10 && copy /Y /B /V {selfExecutable} /B {amethystInstallerExecutable} && timeout 5 && rmdir /Q /S {Constants.AmethystTempDirectory}",
+                                Arguments = $"/C timeout 10 && copy /Y /B /V \"{selfExecutable}\" /B \"{amethystInstallerExecutable}\" && timeout 5 && rmdir /Q /S \"{Constants.AmethystTempDirectory}\"",
                                 WindowStyle = ProcessWindowStyle.Hidden,
                                 CreateNoWindow = true
                             });

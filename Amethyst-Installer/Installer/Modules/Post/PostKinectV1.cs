@@ -185,7 +185,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                 var procStart = new ProcessStartInfo() {
                     FileName = darkExecutablePath,
                     WorkingDirectory = Constants.AmethystTempDirectory,
-                    Arguments = $"{inputFileFullPath} -x {Constants.AmethystTempDirectory}",
+                    Arguments = $"\"{inputFileFullPath}\" -x \"{Constants.AmethystTempDirectory}\"",
                     CreateNoWindow = true,
                     WindowStyle = ProcessWindowStyle.Hidden,
 
@@ -197,6 +197,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                     StandardOutputEncoding = Encoding.UTF8,
                     StandardErrorEncoding = Encoding.UTF8,
                 };
+                Logger.Info($"Starting dark.exe with params:\n{procStart.Arguments}");
                 var proc = Process.Start(procStart);
                 // Redirecting process output so that we can log what happened
                 StringBuilder stdout = new StringBuilder();
@@ -221,6 +222,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                 // 
                 // 0 - Success
                 // 1 - Error
+                Logger.Info(string.Format(LogStrings.DarkExitCode, proc.ExitCode));
                 if ( proc.ExitCode == 1 ) {
                     // Assume WiX failed
                     if ( stderr.Length > 0 )
@@ -251,6 +253,8 @@ namespace amethyst_installer_gui.Installer.Modules {
             string driverTemp = Path.Combine(Constants.AmethystTempDirectory, "File", "Temp");
 
             Directory.CreateDirectory(driverTemp);
+
+            // @TODO: If successfully install driver log succ else log fuck
 
             // Device Driver
             {

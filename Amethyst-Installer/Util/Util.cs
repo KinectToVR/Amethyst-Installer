@@ -302,7 +302,7 @@ namespace amethyst_installer_gui {
 
                 var clearDirProc = Process.Start(new ProcessStartInfo() {
                     FileName = "cmd.exe",
-                    Arguments = $"/C timeout 10 && rmdir /Q /S {tempDir}",
+                    Arguments = $"/C timeout 10 && rmdir /Q /S \"{tempDir}\"",
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true
                 });
@@ -424,7 +424,7 @@ namespace amethyst_installer_gui {
                 
                 // Pass same args
                 FileName            = Process.GetCurrentProcess().MainModule.FileName,
-                Arguments           = string.Join(" ", Environment.GetCommandLineArgs()),
+                Arguments           = string.Join("\" \"", Environment.GetCommandLineArgs()),
                 WorkingDirectory    = Directory.GetCurrentDirectory(),
 
                 Verb                = "runas" // Force UAC prompt

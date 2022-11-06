@@ -76,7 +76,7 @@ namespace amethyst_installer_gui {
                 var taskkillProc = Process.Start(new ProcessStartInfo() {
                     FileName = newPath,
                     WorkingDirectory = Constants.AmethystTempDirectory,
-                    Arguments = string.Join(" ", Environment.GetCommandLineArgs()),
+                    Arguments = string.Join("\" \"", Environment.GetCommandLineArgs()),
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true
                 });

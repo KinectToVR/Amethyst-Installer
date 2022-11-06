@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace amethyst_installer_gui.Commands {
@@ -28,7 +24,7 @@ namespace amethyst_installer_gui.Commands {
                 File.Copy(Assembly.GetExecutingAssembly().Location, tempAmeInstallerPath);
                 Process.Start(new ProcessStartInfo() {
                     FileName = tempAmeInstallerPath,
-                    Arguments = string.Join(" ", Environment.GetCommandLineArgs()),
+                    Arguments = string.Join("\" \"", Environment.GetCommandLineArgs()),
                     WorkingDirectory = Constants.AmethystTempDirectory,
                 });
                 Util.Quit(ExitCodes.Command);
