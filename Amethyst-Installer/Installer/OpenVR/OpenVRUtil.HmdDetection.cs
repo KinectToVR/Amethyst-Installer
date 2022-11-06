@@ -161,7 +161,7 @@ namespace amethyst_installer_gui.Installer {
 
                 // Pico Neo
                 case "pico":
-                    // TODO: @Revise further because yeahhhhh
+                    // @TODO: Revise further because yeahhhhh
                     ConnectionType = VRConnectionType.Tethered;
                     TrackingType = UsesLighthouseTracking() ? VRTrackingType.Lighthouse : VRTrackingType.Oculus;
                     switch ( hmdModel ) {

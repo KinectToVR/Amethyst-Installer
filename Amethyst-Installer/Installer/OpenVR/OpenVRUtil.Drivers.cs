@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 
-
 namespace amethyst_installer_gui.Installer {
     /// <summary>
     /// Helper class responsible for interfacing with OpenVR, and changing OpenVR related settings, etc...
