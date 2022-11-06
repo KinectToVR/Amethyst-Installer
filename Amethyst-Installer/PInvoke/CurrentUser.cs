@@ -79,10 +79,11 @@ namespace amethyst_installer_gui.PInvoke {
                     StringBuilder sBuilder = new StringBuilder(size);
                     GetUserProfileDirectory(user, sBuilder, ref size);
                     s_userProfileDirectory = sBuilder.ToString();
-                    if ( s_userProfileDirectory.ToLowerInvariant() == @"c:\\windows\\system32\\config\\systemprofile") {
+                    if ( s_userProfileDirectory.ToLowerInvariant() == @"c:\\windows\\system32\\config\\systemprofile" ) {
                         s_userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                     }
-                } catch ( InvalidOperationException ) {
+                } catch ( InvalidOperationException e ) {
+                    Logger.Warn(Util.FormatException(e));
                     s_userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 }
             }
