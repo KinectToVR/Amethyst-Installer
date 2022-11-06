@@ -475,26 +475,25 @@ if upgrade no
         private bool UpdateFirewallRules(ref InstallModuleProgress control) {
 
             control.LogInfo(LogStrings.UpdatingFirewallRules);
+            Logger.Info(LogStrings.UpdatingFirewallRules);
 
             try {
 
                 // Amethyst gRPC protocol ports
-                // @FIXME: Let's see if we need to open UDP ports in prod
-                // Process.Start("netsh advfirewall firewall add rule name=\"Amethyst SteamVR Addon UDP IN\" dir=in action=allow protocol=UDP localport=7135").WaitForExit(10000);
-                // Process.Start("netsh advfirewall firewall add rule name=\"Amethyst SteamVR Addon UDP OUT\" dir=out action=allow protocol=UDP localport=7135").WaitForExit(10000);
-                Process.Start("netsh advfirewall firewall add rule name=\"Amethyst SteamVR Addon TCP IN\" dir=in action=allow protocol=TCP localport=7135").WaitForExit(10000);
-                Process.Start("netsh advfirewall firewall add rule name=\"Amethyst SteamVR Addon TCP OUT\" dir=out action=allow protocol=TCP localport=7135").WaitForExit(10000);
-
+                bool success = Util.ActivateFirewallRule("Amethyst SteamVR Addon", NetworkProtocol.TCP, 7135);
                 // Rotational data default port
-                Process.Start("netsh advfirewall firewall add rule name=\"owoTrack Rotation IN\" dir=in action=allow protocol=UDP localport=6969").WaitForExit(10000);
-                Process.Start("netsh advfirewall firewall add rule name=\"owoTrack Rotation OUT\" dir=out action=allow protocol=UDP localport=6969").WaitForExit(10000);
-                
+                success = success && Util.ActivateFirewallRule("owoTrack Rotation", NetworkProtocol.UDP, 6969);
                 // Info server allowing automatic discovery
-                Process.Start("netsh advfirewall firewall add rule name=\"owoTrack discovery IN\" dir=in action=allow protocol=UDP localport=35903").WaitForExit(10000);
-                Process.Start("netsh advfirewall firewall add rule name=\"owoTrack discovery OUT\" dir=out action=allow protocol=UDP localport=35903").WaitForExit(10000);
+                success = success && Util.ActivateFirewallRule("owoTrack Discovery", NetworkProtocol.UDP, 35903);
 
-                control.LogInfo(LogStrings.UpdatingFirewallRulesSuccess);
-                return true;
+                if ( success ) {
+                    control.LogInfo(LogStrings.UpdatingFirewallRulesSuccess);
+                    Logger.Info(LogStrings.UpdatingFirewallRulesSuccess);
+                } else {
+                    control.LogError(LogStrings.UpdatingFirewallRulesFailure + "!");
+                    Logger.Fatal(LogStrings.UpdatingFirewallRulesFailure + "!");
+                }
+                return success;
             } catch ( Exception e ) {
                 control.LogError($"{LogStrings.UpdatingFirewallRulesFailure}! {LogStrings.ViewLogs}");
                 Logger.Fatal(LogStrings.UpdatingFirewallRulesFailure);

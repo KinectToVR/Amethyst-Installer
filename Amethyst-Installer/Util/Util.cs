@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -256,10 +257,12 @@ namespace amethyst_installer_gui {
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsLaptop() {
             return PowerProvider.SystemPowerCapabilites.LidPresent;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GenerateDocsURL(string relative) {
 
             string docsLocaleCode = "en";
@@ -443,5 +446,50 @@ namespace amethyst_installer_gui {
         public static ReadOnlyMemory<char> RelativePath(this ReadOnlyMemory<char> path, int relativePathStart) {
             return path.Slice(relativePathStart, path.Length - relativePathStart);
         }
+
+        public static bool ActivateFirewallRule(string title, NetworkProtocol protocol, ushort port) {
+            string protocolString;
+            switch ( protocol ) {
+                case NetworkProtocol.TCP:
+                    protocolString = "TCP";
+                    break;
+                case NetworkProtocol.UDP:
+                    protocolString = "UDP";
+                    break;
+                default:
+                    protocolString = "Unknown network protocol";
+                    break;
+            }
+
+            // Network in
+            var netProcIn = new ProcessStartInfo() {
+                FileName = "netsh",
+                Arguments = $"advfirewall firewall add rule name=\"{title} IN\" dir=in action=allow protocol={protocolString} localport={port}",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+            };
+            var winProcNetIn = Process.Start(netProcIn);
+            winProcNetIn.WaitForExit(10000);
+            
+
+            // Network in
+            var netProcOut = new ProcessStartInfo() {
+                FileName = "netsh",
+                Arguments = $"advfirewall firewall add rule name=\"{title} OUT\" dir=out action=allow protocol={protocolString} localport={port}",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+            };
+            var winProcNetOut = Process.Start(netProcOut);
+            winProcNetOut.WaitForExit(10000);
+
+            // Process.Start($"netsh advfirewall firewall add rule name=\"{title} IN\" dir=in action=allow protocol={protocolString} localport={port}").WaitForExit(10000);
+            // Process.Start($"netsh advfirewall firewall add rule name=\"{title} OUT\" dir=out action=allow protocol={protocolString} localport={port}").WaitForExit(10000);
+            return winProcNetIn.ExitCode == 0 && winProcNetOut.ExitCode == 0;
+        }
+    }
+
+    public enum NetworkProtocol {
+        UDP,
+        TCP
     }
 }
