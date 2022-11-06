@@ -85,11 +85,14 @@ namespace amethyst_installer_gui.Controls {
             m_dpi = VisualTreeHelper.GetDpi(this).PixelsPerDip;
 
             // Create the initial formatted text string.
-            m_computedTextFormatting = new FormattedText(Text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, TypeFace, FontSize, Brushes.White, m_dpi);
+            m_computedTextFormatting = new FormattedText(Text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, TypeFace, FontSize, Brushes.White, m_dpi) {
+                MaxTextWidth = ActualWidth,
+                MaxTextHeight = double.PositiveInfinity,
+            };
 
             // Set a maximum width and height. If the text overflows these values, an ellipsis "..." appears.
-            m_computedTextFormatting.MaxTextWidth = ActualWidth;
-            m_computedTextFormatting.MaxTextHeight = double.PositiveInfinity;
+            // m_computedTextFormatting.MaxTextWidth = ActualWidth;
+            // m_computedTextFormatting.MaxTextHeight = double.PositiveInfinity;
 
             for ( int i = 0; i < FontSizes.Count; i++ ) {
                 m_computedTextFormatting.SetFontSize(FontSizes[i].TargetFontSize, FontSizes[i].Start, FontSizes[i].Length);
