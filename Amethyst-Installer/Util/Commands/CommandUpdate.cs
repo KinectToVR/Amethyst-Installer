@@ -162,7 +162,9 @@ namespace amethyst_installer_gui.Commands {
                     // For dependency in X
                     Logger.Info($"Queueing dependency \"{thisModule.DisplayName}\"...");
                     if ( !InstallerStateManager.ModulesToInstall.Contains(thisModule) ) {
-                        InstallerStateManager.ModulesToInstall.Add(thisModule);
+                        if ( InstallerStateManager.ShouldInstallModule(thisModule) ) {
+                            InstallerStateManager.ModulesToInstall.Add(thisModule);
+                        }
                     }
                 }
 

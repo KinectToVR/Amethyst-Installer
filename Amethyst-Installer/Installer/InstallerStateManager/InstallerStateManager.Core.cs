@@ -165,5 +165,15 @@ namespace amethyst_installer_gui.Installer {
         }
 
         // @TODO: System to allow selecting modules to install / update, etc
+        public static bool ShouldInstallModule(in Module currentModule) {
+
+            if (currentModule.Detect != null && currentModule.Detect.Type != null) {
+                if (ModuleCheckOps.ContainsKey(currentModule.Detect.Type)) {
+                    return ModuleCheckOps[currentModule.Detect.Type].CheckShouldInstall(currentModule);
+                }
+            }
+
+            return true;
+        }
     }
 }
