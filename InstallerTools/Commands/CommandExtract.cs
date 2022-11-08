@@ -22,12 +22,12 @@ namespace InstallerTools.Commands {
                 switch ( parameters[i] ) {
                     case "-file":
                     case "-f":
-                        directoryPath = parameters[i + 1];
+                        filePath = parameters[i + 1];
                         i++;
                         break;
                     case "-out":
                     case "-o":
-                        filePath = parameters[i + 1];
+                        directoryPath = parameters[i + 1];
                         i++;
                         break;
                 }
