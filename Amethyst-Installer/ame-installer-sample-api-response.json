@@ -50,7 +50,7 @@
 				"main_url": "https://aka.ms/vs/17/release/vc_redist.x64.exe",
 				"mirror_url": "https://api.k2vr.tech/mirrors/vc_redist.x64.exe",
 				"filename": "vc_redist.x64.exe",
-				"checksum": "CDCE5D5EE259D8071FA82F522C5C7D6E"
+				"checksum": "703BD677778F2A1BA1EB4338BAC3B868"
 			},
 			"install": {
 				"type": "exe",
@@ -63,8 +63,7 @@
 				]
 			},
 			"detect": {
-				"type": "vcredist",
-				"version": "2022"
+				"type": "vcredist"
 			}
 		},
 
