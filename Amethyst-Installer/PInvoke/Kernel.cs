@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace amethyst_installer_gui.PInvoke {
     public static class Kernel {
@@ -28,6 +28,12 @@ namespace amethyst_installer_gui.PInvoke {
         [DllImport("kernel32.dll")]
         private static extern uint GetLastError();
 
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindowAsync(HandleRef hWnd, int nCmdShow);
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr WindowHandle);
+        private const int SW_RESTORE = 9;
+
 
         public static void EnableAnsiCmd() {
             var iStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -41,6 +47,12 @@ namespace amethyst_installer_gui.PInvoke {
                 Console.Error.WriteLine($"Failed to set output console mode, error code: {GetLastError()}");
                 return;
             }
+        }
+
+        public static void FocusProcess(Process proc) {
+            IntPtr hWnd = proc.MainWindowHandle;
+            ShowWindowAsync(new HandleRef(null, hWnd), SW_RESTORE);
+            SetForegroundWindow(proc.MainWindowHandle);
         }
     }
 }

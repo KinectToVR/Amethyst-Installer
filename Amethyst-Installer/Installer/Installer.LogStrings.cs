@@ -40,6 +40,7 @@
         public const string InstallingExe                       = "Installing {0}...";
         public const string FailedInstallExe                    = "Failed to install {0}";
         public const string FailedExeInvalidExitCode            = "{0} returned unexpected exit code {1}!";
+        public const string FailedExeInvalidExitCodeTryManual   = "{0} returned unexpected exit code {1}! Please try installing {0} manually.";
         public const string InstallExeSuccess                   = "Successfully installed {0}!";
 
         // extract-archive
