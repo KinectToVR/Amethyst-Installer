@@ -161,6 +161,7 @@ namespace amethyst_installer_gui.Pages {
                     pathTextbox.Text = Path.Combine(dialog.SelectedPath, "Amethyst");
                 }
                 pathTextbox.Text = Path.GetFullPath(pathTextbox.Text);
+                string tempPath = pathTextbox.Text;
                 if ( driveControlDiskLetterPair.ContainsKey(dirInfo.Root.ToString()) ) {
                     var thisDrive = driveControlDiskLetterPair[dirInfo.Root.ToString()];
                     // Invoke left click handler because im lazy
@@ -170,6 +171,7 @@ namespace amethyst_installer_gui.Pages {
                             Source = thisDrive
                         });
                 }
+                pathTextbox.Text = tempPath;
                 CheckPath();
             }
         }
