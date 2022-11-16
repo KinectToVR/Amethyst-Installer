@@ -21,10 +21,10 @@ namespace amethyst_installer_gui.Commands {
                 // If the installer is running from an existing amethyst install, make it copy itself to temp, then 
                 // execute the installer from temp, passing the current arguments through, and terminate this process so that this file is free
                 string tempAmeInstallerPath = Path.Combine(Constants.AmethystTempDirectory, "Amethyst-Installer.exe");
-                File.Copy(Assembly.GetExecutingAssembly().Location, tempAmeInstallerPath);
+                File.Copy(Assembly.GetExecutingAssembly().Location, tempAmeInstallerPath, true);
                 Process.Start(new ProcessStartInfo() {
                     FileName = tempAmeInstallerPath,
-                    Arguments = string.Join("\" \"", Environment.GetCommandLineArgs()),
+                    Arguments = string.Join("\" \"", App.Arguments),
                     WorkingDirectory = Constants.AmethystTempDirectory,
                 });
                 Util.Quit(ExitCodes.Command);

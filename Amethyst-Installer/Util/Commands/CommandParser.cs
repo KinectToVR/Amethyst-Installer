@@ -56,6 +56,7 @@ namespace amethyst_installer_gui.Commands {
         /// <returns>Whether regular execution of the program shall be interrupted.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool ParseCommands(string[] args) {
+
             for ( int i = 0; i < args.Length; i++ ) {
 
                 // Check if this item matches a command or not

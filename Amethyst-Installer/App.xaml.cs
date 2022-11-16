@@ -21,12 +21,14 @@ namespace amethyst_installer_gui {
     public partial class App : Application {
 
         public static InstallerState InitialPage = InstallerState.Welcome;
+        public static string[] Arguments;
         private static bool s_initialized = false;
 
         private void Application_Startup(object sender, StartupEventArgs e) {
 
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            
+            Arguments = e.Args;
+
             // Init console ; enables ANSI, unicode, and enables logging in WPF
             Kernel.AttachConsole(-1);
             Console.OutputEncoding = Encoding.Unicode;
@@ -47,13 +49,15 @@ namespace amethyst_installer_gui {
             EnsureNotInAmeDirectory();
 
             CommandParser parser = new CommandParser();
-            if ( !ProtocolParser.ParseCommands(e.Args) && !parser.ParseCommands(e.Args) ) {
+            if ( !ProtocolParser.ParseCommands(Arguments) && !parser.ParseCommands(Arguments) ) {
 
                 // @NOTE: Yes, we technically do support light theme, but right now it's an unfinished mess, so we'll keep on forcing
                 // dark mode for the time being
                 // SetTheme(WindowsColorHelpers.IsDarkTheme());
                 SetTheme(true);
                 Init();
+
+                Logger.Info(string.Join(" ", Arguments));
 
                 if ( InstallerStateManager.CanInstall ) {
                     // MainWindow
@@ -76,11 +80,12 @@ namespace amethyst_installer_gui {
                 var taskkillProc = Process.Start(new ProcessStartInfo() {
                     FileName = newPath,
                     WorkingDirectory = Constants.AmethystTempDirectory,
-                    Arguments = string.Join("\" \"", Environment.GetCommandLineArgs()),
+                    Arguments = string.Join("\" \"", Arguments),
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true
                 });
-                Util.Quit(ExitCodes.InvalidStartupDirectory);
+                Console.WriteLine(string.Join("\" \"", Arguments));
+                // Util.Quit(ExitCodes.InvalidStartupDirectory);
             }
         }
 
