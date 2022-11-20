@@ -79,6 +79,18 @@ namespace amethyst_installer_gui.Pages {
                 var freeSpace = drives[i].AvailableFreeSpace;
                 var totalSize = drives[i].TotalSize;
 
+                if ( totalSize == 0 ) {
+                    // This is probably a DVD drive or something similar, skip it
+                    continue;
+                }
+                switch ( drives[i].DriveType ) {
+                    // CD drives
+                    case DriveType.CDRom:
+                    // Misleading-ish name, this means drives with a file system that Windows recognises but without a drive letter assigned to them
+                    case DriveType.NoRootDirectory:
+                        continue;
+                }
+
                 // Create control
                 var driveControl = new DriveSelectionControl();
                 driveControl.DiskPercentage = 1.0 - ( ( double ) freeSpace / ( totalSize ) );
