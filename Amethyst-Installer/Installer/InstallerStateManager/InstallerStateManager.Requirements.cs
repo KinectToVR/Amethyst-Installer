@@ -235,9 +235,20 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
             // Generate a cleaned up string for USB devices
 
             // Most USB Controllers have the string "(Microsoft)" in their name, handle those first
-            if ( this.FriendlyString.Contains("(Microsoft)") ) {
-                this.FriendlyString = this.FriendlyString.Substring(0, this.FriendlyString.IndexOf("eXtensible"));
-            } else {
+            // If for some reason we explode (usually non-English languages), fall back to the painful method
+            bool hell = false;
+            try {
+                if ( this.FriendlyString.Contains("(Microsoft)") ) {
+                    this.FriendlyString = this.FriendlyString.Substring(0, this.FriendlyString.IndexOf("eXtensible"));
+                } else {
+                    hell = true;
+                }
+            } catch (Exception e) {
+                Logger.Fatal(Util.FormatException(e));
+                hell = true;
+            }
+            
+            if (hell) {
                 // Oh god oh fuck
                 // Try being "smart" and cut till we find USB, and include any numerics if the next "word" is a number (i.e. version)
                 int lastChar = this.FriendlyString.IndexOf("USB") + 3;
