@@ -81,6 +81,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <controls:DX_Blobs />
+
         <Grid MaxWidth="500">
             <Grid.RowDefinitions>
                 <RowDefinition />
