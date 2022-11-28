@@ -67,6 +67,11 @@
         Uninstall = 11,
 
         /// <summary>
+        /// K2EX Upgrade screen
+        /// </summary>
+        K2EXUpgrading = 12,
+
+        /// <summary>
         /// DEBUG
         /// </summary>
         Debug = 1000,

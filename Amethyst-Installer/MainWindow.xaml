@@ -60,7 +60,6 @@
                         <Button x:Name="viewLogsBtn" Style="{DynamicResource WinUIHyperlinkButton}" Content="{x:Static local:Localisation.Sidebar_ViewLogs}"  Margin="0,0,0,4" Click="viewLogsBtn_Click"/>
                         <StackPanel Orientation="Horizontal">
                             <Label x:Name="versionLabel" Content="{x:Static local:Util.InstallerVersionString}" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI Semibold" IsTabStop="False" />
-                            <Label Content="PREVIEW" Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe UI" IsTabStop="False" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>

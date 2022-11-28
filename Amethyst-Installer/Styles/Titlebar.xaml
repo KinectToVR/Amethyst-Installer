@@ -6,6 +6,7 @@
         <Setter Property="Foreground" Value="#FFFFFFFF"/>
         <Setter Property="Background" Value="#00FFFFFF"/>
         <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>

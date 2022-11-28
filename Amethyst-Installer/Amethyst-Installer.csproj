@@ -253,6 +253,9 @@
     <Compile Include="Pages\PageInstallOptions.xaml.cs">
       <DependentUpon>PageInstallOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PageK2EXUpgrade.xaml.cs">
+      <DependentUpon>PageK2EXUpgrade.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PageLogs.xaml.cs">
       <DependentUpon>PageLogs.xaml</DependentUpon>
     </Compile>
@@ -393,6 +396,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageInstallOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageK2EXUpgrade.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -616,6 +623,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Binaries\libzstd.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\k2ex-icon.png" />
+    <Resource Include="Resources\Image\k2ex-upgrade-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\amethyst-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

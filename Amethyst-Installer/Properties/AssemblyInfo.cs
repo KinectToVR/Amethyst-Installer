@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Amethyst Installer Preview")]
+[assembly: AssemblyTitle("Amethyst Installer")]
 [assembly: AssemblyDescription("The installer for Amethyst")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("K2VR Team")]
-[assembly: AssemblyProduct("Amethyst Installer Preview")]
+[assembly: AssemblyProduct("Amethyst Installer")]
 [assembly: AssemblyCopyright("Copyright © K2VR Team 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

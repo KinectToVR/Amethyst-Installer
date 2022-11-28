@@ -544,5 +544,25 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Installer_QuitVerify_Modal_Description");
             }
         }
+        public static string Installer_K2EXUpgrade_Title {
+            get {
+                return LocaleManager.GetString("Installer_K2EXUpgrade_Title");
+            }
+        }
+        public static string Installer_K2EXUpgrade_Description {
+            get {
+                return LocaleManager.GetString("Installer_K2EXUpgrade_Description");
+            }
+        }
+        public static string Installer_K2EXUpgrade_LearnMore {
+            get {
+                return LocaleManager.GetString("Installer_K2EXUpgrade_LearnMore");
+            }
+        }
+        public static string Installer_K2EXUpgrade_UpgradeButton {
+            get {
+                return LocaleManager.GetString("Installer_K2EXUpgrade_UpgradeButton");
+            }
+        }
     }
 }

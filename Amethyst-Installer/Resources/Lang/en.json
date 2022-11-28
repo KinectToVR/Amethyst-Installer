@@ -129,5 +129,10 @@
   "Updating_UpdatingAmethyst": "Amethyst is being updated…",
 
   "Installer_QuitVerify_Modal_Title": "If you exit now, Amethyst will not be installed.\nAre you sure you want to close the installer?",
-  "Installer_QuitVerify_Modal_Description": "Close Amethyst Installer?"
+  "Installer_QuitVerify_Modal_Description": "Close Amethyst Installer?",
+
+  "Installer_K2EXUpgrade_Title": "You're about to upgrade to Amethyst",
+  "Installer_K2EXUpgrade_Description": "Amethyst is a new app from K2VR Team. It replaces K2EX. It's faster, more stable and has a bunch of new features.",
+  "Installer_K2EXUpgrade_LearnMore": "Click here to learn more.",
+  "Installer_K2EXUpgrade_UpgradeButton": "Upgrade now"
 }
