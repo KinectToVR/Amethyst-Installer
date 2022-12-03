@@ -20,11 +20,11 @@ namespace amethyst_installer_gui.DirectX {
 
         public abstract void Render(SharpDX.Direct2D1.DeviceContext target);
 
-        private SharpDX.Direct3D11.Device device;
-        private Texture2D sharedTarget;
-        private Texture2D dx11Target;
-        private DX11ImageSource d3DSurface;
-        private DeviceContext d2DRenderTarget;
+        protected SharpDX.Direct3D11.Device device;
+        protected Texture2D sharedTarget;
+        protected Texture2D dx11Target;
+        protected DX11ImageSource d3DSurface;
+        protected DeviceContext d2DRenderTarget;
         private bool hardwareAcceleration = true;
 
         private readonly Stopwatch renderTimer = new Stopwatch();
@@ -259,7 +259,7 @@ namespace amethyst_installer_gui.DirectX {
 #if DEBUG
                         DebugLevel = DebugLevel.Information,
 #endif
-                        ThreadingMode = ThreadingMode.SingleThreaded
+                        ThreadingMode = ThreadingMode.SingleThreaded,
                     });
                 }
 

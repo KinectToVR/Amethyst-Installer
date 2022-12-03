@@ -15,6 +15,11 @@
 			<InputAssemblies Include="$(OutputPath)System.Memory.dll" />
 			<InputAssemblies Include="$(OutputPath)System.Runtime.CompilerServices.Unsafe.dll" />
 			<InputAssemblies Include="$(OutputPath)System.Buffers.dll" />
+			<InputAssemblies Include="$(OutputPath)SharpDX.dll" />
+			<InputAssemblies Include="$(OutputPath)SharpDX.DXGI.dll" />
+			<InputAssemblies Include="$(OutputPath)SharpDX.Direct3D11.dll" />
+			<InputAssemblies Include="$(OutputPath)SharpDX.Direct3D9.dll" />
+			<InputAssemblies Include="$(OutputPath)SharpDX.Direct2D1.dll" />
 			<InputAssemblies Include="$(OutputPath)ZstdNet.dll" />
 		</ItemGroup>
 

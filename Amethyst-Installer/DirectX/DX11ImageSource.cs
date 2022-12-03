@@ -7,7 +7,7 @@ using System.Windows.Interop;
 
 namespace amethyst_installer_gui.DirectX {
 
-    internal class DX11ImageSource : D3DImage, IDisposable {
+    public class DX11ImageSource : D3DImage, IDisposable {
 
         private Direct3DEx D3DContext;
         private DeviceEx   D3DDevice;

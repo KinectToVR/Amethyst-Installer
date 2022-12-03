@@ -1,12 +1,18 @@
 ﻿using amethyst_installer_gui.DirectX;
+using SharpDX;
 using SharpDX.Direct2D1;
+using SharpDX.DXGI;
 using SharpDX.Mathematics.Interop;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Media3D;
+using D2DContext = SharpDX.Direct2D1.DeviceContext;
 
 namespace amethyst_installer_gui.Controls {
     public class DX_Blobs : D2DControl {
@@ -26,8 +32,8 @@ namespace amethyst_installer_gui.Controls {
             resCache.Add("BlueBrush", t => new SolidColorBrush(t, new RawColor4(0.0f, 0.0f, 1.0f, 1.0f)));
         }
 
-        public override void Render(DeviceContext target) {
-            Application.Current.Shutdown();
+        public override void Render(D2DContext target) {
+
             target.Clear(new RawColor4(1.0f, 1.0f, 1.0f, 1.0f));
             Brush brush = null;
             switch ( rnd.Next(3) ) {
@@ -51,6 +57,8 @@ namespace amethyst_installer_gui.Controls {
             if ( y >= ActualHeight - h || y <= 0 ) {
                 dy = -dy;
             }
+
+            // target.DrawBitmap();
         }
     }
 }

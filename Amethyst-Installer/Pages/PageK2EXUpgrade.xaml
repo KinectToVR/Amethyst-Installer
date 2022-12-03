@@ -81,7 +81,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <controls:DX_Blobs />
+        <controls:DX_Blobs x:Name="dxHost" Grid.RowSpan="2" MaxHeight="400" MaxWidth="640"/>
 
         <Grid MaxWidth="500">
             <Grid.RowDefinitions>
