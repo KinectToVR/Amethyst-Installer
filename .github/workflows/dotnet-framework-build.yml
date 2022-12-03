@@ -22,7 +22,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       - name: Setup msbuild
         uses: microsoft/setup-msbuild@v1
@@ -49,14 +49,14 @@ jobs:
       
       - name: Get short SHA
         id: slug
-        run: "$slug = '::set-output name=slug::' + $env:GITHUB_SHA.SubString(0,7); echo $slug"
+        run: "$slug = 'slug=' + $env:GITHUB_SHA.SubString(0,7); echo $slug >> $GITHUB_STATE"
         
       - name: Rename distribution executable
-        run: mv bin/x64/Dist/Amethyst-Installer/Amethyst-Installer.exe bin/x64/Dist/Amethyst-Installer/Amethyst-Installer-${{ steps.slug.outputs.slug }}.exe
+        run: mv bin/x64/Dist/Amethyst-Installer/Amethyst-Installer.exe bin/x64/Dist/Amethyst-Installer/Amethyst-Installer-${{ env.slug }}.exe
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v2.2.0
         with:
-          name: Amethyst-Installer-${{ steps.slug.outputs.slug }}.exe
-          path: bin/x64/Dist/Amethyst-Installer/Amethyst-Installer-${{ steps.slug.outputs.slug }}.exe
+          name: Amethyst-Installer-${{ env.slug }}.exe
+          path: bin/x64/Dist/Amethyst-Installer/Amethyst-Installer-${{ env.slug }}.exe
           if-no-files-found: error
