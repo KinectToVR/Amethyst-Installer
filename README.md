@@ -25,3 +25,7 @@ If you would like to contribute to this project by translating strings for other
    ```
 
 6. File an issue or create a pull request to request us to add your translations to the installer. Alternatively, contact us on [the Discord server](https://discord.gg/YBQCRDG) in #development to get your translations merged.
+
+# Developers
+
+To use debug builds of Amethyst Installer you need to [enable Graphics Debugging in Windows](https://learn.microsoft.com/en-us/windows/uwp/gaming/use-the-directx-runtime-and-visual-studio-graphics-diagnostic-features).
