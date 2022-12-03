@@ -40,6 +40,9 @@ jobs:
 
       - name: Restore NuGet packages
         run: nuget.exe restore Amethyst-Installer.sln
+
+      - name: Initialize submodules
+        run: git submodule update --init --recursive
       
       - name: Build
         run: MSBuild.exe "/p:Configuration=Dist;Platform=x64"
