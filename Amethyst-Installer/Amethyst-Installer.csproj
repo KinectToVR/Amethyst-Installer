@@ -184,6 +184,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\AnimatedScrollViewer.cs" />
+    <Compile Include="Controls\DoomControl.cs" />
     <Compile Include="Controls\DX_Blobs.cs" />
     <Compile Include="Controls\FastTextContainer.xaml.cs">
       <DependentUpon>FastTextContainer.xaml</DependentUpon>
@@ -260,6 +261,9 @@
     </Compile>
     <Compile Include="Pages\PageDone.xaml.cs">
       <DependentUpon>PageDone.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageDoom.xaml.cs">
+      <DependentUpon>PageDoom.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageDownloading.xaml.cs">
       <DependentUpon>PageDownloading.xaml</DependentUpon>
@@ -398,6 +402,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDone.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageDoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -619,6 +627,10 @@
     <ProjectReference Include="..\AutoGenerateLoc\AutoGenerateLoc.csproj">
       <Project>{3f1750ac-522a-4983-b648-84606bbeb8bb}</Project>
       <Name>AutoGenerateLoc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\doom-wpf\doom-sharpdx\doom-sharpdx.csproj">
+      <Project>{0e99c3a7-edce-4c0b-b3dc-7beac6ae54b9}</Project>
+      <Name>doom-sharpdx</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

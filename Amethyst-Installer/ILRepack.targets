@@ -21,6 +21,7 @@
 			<InputAssemblies Include="$(OutputPath)SharpDX.Direct3D9.dll" />
 			<InputAssemblies Include="$(OutputPath)SharpDX.Direct2D1.dll" />
 			<InputAssemblies Include="$(OutputPath)ZstdNet.dll" />
+			<InputAssemblies Include="$(OutputPath)doom-sharpdx.dll" />
 		</ItemGroup>
 
 		<PropertyGroup>

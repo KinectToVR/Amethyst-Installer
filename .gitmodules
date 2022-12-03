@@ -1,0 +1,3 @@
+[submodule "Dependencies/doom-wpf"]
+	path = Dependencies/doom-wpf
+	url = https://github.com/hyblocker/managed-doom-wpf

@@ -70,6 +70,7 @@ namespace amethyst_installer_gui {
             Pages.Add(InstallerState.Updating, new PageUpdating());
             Pages.Add(InstallerState.K2EXUpgrading, new PageK2EXUpgrade());
             Pages.Add(InstallerState.Debug, new PageDebug());
+            Pages.Add(InstallerState.DooM, new PageDoom());
 
             // Set default page to welcome
             SetPage(App.InitialPage);

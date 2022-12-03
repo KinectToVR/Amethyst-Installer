@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="amethyst_installer_gui.Pages.PageDoom"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:global="clr-namespace:amethyst_installer_gui"
+             xmlns:local="clr-namespace:amethyst_installer_gui.Pages"
+             xmlns:controls="clr-namespace:amethyst_installer_gui.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="447" d:DesignWidth="822">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:DoomControl x:Name="doomHost" Grid.RowSpan="2" MaxHeight="400" MaxWidth="640"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="ActionButtonPrimary" Grid.Column="1" Content="{x:Static global:Localisation.Installer_Action_Back}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+            </Grid>
+
+            <TextBlock Grid.Column="0" Text="{x:Static global:Util.InstallerVersionString}" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Margin="8" VerticalAlignment="Bottom"/>
+        </Grid>
+    </Grid>
+</UserControl>

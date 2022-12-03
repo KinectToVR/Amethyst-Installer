@@ -75,5 +75,10 @@
         /// DEBUG
         /// </summary>
         Debug = 1000,
+
+        /// <summary>
+        /// Amethyst Installer can indeed run DOOM
+        /// </summary>
+        DooM = 666,
     }
 }
