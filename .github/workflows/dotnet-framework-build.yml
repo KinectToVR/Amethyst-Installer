@@ -31,12 +31,12 @@ jobs:
         run: cd $GITHUB_WORKSPACE
 
       - name: Cache NuGet packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: "~/.nuget/packages"
-          key: "nuget-${{ hashFiles('packages.config') }}"
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
-            nuget-
+            ${{ runner.os }}-nuget-
 
       - name: Restore NuGet packages
         run: nuget.exe restore Amethyst-Installer.sln
