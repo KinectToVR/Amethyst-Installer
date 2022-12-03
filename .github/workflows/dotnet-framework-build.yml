@@ -55,7 +55,7 @@ jobs:
         run: mv bin/x64/Dist/Amethyst-Installer/Amethyst-Installer.exe bin/x64/Dist/Amethyst-Installer/Amethyst-Installer-${{ env.slug }}.exe
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v2.2.0
+        uses: actions/upload-artifact@v3
         with:
           name: Amethyst-Installer-${{ env.slug }}.exe
           path: bin/x64/Dist/Amethyst-Installer/Amethyst-Installer-${{ env.slug }}.exe
