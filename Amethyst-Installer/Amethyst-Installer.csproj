@@ -699,4 +699,7 @@
   <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets')" />
   <ProjectExtensions />
   <Import Project="..\packages\ZstdNet.1.4.5\build\ZstdNet.targets" Condition="Exists('..\packages\ZstdNet.1.4.5\build\ZstdNet.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir)DirectX\Shaders\ &amp;&amp; $(ProjectDir)DirectX\Shaders\_CompileShaders.bat</PreBuildEvent>
+  </PropertyGroup>
 </Project>
