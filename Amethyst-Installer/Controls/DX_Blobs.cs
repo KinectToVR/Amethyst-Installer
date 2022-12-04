@@ -1,6 +1,7 @@
 ﻿using amethyst_installer_gui.DirectX;
 using SharpDX;
 using SharpDX.Direct2D1;
+using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using SharpDX.Mathematics.Interop;
 using System;
@@ -12,10 +13,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Media3D;
+using Buffer = SharpDX.Direct3D11.Buffer;
 using D2DContext = SharpDX.Direct2D1.DeviceContext;
 
 namespace amethyst_installer_gui.Controls {
-    public class DX_Blobs : D2DControl {
+    public class DX_Blobs : D2DControl, IDisposable {
+
+        private DX11ShaderPair m_shaders;
+        private Buffer m_vertexBuffer;
+        private Buffer m_indexBuffer;
 
         private float x = 0;
         private float y = 0;
@@ -32,9 +38,21 @@ namespace amethyst_installer_gui.Controls {
             resCache.Add("BlueBrush", t => new SolidColorBrush(t, new RawColor4(0.0f, 0.0f, 1.0f, 1.0f)));
         }
 
+        public override void TargetsCreated() {
+            // Called whenever we must create resources
+            // This includes initialization I think
+
+            // Setup buffers, strides, shaders, etc
+            if ( m_shaders == null)
+                m_shaders = new DX11ShaderPair(ref device, "Shaders.simple_vert.cso", "Shaders.simple_frag.cso");
+            m_shaders.Recreate(ref device);
+        }
+
         public override void Render(D2DContext target) {
 
-            target.Clear(new RawColor4(1.0f, 1.0f, 1.0f, 1.0f));
+            // Called every frame
+
+            target.Clear(new RawColor4(0.0f, 0.0f, 0.0f, 0.0f));
             Brush brush = null;
             switch ( rnd.Next(3) ) {
                 case 0:
@@ -58,7 +76,17 @@ namespace amethyst_installer_gui.Controls {
                 dy = -dy;
             }
 
+            // DX11Context.DrawIndexed(0, 0, 0);
+
+            // Instancing!
+            // DX11Context.DrawIndexedInstanced();
+
             // target.DrawBitmap();
+        }
+
+        public new void Dispose() {
+            m_shaders.Dispose();
+            base.Dispose();
         }
     }
 }

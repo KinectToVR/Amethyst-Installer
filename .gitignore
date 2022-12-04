@@ -357,3 +357,6 @@ MigrationBackup/
 
 # SonarQube Static Analysis
 .sonarqube/
+
+# Shader binaries
+*.cso

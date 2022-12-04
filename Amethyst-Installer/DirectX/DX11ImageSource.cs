@@ -7,12 +7,16 @@ using System.Windows.Interop;
 
 namespace amethyst_installer_gui.DirectX {
 
+    // @TODO: P/Invoke / COM marshal D3D9 classes so that we can remove the SharpDX.Direct3D9
+    //        dependency to both reduce binary size and reduce conflicts from intellisense
+    //        auto-using both DX9 and DX11 APIs
+
     public class DX11ImageSource : D3DImage, IDisposable {
 
         private Direct3DEx D3DContext;
         private DeviceEx   D3DDevice;
 
-        private Texture renderTarget;
+        private Texture    renderTarget;
 
         public DX11ImageSource() {
             StartD3D();
@@ -71,11 +75,11 @@ namespace amethyst_installer_gui.DirectX {
 
         private void StartD3D() {
 
-            var presentParams = GetPresentParameters();
-            var createFlags    = CreateFlags.HardwareVertexProcessing | CreateFlags.Multithreaded | CreateFlags.FpuPreserve;
+            var presentParams   = GetPresentParameters();
+            var createFlags     = CreateFlags.HardwareVertexProcessing | CreateFlags.Multithreaded | CreateFlags.FpuPreserve;
 
-            D3DContext = new Direct3DEx();
-            D3DDevice = new DeviceEx(D3DContext, 0, DeviceType.Hardware, IntPtr.Zero, createFlags, presentParams);
+            D3DContext          = new Direct3DEx();
+            D3DDevice           = new DeviceEx(D3DContext, 0, DeviceType.Hardware, IntPtr.Zero, createFlags, presentParams);
         }
 
         private void EndD3D() {
@@ -85,12 +89,12 @@ namespace amethyst_installer_gui.DirectX {
         }
 
         private static PresentParameters GetPresentParameters() {
-            var presentParams = new PresentParameters();
+            var presentParams                   = new PresentParameters();
 
-            presentParams.Windowed = true;
-            presentParams.SwapEffect = SwapEffect.Discard;
-            presentParams.DeviceWindowHandle = GetDesktopWindow();
-            presentParams.PresentationInterval = PresentInterval.Default;
+            presentParams.Windowed              = true;
+            presentParams.SwapEffect            = SwapEffect.Discard;
+            presentParams.DeviceWindowHandle    = GetDesktopWindow();
+            presentParams.PresentationInterval  = PresentInterval.Default;
 
             return presentParams;
         }

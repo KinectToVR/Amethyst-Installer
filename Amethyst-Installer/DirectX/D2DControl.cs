@@ -16,8 +16,11 @@ using System.Windows.Threading;
 using DeviceContext = SharpDX.Direct2D1.DeviceContext;
 
 namespace amethyst_installer_gui.DirectX {
-    public abstract class D2DControl : System.Windows.Controls.Image {
+    public abstract class D2DControl : System.Windows.Controls.Image, IDisposable {
 
+        /// <summary>
+        /// Called whenever we're supposed to render a frame
+        /// </summary>
         public abstract void Render(SharpDX.Direct2D1.DeviceContext target);
 
         protected SharpDX.Direct3D11.Device device;
@@ -25,19 +28,8 @@ namespace amethyst_installer_gui.DirectX {
         protected Texture2D dx11Target;
         protected DX11ImageSource d3DSurface;
         protected DeviceContext d2DRenderTarget;
-        private bool hardwareAcceleration = true;
-
-        private readonly Stopwatch renderTimer = new Stopwatch();
 
         protected ResourceCache resCache = new ResourceCache();
-
-        private long lastFrameTime = 0;
-        private int frameCount = 0;
-        private int frameCountHistTotal = 0;
-        private Queue<int> frameCountHist = new Queue<int>();
-
-        private D2DControlError m_error = D2DControlError.OK;
-        private TimeSpan m_timeout = new TimeSpan(0, 0, 0, 0, 33);
 
         public TimeSpan Timeout {
             get { return m_timeout; }
@@ -53,7 +45,6 @@ namespace amethyst_installer_gui.DirectX {
         }
 
         private static readonly DependencyPropertyKey FpsPropertyKey = DependencyProperty.RegisterReadOnly("Fps", typeof(int), typeof(D2DControl), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.None));
-
         public static readonly DependencyProperty FpsProperty = FpsPropertyKey.DependencyProperty;
 
         public int Fps {
@@ -68,11 +59,23 @@ namespace amethyst_installer_gui.DirectX {
         }
 
         public SharpDX.Direct3D11.Device DX11Device => device;
-        public DeviceContext D2DRenderTarget => d2DRenderTarget;
+        public SharpDX.Direct3D11.DeviceContext DX11Context => device.ImmediateContext;
+        public SharpDX.Direct2D1.DeviceContext D2DRenderTarget => d2DRenderTarget;
         public D2DControlError Error => m_error;
 
         private bool m_initialized = false;
         private bool m_isError = false;
+
+        private bool m_hardwareAcceleration = true;
+        private readonly Stopwatch m_renderTimer = new Stopwatch();
+
+        private long m_lastFrameTime = 0;
+        private int m_frameCount = 0;
+        private int m_frameCountHistTotal = 0;
+        private Queue<int> m_frameCountHist = new Queue<int>();
+
+        private D2DControlError m_error = D2DControlError.OK;
+        private TimeSpan m_timeout = new TimeSpan(0, 0, 0, 0, 33);
 
         public D2DControl() {
             base.Loaded += Control_Loaded;
@@ -80,6 +83,22 @@ namespace amethyst_installer_gui.DirectX {
 
             base.Stretch = System.Windows.Media.Stretch.Fill;
         }
+
+        protected void Shutdown() {
+            StopRendering();
+            EndD3D();
+        }
+
+        public void Dispose() {
+            Shutdown();
+            Destroy();
+            resCache.Clear();
+        }
+
+        /// <summary>
+        /// Called whenever we must re-create resources
+        /// </summary>
+        public virtual void TargetsCreated() { }
 
         private void Control_Loaded(object sender, RoutedEventArgs e) {
             InitializeInternal();
@@ -111,13 +130,8 @@ namespace amethyst_installer_gui.DirectX {
             Shutdown();
         }
 
-        protected void Shutdown() {
-            StopRendering();
-            EndD3D();
-        }
-
         private void OnRendering(object sender, EventArgs e) {
-            if ( !renderTimer.IsRunning ) {
+            if ( !m_renderTimer.IsRunning ) {
                 m_error = D2DControlError.ERR_RENDER_TIMER_NOT_RUNNING;
                 return;
             }
@@ -160,7 +174,7 @@ namespace amethyst_installer_gui.DirectX {
 
         private void OnIsFrontBufferAvailableChanged(object sender, DependencyPropertyChangedEventArgs e) {
 
-            if ( !hardwareAcceleration ) {
+            if ( !m_hardwareAcceleration ) {
                 return;
             }
 
@@ -199,6 +213,10 @@ namespace amethyst_installer_gui.DirectX {
         private void EndD3D() {
             d3DSurface.IsFrontBufferAvailableChanged -= OnIsFrontBufferAvailableChanged;
             base.Source = null;
+
+            // Hint to the graphics driver that the VRAM which is currently in use may be used by other apps
+            using ( var dxgiDevice = device.QueryInterface<SharpDX.DXGI.Device3>() )
+                dxgiDevice.Trim();
 
             Disposer.SafeDispose(ref d2DRenderTarget);
             Disposer.SafeDispose(ref d3DSurface);
@@ -274,25 +292,22 @@ namespace amethyst_installer_gui.DirectX {
             }
         }
 
-        protected virtual void TargetsCreated() {
-        }
-
         private void StartRendering() {
-            if ( renderTimer.IsRunning ) {
+            if ( m_renderTimer.IsRunning ) {
                 return;
             }
 
             System.Windows.Media.CompositionTarget.Rendering += OnRendering;
-            renderTimer.Start();
+            m_renderTimer.Start();
         }
 
         private void StopRendering() {
-            if ( !renderTimer.IsRunning ) {
+            if ( !m_renderTimer.IsRunning ) {
                 return;
             }
 
             System.Windows.Media.CompositionTarget.Rendering -= OnRendering;
-            renderTimer.Stop();
+            m_renderTimer.Stop();
         }
         private void Destroy() {
 
@@ -319,24 +334,24 @@ namespace amethyst_installer_gui.DirectX {
             Render(d2DRenderTarget);
             d2DRenderTarget.EndDraw();
 
-            CalcFps();
+            ComputeFramerate();
 
             device.ImmediateContext.Flush();
         }
 
-        private void CalcFps() {
-            frameCount++;
-            if ( renderTimer.ElapsedMilliseconds - lastFrameTime > 1000 ) {
-                frameCountHist.Enqueue(frameCount);
-                frameCountHistTotal += frameCount;
-                if ( frameCountHist.Count > 5 ) {
-                    frameCountHistTotal -= frameCountHist.Dequeue();
+        private void ComputeFramerate() {
+            m_frameCount++;
+            if ( m_renderTimer.ElapsedMilliseconds - m_lastFrameTime > 1000 ) {
+                m_frameCountHist.Enqueue(m_frameCount);
+                m_frameCountHistTotal += m_frameCount;
+                if ( m_frameCountHist.Count > 5 ) {
+                    m_frameCountHistTotal -= m_frameCountHist.Dequeue();
                 }
 
-                Fps = frameCountHistTotal / frameCountHist.Count;
+                Fps = m_frameCountHistTotal / m_frameCountHist.Count;
 
-                frameCount = 0;
-                lastFrameTime = renderTimer.ElapsedMilliseconds;
+                m_frameCount = 0;
+                m_lastFrameTime = m_renderTimer.ElapsedMilliseconds;
             }
         }
 
@@ -344,13 +359,13 @@ namespace amethyst_installer_gui.DirectX {
 
             // Check if the GPU can even do hardware acceleration (this should never trigger in 2022)
             if ( ( RenderCapability.Tier >> 16 ) == 0 ) {
-                hardwareAcceleration = false;
+                m_hardwareAcceleration = false;
                 return;
             }
 
             // Remote sessions can break hardware accelerate WPF rendering
             if (GetSystemMetrics(SM_REMOTESESSION) != 0) {
-                hardwareAcceleration = false;
+                m_hardwareAcceleration = false;
                 return;
             }
 
@@ -359,7 +374,7 @@ namespace amethyst_installer_gui.DirectX {
             if ( subKey != null ) {
                 if ( subKey.GetValue("DisableHWAcceleration") is int d ) {
                     if ( d == 1 ) {
-                        hardwareAcceleration = false;
+                        m_hardwareAcceleration = false;
                         return;
                     }
                 }
@@ -367,7 +382,7 @@ namespace amethyst_installer_gui.DirectX {
 
             // Additionally this is also checked after the registry key override
             if (RenderOptions.ProcessRenderMode == RenderMode.SoftwareOnly) {
-                hardwareAcceleration = false;
+                m_hardwareAcceleration = false;
                 return;
             }
 
@@ -375,11 +390,11 @@ namespace amethyst_installer_gui.DirectX {
             var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
 
             if ( hwndSource != null && hwndSource.CompositionTarget.RenderMode == RenderMode.SoftwareOnly ) {
-                hardwareAcceleration = false;
+                m_hardwareAcceleration = false;
                 return;
             }
 
-            hardwareAcceleration = true;
+            m_hardwareAcceleration = true;
         }
 
         // Remote desktop stuff
