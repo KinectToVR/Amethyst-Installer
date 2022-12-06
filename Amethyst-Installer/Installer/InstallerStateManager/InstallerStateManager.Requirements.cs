@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -25,9 +26,11 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool SteamVRInstalled = false;
 
-        // @TODO: Detect if using Shadow, prevent an install because Ame doesn't support networked environments
+        // Detect if using Shadow, prevent an install because Ame doesn't support networked environments
         public static bool IsCloudPC = false;
         public static bool IsWindowsAncient = false;
+        // Check if the C drive has enough storage to let the installer work
+        public static bool HasEnoughStorage = false;
 
         /// <summary>
         /// Whether K2EX was found on the system, so that we remove it
@@ -43,6 +46,7 @@ namespace amethyst_installer_gui.Installer {
 
             // @TODO: actually compute the requirements for installing amethyst
 
+            CheckStorage();
             CheckSteamVR();
             CheckAmethyst();
             CheckK2EX();
@@ -157,6 +161,31 @@ namespace amethyst_installer_gui.Installer {
             Logger.Warn($"BatteriesAreShortTerm: {PowerProvider.SystemPowerCapabilites.BatteriesAreShortTerm}");
         }
 
+        private static void CheckStorage() {
+
+            DriveInfo primaryDrive = null;
+
+            var drives = DriveInfo.GetDrives();
+            var systemDriveLetter = Path.GetPathRoot( Environment.GetFolderPath( Environment.SpecialFolder.Windows ));
+            foreach ( var drive in drives ) {
+                if (drive.IsReady && drive.RootDirectory.ToString() == systemDriveLetter ) {
+                    // Assume default disk
+                    primaryDrive = drive;
+                    break;
+                }
+            }
+            if ( primaryDrive == null ) {
+                primaryDrive = drives[0];
+            }
+
+            if ( primaryDrive != null && primaryDrive.IsReady ) {
+                // Demand 10GB of free space on the primary drive
+                HasEnoughStorage = primaryDrive.AvailableFreeSpace > 10000000000; // 10GB
+            } else {
+                // It'll get caught elsewhere anyway
+                HasEnoughStorage = true;
+            }
+        }
     }
 
     public enum UsbControllerQuality {

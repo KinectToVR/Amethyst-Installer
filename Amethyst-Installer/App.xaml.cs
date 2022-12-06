@@ -108,6 +108,9 @@ namespace amethyst_installer_gui {
                     // If using a phone
                     Util.ShowMessageBox(LocaleStrings.InstallProhibited_PhoneVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
                     Util.Quit(ExitCodes.IncompatibleSetup);
+                } else if (!InstallerStateManager.HasEnoughStorage) {
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_DiskFull, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.Quit(ExitCodes.IncompatibleSetup);
                 }
             }
         }
