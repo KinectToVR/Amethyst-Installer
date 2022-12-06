@@ -486,6 +486,16 @@ namespace amethyst_installer_gui {
             // Process.Start($"netsh advfirewall firewall add rule name=\"{title} OUT\" dir=out action=allow protocol={protocolString} localport={port}").WaitForExit(10000);
             return winProcNetIn.ExitCode == 0 && winProcNetOut.ExitCode == 0;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // https://stackoverflow.com/a/9294382
+        public static bool IsDiskFull(Exception ex) {
+            const int HR_ERROR_HANDLE_DISK_FULL = unchecked((int)0x80070027);
+            const int HR_ERROR_DISK_FULL = unchecked((int)0x80070070);
+
+            return ex.HResult == HR_ERROR_HANDLE_DISK_FULL
+                || ex.HResult == HR_ERROR_DISK_FULL;
+        }
     }
 
     public enum NetworkProtocol {

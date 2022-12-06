@@ -169,6 +169,16 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("InstallFailure_Modal_Description");
             }
         }
+        public static string InstallFailure_DiskFull_Description {
+            get {
+                return LocaleManager.GetString("InstallFailure_DiskFull_Description");
+            }
+        }
+        public static string InstallFailure_DiskFull_Title {
+            get {
+                return LocaleManager.GetString("InstallFailure_DiskFull_Title");
+            }
+        }
         public static string Installer_Action_Back {
             get {
                 return LocaleManager.GetString("Installer_Action_Back");

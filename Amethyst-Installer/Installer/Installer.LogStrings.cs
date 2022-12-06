@@ -47,6 +47,7 @@
         public const string ExtractingArchive                   = "Extracting archive {0}...";
         public const string ExtractingArchiveSuccess            = "Successfully extracted {0}!";
         public const string FailedExtractArchive                = "Failed to extract {0}";
+        public const string FailedExtractArchiveDiskFull        = "Failed to extract {0}! Your disk is full!";
 
         // dark-extract
         public const string ExtractingDark                      = "Extracting files from {0}...";

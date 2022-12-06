@@ -22,7 +22,12 @@ namespace amethyst_installer_gui.Installer.Modules {
                     if ( !Directory.Exists(tempDirectory) )
                         Directory.CreateDirectory(tempDirectory);
 
-                    InstallUtil.ExtractZipToDirectory(sourceZip, tempDirectory);
+                    if (!InstallUtil.ExtractZipToDirectory(sourceZip, tempDirectory)) {
+                        // Failed to extract ZIP! Abort!
+                        Logger.Fatal($"{string.Format(LogStrings.FailedExtractArchiveDiskFull, sourceFile)}!)");
+                        control.LogError($"{string.Format(LogStrings.FailedExtractArchiveDiskFull, sourceFile)}! {LogStrings.ViewLogs}");
+
+                    }
                     // ZipFile.ExtractToDirectory(sourceZip, tempDirectory);
 
                     Logger.Info(string.Format(LogStrings.ExtractingArchiveSuccess, sourceFile));

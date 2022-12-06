@@ -41,6 +41,8 @@
 
   "InstallFailure_Modal_Title": "An unexpected error occured!",
   "InstallFailure_Modal_Description": "An unexpected error occured while installing {0}. Please view the logs for more information. Join our Discord server for help. The installation cannot continue.", /* {0} gets replaced with the module that failed to install */
+  "InstallFailure_DiskFull_Description": "One of your disk drives is full. Please clear some storage, then re-run this installer. The installation cannot continue.",
+  "InstallFailure_DiskFull_Title": "Disk Full!",
 
   "Installer_Action_Back": "Back",
   "Installer_Action_CopyError": "Copy error",

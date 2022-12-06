@@ -18,7 +18,7 @@ namespace amethyst_installer_gui {
         /// <summary>
         /// Extracts a zip file to a specified directory. This is different from <see cref="System.IO.Compression.ZipFile.ExtractToDirectory(string, string)"/>
         /// </summary>
-        public static void ExtractZipToDirectory(string sourceArchive, string destinationDirectory) {
+        public static bool ExtractZipToDirectory(string sourceArchive, string destinationDirectory) {
             using ( var zip = ZipFile.OpenRead(sourceArchive) ) {
                 foreach ( var archiveEntry in zip.Entries ) {
 
@@ -30,23 +30,33 @@ namespace amethyst_installer_gui {
                             Directory.CreateDirectory(finalDir);
                         }
                     } else {
-                        // If the entry Name is not empty, it's a file
-                        string fullPath = Path.Combine(destinationDirectory, archiveEntry.FullName);
+                        try {
+                            // If the entry Name is not empty, it's a file
+                            string fullPath = Path.Combine(destinationDirectory, archiveEntry.FullName);
 
-                        // Ensure the directory exists, in case
-                        string dirName = Path.GetDirectoryName(fullPath);
-                        if ( !Directory.Exists(dirName) )
-                            Directory.CreateDirectory(dirName);
+                            // Ensure the directory exists, in case
+                            string dirName = Path.GetDirectoryName(fullPath);
+                            if ( !Directory.Exists(dirName) )
+                                Directory.CreateDirectory(dirName);
 
-                        archiveEntry.ExtractToFile(fullPath, true);
-                        
-                        // Unblock all executable files
-                        if ( Path.GetExtension(fullPath) == ".exe" ) {
-                            Shell.Unblock(fullPath);
+                            archiveEntry.ExtractToFile(fullPath, true);
+
+                            // Unblock all executable files
+                            if ( Path.GetExtension(fullPath) == ".exe" ) {
+                                Shell.Unblock(fullPath);
+                            }
+                        } catch ( Exception ex ) {
+                            if (Util.IsDiskFull(ex)) {
+                                Util.ShowMessageBox(Localisation.InstallFailure_DiskFull_Description, Localisation.InstallFailure_DiskFull_Title);
+                                return false;
+                            }
+                            throw ex;
                         }
                     }
                 }
             }
+
+            return true;
         }
 
 
