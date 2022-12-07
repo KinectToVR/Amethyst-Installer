@@ -220,6 +220,7 @@
     <Compile Include="DirectX\DX11ShaderPair.cs" />
     <Compile Include="DirectX\FrameTimeHelper.cs" />
     <Compile Include="DirectX\ResourceCache.cs" />
+    <Compile Include="DirectX\VertexData.cs" />
     <Compile Include="Installer\AnalyticsData.cs" />
     <Compile Include="Installer\DownloadManager.cs" />
     <Compile Include="Installer\Installer.Enums.cs" />

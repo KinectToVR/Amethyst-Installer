@@ -15,30 +15,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Media3D;
-using Buffer = SharpDX.Direct3D11.Buffer;
+using DX11Buffer = SharpDX.Direct3D11.Buffer;
 using D2DContext = SharpDX.Direct2D1.DeviceContext;
 
 namespace amethyst_installer_gui.Controls {
+
     public class DX_Blobs : D2DControl, IDisposable {
 
         private DX11ShaderPair m_shaders;
-        private Buffer m_vertexBuffer;
-        private Buffer m_indexBuffer;
+        private DX11Buffer m_vertexBuffer;
+        private DX11Buffer m_indexBuffer;
 
         private Random rnd = new Random();
 
         public DX_Blobs() {
-            
-        }
-
-        struct VertexData {
-            Vector3 position;
-            Vector4 color;
-
-            public VertexData(Vector3 position, Vector4 color) {
-                this.position = position;
-                this.color = color;
-            }
+            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
         public override void TargetsCreated() {
@@ -52,7 +43,7 @@ namespace amethyst_installer_gui.Controls {
             m_shaders.Recreate(ref device);
 
             // Construct a full screen quad in screenspace
-            m_vertexBuffer = Buffer.Create(device, BindFlags.VertexBuffer, new VertexData[]
+            m_vertexBuffer = DX11Buffer.Create(device, BindFlags.VertexBuffer, new VertexData[]
             {
                 // POSITION                                         COLOR
                 new VertexData(new Vector3(-1.0f,  1.0f, 0.5f),     new Vector4(1.0f, 0.0f, 0.0f, 1.0f)),
@@ -62,7 +53,7 @@ namespace amethyst_installer_gui.Controls {
                 new VertexData(new Vector3( 1.0f, -1.0f, 0.5f),     new Vector4(0.5f, 0.0f, 0.5f, 1.0f))
             });
             // 16-bit integers to occupy less memory
-            m_indexBuffer = Buffer.Create(device, BindFlags.IndexBuffer,  new ushort[] { 0, 1, 2, 3, 2, 1 });
+            m_indexBuffer = DX11Buffer.Create(device, BindFlags.IndexBuffer,  new ushort[] { 0, 1, 2, 3, 2, 1 });
             
             // Stride = 8 elements * 4 bytes (per float) = 32 bytes
             // Bind to the device context

@@ -1,3 +1,4 @@
+// Vertex input, must match vertex struct
 struct vinput
 {
     float3 pos : POSITION;
