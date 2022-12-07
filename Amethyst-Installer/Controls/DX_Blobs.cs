@@ -1,6 +1,7 @@
 ﻿using amethyst_installer_gui.DirectX;
 using SharpDX;
 using SharpDX.Direct2D1;
+using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using SharpDX.Mathematics.Interop;
@@ -8,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,13 +49,27 @@ namespace amethyst_installer_gui.Controls {
                 // Don't init the native stuff because we'll do it after exiting the this scope
                 m_shaders = new DX11ShaderPair(ref device, "Shaders.simple_vert.cso", "Shaders.simple_frag.cso", false);
             m_shaders.Recreate(ref device);
+            
+            // @TODO: Vertex buffer go brrr
+            m_vertexBuffer = Buffer.Create(device, BindFlags.VertexBuffer, new[]
+            {
+                // POSITION                                     COLOR
+                new Vector4(0.0f, 0.5f, 0.5f, 1.0f),    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4(0.5f, -0.5f, 0.5f, 1.0f),   new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+                new Vector4(-0.5f, -0.5f, 0.5f, 1.0f),  new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
+            });
+            
+            device.ImmediateContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(m_vertexBuffer, 32, 0));
+            m_shaders.Bind();
+            device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleStrip;
+            device.ImmediateContext.OutputMerger.SetTargets(renderView);
         }
 
         public override void Render(D2DContext target) {
 
             // Called every frame
 
-            target.Clear(new RawColor4(0.0f, 0.0f, 0.0f, 0.0f));
+            // target.Clear(new RawColor4(0.0f, 0.0f, 0.0f, 0.0f));
             Brush brush = null;
             switch ( rnd.Next(3) ) {
                 case 0:
@@ -66,8 +82,10 @@ namespace amethyst_installer_gui.Controls {
                     brush = resCache["BlueBrush"] as Brush;
                     break;
             }
-            target.DrawRectangle(new RawRectangleF(x, y, x + w, y + h), brush);
+            // target.DrawRectangle(new RawRectangleF(x, y, x + w, y + h), brush);
 
+            // resCache.RenderTarget.draw
+            
             x = x + dx;
             y = y + dy;
             if ( x >= ActualWidth - w || x <= 0 ) {
@@ -76,6 +94,12 @@ namespace amethyst_installer_gui.Controls {
             if ( y >= ActualHeight - h || y <= 0 ) {
                 dy = -dy;
             }
+
+            // This is really odd but supposedly this renders a full screen quad
+            if ( renderView != null ) {
+                device.ImmediateContext.ClearRenderTargetView(renderView, new RawColor4(1.0f, 0.2f, 0.3f, 0.0f));
+            }
+            device.ImmediateContext.Draw(3, 0);
 
             // DX11Context.DrawIndexed(0, 0, 0);
 
