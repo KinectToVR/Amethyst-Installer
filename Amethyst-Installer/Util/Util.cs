@@ -326,6 +326,7 @@ namespace amethyst_installer_gui {
 
             Task.Run(() => {
 
+                Application.Current.Dispatcher.InvokeShutdown();
                 // Wait a few 250ms first, otherwise the window will hang
                 Thread.Sleep(250);
 

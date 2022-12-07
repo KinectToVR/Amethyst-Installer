@@ -43,6 +43,11 @@ namespace amethyst_installer_gui.Controls
             }
         }
 
+        private void Dispatcher_ShutdownStarted(object sender, EventArgs e) {
+            Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+            Dispose();
+        }
+
         private void Draw(ref byte[] textureData) {
             lock ( texData ) {
                 lock ( textureData ) {

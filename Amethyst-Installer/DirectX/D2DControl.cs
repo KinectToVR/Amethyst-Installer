@@ -215,12 +215,16 @@ namespace amethyst_installer_gui.DirectX {
         }
 
         private void EndD3D() {
-            d3DSurface.IsFrontBufferAvailableChanged -= OnIsFrontBufferAvailableChanged;
+            if ( d3DSurface != null ) {
+                d3DSurface.IsFrontBufferAvailableChanged -= OnIsFrontBufferAvailableChanged;
+            }
             base.Source = null;
 
-            // Hint to the graphics driver that the VRAM which is currently in use may be used by other apps
-            using ( var dxgiDevice = device.QueryInterface<SharpDX.DXGI.Device3>() )
-                dxgiDevice.Trim();
+            if ( device != null ) {
+                // Hint to the graphics driver that the VRAM which is currently in use may be used by other apps
+                using ( var dxgiDevice = device.QueryInterface<SharpDX.DXGI.Device3>() )
+                    dxgiDevice.Trim();
+            }
 
             Disposer.SafeDispose(ref d2DRenderTarget);
             Disposer.SafeDispose(ref renderView);

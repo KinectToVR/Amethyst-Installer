@@ -84,10 +84,15 @@ namespace amethyst_installer_gui.Controls {
         }
 
         public new void Dispose() {
-            m_vertexBuffer.Dispose();
-            m_indexBuffer.Dispose();
-            m_shaders.Dispose();
+            m_vertexBuffer?.Dispose();
+            m_indexBuffer?.Dispose();
+            m_shaders?.Dispose();
             base.Dispose();
+        }
+
+        private void Dispatcher_ShutdownStarted(object sender, EventArgs e) {
+            Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+            Dispose();
         }
     }
 }
