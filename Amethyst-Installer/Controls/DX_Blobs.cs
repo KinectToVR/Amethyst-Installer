@@ -25,19 +25,10 @@ namespace amethyst_installer_gui.Controls {
         private Buffer m_vertexBuffer;
         private Buffer m_indexBuffer;
 
-        private float x = 0;
-        private float y = 0;
-        private float w = 10;
-        private float h = 10;
-        private float dx = 1;
-        private float dy = 1;
-
         private Random rnd = new Random();
 
         public DX_Blobs() {
-            resCache.Add("RedBrush", t => new SolidColorBrush(t, new RawColor4(1.0f, 0.0f, 0.0f, 1.0f)));
-            resCache.Add("GreenBrush", t => new SolidColorBrush(t, new RawColor4(0.0f, 1.0f, 0.0f, 1.0f)));
-            resCache.Add("BlueBrush", t => new SolidColorBrush(t, new RawColor4(0.0f, 0.0f, 1.0f, 1.0f)));
+            
         }
 
         public override void TargetsCreated() {
@@ -56,6 +47,10 @@ namespace amethyst_installer_gui.Controls {
                 // POSITION                                     COLOR
                 new Vector4(0.0f, 0.5f, 0.5f, 1.0f),    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
                 new Vector4(0.5f, -0.5f, 0.5f, 1.0f),   new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+                new Vector4(-0.5f, -0.5f, 0.5f, 1.0f),  new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+                
+                new Vector4(0.0f, 0.5f, 0.5f, 1.0f),    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4(0.5f, -0.5f, 0.5f, 1.0f),   new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
                 new Vector4(-0.5f, -0.5f, 0.5f, 1.0f),  new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
             });
             
@@ -69,37 +64,11 @@ namespace amethyst_installer_gui.Controls {
 
             // Called every frame
 
-            // target.Clear(new RawColor4(0.0f, 0.0f, 0.0f, 0.0f));
-            Brush brush = null;
-            switch ( rnd.Next(3) ) {
-                case 0:
-                    brush = resCache["RedBrush"] as Brush;
-                    break;
-                case 1:
-                    brush = resCache["GreenBrush"] as Brush;
-                    break;
-                case 2:
-                    brush = resCache["BlueBrush"] as Brush;
-                    break;
-            }
-            // target.DrawRectangle(new RawRectangleF(x, y, x + w, y + h), brush);
-
-            // resCache.RenderTarget.draw
-            
-            x = x + dx;
-            y = y + dy;
-            if ( x >= ActualWidth - w || x <= 0 ) {
-                dx = -dx;
-            }
-            if ( y >= ActualHeight - h || y <= 0 ) {
-                dy = -dy;
-            }
-
             // This is really odd but supposedly this renders a full screen quad
             if ( renderView != null ) {
                 device.ImmediateContext.ClearRenderTargetView(renderView, new RawColor4(1.0f, 0.2f, 0.3f, 0.0f));
             }
-            device.ImmediateContext.Draw(3, 0);
+            device.ImmediateContext.Draw(6, 0);
 
             // DX11Context.DrawIndexed(0, 0, 0);
 
