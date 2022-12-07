@@ -74,7 +74,9 @@ namespace amethyst_installer_gui {
                 // We WILL encounter issues during an install / uninstall.
                 // This is due to how Windows loads binaries (namely openvr_api.dll)
                 // As a terrible horrible solution: bootstrap into a copy of the installer elsewhere
+                // ReSharper disable PossibleNullReferenceException
                 string processPath = Process.GetCurrentProcess().MainModule.FileName;
+                // ReSharper restore PossibleNullReferenceException
                 string newPath = Path.Combine(Constants.AmethystTempDirectory, "Amethyst-Installer.exe");
                 File.Copy(processPath, newPath, true);
                 var taskkillProc = Process.Start(new ProcessStartInfo() {
@@ -94,22 +96,22 @@ namespace amethyst_installer_gui {
                 SystemSounds.Exclamation.Play();
                 if ( InstallerStateManager.IsCloudPC ) {
                     // If Cloud PC
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_CloudPC, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_CloudPC, LocaleStrings.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 } else if ( InstallerStateManager.IsWindowsAncient ) {
                     // If Windows version is not supported
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_WindowsAncient, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_WindowsAncient, LocaleStrings.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 } else if ( !InstallerStateManager.SteamVRInstalled ) {
                     // If no SteamVR
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_NoSteamVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_NoSteamVR, LocaleStrings.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 } else if ( OpenVRUtil.HmdType == VRHmdType.Phone ) {
                     // If using a phone
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_PhoneVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_PhoneVR, LocaleStrings.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 } else if (!InstallerStateManager.HasEnoughStorage) {
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_DiskFull, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_DiskFull, LocaleStrings.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 }
             }
