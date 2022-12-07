@@ -1,43 +1,21 @@
 ﻿using amethyst_installer_gui.DirectX;
 using ManagedDoom.SFML;
-using SharpDX;
 using SharpDX.Direct2D1;
-using SharpDX.DXGI;
 using SharpDX.Mathematics.Interop;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media.Media3D;
 using D2DContext = SharpDX.Direct2D1.DeviceContext;
 
-namespace amethyst_installer_gui.Controls {
+namespace amethyst_installer_gui.Controls
+{
     public class DoomControl : D2DControl {
-
-        private float x = 0;
-        private float y = 0;
-        private float w = 10;
-        private float h = 10;
-        private float dx = 1;
-        private float dy = 1;
-
-        private Random rnd = new Random();
 
         public SfmlDoom doomGame;
         bool hasDrawEvent = false;
         byte[] texData = { };
 
         public DoomControl() {
-            resCache.Add("RedBrush", t => new SolidColorBrush(t, new RawColor4(1.0f, 0.0f, 0.0f, 1.0f)));
-            resCache.Add("GreenBrush", t => new SolidColorBrush(t, new RawColor4(0.0f, 1.0f, 0.0f, 1.0f)));
-            resCache.Add("BlueBrush", t => new SolidColorBrush(t, new RawColor4(0.0f, 0.0f, 1.0f, 1.0f)));
+            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
-        private SharpDX.Direct2D1.Factory Factory2D;
-        private RenderTarget RenderTarget2D;
         BitmapRenderTarget bmp;
 
         public override void Render(D2DContext target) {
@@ -52,30 +30,6 @@ namespace amethyst_installer_gui.Controls {
             }
 
             doomGame.OnFrame();
-
-            // target.Clear(new RawColor4(1.0f, 1.0f, 1.0f, 1.0f));
-            Brush brush = null;
-            switch ( rnd.Next(3) ) {
-                case 0:
-                    brush = resCache["RedBrush"] as Brush;
-                    break;
-                case 1:
-                    brush = resCache["GreenBrush"] as Brush;
-                    break;
-                case 2:
-                    brush = resCache["BlueBrush"] as Brush;
-                    break;
-            }
-            // target.DrawRectangle(new RawRectangleF(x, y, x + w, y + h), brush);
-
-            x = x + dx;
-            y = y + dy;
-            if ( x >= ActualWidth - w || x <= 0 ) {
-                dx = -dx;
-            }
-            if ( y >= ActualHeight - h || y <= 0 ) {
-                dy = -dy;
-            }
 
             if ( texData != null && texData.Length > 0 ) {
                 lock ( texData ) {
