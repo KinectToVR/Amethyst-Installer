@@ -1,4 +1,5 @@
-﻿using amethyst_installer_gui.Installer;
+﻿using amethyst_installer_gui.Controls;
+using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,7 +27,13 @@ namespace amethyst_installer_gui.Pages {
         }
 
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
-            // @TODO: Stuff
+            Util.HandleKeyboardFocus(e);
+
+            if ( MainWindow.HandleSpeedrun() ) {
+                // Advance to next page
+                SoundPlayer.PlaySound(SoundEffect.MoveNext);
+                MainWindow.Instance.SetPage(InstallerState.Welcome);
+            }
         }
 
         private void UpdateHandler() {
