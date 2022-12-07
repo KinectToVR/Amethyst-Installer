@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -24,6 +26,15 @@ namespace amethyst_installer_gui.PInvoke {
         private const uint INVALID_SESSION_ID = 0xFFFFFFFF;
 
         private static string s_userProfileDirectory = string.Empty;
+
+        private static readonly string[] INVALID_PROFILE_DIRECTORIES = {
+            @"c:\windows\serviceprofiles\ovrlibraryservice", // Wtf oculus has a user profile???
+            @"c:\users\defaultapppool",
+            @"c:\windows\system32\config\systemprofile",
+            @"c:\windows\serviceprofiles\networkservice",
+            @"c:\windows\serviceprofiles\localservice",
+
+        };
 
         private enum WtsInfoClass {
             WTSUserName = 5,
@@ -79,12 +90,20 @@ namespace amethyst_installer_gui.PInvoke {
                     StringBuilder sBuilder = new StringBuilder(size);
                     GetUserProfileDirectory(user, sBuilder, ref size);
                     s_userProfileDirectory = sBuilder.ToString();
-                    if ( s_userProfileDirectory.ToLowerInvariant() == @"c:\\windows\\system32\\config\\systemprofile" ) {
-                        s_userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                    if ( INVALID_PROFILE_DIRECTORIES.Contains(s_userProfileDirectory.ToLowerInvariant().TrimEnd('\\', '/'))) {
+                        Logger.Info("USERNAME:" + GetCurrentlyLoggedInUsername());
+                        Logger.Info("USER PROFILE (API): " + s_userProfileDirectory);
+                        Logger.Info("USER PROFILE (ENV): " + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+                        // @TODO: See whether this is a good approach to fixing the running as SYSTEM bug
+                        // This is a bandaid fix I have no clue whether this is going to work or not
+                        // Fixing bugs which are unreliable to reproduce is painful
+                        s_userProfileDirectory = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", GetCurrentlyLoggedInUsername())); ;
+                        // s_userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                     }
                 } catch ( InvalidOperationException e ) {
-                    Logger.Warn(Util.FormatException(e));
-                    s_userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                    Logger.Warn($"Failed to get determine user directory!\n{Util.FormatException(e)}");
+                    s_userProfileDirectory = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", GetCurrentlyLoggedInUsername()));
+                    // s_userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 }
             }
             return s_userProfileDirectory;
