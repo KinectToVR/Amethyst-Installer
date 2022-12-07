@@ -77,6 +77,9 @@ namespace amethyst_installer_gui.DirectX {
         private D2DControlError m_error = D2DControlError.OK;
         private TimeSpan m_timeout = new TimeSpan(0, 0, 0, 0, 33);
 
+        private const int MIN_WIDTH = 128;
+        private const int MIN_HEIGHT = 128;
+
         public D2DControl() {
             base.Loaded += Control_Loaded;
             base.Unloaded += Control_Closing;
@@ -238,8 +241,8 @@ namespace amethyst_installer_gui.DirectX {
                 Disposer.SafeDispose(ref sharedTarget);
                 Disposer.SafeDispose(ref dx11Target);
 
-                var width  = Math.Max((int)ActualWidth , 100);
-                var height = Math.Max((int)ActualHeight, 100);
+                int width  = Math.Max((int)ActualWidth , MIN_WIDTH);
+                int height = Math.Max((int)ActualHeight, MIN_HEIGHT);
 
                 var frontDesc = new Texture2DDescription {
                     BindFlags = BindFlags.RenderTarget | BindFlags.ShaderResource,
