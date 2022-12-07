@@ -1,6 +1,6 @@
 struct vinput
 {
-    float4 pos : POSITION;
+    float3 pos : POSITION;
     float4 color : COLOR0;
 };
 
@@ -15,7 +15,7 @@ v2f vert(vinput input)
     v2f output = (v2f)0;
     
     // Transform the vertex position into projected space.
-    output.pos = input.pos;
+    output.pos = float4(input.pos, 1.f);
 
     // Pass through the color without modification.
     output.color = input.color;
