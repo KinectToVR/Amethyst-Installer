@@ -28,6 +28,7 @@ namespace amethyst_installer_gui.DirectX {
         protected Texture2D dx11Target;
         protected DX11ImageSource d3DSurface;
         protected DeviceContext d2DRenderTarget;
+        protected RenderTargetView renderView;
 
         protected ResourceCache resCache = new ResourceCache();
 
@@ -222,6 +223,7 @@ namespace amethyst_installer_gui.DirectX {
                 dxgiDevice.Trim();
 
             Disposer.SafeDispose(ref d2DRenderTarget);
+            Disposer.SafeDispose(ref renderView);
             Disposer.SafeDispose(ref d3DSurface);
             Disposer.SafeDispose(ref sharedTarget);
             Disposer.SafeDispose(ref dx11Target);
@@ -238,6 +240,7 @@ namespace amethyst_installer_gui.DirectX {
                 d3DSurface.SetRenderTarget(null);
 
                 Disposer.SafeDispose(ref d2DRenderTarget);
+                Disposer.SafeDispose(ref renderView);
                 Disposer.SafeDispose(ref sharedTarget);
                 Disposer.SafeDispose(ref dx11Target);
 
@@ -272,6 +275,7 @@ namespace amethyst_installer_gui.DirectX {
 
                 sharedTarget = new Texture2D(device, frontDesc);
                 dx11Target = new Texture2D(device, backDesc);
+                renderView = new RenderTargetView(device, dx11Target);
 
                 using ( var surface = dx11Target.QueryInterface<Surface>() ) {
 
