@@ -35,12 +35,13 @@ namespace amethyst_installer_gui.DirectX
         private VertexShader m_vertexShaderProgram;
         private InputLayout m_inputLayout;
 
-        public DX11ShaderPair(ref Device device, string vertexProgramPath, string pixelProgramPath) {
+        public DX11ShaderPair(ref Device device, string vertexProgramPath, string pixelProgramPath, bool init = true) {
             m_device = device;
             m_vertexShaderPath = vertexProgramPath;
             m_pixelShaderPath = pixelProgramPath;
 
-            Recreate(ref device);
+            if ( init )
+                Recreate(ref device);
         }
 
         public void Bind() {

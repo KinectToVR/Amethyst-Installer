@@ -44,7 +44,8 @@ namespace amethyst_installer_gui.Controls {
 
             // Setup buffers, strides, shaders, etc
             if ( m_shaders == null)
-                m_shaders = new DX11ShaderPair(ref device, "Shaders.simple_vert.cso", "Shaders.simple_frag.cso");
+                // Don't init the native stuff because we'll do it after exiting the this scope
+                m_shaders = new DX11ShaderPair(ref device, "Shaders.simple_vert.cso", "Shaders.simple_frag.cso", false);
             m_shaders.Recreate(ref device);
         }
 
