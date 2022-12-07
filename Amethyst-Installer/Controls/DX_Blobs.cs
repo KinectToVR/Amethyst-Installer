@@ -45,16 +45,17 @@ namespace amethyst_installer_gui.Controls {
             m_vertexBuffer = Buffer.Create(device, BindFlags.VertexBuffer, new[]
             {
                 // POSITION                                     COLOR
-                new Vector4(0.0f, 0.5f, 0.5f, 1.0f),    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4(0.5f, -0.5f, 0.5f, 1.0f),   new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+                new Vector4(-1.0f, 1.0f, 0.5f, 1.0f),    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4(1.0f, 1.0f, 0.5f, 1.0f),   new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
                 new Vector4(-0.5f, -0.5f, 0.5f, 1.0f),  new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
                 
-                new Vector4(0.0f, 0.5f, 0.5f, 1.0f),    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4(0.5f, -0.5f, 0.5f, 1.0f),   new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-                new Vector4(-0.5f, -0.5f, 0.5f, 1.0f),  new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
+                new Vector4(1.0f, -0.5f, 0.5f, 1.0f),    new Vector4(1.0f, 0.0f, 0.0f, 1.0f)
             });
+            m_indexBuffer = Buffer.Create(device, BindFlags.IndexBuffer,  new ushort[] { 0, 1, 2, 3, 2, 1 });
             
+            // Stride = 8 elements * 4 bytes (per float) = 32 bytes
             device.ImmediateContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(m_vertexBuffer, 32, 0));
+            device.ImmediateContext.InputAssembler.SetIndexBuffer(m_indexBuffer, Format.R16_UInt, 0);
             m_shaders.Bind();
             device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleStrip;
             device.ImmediateContext.OutputMerger.SetTargets(renderView);
@@ -68,7 +69,8 @@ namespace amethyst_installer_gui.Controls {
             if ( renderView != null ) {
                 device.ImmediateContext.ClearRenderTargetView(renderView, new RawColor4(1.0f, 0.2f, 0.3f, 0.0f));
             }
-            device.ImmediateContext.Draw(6, 0);
+            // device.ImmediateContext.Draw(3, 0);
+            device.ImmediateContext.DrawIndexed(6, 0, 0);
 
             // DX11Context.DrawIndexed(0, 0, 0);
 
