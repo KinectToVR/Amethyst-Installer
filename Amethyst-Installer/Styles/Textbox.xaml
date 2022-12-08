@@ -116,7 +116,7 @@
                             <Setter Property="Opacity" TargetName="border" Value="0.56"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{x:Static local:WindowsColorHelpers.AccentLight}" />
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource BrushAccent}" />
                             <Setter Property="Background" TargetName="border" Value="#FF1F1F1F" />
                             <Setter Property="Foreground" Value="#FFFFFFFF" />
                         </Trigger>

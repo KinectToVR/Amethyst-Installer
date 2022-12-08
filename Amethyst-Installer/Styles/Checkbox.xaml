@@ -17,7 +17,7 @@
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <BulletDecorator>
                         <BulletDecorator.Bullet>
-                            <Border Name="checkboxBorder" Padding="3" CornerRadius="4" BorderBrush="#8BFFFFFF" BorderThickness="1" Background="{x:Static local:WindowsColorHelpers.AccentLight}">
+                            <Border Name="checkboxBorder" Padding="3" CornerRadius="4" BorderBrush="#8BFFFFFF" BorderThickness="1" Background="{StaticResource BrushAccent}">
                                 <Grid>
                                     <TextBlock Name="checkboxIcon" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Foreground="#FF000000">&#xE73E;</TextBlock>
                                 </Grid>
@@ -32,8 +32,8 @@
                             <Setter TargetName="checkboxIcon" Property="Visibility" Value="Hidden" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="checkboxBorder" Property="Background" Value="{x:Static local:WindowsColorHelpers.AccentLight}" />
-                            <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="{x:Static local:WindowsColorHelpers.AccentLight}" />
+                            <Setter TargetName="checkboxBorder" Property="Background" Value="{StaticResource BrushAccent}" />
+                            <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="{StaticResource BrushAccent}" />
                             <Setter TargetName="checkboxIcon" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">

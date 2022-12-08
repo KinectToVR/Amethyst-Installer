@@ -32,6 +32,7 @@
 
 		<ILRepack
 			Parallel="true"
+			Internalize="true"
 			DebugInfo="$(CreateDebugInfo)"
 			AllowDuplicateResources="false"
 			InputAssemblies="@(InputAssemblies)"

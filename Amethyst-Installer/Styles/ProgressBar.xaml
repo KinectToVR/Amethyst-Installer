@@ -5,7 +5,7 @@
     <Style x:Key="WinUIProgressBar" TargetType="{x:Type ProgressBar}">
         <Setter Property="Background" Value="#FF808080" />
         <Setter Property="BorderBrush" Value="#FF808080" />
-        <Setter Property="Foreground" Value="{x:Static local:WindowsColorHelpers.AccentLight}" />
+        <Setter Property="Foreground" Value="{StaticResource BrushAccent}" />
         <Setter Property="Height" Value="8" />
 
         <Setter Property="Template">

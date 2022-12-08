@@ -31,7 +31,7 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="downloadedSizeText" FontFamily="Segoe UI Semibold" TextAlignment="Left" Grid.Column="0" Foreground="{x:Static root:WindowsColorHelpers.AccentLight}" />
+                                    <TextBlock x:Name="downloadedSizeText" FontFamily="Segoe UI Semibold" TextAlignment="Left" Grid.Column="0" Foreground="{StaticResource BrushAccent}" />
                                     <TextBlock x:Name="totalSizeText" FontFamily="Segoe UI Semibold" TextAlignment="Left" Grid.Column="1" />
                                     <Border BorderThickness="0" Background="Transparent" Grid.Column="2" />
                                     <TextBlock x:Name="percentageText" FontFamily="Segoe UI Semibold" TextAlignment="Left" Grid.Column="3" />
@@ -61,7 +61,7 @@
                         <Trigger Property="IsPending" Value="True">
                             <Setter TargetName="contentRoot" Property="Opacity" Value="0.5" />
                             <Setter TargetName="downloadedSizeText" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="totalSizeText" Property="Foreground" Value="{x:Static root:WindowsColorHelpers.AccentLight}" />
+                            <Setter TargetName="totalSizeText" Property="Foreground" Value="{StaticResource BrushAccent}" />
                             <Setter TargetName="controlContainer" Property="Border.Effect">
                                 <Setter.Value>
                                     <DropShadowEffect Color="Black" Direction="270" ShadowDepth="4" BlurRadius="4" Opacity="0.09" />

@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:amethyst_installer_gui">
 
     <SolidColorBrush x:Key="BrushBackgroundWindow" Color="#82282828" />
     
@@ -9,5 +10,7 @@
     <SolidColorBrush x:Key="BrushForegroundAlt" Color="#4CFFFFFF" />
 
     <SolidColorBrush x:Key="BrushLineSeparator" Color="#4CFFFFFF" />
+
+    <SolidColorBrush x:Key="BrushAccent" Color="{x:Static local:WindowsColorHelpers.ColorAccentLight}" />
 
 </ResourceDictionary>

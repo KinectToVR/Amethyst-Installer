@@ -37,7 +37,7 @@
                         <controls:ItemTask x:Name="vrSystem" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_VrSystem}" Margin="0,0,0,16" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                                 <TextBlock x:Name="vrSystemDescription" FontFamily="Segoe UI Semibold" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA weeeeeeeeeee</TextBlock>
-                                <TextBlock x:Name="vrSystemFootnote" Foreground="#4CFFFFFF" TextWrapping="WrapWithOverflow" Visibility="Collapsed">AAAA <Hyperlink Foreground="{x:Static global:WindowsColorHelpers.AccentLight}">bbbbbbbbbbbbbbbbb</Hyperlink> weeeeeeeeeee</TextBlock>
+                                <TextBlock x:Name="vrSystemFootnote" Foreground="#4CFFFFFF" TextWrapping="WrapWithOverflow" Visibility="Collapsed">AAAA <Hyperlink Foreground="{StaticResource BrushAccent}">bbbbbbbbbbbbbbbbb</Hyperlink> weeeeeeeeeee</TextBlock>
                             </StackPanel>
                         </controls:ItemTask>
                         <controls:ItemTask x:Name="compatDevices" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_Compatibility}" Margin="0,0,0,16" Focusable="False">

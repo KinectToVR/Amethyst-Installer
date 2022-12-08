@@ -17,11 +17,17 @@ namespace amethyst_installer_gui {
         private static readonly Color s_defaultColor = Color.FromRgb(24, 131, 215);
 
         public static Brush BorderAccent { get { return SystemParameters.WindowGlassBrush; } }
-        public static Brush Accent { get { return new SolidColorBrush(GetAccentColor()); } }
-        public static Brush AccentLight { get { return new SolidColorBrush(Lighten(GetAccentColor(), 0.1f)); } }
-        public static Brush AccentText { get { return new SolidColorBrush(GetContrastingColor(GetAccentColor())); } }
-        public static Brush AccentHighlightBackground { get { return new SolidColorBrush(GetAccentColor()); } }
-        public static Brush AccentHighlightForeground { get { return new SolidColorBrush(GetContrastingColor(GetAccentColor())); } }
+        public static Brush Accent { get { return new SolidColorBrush(ColorAccent); } }
+        public static Brush AccentLight { get { return new SolidColorBrush(ColorAccentLight); } }
+        public static Brush AccentText { get { return new SolidColorBrush(ColorAccentText); } }
+        public static Brush AccentHighlightBackground { get { return new SolidColorBrush(ColorAccentHighlightBackground); } }
+        public static Brush AccentHighlightForeground { get { return new SolidColorBrush(ColorAccentHighlightForeground); } }
+
+        public static Color ColorAccent { get { return GetAccentColor(); } }
+        public static Color ColorAccentLight { get { return Lighten(GetAccentColor(), 0.1f); } }
+        public static Color ColorAccentText { get { return GetContrastingColor(GetAccentColor()); } }
+        public static Color ColorAccentHighlightBackground { get { return GetAccentColor(); } }
+        public static Color ColorAccentHighlightForeground { get { return GetContrastingColor(GetAccentColor()); } }
 
         // Extended from
         // https://stackoverflow.com/a/50848113
