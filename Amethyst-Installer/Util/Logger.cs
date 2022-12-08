@@ -1,5 +1,6 @@
 using amethyst_installer_gui.Pages;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -19,6 +20,8 @@ namespace amethyst_installer_gui {
         private static extern int GetCurrentWin32ThreadId();
 
         public static string LogFilePath;
+
+        private static List<(ConsoleColor, string)> s_logLines = new List<(ConsoleColor, string)>();
 
         #region Log Functions
 
@@ -98,8 +101,18 @@ namespace amethyst_installer_gui {
         private static void LogInternal(string message) {
             Console.ResetColor();
             Console.WriteLine(message);
-            if ( LogFilePath == null )
-                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
+            if ( LogFilePath == null ) {
+                s_logLines.Add((ConsoleColor.White, message));
+                return;
+            }
+            if ( s_logLines.Count > 0 ) {
+                for ( int i = 0; i < s_logLines.Count; i++)
+                {
+                    File.AppendAllLines(LogFilePath, new[] { s_logLines[i].Item2 });
+                    PageLogs.LogLine(s_logLines[i].Item2, s_logLines[i].Item1);
+                }
+                s_logLines.Clear();
+            }
             File.AppendAllLines(LogFilePath, new[] { message });
 
             PageLogs.LogLine(message, ConsoleColor.White);
@@ -108,8 +121,18 @@ namespace amethyst_installer_gui {
         private static void LogInternal(string message, ConsoleColor color) {
             Console.ForegroundColor = color;
             Console.WriteLine(message);
-            if ( LogFilePath == null )
-                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
+            if ( LogFilePath == null ) {
+                s_logLines.Add((color, message));
+                return;
+            }
+            if ( s_logLines.Count > 0 ) {
+                for ( int i = 0; i < s_logLines.Count; i++)
+                {
+                    File.AppendAllLines(LogFilePath, new[] { s_logLines[i].Item2 });
+                    PageLogs.LogLine(s_logLines[i].Item2, s_logLines[i].Item1);
+                }
+                s_logLines.Clear();
+            }
             File.AppendAllLines(LogFilePath, new[] { message });
 
             PageLogs.LogLine(message, color);
@@ -118,8 +141,18 @@ namespace amethyst_installer_gui {
         private static void LogInternalUniqueMessage(string message, string messageUI, ConsoleColor color) {
             Console.ForegroundColor = color;
             Console.WriteLine(message);
-            if ( LogFilePath == null )
-                throw new InvalidOperationException("Tried logging something without calling Logger.Init()! Aborting...");
+            if ( LogFilePath == null ) {
+                s_logLines.Add((color, message));
+                return;
+            }
+            if ( s_logLines.Count > 0 ) {
+                for ( int i = 0; i < s_logLines.Count; i++)
+                {
+                    File.AppendAllLines(LogFilePath, new[] { s_logLines[i].Item2 });
+                    PageLogs.LogLine(s_logLines[i].Item2, s_logLines[i].Item1);
+                }
+                s_logLines.Clear();
+            }
             File.AppendAllLines(LogFilePath, new[] { message });
 
             PageLogs.LogLine(messageUI, color);
