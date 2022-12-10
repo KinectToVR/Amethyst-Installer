@@ -64,6 +64,8 @@ namespace amethyst_installer_gui.Installer.Modules {
 
                 if ( stdout.Length > 0 )
                     Logger.Info(stdout.ToString().Trim());
+                if ( stderr.Length > 0 )
+                    Logger.Fatal(stderr.ToString().Trim());
 
                 // https://github.com/wixtoolset/wix3/blob/6b461364c40e6d1c487043cd0eae7c1a3d15968c/src/tools/dark/dark.cs#L54
                 // Exit codes for DARK:
@@ -74,8 +76,6 @@ namespace amethyst_installer_gui.Installer.Modules {
                 Logger.Info(string.Format(LogStrings.DarkExitCode, proc.ExitCode));
                 if ( proc.ExitCode == 1 ) {
                     // Assume WiX failed
-                    if ( stderr.Length > 0 )
-                        Logger.Fatal(stderr.ToString().Trim());
                     Logger.Fatal($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}!");
                     control.LogError($"{string.Format(LogStrings.FailedExtractDark, sourceFile)}! {LogStrings.ViewLogs}");
                     return false;
