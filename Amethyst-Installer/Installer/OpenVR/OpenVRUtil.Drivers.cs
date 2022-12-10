@@ -54,12 +54,15 @@ namespace amethyst_installer_gui.Installer {
             }
 
             if ( s_openvrpaths != null ) {
+                Logger.Info("Attempting to register via openvrpaths...");
                 if ( !s_openvrpaths.external_drivers.Contains(driverPath) ) {
                     // Driver is not registered!
                     s_openvrpaths.external_drivers.Add(driverPath);
                     Logger.Info("Saving openvrpaths...");
                     SaveOpenVrPaths();
                     Logger.Info("Done!");
+                } else {
+                    Logger.Info("Already registered via openvrpaths!");
                 }
             }
         }
@@ -97,6 +100,8 @@ namespace amethyst_installer_gui.Installer {
                         case 2: // Driver installed more than once
                             return output;
                         case -1: // Configuration or permission problem
+                            Logger.Fatal($"Failed to register using vrpathreg:: Configuration or permission problem");
+                            break;
                         case -2: // Argument problem (wtf??)
                             Logger.Fatal($"vrpathreg failed:\n\tCode: {vrpathregProc.ExitCode}\n\tArgs: \"{args}\"");
                             break;
@@ -164,6 +169,8 @@ namespace amethyst_installer_gui.Installer {
                         case 2: // Driver installed more than once
                             return;
                         case -1: // Configuration or permission problem
+                            Logger.Fatal($"Failed to register using vrpathreg:: Configuration or permission problem");
+                            break;
                         case -2: // Argument problem (wtf??)
                             Logger.Fatal($"vrpathreg failed:\n\tCode: {vrpathregProc.ExitCode}\n\tArgs: \"{args}\"");
                             break;
@@ -231,6 +238,8 @@ namespace amethyst_installer_gui.Installer {
                         case 2: // Driver installed more than once
                             return;
                         case -1: // Configuration or permission problem
+                            Logger.Fatal($"Failed to register using vrpathreg:: Configuration or permission problem");
+                            break;
                         case -2: // Argument problem (wtf??)
                             Logger.Fatal($"vrpathreg failed:\n\tCode: {vrpathregProc.ExitCode}\n\tArgs: \"{args}\"");
                             break;
@@ -313,7 +322,7 @@ namespace amethyst_installer_gui.Installer {
                 // Oh no, the user has an antivirus probably
                 // This isn't a critical exception, so we catch it
                 Logger.Error(Util.FormatException(ex));
-                Logger.Warn("The user might have to enable the driver manually in SteamVR.");
+                Logger.Warn("You might have to enable the driver manually in SteamVR.");
                 return false;
             }
         }
