@@ -6,7 +6,8 @@ namespace amethyst_installer_gui.PInvoke {
     public static class Kernel {
         [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern IntPtr LoadLibrary(string lpFileName);
-
+        [DllImport("kernel32")]
+        public static extern IntPtr GetProcAddress(IntPtr module, string procName);
 
         [DllImport("Kernel32.dll")]
         public static extern bool AttachConsole(int processId);
