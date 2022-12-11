@@ -29,11 +29,12 @@ namespace amethyst_installer_gui.Pages {
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
 
-            if ( MainWindow.HandleSpeedrun() ) {
+            // if ( MainWindow.HandleSpeedrun() ) {
                 // Advance to next page
                 SoundPlayer.PlaySound(SoundEffect.MoveNext);
-                MainWindow.Instance.SetPage(InstallerState.Welcome);
-            }
+                dxHost.doCapture = true;
+                // MainWindow.Instance.SetPage(InstallerState.Welcome);
+            // }
         }
 
         private void UpdateHandler() {
