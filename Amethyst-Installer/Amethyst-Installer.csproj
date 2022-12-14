@@ -219,8 +219,10 @@
     <Compile Include="DirectX\DX11ImageSource.cs" />
     <Compile Include="DirectX\DX11ShaderPair.cs" />
     <Compile Include="DirectX\FrameTimeHelper.cs" />
+    <Compile Include="DirectX\Renderdoc\RenderDoc.cs" />
+    <Compile Include="DirectX\Renderdoc\RenderDocNative.cs" />
     <Compile Include="DirectX\ResourceCache.cs" />
-    <Compile Include="DirectX\VertexData.cs" />
+    <Compile Include="DirectX\InstancedParticleData.cs" />
     <Compile Include="Installer\AnalyticsData.cs" />
     <Compile Include="Installer\DownloadManager.cs" />
     <Compile Include="Installer\Installer.Enums.cs" />
@@ -354,6 +356,7 @@
     <Compile Include="Util\ExitCodes.cs" />
     <Compile Include="Util\Extensions\HttpClientExtensions.cs" />
     <Compile Include="Util\Extensions\LinqExtensions.cs" />
+    <Compile Include="Util\Extensions\MathExtensions.cs" />
     <Compile Include="Util\Extensions\StreamExtensions.cs" />
     <Compile Include="Installer\InstallUtil.cs" />
     <Compile Include="Util\Localisation\LocaleManager.cs" />

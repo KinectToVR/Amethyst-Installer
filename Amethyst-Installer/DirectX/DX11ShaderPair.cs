@@ -147,7 +147,8 @@ namespace amethyst_installer_gui.DirectX
                         break;
                 }
 
-                var elem = new InputElement(inputParam.SemanticName, inputParam.SemanticIndex, elementFormat, offset, 0, InputClassification.PerVertexData, 0);
+                bool shouldBePerVertex = IsHlslShaderSemantic(inputParam.SemanticName);
+                var elem = new InputElement(inputParam.SemanticName, inputParam.SemanticIndex, elementFormat, offset, shouldBePerVertex ? 0 : 1, shouldBePerVertex ? InputClassification.PerVertexData : InputClassification.PerInstanceData, 0);
                 offset += sizeOfElement * elementComponentCount;
                 dynamicVertexLayout.Add(elem);
             }
@@ -172,6 +173,52 @@ namespace amethyst_installer_gui.DirectX
             Utilities.Dispose(ref m_vertexShaderProgram);
             Utilities.Dispose(ref m_inputLayout);
             Utilities.Dispose(ref m_pixelShaderProgram);
+        }
+
+        private static bool IsHlslShaderSemantic(string semanticString) {
+            semanticString = semanticString.ToUpperInvariant();
+            switch ( semanticString ) {
+                case "POSITIONT":
+                case "FOG":
+                case "PSIZE":
+                case "VFACE":
+                case "VPOS":
+                    return true;
+            }
+            if ( semanticString.StartsWith("COLOR") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("POSITION") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("NORMAL") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("TEXCOORD") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("TANGENT") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("DEPTH") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("BINORMAL") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("BLENDINDICES") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("BLENDWEIGHT") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("PSIZE") ) {
+                return true;
+            }
+            if ( semanticString.StartsWith("TESSFACTOR") ) {
+                return true;
+            }
+            return false;
         }
     }
 }

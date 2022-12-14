@@ -1,4 +1,5 @@
 ﻿using amethyst_installer_gui.DirectX;
+using amethyst_installer_gui.DirectX.Renderdoc;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D;
@@ -21,14 +22,27 @@ using D2DContext = SharpDX.Direct2D1.DeviceContext;
 namespace amethyst_installer_gui.Controls {
 
     public class DX_Blobs : D2DControl, IDisposable {
+        private RenderDoc rdoc;
+        public bool doCapture = false;
+        const int particleCount = 1;
+            
+        private const float ANIM_OFFSET_MIN = 0;
+        private const float ANIM_OFFSET_MAX = 1;
+        private const float ANIM_PERIOD_MIN = 0.2f;
+        private const float ANIM_PERIOD_MAX = 1;
+        private const float ANIM_POLAR_ANGLE_MIN = 0;
+        private const float ANIM_POLAR_ANGLE_MAX = 1;
 
         private DX11ShaderPair m_shaders;
         private DX11Buffer m_vertexBuffer;
         private DX11Buffer m_indexBuffer;
+        private DX11Buffer m_instanceBuffer;
 
-        private Random rnd = new Random();
+        private Random rng;
 
         public DX_Blobs() {
+            rng = new Random();
+            RenderDoc.Load(out rdoc);
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
@@ -43,37 +57,93 @@ namespace amethyst_installer_gui.Controls {
             m_shaders.Recreate(ref device);
 
             // Construct a full screen quad in screenspace
-            m_vertexBuffer = DX11Buffer.Create(device, BindFlags.VertexBuffer, new VertexData[]
-            {
-                // POSITION                                         COLOR
-                new VertexData(new Vector3(-1.0f,  1.0f, 0.5f),     new Vector4(1.0f, 0.0f, 0.0f, 1.0f)),
-                new VertexData(new Vector3( 1.0f,  1.0f, 0.5f),     new Vector4(0.0f, 1.0f, 0.0f, 1.0f)),
-                new VertexData(new Vector3(-1.0f, -1.0f, 0.5f),     new Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
-
-                new VertexData(new Vector3( 1.0f, -1.0f, 0.5f),     new Vector4(0.5f, 0.0f, 0.5f, 1.0f))
-            });
+            var data = new InstancedParticleData[] {
+                new InstancedParticleData(
+                    new Vector4(0,0,0, 0),
+                    new Vector3(-1.0f, +1.0f, 0.5f), 
+                    new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                    rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
+                    rng.NextFloat(ANIM_OFFSET_MIN, ANIM_OFFSET_MAX), 
+                    rng.NextFloat(ANIM_PERIOD_MIN, ANIM_PERIOD_MAX),
+                    0),
+                new InstancedParticleData(
+                    new Vector4(0,0,0, 0),
+                    new Vector3(+1.0f, +1.0f, 0.5f),
+                    new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+                    rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
+                    rng.NextFloat(ANIM_OFFSET_MIN, ANIM_OFFSET_MAX),
+                    rng.NextFloat(ANIM_PERIOD_MIN, ANIM_PERIOD_MAX),
+                    0),
+                new InstancedParticleData(
+                    new Vector4(0,0,0, 0),
+                    new Vector3(-1.0f, -1.0f, 0.5f),
+                    new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+                    rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
+                    rng.NextFloat(ANIM_OFFSET_MIN, ANIM_OFFSET_MAX),
+                    rng.NextFloat(ANIM_PERIOD_MIN, ANIM_PERIOD_MAX),
+                    0),
+                new InstancedParticleData(
+                    new Vector4(0,0,0, 0),
+                    new Vector3(+1.0f, -1.0f, 0.5f),
+                    new Vector4(0.5f, 0.0f, 0.5f, 1.0f),
+                    rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
+                    rng.NextFloat(ANIM_OFFSET_MIN, ANIM_OFFSET_MAX),
+                    rng.NextFloat(ANIM_PERIOD_MIN, ANIM_PERIOD_MAX), 0),
+                
+                // TEMP
+                new InstancedParticleData(
+                    new Vector4(0,0,0, 0),
+                    new Vector3(-1.0f, -1.0f, 0.5f),
+                    new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+                    rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
+                    rng.NextFloat(ANIM_OFFSET_MIN, ANIM_OFFSET_MAX),
+                    rng.NextFloat(ANIM_PERIOD_MIN, ANIM_PERIOD_MAX),
+                    0),
+                new InstancedParticleData(
+                    new Vector4(0,0,0, 0),
+                    new Vector3(+1.0f, +1.0f, 0.5f),
+                    new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+                    rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
+                    rng.NextFloat(ANIM_OFFSET_MIN, ANIM_OFFSET_MAX),
+                    rng.NextFloat(ANIM_PERIOD_MIN, ANIM_PERIOD_MAX),
+                    0),
+            };
+            // m_vertexBuffer = DX11Buffer.Create(device, BindFlags.VertexBuffer, data);
+            m_vertexBuffer = DX11Buffer.Create(device, BindFlags.VertexBuffer, data);
             // 16-bit integers to occupy less memory
             m_indexBuffer = DX11Buffer.Create(device, BindFlags.IndexBuffer,  new ushort[] { 0, 1, 2, 3, 2, 1 });
             
-            // Stride = 8 elements * 4 bytes (per float) = 32 bytes
-            // Bind to the device context
-            device.ImmediateContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(m_vertexBuffer, Utilities.SizeOf<VertexData>(), 0));
-            device.ImmediateContext.InputAssembler.SetIndexBuffer(m_indexBuffer, Format.R16_UInt, 0);
-            m_shaders.Bind();
-            device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleStrip;
-            device.ImmediateContext.OutputMerger.SetTargets(renderView);
         }
 
         public override void Render(D2DContext target) {
 
             // Called every frame
+            if ( rdoc != null && doCapture ) {
+                if ( !rdoc.IsFrameCapturing() ) {
+                    rdoc.StartFrameCapture();
+                }
+                doCapture = false;
+            }
 
             // This is really odd but supposedly this renders a full screen quad
             if ( renderView != null ) {
+                device.ImmediateContext.OutputMerger.SetTargets(renderView);
                 device.ImmediateContext.ClearRenderTargetView(renderView, new RawColor4(1.0f, 0.2f, 0.3f, 0.0f));
             }
+            m_shaders.Bind();
+            // Stride = 8 elements * 4 bytes (per float) = 32 bytes
+            // Bind to the device context
+            device.ImmediateContext.InputAssembler.SetVertexBuffers(1,
+                // new VertexBufferBinding(m_vertexBuffer, Utilities.SizeOf<VertexData>(), 0),
+                new VertexBufferBinding(m_vertexBuffer, Utilities.SizeOf<InstancedParticleData>(), 0)
+            );
+            // device.ImmediateContext.InputAssembler.SetIndexBuffer(m_indexBuffer, Format.R16_UInt, 0);
+            device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleStrip;
+
             // device.ImmediateContext.Draw(3, 0);
-            device.ImmediateContext.DrawIndexed(6, 0, 0);
+            // device.ImmediateContext.DrawIndexed(6, 0, 0);
+            // device.ImmediateContext.DrawIndexedInstanced(6, particleCount, 0, 0, 0);
+            device.ImmediateContext.DrawInstanced(6, particleCount, 0, 0);
 
             // DX11Context.DrawIndexed(0, 0, 0);
 
@@ -81,6 +151,10 @@ namespace amethyst_installer_gui.Controls {
             // DX11Context.DrawIndexedInstanced();
 
             // target.DrawBitmap();
+            
+            if ( rdoc != null && rdoc.IsFrameCapturing() ) {
+                rdoc.EndFrameCapture();
+            }
         }
 
         public new void Dispose() {
