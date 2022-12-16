@@ -42,7 +42,9 @@ namespace amethyst_installer_gui.Controls {
 
         public DX_Blobs() {
             rng = new Random();
-            RenderDoc.Load(out rdoc);
+            try {
+                RenderDoc.Load(out rdoc);
+            } catch (Exception e) { }
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
