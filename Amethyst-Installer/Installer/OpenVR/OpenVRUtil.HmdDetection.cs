@@ -20,7 +20,7 @@ namespace amethyst_installer_gui.Installer {
             if ( s_steamvrSettings["LastKnown"] == null ) {
                 return "";
             }
-            return s_steamvrSettings["LastKnown"]["HMDModel"];
+            return s_steamvrSettings["LastKnown"]["HMDModel"] ?? "";
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetSteamVRHmdManufacturer() {
@@ -30,7 +30,7 @@ namespace amethyst_installer_gui.Installer {
             if ( s_steamvrSettings["LastKnown"] == null ) {
                 return "";
             }
-            return s_steamvrSettings["LastKnown"]["HMDManufacturer"];
+            return s_steamvrSettings["LastKnown"]["HMDManufacturer"] ?? "";
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
