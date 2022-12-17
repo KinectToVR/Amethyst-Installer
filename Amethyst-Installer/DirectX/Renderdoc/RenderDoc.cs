@@ -74,6 +74,9 @@ namespace amethyst_installer_gui.DirectX.Renderdoc {
         {
             LoadFunction("RENDERDOC_GetAPI", out pRENDERDOC_GetAPI getApiFunc);
             IntPtr apiPointers = IntPtr.Zero;
+            if ( getApiFunc == null ) {
+                throw new InvalidOperationException("Failed to load RenderDoc API.");
+            }
             int result = getApiFunc(RENDERDOC_Version.eRENDERDOC_API_Version_1_4_1, ref apiPointers);
             if (result != 1)
             {
