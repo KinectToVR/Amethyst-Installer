@@ -8,14 +8,14 @@ namespace amethyst_installer_gui.DirectX
         // Vector4 position;
         Vector3 localPosition;
         Vector4 color;
-        // X => Polar angle, Y => Unused , Z => Timing offset, W => Timing period 
+        // X => Polar angle, Y => Scale , Z => Timing offset, W => Timing period 
         Vector4 animData;
 
-        public InstancedParticleData(Vector4 position, Vector3 localPosition, Vector4 color, float polarAngle, float timingOffset, float timingPeriod, float other = 0) {
+        public InstancedParticleData(Vector3 localPosition, Vector4 color, float polarAngle, float timingOffset, float timingPeriod, float scale) {
             // this.position = position;
             this.localPosition = localPosition;
             this.color = color;
-            this.animData = new Vector4(polarAngle, other, timingOffset, timingPeriod);
+            this.animData = new Vector4(polarAngle, scale, timingOffset, timingPeriod);
         }
     }
 }

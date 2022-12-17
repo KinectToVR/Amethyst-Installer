@@ -1,20 +1,22 @@
+// These would be in some common functions hlsl file but we don't have a good compiler
+// Thus, everything is inlined into the same file
 static const float PI           = 3.14159265358979323846;
 static const float TWO_PI       = PI * 2.f;
 
 // Vertex input, must match vertex struct
 struct vinput
 {
-    // float4 pos              : Position;
-    float3 posInst          : INST_POSITION;
-    float4 colorInst        : INST_COLOR0;
-    float4 animDataInst     : INST_ANIMDATA;
-    // uint instanceID     : SV_InstanceID;
+    float4 pos              : POSITION;
+    float3 posInst          : TEXCOORD0;
+    float4 colorInst        : TEXCOORD1;
+    float4 animDataInst     : TEXCOORD2;
+    // uint instanceID     : SV_InstanceID; // Doesn't seem necessary?
 };
 
 struct v2f
 {
-    float4 pos : INST_POS;
-    float4 color : INST_COLOR;
+    float4 pos              : SV_POSITION;
+    float4 color            : TEXCOORD0;
 };
 
 float2 toCartesian(float2 polar){
@@ -30,13 +32,12 @@ v2f vert(vinput input)
     const float animDirectionPolar  = input.animDataInst.x;
     const float animTimingOffset    = input.animDataInst.z;
     const float animTimingPeriod    = input.animDataInst.w;
-    const float animUnused          = input.animDataInst.y;
+    const float scale               = input.animDataInst.y;
 
     const float2 animDir = toCartesian(float2(animDirectionPolar, 1));
-    
+
     // Transform the vertex position into projected space.
-    output.pos = float4(input.posInst, 1.f);
-    // output.pos.xy *= 0.f;
+    output.pos = float4(input.pos.xyz * scale + input.posInst, 1.f);
 
     // Pass through the color without modification.
     output.color = input.colorInst;

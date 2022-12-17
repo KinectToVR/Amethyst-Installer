@@ -16,6 +16,8 @@ using DeviceContext = SharpDX.Direct3D11.DeviceContext;
 using D2DContext = SharpDX.Direct2D1.DeviceContext;
 using FeatureLevel = SharpDX.Direct3D.FeatureLevel;
 using InputElement = SharpDX.Direct3D11.InputElement;
+using System.Runtime.CompilerServices;
+using SharpDX.D3DCompiler;
 
 namespace amethyst_installer_gui.DirectX
 {
@@ -34,11 +36,15 @@ namespace amethyst_installer_gui.DirectX
         private PixelShader m_pixelShaderProgram;
         private VertexShader m_vertexShaderProgram;
         private InputLayout m_inputLayout;
+        private bool m_texcoordAsPerInstance;
 
-        public DX11ShaderPair(ref Device device, string vertexProgramPath, string pixelProgramPath, bool init = true) {
+        public bool TexcoordAsPerInstance { get => m_texcoordAsPerInstance; set { m_texcoordAsPerInstance = value; } }
+
+        public DX11ShaderPair(ref Device device, string vertexProgramPath, string pixelProgramPath, bool texcoordIsPerInstance = false, bool init = true) {
             m_device = device;
             m_vertexShaderPath = vertexProgramPath;
             m_pixelShaderPath = pixelProgramPath;
+            m_texcoordAsPerInstance = texcoordIsPerInstance;
 
             if ( init )
                 Recreate(ref device);
@@ -71,7 +77,8 @@ namespace amethyst_installer_gui.DirectX
             List<InputElement> dynamicVertexLayout = new List<InputElement>();
 
             var reflectionData = new SharpDX.D3DCompiler.ShaderReflection(m_vertexShaderBytes);
-            int offset = 0;
+            int perVertOffset = 0;
+            int perInstOffset = 0;
             for (int i = 0; i < reflectionData.Description.InputParameters; i++) {
                 var inputParam = reflectionData.GetInputParameterDescription(i);
                 Format elementFormat = Format.Unknown;
@@ -148,12 +155,28 @@ namespace amethyst_installer_gui.DirectX
                 }
 
                 bool shouldBePerVertex = IsHlslShaderSemantic(inputParam.SemanticName);
-                var elem = new InputElement(inputParam.SemanticName, inputParam.SemanticIndex, elementFormat, offset, shouldBePerVertex ? 0 : 1, shouldBePerVertex ? InputClassification.PerVertexData : InputClassification.PerInstanceData, 0);
-                offset += sizeOfElement * elementComponentCount;
+                if ( m_texcoordAsPerInstance ) {
+                    shouldBePerVertex = !inputParam.SemanticName.ToUpperInvariant().StartsWith("TEXCOORD");
+                }
+                var elem = new InputElement() {
+                    SemanticName            = inputParam.SemanticName,
+                    SemanticIndex           = inputParam.SemanticIndex,
+                    Format                  = elementFormat,
+                    Slot                    = shouldBePerVertex ? 0 : 1,
+                    AlignedByteOffset       = shouldBePerVertex ? perVertOffset : perInstOffset,
+                    Classification          = shouldBePerVertex ? InputClassification.PerVertexData : InputClassification.PerInstanceData,
+                    InstanceDataStepRate    = shouldBePerVertex ? 0 : 1,
+                };
+
+                if (shouldBePerVertex ) {
+                    perVertOffset += sizeOfElement * elementComponentCount;
+                } else {
+                    perInstOffset += sizeOfElement * elementComponentCount;
+                }
                 dynamicVertexLayout.Add(elem);
             }
 
-            m_inputLayout = new InputLayout(m_device, m_vertexShaderBytes, dynamicVertexLayout.ToArray());
+            m_inputLayout = new InputLayout(m_device, ShaderSignature.GetInputSignature(m_vertexShaderBytes), dynamicVertexLayout.ToArray());
 
             // Bind the vertex struct layout
             // var vertexLayout = new[]
