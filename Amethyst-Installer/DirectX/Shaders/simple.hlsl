@@ -8,7 +8,7 @@ struct vinput
 {
     float4 pos              : POSITION;
     float3 posInst          : TEXCOORD0;
-    float4 colorInst        : TEXCOORD1;
+    float3 colorInst        : TEXCOORD1;
     float4 animDataInst     : TEXCOORD2;
     // uint instanceID     : SV_InstanceID; // Doesn't seem necessary?
 };
@@ -16,7 +16,7 @@ struct vinput
 struct v2f
 {
     float4 pos              : SV_POSITION;
-    float4 color            : TEXCOORD0;
+    float3 color            : TEXCOORD1;
 };
 
 float2 toCartesian(float2 polar){

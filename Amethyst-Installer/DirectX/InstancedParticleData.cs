@@ -7,11 +7,11 @@ namespace amethyst_installer_gui.DirectX
     struct InstancedParticleData {
         // Vector4 position;
         Vector3 localPosition;
-        Vector4 color;
+        Vector3 color;
         // X => Polar angle, Y => Scale , Z => Timing offset, W => Timing period 
         Vector4 animData;
 
-        public InstancedParticleData(Vector3 localPosition, Vector4 color, float polarAngle, float timingOffset, float timingPeriod, float scale) {
+        public InstancedParticleData(Vector3 localPosition, Vector3 color, float polarAngle, float timingOffset, float timingPeriod, float scale) {
             // this.position = position;
             this.localPosition = localPosition;
             this.color = color;
