@@ -24,8 +24,7 @@ namespace amethyst_installer_gui.DirectX
     /// <summary>
     /// A thin wrapper around a DX11 Shader object
     /// </summary>
-    public class DX11ShaderPair : IDisposable
-    {
+    public class DX11ShaderPair : IDisposable {
         // Used for caching purposes
         private string m_vertexShaderPath;
         private string m_pixelShaderPath;
@@ -79,7 +78,7 @@ namespace amethyst_installer_gui.DirectX
             var reflectionData = new SharpDX.D3DCompiler.ShaderReflection(m_vertexShaderBytes);
             int perVertOffset = 0;
             int perInstOffset = 0;
-            for (int i = 0; i < reflectionData.Description.InputParameters; i++) {
+            for ( int i = 0; i < reflectionData.Description.InputParameters; i++ ) {
                 var inputParam = reflectionData.GetInputParameterDescription(i);
                 Format elementFormat = Format.Unknown;
 
@@ -168,7 +167,7 @@ namespace amethyst_installer_gui.DirectX
                     InstanceDataStepRate    = shouldBePerVertex ? 0 : 1,
                 };
 
-                if (shouldBePerVertex ) {
+                if ( shouldBePerVertex ) {
                     perVertOffset += sizeOfElement * elementComponentCount;
                 } else {
                     perInstOffset += sizeOfElement * elementComponentCount;
@@ -191,8 +190,7 @@ namespace amethyst_installer_gui.DirectX
             m_pixelShaderProgram = new PixelShader(m_device, m_pixelShaderBytes);
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             Utilities.Dispose(ref m_vertexShaderProgram);
             Utilities.Dispose(ref m_inputLayout);
             Utilities.Dispose(ref m_pixelShaderProgram);
