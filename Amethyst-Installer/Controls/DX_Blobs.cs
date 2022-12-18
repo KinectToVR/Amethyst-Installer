@@ -59,9 +59,11 @@ namespace amethyst_installer_gui.Controls {
                 // Sampling is done on a poisson disk, where the distance is sqrt(1-x), which is a good enough analogue to a
                 // probability distribution function
 
+                const float revolutions = 20.0f;
+
                 float t = i / (float) particleCount;
-                float distX = (float) Math.Sin(2.0 * Math.PI * t);
-                float distY = (float) Math.Cos(2.0 * Math.PI * t);
+                float distX = (float) Math.Sin(2.0 * Math.PI * t * revolutions);
+                float distY = (float) Math.Cos(2.0 * Math.PI * t * revolutions);
                 float magnitude = ( float ) Math.Sqrt(1.0 - t);
 
                 distX *= magnitude;
@@ -69,7 +71,7 @@ namespace amethyst_installer_gui.Controls {
 
                 data[i] = new InstancedParticleData(
                     localPosition:  new Vector3(distX, distY, 0.0f),
-                    color:          new Vector4(rng.NextFloat(), rng.NextFloat(), rng.NextFloat(), 1.0f),
+                    color:          new Vector3(rng.NextFloat(), rng.NextFloat(), rng.NextFloat()),
 
                     // Attributes
                     polarAngle:     rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
@@ -138,7 +140,7 @@ namespace amethyst_installer_gui.Controls {
         }
 
         private static float DistributionFunction(float t) {
-            return ( float ) ( 1.65 * Math.Sqrt(-2.0 * Math.Log(t)) * Math.Sin(2 * Math.PI * t * 0.5));
+            return ( float ) ( 1.65 * Math.Sqrt(-2.0 * Math.Log(t)) * Math.Sin(2 * Math.PI * t * 0.5) );
         }
     }
 }
