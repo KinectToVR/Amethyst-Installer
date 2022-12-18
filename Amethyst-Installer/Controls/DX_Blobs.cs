@@ -154,9 +154,5 @@ namespace amethyst_installer_gui.Controls {
             Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
             Dispose();
         }
-
-        private static float DistributionFunction(float t) {
-            return ( float ) ( 1.65 * Math.Sqrt(-2.0 * Math.Log(t)) * Math.Sin(2 * Math.PI * t * 0.5) );
-        }
     }
 }
