@@ -43,9 +43,10 @@ v2f vert(vinput input)
     const float aspectRatio = ScreenResolution.y / ScreenResolution.x;
 
     const float2 animDir = toCartesian(float2(animDirectionPolar, 1));
+    const float currentTimeInAnimation = sin(animTimingPeriod * Time.x - animTimingOffset);
 
     // Transform the vertex position into projected space.
-    output.pos = float4(input.pos.xyz * scale + input.posInst, 1.f);
+    output.pos = float4(input.pos.xyz * aspectRatio * scale + input.posInst + float3(animDir * currentTimeInAnimation, 0), 1.f);
     output.pos.x *= aspectRatio;
 
     // Pass through the color without modification.
