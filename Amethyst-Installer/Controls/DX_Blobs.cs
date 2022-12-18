@@ -30,7 +30,7 @@ namespace amethyst_installer_gui.Controls {
         private DX11Buffer m_vertexBuffer;
         private DX11Buffer m_indexBuffer;
         private DX11Buffer m_instanceBuffer;
-
+        private BlendState m_blendState;
         private Random rng;
 
         public DX_Blobs() {
@@ -92,6 +92,20 @@ namespace amethyst_installer_gui.Controls {
             // 16-bit integers to occupy less memory
             m_indexBuffer = DX11Buffer.Create(device, BindFlags.IndexBuffer, new ushort[] { 0, 1, 2, 3, 2, 1 });
 
+            // Prepare blend state for alpha blending
+            BlendStateDescription blendStateDescription = new BlendStateDescription() {
+                AlphaToCoverageEnable = false, // So far we don't need Alpha To Coverage
+            };
+            blendStateDescription.RenderTarget[0].IsBlendEnabled = true;
+            blendStateDescription.RenderTarget[0].SourceBlend = BlendOption.SourceAlpha;
+            blendStateDescription.RenderTarget[0].DestinationBlend = BlendOption.InverseSourceAlpha;
+            blendStateDescription.RenderTarget[0].BlendOperation = BlendOperation.Add;
+            blendStateDescription.RenderTarget[0].SourceAlphaBlend = BlendOption.Zero;
+            blendStateDescription.RenderTarget[0].DestinationAlphaBlend = BlendOption.Zero;
+            blendStateDescription.RenderTarget[0].AlphaBlendOperation = BlendOperation.Add;
+            blendStateDescription.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+
+            m_blendState = new BlendState(device, blendStateDescription);
         }
 
         public override void Render(D2DContext target) {
@@ -117,7 +131,8 @@ namespace amethyst_installer_gui.Controls {
             );
             device.ImmediateContext.InputAssembler.SetIndexBuffer(m_indexBuffer, Format.R16_UInt, 0);
             device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleStrip;
-            
+            device.ImmediateContext.OutputMerger.BlendState = m_blendState;
+
             m_shaders.Bind();
 
             device.ImmediateContext.DrawIndexedInstanced(6, particleCount, 0, 0, 0);
@@ -128,6 +143,7 @@ namespace amethyst_installer_gui.Controls {
         }
 
         public new void Dispose() {
+            m_blendState?.Dispose();
             m_vertexBuffer?.Dispose();
             m_indexBuffer?.Dispose();
             m_shaders?.Dispose();

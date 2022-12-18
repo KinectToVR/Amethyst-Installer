@@ -16,6 +16,7 @@ struct vinput
 struct v2f
 {
     float4 pos              : SV_POSITION;
+    float2 uv               : TEXCOORD0;
     float3 color            : TEXCOORD1;
 };
 
@@ -41,6 +42,7 @@ v2f vert(vinput input)
 
     // Pass through the color without modification.
     output.color = input.colorInst;
+    output.uv = input.pos.xy;
     
     return output;
 }
@@ -50,6 +52,8 @@ float4 frag(v2f input) : SV_TARGET
     // TODO: Read UV from v2f
     float2 uv = 0;
 
-    return input.color;
+    const float alpha = 1.f - saturate(length(input.uv));
+
+    return float4(input.color, alpha);
     // return float4(input.color, 1.0f);
 }
