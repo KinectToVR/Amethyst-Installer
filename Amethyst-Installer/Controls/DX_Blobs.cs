@@ -16,7 +16,7 @@ namespace amethyst_installer_gui.Controls {
         private RenderDoc rdoc;
         public bool doCapture = false;
         const int particleCount = 2048;
-            
+
         private const float ANIM_OFFSET_MIN = 0;
         private const float ANIM_OFFSET_MAX = 1;
         private const float ANIM_PERIOD_MIN = 0.2f;
@@ -37,7 +37,7 @@ namespace amethyst_installer_gui.Controls {
             rng = new Random();
             try {
                 RenderDoc.Load(out rdoc);
-            } catch (Exception e) { }
+            } catch ( Exception e ) { }
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
@@ -46,7 +46,7 @@ namespace amethyst_installer_gui.Controls {
             // This includes initialization
 
             // Setup shaders
-            if ( m_shaders == null)
+            if ( m_shaders == null )
                 // Don't init the native stuff because we'll do it after exiting the this scope
                 m_shaders = new DX11ShaderPair(ref device, "Shaders.simple_vert.cso", "Shaders.simple_frag.cso", true, false);
             m_shaders.Recreate(ref device);
@@ -88,8 +88,8 @@ namespace amethyst_installer_gui.Controls {
             m_vertexBuffer = DX11Buffer.Create(device, BindFlags.VertexBuffer, positions);
             m_instanceBuffer = DX11Buffer.Create(device, BindFlags.VertexBuffer, data);
             // 16-bit integers to occupy less memory
-            m_indexBuffer = DX11Buffer.Create(device, BindFlags.IndexBuffer,  new ushort[] { 0, 1, 2, 3, 2, 1 });
-            
+            m_indexBuffer = DX11Buffer.Create(device, BindFlags.IndexBuffer, new ushort[] { 0, 1, 2, 3, 2, 1 });
+
         }
 
         public override void Render(D2DContext target) {
@@ -119,7 +119,7 @@ namespace amethyst_installer_gui.Controls {
             m_shaders.Bind();
 
             device.ImmediateContext.DrawIndexedInstanced(6, particleCount, 0, 0, 0);
-            
+
             if ( rdoc != null && rdoc.IsFrameCapturing() ) {
                 rdoc.EndFrameCapture();
             }
