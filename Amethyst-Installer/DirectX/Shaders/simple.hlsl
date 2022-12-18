@@ -26,6 +26,11 @@ float2 toCartesian(float2 polar){
     return cartesian * polar.y;
 }
 
+cbuffer CommonDataCBuffer {
+    float2 Time; // X => Elapsed Time ; Y => DeltaTime
+    float2 ScreenResolution; // Screen resolution in pixels
+};
+
 v2f vert(vinput input)
 {
     v2f output = (v2f)0;

@@ -213,6 +213,7 @@
     <Compile Include="Controls\UsbControllerItem.xaml.cs">
       <DependentUpon>UsbControllerItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DirectX\CommonDataCBuffer.cs" />
     <Compile Include="DirectX\D2DControl.cs" />
     <Compile Include="DirectX\D2DControlError.cs" />
     <Compile Include="DirectX\Disposer.cs" />

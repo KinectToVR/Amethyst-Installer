@@ -9,6 +9,7 @@ using System;
 using System.Numerics;
 using DX11Buffer = SharpDX.Direct3D11.Buffer;
 using D2DContext = SharpDX.Direct2D1.DeviceContext;
+using System.Diagnostics;
 
 namespace amethyst_installer_gui.Controls {
 
@@ -31,10 +32,21 @@ namespace amethyst_installer_gui.Controls {
         private DX11Buffer m_indexBuffer;
         private DX11Buffer m_instanceBuffer;
         private BlendState m_blendState;
+        private DX11Buffer m_cbufferCommonData;
         private Random rng;
+
+        private Stopwatch m_stopwatch;
+        private double m_lastTime = 0;
+
+        private float m_elapsedTime = 0.0f, m_deltaTime = 0.0f;
+        private CommonDataCBuffer CommonData = new CommonDataCBuffer() {
+            Time                = new Vector2(0, 1.0f / 30.0f),
+            ScreenResolution    = new Vector2(1, 1)
+        };
 
         public DX_Blobs() {
             rng = new Random();
+            m_stopwatch = new Stopwatch();
             try {
                 RenderDoc.Load(out rdoc);
             } catch ( Exception e ) { }
@@ -105,7 +117,28 @@ namespace amethyst_installer_gui.Controls {
             blendStateDescription.RenderTarget[0].AlphaBlendOperation       = BlendOperation.Add;
             blendStateDescription.RenderTarget[0].RenderTargetWriteMask     = ColorWriteMaskFlags.All;
 
-            m_blendState        = new BlendState(device, blendStateDescription);
+            m_blendState                = new BlendState(device, blendStateDescription);
+
+            // Init cbuffer data
+            CommonData.Time             = new Vector2(m_elapsedTime, m_deltaTime);
+            CommonData.ScreenResolution = new Vector2(( float ) ActualWidth, ( float ) ActualHeight);
+
+            // cbuffer
+            m_cbufferCommonData = DX11Buffer.Create(device,
+                BindFlags.ConstantBuffer,
+                ref CommonData,
+                Utilities.SizeOf<CommonDataCBuffer>(),
+                ResourceUsage.Dynamic,
+                CpuAccessFlags.Write,
+                ResourceOptionFlags.None,
+                0);
+
+            // Bind cbuffer
+            device.ImmediateContext.VertexShader.SetConstantBuffer(0, m_cbufferCommonData);
+            device.ImmediateContext.PixelShader.SetConstantBuffer(0, m_cbufferCommonData);
+
+            m_stopwatch.Reset();
+            m_stopwatch.Start();
         }
 
         public override void Render(D2DContext target) {
@@ -117,6 +150,9 @@ namespace amethyst_installer_gui.Controls {
                 }
                 doCapture = false;
             }
+            TimeSpan currentTimeMs  = m_stopwatch.Elapsed;
+            m_deltaTime             = (float)( currentTimeMs.TotalSeconds - m_lastTime );
+            m_elapsedTime           += m_deltaTime;
 
             // This is really odd but supposedly this renders a full screen quad
             if ( renderView != null ) {
@@ -135,8 +171,21 @@ namespace amethyst_installer_gui.Controls {
 
             m_shaders.Bind();
 
+            // Update common data cbuffer
+            CommonData.Time                 = new Vector2(m_elapsedTime, m_deltaTime);
+            CommonData.ScreenResolution     = new Vector2(( float ) ActualWidth, ( float ) ActualHeight);
+
+            // Upload cbuffer to GPU
+            DataStream stream;
+            DataBox dataBox = device.ImmediateContext.MapSubresource(m_cbufferCommonData, MapMode.WriteDiscard, SharpDX.Direct3D11.MapFlags.None, out stream);
+            stream.WriteRange(new[] { CommonData });
+            device.ImmediateContext.UnmapSubresource(m_cbufferCommonData, 0);
+            stream.Dispose();
+
+            // Actually issue the draw call
             device.ImmediateContext.DrawIndexedInstanced(6, particleCount, 0, 0, 0);
 
+            m_lastTime = currentTimeMs.TotalSeconds;
             if ( rdoc != null && rdoc.IsFrameCapturing() ) {
                 rdoc.EndFrameCapture();
             }
@@ -147,6 +196,7 @@ namespace amethyst_installer_gui.Controls {
             m_vertexBuffer?.Dispose();
             m_indexBuffer?.Dispose();
             m_shaders?.Dispose();
+            m_stopwatch?.Stop();
             base.Dispose();
         }
 
