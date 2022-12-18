@@ -87,25 +87,25 @@ namespace amethyst_installer_gui.Controls {
                 new Vector4(-1.0f, -1.0f, 0.5f, 0.0f),
                 new Vector4(+1.0f, -1.0f, 0.5f, 0.0f),
             };
-            m_vertexBuffer = DX11Buffer.Create(device, BindFlags.VertexBuffer, positions);
-            m_instanceBuffer = DX11Buffer.Create(device, BindFlags.VertexBuffer, data);
+            m_vertexBuffer      = DX11Buffer.Create(device, BindFlags.VertexBuffer, positions);
+            m_instanceBuffer    = DX11Buffer.Create(device, BindFlags.VertexBuffer, data);
             // 16-bit integers to occupy less memory
-            m_indexBuffer = DX11Buffer.Create(device, BindFlags.IndexBuffer, new ushort[] { 0, 1, 2, 3, 2, 1 });
+            m_indexBuffer       = DX11Buffer.Create(device, BindFlags.IndexBuffer, new ushort[] { 0, 1, 2, 3, 2, 1 });
 
             // Prepare blend state for alpha blending
             BlendStateDescription blendStateDescription = new BlendStateDescription() {
                 AlphaToCoverageEnable = false, // So far we don't need Alpha To Coverage
             };
-            blendStateDescription.RenderTarget[0].IsBlendEnabled = true;
-            blendStateDescription.RenderTarget[0].SourceBlend = BlendOption.SourceAlpha;
-            blendStateDescription.RenderTarget[0].DestinationBlend = BlendOption.InverseSourceAlpha;
-            blendStateDescription.RenderTarget[0].BlendOperation = BlendOperation.Add;
-            blendStateDescription.RenderTarget[0].SourceAlphaBlend = BlendOption.Zero;
-            blendStateDescription.RenderTarget[0].DestinationAlphaBlend = BlendOption.Zero;
-            blendStateDescription.RenderTarget[0].AlphaBlendOperation = BlendOperation.Add;
-            blendStateDescription.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+            blendStateDescription.RenderTarget[0].IsBlendEnabled            = true;
+            blendStateDescription.RenderTarget[0].SourceBlend               = BlendOption.SourceAlpha;
+            blendStateDescription.RenderTarget[0].DestinationBlend          = BlendOption.InverseSourceAlpha;
+            blendStateDescription.RenderTarget[0].BlendOperation            = BlendOperation.Add;
+            blendStateDescription.RenderTarget[0].SourceAlphaBlend          = BlendOption.Zero;
+            blendStateDescription.RenderTarget[0].DestinationAlphaBlend     = BlendOption.Zero;
+            blendStateDescription.RenderTarget[0].AlphaBlendOperation       = BlendOperation.Add;
+            blendStateDescription.RenderTarget[0].RenderTargetWriteMask     = ColorWriteMaskFlags.All;
 
-            m_blendState = new BlendState(device, blendStateDescription);
+            m_blendState        = new BlendState(device, blendStateDescription);
         }
 
         public override void Render(D2DContext target) {
