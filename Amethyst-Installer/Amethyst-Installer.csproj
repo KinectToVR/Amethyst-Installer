@@ -694,7 +694,7 @@
     <None Include="DirectX\Shaders\simple.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\upgradeColorRamp.png" />
+    <EmbeddedResource Include="Resources\upgradeColorRamp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -20,10 +20,12 @@ namespace amethyst_installer_gui.Controls {
 
         private const float ANIM_OFFSET_MIN         = 0;
         private const float ANIM_OFFSET_MAX         = 1;
-        private const float ANIM_PERIOD_MIN         = 0.2f;
-        private const float ANIM_PERIOD_MAX         = 1;
-        private const float ANIM_POLAR_ANGLE_MIN    = 0;
-        private const float ANIM_POLAR_ANGLE_MAX    = 1;
+        private const float ANIM_SPEED_MIN          = 0.05f;
+        private const float ANIM_SPEED_MAX          = 0.25f;
+        private const float ANIM_LIFESPAN_MIN       = 0.2f;
+        private const float ANIM_LIFESPAN_MAX       = 0.5f;
+        private const float ANIM_POLAR_ANGLE_MIN    = -0.1f;
+        private const float ANIM_POLAR_ANGLE_MAX    = 0.1f;
         private const float SCALE_MIN               = 0.01f;
         private const float SCALE_MAX               = 0.25f;
         
@@ -42,6 +44,7 @@ namespace amethyst_installer_gui.Controls {
 
         private Texture2D m_gradientTexture;
         private ShaderResourceView m_gradientTextureView;
+        private SamplerState m_gradientTextureSamplerState;
 
         private Stopwatch m_stopwatch;
         private double m_lastTime = 0;
@@ -98,14 +101,16 @@ namespace amethyst_installer_gui.Controls {
                 float t2 = MathExtensions.Saturate(MathExtensions.Remap(0.543f, 1.0f, 0.0f, 1.0f, distX * 0.5f + 0.5f));
 
                 data[i] = new InstancedParticleData(
-                    localPosition:  new Vector3(distX, distY, rng.NextFloat(-0.1f, 0.1f)),
+                    localPosition:  new Vector3(distX * 1.2f, distY, rng.NextFloat(-0.1f, 0.1f)),
                     color:          MathExtensions.Lerp(colorStart, MathExtensions.Lerp(colorMiddle, colorEnd, t2), t1),
 
                     // Attributes
                     polarAngle:     rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
                     timingOffset:   rng.NextFloat(ANIM_OFFSET_MIN, ANIM_OFFSET_MAX),
-                    timingPeriod:   rng.NextFloat(ANIM_PERIOD_MIN, ANIM_PERIOD_MAX),
-                    scale:          rng.NextFloat(SCALE_MIN, SCALE_MAX));
+                    lifespan:       rng.NextFloat(ANIM_LIFESPAN_MIN, ANIM_LIFESPAN_MAX),
+                    scale:          rng.NextFloat(SCALE_MIN, SCALE_MAX),
+                    speed:          rng.NextFloat(ANIM_SPEED_MIN, ANIM_SPEED_MAX)
+                );
             }
 
             // Particle meshes (a quad lol)
@@ -115,18 +120,35 @@ namespace amethyst_installer_gui.Controls {
                 new Vector4(-1.0f, -1.0f, 0.5f, 0.0f),
                 new Vector4(+1.0f, -1.0f, 0.5f, 0.0f),
             };
-            m_vertexBuffer      = DX11Buffer.Create(device, BindFlags.VertexBuffer, positions);
-            m_instanceBuffer    = DX11Buffer.Create(device, BindFlags.VertexBuffer, data);
+            m_vertexBuffer                  = DX11Buffer.Create(device, BindFlags.VertexBuffer, positions);
+            m_instanceBuffer                = DX11Buffer.Create(device, BindFlags.VertexBuffer, data);
             // 16-bit integers to occupy less memory
-            m_indexBuffer       = DX11Buffer.Create(device, BindFlags.IndexBuffer, new ushort[] { 0, 1, 2, 3, 2, 1 });
+            m_indexBuffer                   = DX11Buffer.Create(device, BindFlags.IndexBuffer, new ushort[] { 0, 1, 2, 3, 2, 1 });
 
-            m_gradientTexture   = Texture2DLoader.LoadFromResource(ref device, "upgradeColorRamp.png");
-            m_gradientTextureView = new ShaderResourceView(device, m_gradientTexture);
+            m_gradientTexture               = Texture2DLoader.LoadFromResource(ref device, "upgradeColorRamp.png");
+            m_gradientTextureView           = new ShaderResourceView(device, m_gradientTexture);
+            m_gradientTextureSamplerState   = new SamplerState(device, new SamplerStateDescription() {
+                AddressU                    = TextureAddressMode.Clamp,
+                AddressV                    = TextureAddressMode.Clamp,
+                AddressW                    = TextureAddressMode.Clamp,
+                Filter                      = Filter.ComparisonMinMagMipLinear,
+                MaximumLod                  = 0,
+                MinimumLod                  = 0,
+                ComparisonFunction          = Comparison.Always,
+                BorderColor                 = new RawColor4(0, 0, 0, 0),
+                MaximumAnisotropy           = 0,
+                MipLodBias                  = -10,
+            });
+
+            device.ImmediateContext.VertexShader.SetShaderResource(0, m_gradientTextureView);
+            device.ImmediateContext.PixelShader.SetShaderResource(0, m_gradientTextureView);
+            device.ImmediateContext.VertexShader.SetSampler(0, m_gradientTextureSamplerState);
+            device.ImmediateContext.PixelShader.SetSampler(0, m_gradientTextureSamplerState);
 
             // Prepare blend state for alpha blending
             BlendStateDescription blendStateDescription = new BlendStateDescription() {
-                AlphaToCoverageEnable = false, // So far we don't need Alpha To Coverage
-                IndependentBlendEnable = false,
+                AlphaToCoverageEnable       = false, // So far we don't need Alpha To Coverage
+                IndependentBlendEnable      = false,
             };
             blendStateDescription.RenderTarget[0].IsBlendEnabled            = true;
             blendStateDescription.RenderTarget[0].SourceBlend               = BlendOption.One;
@@ -137,11 +159,11 @@ namespace amethyst_installer_gui.Controls {
             blendStateDescription.RenderTarget[0].AlphaBlendOperation       = BlendOperation.Add;
             blendStateDescription.RenderTarget[0].RenderTargetWriteMask     = ColorWriteMaskFlags.All;
 
-            m_blendState                = new BlendState(device, blendStateDescription);
+            m_blendState                    = new BlendState(device, blendStateDescription);
 
             // Init cbuffer data
-            CommonData.Time             = new Vector2(m_elapsedTime, m_deltaTime);
-            CommonData.ScreenResolution = new Vector2(( float ) ActualWidth, ( float ) ActualHeight);
+            CommonData.Time                 = new Vector2(m_elapsedTime, m_deltaTime);
+            CommonData.ScreenResolution     = new Vector2(( float ) ActualWidth, ( float ) ActualHeight);
 
             // cbuffer
             m_cbufferCommonData = DX11Buffer.Create(device,
@@ -189,8 +211,6 @@ namespace amethyst_installer_gui.Controls {
             device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleStrip;
             device.ImmediateContext.OutputMerger.SetBlendState(m_blendState, new RawColor4(0,0,0,0), ~0);
 
-            device.ImmediateContext.PixelShader.SetShaderResource(0, m_gradientTextureView);
-
             m_shaders.Bind();
 
             // Update common data cbuffer
@@ -217,6 +237,7 @@ namespace amethyst_installer_gui.Controls {
         }
 
         public new void Dispose() {
+            m_gradientTextureSamplerState?.Dispose();
             m_gradientTexture?.Dispose();
             m_blendState?.Dispose();
             m_vertexBuffer?.Dispose();

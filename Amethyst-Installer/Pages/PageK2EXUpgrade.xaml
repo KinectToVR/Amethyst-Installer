@@ -83,9 +83,9 @@
 
         <Border Grid.RowSpan="2" >
             <Border.Effect>
-                <BlurEffect Radius="0" KernelType="Gaussian"/>
+                <BlurEffect Radius="38" KernelType="Gaussian"/>
             </Border.Effect>
-            <controls:DX_Blobs x:Name="dxHost" Opacity="1"/>
+            <controls:DX_Blobs x:Name="dxHost" Opacity="0.75"/>
         </Border>
 
         <Grid MaxWidth="500">

@@ -226,8 +226,8 @@ namespace amethyst_installer_gui.DirectX {
                     dxgiDevice.Trim();
             }
 
-            device.ImmediateContext.ClearState();
-            device.ImmediateContext.Flush();
+            device?.ImmediateContext?.ClearState();
+            device?.ImmediateContext?.Flush();
 
             Disposer.SafeDispose(ref d2DRenderTarget);
             Disposer.SafeDispose(ref renderView);
@@ -301,8 +301,11 @@ namespace amethyst_installer_gui.DirectX {
 
                 device.ImmediateContext.Rasterizer.SetViewport(0, 0, width, height, 0.0f, 1.0f);
                 TargetsCreated();
-            } catch {
+            } catch (Exception ex) {
                 m_isError = true;
+#if DEBUG
+                throw ex;
+#endif
             }
         }
 

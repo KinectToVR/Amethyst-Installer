@@ -6,6 +6,8 @@ static const float TWO_PI       = PI * 2.f;
 Texture2D UpgradeColorRamp : register(t0);
 SamplerState UpgradeColorRamp_Sampler : register(s0);
 
+#define glsl_mod(x,y) (((x)-(y)*floor((x)/(y))))
+
 // Vertex input, must match vertex struct
 struct vinput
 {
@@ -13,6 +15,7 @@ struct vinput
     float3 posInst          : TEXCOORD0;
     float3 colorInst        : TEXCOORD1;
     float4 animDataInst     : TEXCOORD2;
+    float4 animDataInst2    : TEXCOORD3;
     // uint instanceID     : SV_InstanceID; // Doesn't seem necessary?
 };
 
@@ -23,6 +26,7 @@ struct v2f
     float2 screenSpace      : TEXCOORD1;
     float3 color            : TEXCOORD2;
     float4 animData         : TEXCOORD3;
+    float4 animData2        : TEXCOORD4;
 };
 
 cbuffer CommonDataCBuffer {
@@ -86,16 +90,18 @@ v2f vert(vinput input)
 
     const float animDirectionPolar  = input.animDataInst.x;
     const float animTimingOffset    = input.animDataInst.z;
-    const float animTimingPeriod    = input.animDataInst.w;
+    const float lifeSpan            = input.animDataInst.w;
     const float scale               = input.animDataInst.y;
+    const float speed               = input.animDataInst2.x;
 
     const float aspectRatio = ScreenResolution.y / ScreenResolution.x;
 
     const float2 animDir = toCartesian(float2(animDirectionPolar, 1));
-    const float currentTimeInAnimation = sin(animTimingPeriod * Time.x * 0.28f - animTimingOffset);
+    const float timeElapsed = glsl_mod((Time.x * speed * 0.28f - animTimingOffset), lifeSpan);
+    const float currentTimeInAnimation = sin(timeElapsed);
 
     // Transform the vertex position into projected space.
-    output.pos = float4(input.pos.xyz * aspectRatio * scale + input.posInst + float3(animDir * currentTimeInAnimation * 0.5f, 0), 1.f);
+    output.pos = float4(input.pos.xyz * aspectRatio * scale + input.posInst + float3(animDir * currentTimeInAnimation, 0), 1.f);
     output.pos.x *= aspectRatio;
 
     // Pass attributes to the pixel shader
@@ -103,31 +109,46 @@ v2f vert(vinput input)
     output.uv           = input.pos.xy;
     output.screenSpace  = output.pos.xy;
     output.animData     = input.animDataInst;
+    output.animData2    = float4(input.animDataInst2.x, currentTimeInAnimation, timeElapsed / lifeSpan, 0);
     
     return output;
 }
 float4 frag(v2f input) : SV_TARGET
 {
-    const float elapsedTime = saturate(Time.x / 0.3f);
+    const float elapsedTime = saturate(Time.x / 1.f);
 
     const float animDirectionPolar  = input.animData.x;
     const float animTimingOffset    = input.animData.z;
-    const float animTimingPeriod    = input.animData.w;
+    const float lifeSpan            = input.animData.w;
     const float scale               = input.animData.y;
+    const float lifetime            = saturate(input.animData2.y);
+    const float timeElapsed         = input.animData2.y;
+
+    const float sampleOffset = (animTimingOffset * 0.4f + lifeSpan * 0.34f + scale * 0.025f) * 0.25f;
+    const float4 gradientTex = UpgradeColorRamp.Sample(UpgradeColorRamp_Sampler, float2(input.screenSpace.x * 0.5f + 0.5f + sampleOffset, 0));
 
     const float2 animDir = toCartesian(float2(animDirectionPolar, 1));
-
-    float alpha = 1.f - saturate(length(input.uv)); // Edge fade per particle
-    alpha *= elapsedTime;
-
+    
     const float distanceToScreenEdge = saturate(length(float2(input.screenSpace.x, input.screenSpace.y)));
     const float distanceToScreenEdge2 = distanceToScreenEdge * distanceToScreenEdge;
 
-    alpha *= 1.f - distanceToScreenEdge;
-
     float3 fakeWorldSpacePos = float3(input.screenSpace * scale, dot(input.screenSpace, animDir)) * 12.4f + 20.f;
     float noise = fbm(fakeWorldSpacePos);
-    alpha *= saturate(noise);
+    const float lifeTimeFade = -4.f * lifetime * lifetime + 4.f * lifetime;
+    const float lifeTimeFade2 = 1.f - lifeTimeFade * lifeTimeFade;
 
-    return float4(input.color * alpha, alpha);
+    const float alpha =
+          (1.f - saturate(length(input.uv)))    // Edge fade per particle
+        * (1.f - distanceToScreenEdge2)         // Distance to edge of framebuffer
+        * elapsedTime                           // Fade in
+        * saturate(noise)                       // Noise for more detail
+        * gradientTex.a                         // Gradient alpha fade
+        * lifeTimeFade2;                        // Particle life time fade
+
+    float3 diffuse = gradientTex.rgb;
+
+    // return float4(input.animData2.xyz, 1.f);
+    // return float4(1, 1, 1, timeElapsed);
+
+    return float4(alpha * diffuse, alpha);
 }
