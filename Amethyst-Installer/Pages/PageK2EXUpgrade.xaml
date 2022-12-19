@@ -81,7 +81,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <controls:DX_Blobs x:Name="dxHost" Grid.RowSpan="2"/>
+        <Border Grid.RowSpan="2" >
+            <Border.Effect>
+                <BlurEffect Radius="0" KernelType="Gaussian"/>
+            </Border.Effect>
+            <controls:DX_Blobs x:Name="dxHost" Opacity="1"/>
+        </Border>
 
         <Grid MaxWidth="500">
             <Grid.RowDefinitions>
@@ -94,7 +99,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="headerTitle" Grid.Row="1" Foreground="White" Text="{x:Static global:Localisation.Installer_K2EXUpgrade_Title}" FontSize="26" FontWeight="Bold" TextAlignment="Center"  TextWrapping="WrapWithOverflow" Opacity="0" />
-            <Grid Grid.Row="2" MaxHeight="100" MaxWidth="400" Margin="0,25">
+            <Grid Grid.Row="2" MaxHeight="100" MaxWidth="400" Margin="0,35">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
@@ -118,7 +123,7 @@
                 </Image>
             </Grid>
             <TextBlock x:Name="blurb" Grid.Row="3" MaxWidth="425" Foreground="White" TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{x:Static global:Localisation.Installer_K2EXUpgrade_Description}" FontSize="16" FontWeight="Normal" Opacity="0"/>
-            <TextBlock x:Name="learnMore" Grid.Row="4" HorizontalAlignment="Center" Margin="0,20,0,0" Opacity="0">
+            <TextBlock x:Name="learnMore" Grid.Row="4" HorizontalAlignment="Center" Margin="0,12,0,0" Opacity="0">
                 <Hyperlink Click="learnMoreLink_Click"><TextBlock x:Name="learnMoreLink" Foreground="{StaticResource BrushAccent}" Text="{x:Static global:Localisation.Installer_K2EXUpgrade_LearnMore}" FontSize="16" FontWeight="SemiBold"/></Hyperlink>
             </TextBlock>
         </Grid>

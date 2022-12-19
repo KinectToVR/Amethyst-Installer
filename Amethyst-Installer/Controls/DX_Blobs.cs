@@ -18,14 +18,18 @@ namespace amethyst_installer_gui.Controls {
         public bool doCapture = false;
         const int particleCount = 2048;
 
-        private const float ANIM_OFFSET_MIN = 0;
-        private const float ANIM_OFFSET_MAX = 1;
-        private const float ANIM_PERIOD_MIN = 0.2f;
-        private const float ANIM_PERIOD_MAX = 1;
-        private const float ANIM_POLAR_ANGLE_MIN = 0;
-        private const float ANIM_POLAR_ANGLE_MAX = 1;
-        private const float SCALE_MIN = 0.01f;
-        private const float SCALE_MAX = 0.25f;
+        private const float ANIM_OFFSET_MIN         = 0;
+        private const float ANIM_OFFSET_MAX         = 1;
+        private const float ANIM_PERIOD_MIN         = 0.2f;
+        private const float ANIM_PERIOD_MAX         = 1;
+        private const float ANIM_POLAR_ANGLE_MIN    = 0;
+        private const float ANIM_POLAR_ANGLE_MAX    = 1;
+        private const float SCALE_MIN               = 0.01f;
+        private const float SCALE_MAX               = 0.25f;
+        
+        private static readonly Vector3 colorStart      = new Vector3(141.0f / 255.0f, 44.0f / 254.0f, 176.0f / 255.0f);
+        private static readonly Vector3 colorMiddle     = new Vector3(59.0f / 255.0f, 192.0f / 255.0f, 254.0f / 255.0f);
+        private static readonly Vector3 colorEnd        = new Vector3(185.0f / 255.0f, 70.0f / 255.0f, 209.0f / 255.0f);
 
         private DX11ShaderPair m_shaders;
         private DX11Buffer m_vertexBuffer;
@@ -33,7 +37,11 @@ namespace amethyst_installer_gui.Controls {
         private DX11Buffer m_instanceBuffer;
         private BlendState m_blendState;
         private DX11Buffer m_cbufferCommonData;
+
         private Random rng;
+
+        private Texture2D m_gradientTexture;
+        private ShaderResourceView m_gradientTextureView;
 
         private Stopwatch m_stopwatch;
         private double m_lastTime = 0;
@@ -57,6 +65,11 @@ namespace amethyst_installer_gui.Controls {
             // Called whenever we must create resources
             // This includes initialization
 
+            // Edge case on init
+            if ( ActualHeight == 0 || ActualWidth == 0 ) {
+                return;
+            }
+
             // Setup shaders
             if ( m_shaders == null )
                 // Don't init the native stuff because we'll do it after exiting the this scope
@@ -68,22 +81,25 @@ namespace amethyst_installer_gui.Controls {
 
             for ( int i = 0; i < particleCount; i++ ) {
 
-                // Sampling is done on a poisson disk, where the distance is sqrt(1-x), which is a good enough analogue to a
+                // Sampling is done on a disk, where the distance is sqrt(1-x), which is a good enough analogue to a
                 // probability distribution function
 
                 const float revolutions = 20.0f;
 
                 float t = i / (float) particleCount;
                 float distX = (float) Math.Sin(2.0 * Math.PI * t * revolutions);
-                float distY = (float) Math.Cos(2.0 * Math.PI * t * revolutions);
+                float distY = (float) (Math.Cos(2.0 * Math.PI * t * revolutions) * (ActualHeight / ActualWidth) - 0.05f);
                 float magnitude = ( float ) Math.Sqrt(1.0 - t);
 
                 distX *= magnitude;
                 distY *= magnitude;
 
+                float t1 = MathExtensions.Saturate(MathExtensions.Remap(0.0f, 0.543f, 0.0f, 1.0f, distX * 0.5f + 0.5f));
+                float t2 = MathExtensions.Saturate(MathExtensions.Remap(0.543f, 1.0f, 0.0f, 1.0f, distX * 0.5f + 0.5f));
+
                 data[i] = new InstancedParticleData(
-                    localPosition:  new Vector3(distX, distY, 0.0f),
-                    color:          new Vector3(rng.NextFloat(), rng.NextFloat(), rng.NextFloat()),
+                    localPosition:  new Vector3(distX, distY, rng.NextFloat(-0.1f, 0.1f)),
+                    color:          MathExtensions.Lerp(colorStart, MathExtensions.Lerp(colorMiddle, colorEnd, t2), t1),
 
                     // Attributes
                     polarAngle:     rng.NextFloat(ANIM_POLAR_ANGLE_MIN, ANIM_POLAR_ANGLE_MAX),
@@ -104,16 +120,20 @@ namespace amethyst_installer_gui.Controls {
             // 16-bit integers to occupy less memory
             m_indexBuffer       = DX11Buffer.Create(device, BindFlags.IndexBuffer, new ushort[] { 0, 1, 2, 3, 2, 1 });
 
+            m_gradientTexture   = Texture2DLoader.LoadFromResource(ref device, "upgradeColorRamp.png");
+            m_gradientTextureView = new ShaderResourceView(device, m_gradientTexture);
+
             // Prepare blend state for alpha blending
             BlendStateDescription blendStateDescription = new BlendStateDescription() {
                 AlphaToCoverageEnable = false, // So far we don't need Alpha To Coverage
+                IndependentBlendEnable = false,
             };
             blendStateDescription.RenderTarget[0].IsBlendEnabled            = true;
-            blendStateDescription.RenderTarget[0].SourceBlend               = BlendOption.SourceAlpha;
+            blendStateDescription.RenderTarget[0].SourceBlend               = BlendOption.One;
             blendStateDescription.RenderTarget[0].DestinationBlend          = BlendOption.InverseSourceAlpha;
             blendStateDescription.RenderTarget[0].BlendOperation            = BlendOperation.Add;
-            blendStateDescription.RenderTarget[0].SourceAlphaBlend          = BlendOption.Zero;
-            blendStateDescription.RenderTarget[0].DestinationAlphaBlend     = BlendOption.Zero;
+            blendStateDescription.RenderTarget[0].SourceAlphaBlend          = BlendOption.One;
+            blendStateDescription.RenderTarget[0].DestinationAlphaBlend     = BlendOption.InverseSourceAlpha;
             blendStateDescription.RenderTarget[0].AlphaBlendOperation       = BlendOperation.Add;
             blendStateDescription.RenderTarget[0].RenderTargetWriteMask     = ColorWriteMaskFlags.All;
 
@@ -167,7 +187,9 @@ namespace amethyst_installer_gui.Controls {
             );
             device.ImmediateContext.InputAssembler.SetIndexBuffer(m_indexBuffer, Format.R16_UInt, 0);
             device.ImmediateContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleStrip;
-            device.ImmediateContext.OutputMerger.BlendState = m_blendState;
+            device.ImmediateContext.OutputMerger.SetBlendState(m_blendState, new RawColor4(0,0,0,0), ~0);
+
+            device.ImmediateContext.PixelShader.SetShaderResource(0, m_gradientTextureView);
 
             m_shaders.Bind();
 
@@ -188,10 +210,14 @@ namespace amethyst_installer_gui.Controls {
             m_lastTime = currentTimeMs.TotalSeconds;
             if ( rdoc != null && rdoc.IsFrameCapturing() ) {
                 rdoc.EndFrameCapture();
+                if (!rdoc.IsTargetControlConnected()) {
+                    rdoc.LaunchReplayUI();
+                }
             }
         }
 
         public new void Dispose() {
+            m_gradientTexture?.Dispose();
             m_blendState?.Dispose();
             m_vertexBuffer?.Dispose();
             m_indexBuffer?.Dispose();

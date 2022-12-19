@@ -258,6 +258,20 @@ namespace amethyst_installer_gui {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static MemoryStream ExtractResourceAsStream(string resourcePath) {
+            using ( var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream($"amethyst_installer_gui.Resources.{resourcePath}") ) {
+                byte[] buffer = new byte[resource.Length];
+                using ( MemoryStream memStream = new MemoryStream() ) {
+                    int read;
+                    while ( ( read = resource.Read(buffer, 0, buffer.Length) ) > 0 ) {
+                        memStream.Write(buffer, 0, read);
+                    }
+                    return memStream;
+                }
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsLaptop() {
             return PowerProvider.SystemPowerCapabilites.LidPresent;
         }

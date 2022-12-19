@@ -226,6 +226,9 @@ namespace amethyst_installer_gui.DirectX {
                     dxgiDevice.Trim();
             }
 
+            device.ImmediateContext.ClearState();
+            device.ImmediateContext.Flush();
+
             Disposer.SafeDispose(ref d2DRenderTarget);
             Disposer.SafeDispose(ref renderView);
             Disposer.SafeDispose(ref d3DSurface);
@@ -343,6 +346,7 @@ namespace amethyst_installer_gui.DirectX {
 
             d2DRenderTarget.BeginDraw();
             Render(d2DRenderTarget);
+            device.ImmediateContext.OutputMerger.BlendState = null;
             d2DRenderTarget.EndDraw();
 
             ComputeFramerate();

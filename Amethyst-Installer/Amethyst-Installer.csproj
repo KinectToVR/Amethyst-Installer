@@ -224,6 +224,7 @@
     <Compile Include="DirectX\Renderdoc\RenderDocNative.cs" />
     <Compile Include="DirectX\ResourceCache.cs" />
     <Compile Include="DirectX\InstancedParticleData.cs" />
+    <Compile Include="DirectX\Texture2DLoader.cs" />
     <Compile Include="Installer\AnalyticsData.cs" />
     <Compile Include="Installer\DownloadManager.cs" />
     <Compile Include="Installer\Installer.Enums.cs" />
@@ -691,6 +692,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectX\Shaders\simple.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\upgradeColorRamp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
