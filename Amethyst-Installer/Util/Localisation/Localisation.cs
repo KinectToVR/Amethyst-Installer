@@ -204,6 +204,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Installer_Action_Next");
             }
         }
+        public static string Installer_Action_Finish {
+            get {
+                return LocaleManager.GetString("Installer_Action_Finish");
+            }
+        }
         public static string InstallProhibited_Title {
             get {
                 return LocaleManager.GetString("InstallProhibited_Title");

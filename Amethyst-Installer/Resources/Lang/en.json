@@ -49,6 +49,7 @@
   "Installer_Action_Discord": "Get help on Discord",
   "Installer_Action_Exit": "Exit",
   "Installer_Action_Next": "Next",
+  "Installer_Action_Finish": "Finish",
 
   "InstallProhibited_Title": "Cannot install Amethyst", /* The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window. */
   "InstallProhibited_CloudPC": "Cloud PCs are unsupported. Amethyst does not work on remote PCs.", /* The error shown to users if they're running Amethyst Installer on a Cloud PC. */
