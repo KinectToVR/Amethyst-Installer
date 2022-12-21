@@ -35,6 +35,10 @@
         public const string UpdatingFirewallRules               = "Updating firewall rules...";
         public const string UpdatingFirewallRulesSuccess        = "Updated firewall rules successfully!";
         public const string UpdatingFirewallRulesFailure        = "Failed to update firewall rules";
+        public const string SettingDefaultConfig                = "Setting default Amethyst config...";
+        public const string SettingDefaultConfigVerbose         = "Setting default Amethyst config at \"{0}\"...";
+        public const string SettingDefaultConfigSuccess         = "Successfully set default Amethyst config!";
+        public const string SettingDefaultConfigFailure         = "Failed to set default config";
 
         // exe-module
         public const string InstallingExe                       = "Installing {0}...";

@@ -2,6 +2,7 @@
 using amethyst_installer_gui.PInvoke;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,6 +62,8 @@ if upgrade no
                     sucessMinor         = sucessMinor    && AdjustSteamVrSettings(ref control);
                     // Don't recreate shortcuts during an update!
                     overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
+                    // Assign default settings
+                    overallSuccess      = overallSuccess && SetDefaultEndpoint(path, ref control);
                 }
 
                 // @TODO: If this is an upgrade change the message to a different one
@@ -479,12 +482,15 @@ if upgrade no
 
             try {
 
-                // Amethyst gRPC protocol ports
+                // Amethyst:: gRPC protocol ports
                 bool success = Util.ActivateFirewallRule("Amethyst SteamVR Addon", NetworkProtocol.TCP, 7135);
-                // Rotational data default port
+                // owoTrack:: Rotational data default port
                 success = success && Util.ActivateFirewallRule("owoTrack Rotation", NetworkProtocol.UDP, 6969);
-                // Info server allowing automatic discovery
+                // owoTrack:: Info server allowing automatic discovery
                 success = success && Util.ActivateFirewallRule("owoTrack Discovery", NetworkProtocol.UDP, 35903);
+                // VRChat:: OSC
+                success = success && Util.ActivateFirewallRule("VRChat outgoing data", NetworkProtocol.UDP, 9000);
+                success = success && Util.ActivateFirewallRule("VRChat incoming data", NetworkProtocol.UDP, 9001);
 
                 if ( success ) {
                     control.LogInfo(LogStrings.UpdatingFirewallRulesSuccess);
@@ -500,6 +506,39 @@ if upgrade no
                 Logger.Fatal(Util.FormatException(e));
                 return false;
             }
+        }
+
+        private bool SetDefaultEndpoint(string path, ref InstallModuleProgress control) {
+
+            /* defaults.json
+             {
+  "TrackingDevice": "K2VRTEAM-AME2-APII-DVCE-DVCEPSMOVEEX",
+  "ServiceEndpoint": "K2VRTEAM-AME2-APII-SNDP-SENDPTOPENVR",
+  "ExtraTrackers": true
+}
+             */
+            try {
+
+                var defaultConfig = new JObject();
+                defaultConfig["ServiceEndpoint"] = InstallerStateManager.DefaultToOSC ? Constants.AmethystPluginGuidOSC : Constants.AmethystPluginGuidOpenVR;
+                string serialized = defaultConfig.ToString(Formatting.Indented);
+                string filePath = Path.GetFullPath(Path.Combine(path, "defaults.json"));
+
+                control.LogInfo(LogStrings.SettingDefaultConfig);
+                Logger.Info(string.Format(LogStrings.SettingDefaultConfigVerbose, filePath));
+
+                File.WriteAllText(filePath, serialized);
+
+                control.LogInfo(LogStrings.SettingDefaultConfigSuccess);
+                Logger.Info(LogStrings.SettingDefaultConfigSuccess);
+
+                return true;
+            } catch ( Exception e ) {
+                control.LogError($"{LogStrings.SettingDefaultConfigFailure}! {LogStrings.ViewLogs}");
+                Logger.Fatal($"{LogStrings.SettingDefaultConfigFailure}:\n{Util.FormatException(e)})");
+            }
+
+            return false;
         }
     }
 }

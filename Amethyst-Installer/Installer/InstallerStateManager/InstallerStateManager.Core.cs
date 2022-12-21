@@ -65,6 +65,11 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool MustDelevateProcesses = false;
 
+        /// <summary>
+        /// Whether Amethyst should default to OSC or SteamVR
+        /// </summary>
+        public static bool DefaultToOSC = false;
+
         public static void Initialize() {
 
             FetchInstallerJson();

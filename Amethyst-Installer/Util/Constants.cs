@@ -102,6 +102,15 @@ namespace amethyst_installer_gui {
         public static readonly string DocsLocalesEndpoint = "https://docs.k2vr.tech/shared/locales.json";
 
         /// <summary>
+        /// The plugin GUID for the OpenVR Service Endpoint Plugin
+        /// </summary>
+        public static readonly string AmethystPluginGuidOpenVR = "K2VRTEAM-AME2-APII-SNDP-SENDPTOPENVR";
+        /// <summary>
+        /// The plugin GUID for the OSC Service Endpoint Plugin
+        /// </summary>
+        public static readonly string AmethystPluginGuidOSC = "K2VRTEAM-AME2-APII-SNDP-SENDPTVRCOSC";
+
+        /// <summary>
         /// Amethyst registry key location
         /// </summary>
         public const string AmethystRegsitryKey = @"Software\K2VR Team\Amethyst";
