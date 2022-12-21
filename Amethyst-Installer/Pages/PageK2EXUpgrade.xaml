@@ -144,6 +144,7 @@
                         <TranslateTransform x:Name="ActionButtonPrimaryTransform" X="0" Y="100"/>
                     </Button.RenderTransform>
                 </Button>
+                <Button x:Name="ActionCaptureRenderDocFrame" Grid.Column="0" Content="RenderDoc Capture" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="3" IsDefault="True" Click="ActionCaptureRenderDocFrame_Click" Visibility="Collapsed" ></Button>
             </Grid>
 
             <TextBlock Grid.Column="0" Text="{x:Static global:Util.InstallerVersionString}" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Margin="8" VerticalAlignment="Bottom"/>

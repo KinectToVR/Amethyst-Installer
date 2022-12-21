@@ -29,17 +29,19 @@ namespace amethyst_installer_gui.Pages {
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
             Util.HandleKeyboardFocus(e);
 
-#if DEBUG
-            // Capture frame with RenderDoc
-            SoundPlayer.PlaySound(SoundEffect.Invoke);
-            dxHost.doCapture = true;
-#else
             if ( MainWindow.HandleSpeedrun() ) {
                 // Advance to next page
                 SoundPlayer.PlaySound(SoundEffect.MoveNext);
                 MainWindow.Instance.SetPage(InstallerState.Welcome);
             }
-#endif
+        }
+
+        private void ActionCaptureRenderDocFrame_Click(object sender, RoutedEventArgs e) {
+            Util.HandleKeyboardFocus(e);
+
+            // Capture frame with RenderDoc
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            dxHost.doCapture = true;
         }
 
         private void UpdateHandler() {
@@ -74,7 +76,7 @@ namespace amethyst_installer_gui.Pages {
             AnimationHandler();
 
 #if DEBUG
-            ActionButtonPrimary.Content = "RenderDoc Capture";
+            ActionCaptureRenderDocFrame.Visibility = Visibility.Visible;
 #endif
         }
 
