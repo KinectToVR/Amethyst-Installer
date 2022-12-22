@@ -68,6 +68,7 @@
   "Page_Done_Title": "Install completed",
   "Page_Download_Title": "Downloading",
   "Page_EULA_Title": "Licenses",
+  "Page_SelectAmethystMode_Title": "Use Amethsyt for?",
   "Page_Exception_Title": "An error happened",
   "Page_InstallOptions_Title": "What to install",
   "Page_Install_Title": "Installation",
@@ -87,6 +88,13 @@
 
   "Speedrunner_Description": "Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?\n\nBe careful where you click!", /* this dialog gets shown when the user spams through the installer */
   "Speedrunner_Title": "Slow down!", /* this dialog gets shown when the user spams through the installer */
+
+  /* The \n in these is important as they're a newline */
+  "AmethystMode_Description": "What will you use Amethyst for?\nThis can be changed later in Amethyst's Settings!",
+  "AmethystMode_OpenVR_Title": "SteamVR Tracking",
+  "AmethystMode_OpenVR_Description": "Use this option if the application(s) you will be using runs on the same PC as Amethyst.\n\nRequires SteamVR to be installed.",
+  "AmethystMode_OSC_Title": "OSC Tracking",
+  "AmethystMode_OSC_Description": "Use this option when playing VRChat directly on the Meta Quest, and not this computer.\n\nOSC trackers is only supported in VRChat.",
 
   "SystemRequirement_Category_Compatibility": "Compatible devices",
   "SystemRequirement_Category_Playspace": "Play Area",

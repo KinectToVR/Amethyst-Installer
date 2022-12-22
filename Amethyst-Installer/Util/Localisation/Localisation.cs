@@ -279,6 +279,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Page_EULA_Title");
             }
         }
+        public static string Page_SelectAmethystMode_Title {
+            get {
+                return LocaleManager.GetString("Page_SelectAmethystMode_Title");
+            }
+        }
         public static string Page_Exception_Title {
             get {
                 return LocaleManager.GetString("Page_Exception_Title");
@@ -362,6 +367,31 @@ namespace amethyst_installer_gui {
         public static string Speedrunner_Title {
             get {
                 return LocaleManager.GetString("Speedrunner_Title");
+            }
+        }
+        public static string AmethystMode_Description {
+            get {
+                return LocaleManager.GetString("AmethystMode_Description");
+            }
+        }
+        public static string AmethystMode_OpenVR_Title {
+            get {
+                return LocaleManager.GetString("AmethystMode_OpenVR_Title");
+            }
+        }
+        public static string AmethystMode_OpenVR_Description {
+            get {
+                return LocaleManager.GetString("AmethystMode_OpenVR_Description");
+            }
+        }
+        public static string AmethystMode_OSC_Title {
+            get {
+                return LocaleManager.GetString("AmethystMode_OSC_Title");
+            }
+        }
+        public static string AmethystMode_OSC_Description {
+            get {
+                return LocaleManager.GetString("AmethystMode_OSC_Description");
             }
         }
         public static string SystemRequirement_Category_Compatibility {

@@ -20,56 +20,60 @@
         /// </summary>
         Welcome = 0,
         /// <summary>
+        /// Amethyst mode selection, SteamVR or OSC select basically
+        /// </summary>
+        AmethystModeSelection = 1,
+        /// <summary>
         /// What to install
         /// </summary>
-        InstallOptions = 1,
+        InstallOptions = 2,
         /// <summary>
         /// Destination
         /// </summary>
-        InstallDestination = 2,
+        InstallDestination = 3,
         /// <summary>
         /// System requirements
         /// </summary>
-        SystemRequirements = 3,
+        SystemRequirements = 4,
         /// <summary>
         /// Downloading
         /// </summary>
-        Downloading = 4,
+        Downloading = 5,
         /// <summary>
         /// Installation
         /// </summary>
-        Installation = 5,
+        Installation = 6,
         /// <summary>
         /// Install completed
         /// </summary>
-        Done = 6,
+        Done = 7,
         /// <summary>
         /// Logs viewer
         /// </summary>
-        Logs = 7,
+        Logs = 8,
         /// <summary>
         /// EULA agreement
         /// </summary>
-        EULA = 8,
+        EULA = 9,
         /// <summary>
         /// Exception handling
         /// </summary>
-        Exception = 9,
+        Exception = 10,
 
         /// <summary>
         /// Updating Screen
         /// </summary>
-        Updating = 10,
+        Updating = 11,
 
         /// <summary>
         /// Uninstall Screen
         /// </summary>
-        Uninstall = 11,
+        Uninstall = 12,
 
         /// <summary>
         /// K2EX Upgrade screen
         /// </summary>
-        K2EXUpgrading = 12,
+        K2EXUpgrading = 13,
 
         /// <summary>
         /// DEBUG

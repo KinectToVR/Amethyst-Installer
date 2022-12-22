@@ -58,6 +58,7 @@ namespace amethyst_installer_gui {
             // Init pages
             Pages.Add(InstallerState.Welcome, new PageWelcome());
             Pages.Add(InstallerState.InstallOptions, new PageInstallOptions());
+            Pages.Add(InstallerState.AmethystModeSelection, new PageAmethystMode());
             Pages.Add(InstallerState.InstallDestination, new PageInstallDestination());
             Pages.Add(InstallerState.SystemRequirements, new PageSystemRequirements());
             Pages.Add(InstallerState.Downloading, new PageDownloading());

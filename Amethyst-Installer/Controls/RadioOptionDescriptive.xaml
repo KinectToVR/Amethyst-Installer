@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="amethyst_installer_gui.Controls.RadioOptionDescriptive"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:amethyst_installer_gui.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="45" d:DesignWidth="508">
+    <Border BorderThickness="2" BorderBrush="{Binding Source={StaticResource BrushAccent}}" CornerRadius="4">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <RadioButton Grid.Column="0" x:Name="radioElementInternal" Margin="8,0,0,0" />
+            
+            <Grid Grid.Column="1" Margin="0,8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" x:Name="titleText" Text="Lorem Ipsum Dolor Sit Amet" Foreground="{DynamicResource BrushForeground}"></TextBlock>
+                <TextBlock Grid.Row="1" x:Name="descriptionText" Text="Lorem ipsum dolor sit amet constecteur adispiling." Foreground="{DynamicResource BrushForegroundAlt}"></TextBlock>
+            </Grid>
+
+        </Grid>
+    </Border>
+</UserControl>

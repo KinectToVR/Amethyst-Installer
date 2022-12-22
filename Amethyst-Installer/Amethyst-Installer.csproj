@@ -202,6 +202,9 @@
     <Compile Include="Controls\InstallableItem.cs" />
     <Compile Include="Controls\ItemTask.cs" />
     <Compile Include="Controls\ProgressSpinner\ProgressSpinner.cs" />
+    <Compile Include="Controls\RadioOptionDescriptive.xaml.cs">
+      <DependentUpon>RadioOptionDescriptive.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SidebarExtensions.cs" />
     <Compile Include="Controls\SidebarTask.xaml.cs">
       <DependentUpon>SidebarTask.xaml</DependentUpon>
@@ -266,6 +269,9 @@
     <Compile Include="Installer\JSON\UninstallListJSON.cs" />
     <Compile Include="Installer\JSON\UpdateJSON.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
+    <Compile Include="Pages\PageAmethystMode.xaml.cs">
+      <DependentUpon>PageAmethystMode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PageDebug.xaml.cs">
       <DependentUpon>PageDebug.xaml</DependentUpon>
     </Compile>
@@ -384,6 +390,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\RadioOptionDescriptive.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SidebarTask.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -408,6 +418,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\PageAmethystMode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\PageDebug.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
