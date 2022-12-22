@@ -275,6 +275,15 @@ namespace amethyst_installer_gui.PInvoke {
             Marshal.FreeHGlobal(buffer);
         }
 
+        public DeviceNodeStatus GetStatus(out uint problemCode) {
+            uint status;
+            if (CM_Get_DevNode_Status(out status, out problemCode, _deviceHandle, 0) == 0) {
+                return ( DeviceNodeStatus ) status;
+            }
+            problemCode = uint.MaxValue;
+            return DeviceNodeStatus.PrivateProblem;
+        }
+
         private void EnumerateChildren() {
             IntPtr ptrFirstChild = IntPtr.Zero;
 
@@ -320,6 +329,8 @@ namespace amethyst_installer_gui.PInvoke {
         private static extern int CM_Get_DevNode_Registry_Property_Ex(IntPtr deviceHandle, int property, IntPtr regDataType, IntPtr outBuffer, ref uint size, int flags, IntPtr machineHandle);
         [DllImport("cfgmgr32.dll")]
         private static extern int CM_Uninstall_DevNode(IntPtr deviceHandle, int flags);
+        [DllImport("cfgmgr32.dll", SetLastError = true)]
+        private static extern int CM_Get_DevNode_Status(out uint status, out uint probNum, IntPtr deviceHandle, int flags);
 
         [DllImport("Cfgmgr32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern int CM_Query_And_Remove_SubTree_Ex(IntPtr deviceInstance, out int vetoType, StringBuilder vetoName, uint vetoNameLength, int flags, IntPtr machineHandle);
@@ -349,5 +360,66 @@ namespace amethyst_installer_gui.PInvoke {
         LegacyBusType = 0x15,
         BusNumber = 0x16,
         EnumeratorName = 0x17,
+    }
+
+    [Flags]
+    public enum DeviceNodeStatus : UInt64 {
+        RootEnumerated          = (0x00000001), // Was enumerated by ROOT
+        DriverLoaded            = (0x00000002), // Has Register_Device_Driver
+        EnumLoaded              = (0x00000004), // Has Register_Enumerator
+        Started                 = (0x00000008), // Is currently configured
+        Manual                  = (0x00000010), // Manually installed
+        NeedToEnum              = (0x00000020), // May need reenumeration
+        NotFirstTime            = (0x00000040), // Has received a config
+        HardwareEnum            = (0x00000080), // Enum generates hardware ID
+        Liar                    = (0x00000100), // Lied about can reconfig once
+        HasMark                 = (0x00000200), // Not CM_Create_DevInst lately
+        HasProblem              = (0x00000400), // Need device installer
+        Filtered                = (0x00000800), // Is filtered
+        Moved                   = (0x00001000), // Has been moved
+        Disableable             = (0x00002000), // Can be disabled
+        Removable               = (0x00004000), // Can be removed
+        PrivateProblem          = (0x00008000), // Has a private problem
+        MultiFunctionalParent   = (0x00010000), // Multi function parent
+        MultiFunctionalChild    = (0x00020000), // Multi function child
+        WillBeRemoved           = (0x00040000), // DevInst is being removed
+
+        //
+        // Windows 4 OPK2 Flags
+        //
+        NotFirstTimeEnumerating = 0x00080000,  // S: Has received a config enumerate
+        StoppedFreeResources    = 0x00100000,  // S: When child is stopped, free resources
+        RebalanceCandidate      = 0x00200000,  // S: Don't skip during rebalance
+        BadPartial              = 0x00400000,  // S: This devnode's log_confs do not have same resources
+        NTEnumerator            = 0x00800000,  // S: This devnode's is an NT enumerator
+        NTDriver                = 0x01000000,  // S: This devnode's is an NT driver
+        //
+        // Windows 4.1 Flags
+        //
+        NeedsLocking            = 0x02000000,  // S: Devnode need lock resume processing
+        ArmWakeup               = 0x04000000,  // S: Devnode can be the wakeup device
+        APMAwareEnumerator      = 0x08000000,  // S: APM aware enumerator
+        APMAwareDriver          = 0x10000000,  // S: APM aware driver
+        SilentInstall           = 0x20000000,  // S: Silent install
+        HideInDeviceManager     = 0x40000000,  // S: No show in device manager
+        BootLogProblem          = 0x80000000,  // S: Had a problem during preassignment of boot log conf
+
+        //
+        // Windows NT Flags
+        //
+        // These are overloaded on top of unused Win 9X flags
+        //
+
+        NeedRestart                     = Liar,                     // System needs to be restarted for this Devnode to work properly
+
+        DriverBlocked                   = NotFirstTime,             // One or more drivers are blocked from loading for this Devnode
+        LegacyDriver                    = Moved,                    // This device is using a legacy driver
+        ChildWithInvalidID              = HasMark,                  // One or more children have invalid ID(s)
+
+        DeviceDisconnected              = NeedsLocking,             // The function driver for a device reported that the device is not connected.  Typically this means a wireless device is out of range.
+
+        QueryRemovePending              = MultiFunctionalParent,    // Device is part of a set of related devices collectively pending query-removal
+        QueryRemoveActive               = MultiFunctionalChild,     // Device is actively engaged in a query-remove IRP
+
     }
 }

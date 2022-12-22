@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using amethyst_installer_gui.PInvoke;
-using Newtonsoft.Json;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -106,8 +101,22 @@ namespace amethyst_installer_gui.Installer {
             foreach ( var device in deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.USB) ) {
                 // USB Controllers have their Enumerator property set to PCI, while everything else has Enumerator set to USB
                 if ( device.EnumeratorName == "PCI" ) {
-                    Logger.Info($"Found USB Controller: Name: {device.FriendlyName}; Location: {device.LocationInfo}; Description: {device.Description}");
-                    UsbControllers.Add(new UsbControllerData(device));
+
+                    // Check if the USB controller is even usable
+                    uint problemCode;
+                    var status = device.GetStatus(out problemCode);
+
+                    bool hasProblems = ((status & DeviceNodeStatus.HasProblem) == DeviceNodeStatus.HasProblem)
+                                    || ((status & DeviceNodeStatus.PrivateProblem) == DeviceNodeStatus.PrivateProblem)
+                                    || ((status & DeviceNodeStatus.BootLogProblem) == DeviceNodeStatus.BootLogProblem)
+                                    || ((status & DeviceNodeStatus.DeviceDisconnected) == DeviceNodeStatus.DeviceDisconnected);
+
+                    if (hasProblems) {
+                        Logger.Warn($"Found USB Controller: Name: {device.FriendlyName}; Location: {device.LocationInfo}; Description: {device.Description}; Problematic with code {problemCode} status {status}. Skipping...");
+                    } else {
+                        Logger.Info($"Found USB Controller: Name: {device.FriendlyName}; Location: {device.LocationInfo}; Description: {device.Description}");
+                        UsbControllers.Add(new UsbControllerData(device));
+                    }
                 }
             }
         }
