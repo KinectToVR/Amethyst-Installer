@@ -45,7 +45,7 @@ jobs:
         run: git submodule update --init --recursive
       
       - name: Build
-        run: MSBuild.exe "/p:Configuration=Dist;Platform=x64"
+        run: MSBuild.exe "-t:restore" "-p:RestoreLockedMode=true" "/p:Configuration=Dist;Platform=x64"
       
       - name: Get short SHA
         id: slug

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETFramework,Version=v4.6.2": {
+      "Newtonsoft.Json": {
+        "type": "Direct",
+        "requested": "[13.0.1, )",
+        "resolved": "13.0.1",
+        "contentHash": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A=="
+      }
+    },
+    ".NETFramework,Version=v4.6.2/win": {},
+    ".NETFramework,Version=v4.6.2/win-x64": {},
+    ".NETFramework,Version=v4.6.2/win-x86": {}
+  }
+}
