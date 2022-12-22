@@ -52,7 +52,7 @@ jobs:
         run: "$slug = 'slug=' + $env:GITHUB_SHA.SubString(0,7); echo $slug >> $GITHUB_STATE"
         
       - name: Rename distribution executable
-        run: mv bin/x64/Dist/Amethyst-Installer/Amethyst-Installer.exe bin/x64/Dist/Amethyst-Installer/Amethyst-Installer-${{ env.slug }}.exe
+        run: cd .. && mv bin/x64/Dist/Amethyst-Installer/Amethyst-Installer.exe bin/x64/Dist/Amethyst-Installer/Amethyst-Installer-${{ env.slug }}.exe
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
