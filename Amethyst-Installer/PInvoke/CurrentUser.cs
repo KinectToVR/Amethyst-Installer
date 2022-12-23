@@ -90,20 +90,17 @@ namespace amethyst_installer_gui.PInvoke {
                     StringBuilder sBuilder = new StringBuilder(size);
                     GetUserProfileDirectory(user, sBuilder, ref size);
                     s_userProfileDirectory = sBuilder.ToString();
-                    Logger.Info("USERNAME:" + GetCurrentlyLoggedInUsername());
-                    Logger.Info("USER PROFILE (API): " + s_userProfileDirectory);
-                    Logger.Info("USER PROFILE (ENV): " + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
-                    if ( INVALID_PROFILE_DIRECTORIES.Contains(s_userProfileDirectory.ToLowerInvariant().TrimEnd('\\', '/'))) {
+                    if ( s_userProfileDirectory.Length == 0 || // This happens... I don't even know either
+                        INVALID_PROFILE_DIRECTORIES.Contains(s_userProfileDirectory.ToLowerInvariant().TrimEnd('\\', '/'))) {
+                        Logger.Warn($"Failed to get determine user directory!");
                         // @TODO: See whether this is a good approach to fixing the running as SYSTEM bug
                         // This is a bandaid fix I have no clue whether this is going to work or not
                         // Fixing bugs which are unreliable to reproduce is painful
                         s_userProfileDirectory = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", GetCurrentlyLoggedInUsername())); ;
-                        // s_userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                     }
                 } catch ( InvalidOperationException e ) {
                     Logger.Warn($"Failed to get determine user directory!\n{Util.FormatException(e)}");
                     s_userProfileDirectory = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "..", GetCurrentlyLoggedInUsername()));
-                    // s_userProfileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 }
             }
             return s_userProfileDirectory;
