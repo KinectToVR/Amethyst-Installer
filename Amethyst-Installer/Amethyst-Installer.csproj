@@ -14,10 +14,6 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>amethyst_installer_gui.App</StartupObject>
@@ -573,7 +569,6 @@
     <Compile Include="Installer\InstallerStateManager\InstallerStateManager.WMI.cs" />
     <None Include="packages.config" />
     <Compile Include="PInvoke\DeviceManaged.Notifications.cs" />
-    <None Include="packages.lock.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
