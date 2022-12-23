@@ -32,6 +32,9 @@
                         <controls:ItemTask x:Name="usbControllers" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_UsbControllers}" Margin="0,0,0,16" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical" x:Name="usbControllersContainer">
                                 <TextBlock x:Name="usbControllersDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
+                                <Border x:Name="usbControllersCard" Background="{StaticResource BrushBackgroundAlt}" Padding="8" CornerRadius="4" Margin="0,4,0,0" Visibility="Collapsed">
+                                    <TextBlock x:Name="usbControllersCardText" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow" Text="{x:Static global:Localisation.SystemRequirement_Description_UsbControllers_Laptop}" />
+                                </Border>
                             </StackPanel>
                         </controls:ItemTask>
                         <controls:ItemTask x:Name="vrSystem" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_VrSystem}" Margin="0,0,0,16" Focusable="False">

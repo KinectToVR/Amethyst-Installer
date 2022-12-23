@@ -21,11 +21,18 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool SteamVRInstalled = false;
 
+        /// <summary>
+        /// Whether SteamVR is required for this install
+        /// </summary>
+        public static bool SteamVRRequired = true;
+
         // Detect if using Shadow, prevent an install because Ame doesn't support networked environments
         public static bool IsCloudPC = false;
         public static bool IsWindowsAncient = false;
         // Check if the C drive has enough storage to let the installer work
         public static bool HasEnoughStorage = false;
+        // Whether the current machine is a laptop
+        public static bool IsLaptop = false;
 
         /// <summary>
         /// Whether K2EX was found on the system, so that we remove it
@@ -139,35 +146,8 @@ namespace amethyst_installer_gui.Installer {
         }
 
         private static void DetectLaptop() {
-            // @TODO: YEET!
-            // This is temp, just to see if this is reliable for now
-            Logger.Warn($"PowerButtonPresent: {PowerProvider.SystemPowerCapabilites.PowerButtonPresent}");
-            Logger.Warn($"SleepButtonPresent: {PowerProvider.SystemPowerCapabilites.SleepButtonPresent}");
-            Logger.Warn($"LidPresent: {PowerProvider.SystemPowerCapabilites.LidPresent}");
-            Logger.Warn($"SystemS1: {PowerProvider.SystemPowerCapabilites.SystemS1}");
-            Logger.Warn($"SystemS2: {PowerProvider.SystemPowerCapabilites.SystemS2}");
-            Logger.Warn($"SystemS3: {PowerProvider.SystemPowerCapabilites.SystemS3}");
-            Logger.Warn($"SystemS4: {PowerProvider.SystemPowerCapabilites.SystemS4}");
-            Logger.Warn($"SystemS5: {PowerProvider.SystemPowerCapabilites.SystemS5}");
-            Logger.Warn($"HiberFilePresent: {PowerProvider.SystemPowerCapabilites.HiberFilePresent}");
-            Logger.Warn($"FullWake: {PowerProvider.SystemPowerCapabilites.FullWake}");
-            Logger.Warn($"VideoDimPresent: {PowerProvider.SystemPowerCapabilites.VideoDimPresent}");
-            Logger.Warn($"ApmPresent: {PowerProvider.SystemPowerCapabilites.ApmPresent}");
-            Logger.Warn($"UpsPresent: {PowerProvider.SystemPowerCapabilites.UpsPresent}");
-            Logger.Warn($"ThermalControl: {PowerProvider.SystemPowerCapabilites.ThermalControl}");
-            Logger.Warn($"ProcessorThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorThrottle}");
-            Logger.Warn($"ProcessorMinThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorMinThrottle}");
-            Logger.Warn($"ProcessorMaxThrottle: {PowerProvider.SystemPowerCapabilites.ProcessorMaxThrottle}");
-            Logger.Warn($"FastSystemS4: {PowerProvider.SystemPowerCapabilites.FastSystemS4}");
-            Logger.Warn($"Hiberboot: {PowerProvider.SystemPowerCapabilites.Hiberboot}");
-            Logger.Warn($"WakeAlarmPresent: {PowerProvider.SystemPowerCapabilites.WakeAlarmPresent}");
-            Logger.Warn($"WakeAlarmPresent: {PowerProvider.SystemPowerCapabilites.WakeAlarmPresent}");
-            Logger.Warn($"AoAc: {PowerProvider.SystemPowerCapabilites.AoAc}");
-            Logger.Warn($"DiskSpinDown: {PowerProvider.SystemPowerCapabilites.DiskSpinDown}");
-            Logger.Warn($"HiberFileType: {PowerProvider.SystemPowerCapabilites.HiberFileType}");
-            Logger.Warn($"AoAcConnectivitySupported: {PowerProvider.SystemPowerCapabilites.AoAcConnectivitySupported}");
-            Logger.Warn($"SystemBatteriesPresent: {PowerProvider.SystemPowerCapabilites.SystemBatteriesPresent}");
-            Logger.Warn($"BatteriesAreShortTerm: {PowerProvider.SystemPowerCapabilites.BatteriesAreShortTerm}");
+            Logger.Info(PowerProvider.SystemPowerCapabilites.LidPresent ? "Laptop detected!" : "PC detected!");
+            IsLaptop = PowerProvider.SystemPowerCapabilites.LidPresent;
         }
 
         private static void CheckStorage() {

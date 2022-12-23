@@ -125,6 +125,11 @@ namespace amethyst_installer_gui.Pages {
             usbControllersDescription.Text = string.Format(Localisation.SystemRequirement_Description_UsbControllers, goodControllerCount);
 
             usbControllers.State = overallQuality ? TaskState.Checkmark : TaskState.Error;
+
+            if ( overallQuality && InstallerStateManager.IsLaptop ) {
+                usbControllers.State = Controls.TaskState.Warning;
+                usbControllersCard.Visibility = Visibility.Visible;
+            }
         }
 
         private void DisplayVRSystem() {

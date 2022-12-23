@@ -459,6 +459,11 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("SystemRequirement_Description_UsbControllers_MultipleControllers");
             }
         }
+        public static string SystemRequirement_Description_UsbControllers_Laptop {
+            get {
+                return LocaleManager.GetString("SystemRequirement_Description_UsbControllers_Laptop");
+            }
+        }
         public static string SystemRequirement_Footnote_StageTracking_VirtualDesktop {
             get {
                 return LocaleManager.GetString("SystemRequirement_Footnote_StageTracking_VirtualDesktop");
