@@ -90,10 +90,10 @@ namespace amethyst_installer_gui.PInvoke {
                     StringBuilder sBuilder = new StringBuilder(size);
                     GetUserProfileDirectory(user, sBuilder, ref size);
                     s_userProfileDirectory = sBuilder.ToString();
+                    Logger.Info("USERNAME:" + GetCurrentlyLoggedInUsername());
+                    Logger.Info("USER PROFILE (API): " + s_userProfileDirectory);
+                    Logger.Info("USER PROFILE (ENV): " + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
                     if ( INVALID_PROFILE_DIRECTORIES.Contains(s_userProfileDirectory.ToLowerInvariant().TrimEnd('\\', '/'))) {
-                        Logger.Info("USERNAME:" + GetCurrentlyLoggedInUsername());
-                        Logger.Info("USER PROFILE (API): " + s_userProfileDirectory);
-                        Logger.Info("USER PROFILE (ENV): " + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
                         // @TODO: See whether this is a good approach to fixing the running as SYSTEM bug
                         // This is a bandaid fix I have no clue whether this is going to work or not
                         // Fixing bugs which are unreliable to reproduce is painful
