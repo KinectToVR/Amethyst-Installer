@@ -115,7 +115,7 @@ v2f vert(vinput input)
 }
 float4 frag(v2f input) : SV_TARGET
 {
-    const float elapsedTime = saturate(Time.x / 1.f);
+    const float elapsedTime = saturate(Time.x / 1.f - 1.f);
 
     const float animDirectionPolar  = input.animData.x;
     const float animTimingOffset    = input.animData.z;
