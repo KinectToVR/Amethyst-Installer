@@ -198,9 +198,7 @@
     <Compile Include="Controls\InstallableItem.cs" />
     <Compile Include="Controls\ItemTask.cs" />
     <Compile Include="Controls\ProgressSpinner\ProgressSpinner.cs" />
-    <Compile Include="Controls\RadioOptionDescriptive.xaml.cs">
-      <DependentUpon>RadioOptionDescriptive.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\RadioOptionDescriptive.cs" />
     <Compile Include="Controls\SidebarExtensions.cs" />
     <Compile Include="Controls\SidebarTask.xaml.cs">
       <DependentUpon>SidebarTask.xaml</DependentUpon>
@@ -386,10 +384,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RadioOptionDescriptive.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\SidebarTask.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -527,6 +521,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\RadioButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\RadioOptionDescriptive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

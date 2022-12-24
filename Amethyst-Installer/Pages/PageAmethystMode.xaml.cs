@@ -1,4 +1,5 @@
-﻿using amethyst_installer_gui.Installer;
+﻿using amethyst_installer_gui.Controls;
+using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,15 @@ namespace amethyst_installer_gui.Pages {
     public partial class PageAmethystMode : UserControl, IInstallerPage {
         public PageAmethystMode() {
             InitializeComponent();
+
+            radioOpenvr.OnToggled += OnToggledItem;
+            radioOsc.OnToggled += OnToggledItem;
+        }
+
+        private void OnToggledItem(object sender, RoutedEventArgs e) {
+            if (((RadioOptionDescriptive)sender).IsChecked) {
+                SoundPlayer.PlaySound(SoundEffect.Invoke);
+            }
         }
 
         private void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
@@ -32,7 +42,7 @@ namespace amethyst_installer_gui.Pages {
 
                 InstallerStateManager.DefaultToOSC = radioOsc.IsChecked;
 
-                MainWindow.Instance.SetPage(InstallerState.SystemRequirements);
+                MainWindow.Instance.SetPage(InstallerState.InstallOptions);
             }
         }
 

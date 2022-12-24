@@ -28,6 +28,7 @@
                         <ResourceDictionary Source="Styles/DriveSelectionControl.xaml" />
                         <ResourceDictionary Source="Styles/InstallableItem.xaml" />
                         <ResourceDictionary Source="Styles/DownloadItem.xaml" />
+                        <ResourceDictionary Source="Styles/RadioOptionDescriptive.xaml" />
 
                         <!-- Custom WinUI Theming -->
                         <ResourceDictionary Source="Styles/Button.xaml" />

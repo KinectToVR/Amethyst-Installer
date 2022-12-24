@@ -23,7 +23,7 @@
             <TextBlock Grid.Row="0" Foreground="{DynamicResource BrushForegroundAlt}" Margin="0,0,0,8" Text="{x:Static global:Localisation.AmethystMode_Description}" />
             <StackPanel Grid.Row="1" Orientation="Vertical">
                 <controls:RadioOptionDescriptive x:Name="radioOpenvr" Margin="0,0,0,8" GroupName="ServiceEndpointRadioGroup" Title="{x:Static global:Localisation.AmethystMode_OpenVR_Title}" Description="{x:Static global:Localisation.AmethystMode_OpenVR_Description}" IsChecked="True"/>
-                <controls:RadioOptionDescriptive x:Name="radioOsc" GroupName="ServiceEndpointRadioGroup" Title="{x:Static global:Localisation.AmethystMode_OSC_Title}" Description="{x:Static global:Localisation.AmethystMode_OSC_Description}"/>
+                <controls:RadioOptionDescriptive x:Name="radioOsc" GroupName="ServiceEndpointRadioGroup" Title="{x:Static global:Localisation.AmethystMode_OSC_Title}" Description="{x:Static global:Localisation.AmethystMode_OSC_Description}" IsChecked="False"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Margin="0,15,0,0">
