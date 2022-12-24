@@ -70,6 +70,11 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool DefaultToOSC = false;
 
+        /// <summary>
+        /// Whether to forcefully attempt fixing E_NUI_NOTREADY. Usually good for forcing a manual install of the drivers
+        /// </summary>
+        public static bool ForceFixNotReady = false;
+
         public static void Initialize() {
 
             FetchInstallerJson();

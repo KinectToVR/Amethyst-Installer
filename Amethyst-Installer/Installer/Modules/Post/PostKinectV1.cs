@@ -100,7 +100,7 @@ namespace amethyst_installer_gui.Installer.Modules {
 
             // The fix
             bool result = true;
-            if ( KinectUtil.MustFixNotReady() ) {
+            if ( KinectUtil.MustFixNotReady() || InstallerStateManager.ForceFixNotReady) {
 
                 control.LogInfo(LogStrings.NotReadyDetected);
                 Logger.Info(LogStrings.NotReadyDetected);

@@ -175,7 +175,8 @@ namespace amethyst_installer_gui.Pages {
 
         private void fixNotReady_Click(object sender, RoutedEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
-            KinectUtil.FixNotReady();
+            InstallerStateManager.ForceFixNotReady = true;
+            Util.ShowMessageBox($"E_NUI_NOTREADY will be fixed when attempting to install the Kinect for Windows v1.8 SDK.", "Fix Status");
         }
 
         private void archiveCreateButton_Click(object sender, RoutedEventArgs e) {
