@@ -76,6 +76,26 @@ namespace amethyst_installer_gui.Installer {
             // It should be in System32 as the user should've installed it to reach this point
             // string kinect10dllPath = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Kinect10.dll"));
 
+            TryGetDeviceTree();
+
+            int kinectDevices = 0;
+
+            // Get Kinect Devices
+            foreach ( var device in s_deviceTree.DeviceNodes.Where(d => d.ClassGuid == DeviceClasses.KinectForWindows) ) {
+                if ( device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02B0&REV_0107"         || // Kinect for Windows Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_00"    || // Kinect for Windows Audio Array
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02BB&REV_0100&MI_01"    || // Kinect for Windows Security Device
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;"             // Kinect for Windows Camera
+                    ) {
+                    kinectDevices++;
+                }
+            }
+
+            // Check if less than 3 drivers have installed successfully
+            if ( kinectDevices < 4 ) {
+                return true;
+            }
+
             if ( KinectSensor.KinectSensors.Count > 0 ) {
                 KinectSensor kinect = KinectSensor.KinectSensors[0];
                 return kinect.Status == KinectStatus.NotReady;
