@@ -46,11 +46,8 @@ namespace amethyst_installer_gui.Installer {
 
         private static void ComputeRequirements() {
 
-            // @TODO: actually compute the requirements for installing amethyst
-
             CheckStorage();
             CheckSteamVR();
-            CheckAmethyst();
             CheckK2EX();
             CheckOS();
             DetectUsbControllers();
@@ -72,16 +69,8 @@ namespace amethyst_installer_gui.Installer {
             Logger.Info($"Detected VR headset type {OpenVRUtil.HmdType}, connected using {OpenVRUtil.ConnectionType}; tracking type: {OpenVRUtil.TrackingType}");
             Logger.Info($"Playspace bounds: {PlayspaceBounds}");
         }
-
-        private static void CheckAmethyst() {
-
-            // @TODO: Check for Amethyst
-        }
         
-
         private static void CheckK2EX() {
-
-            // @TODO: Try locating K2EX
             K2EXPath = K2EXUtil.LocateK2EX();
             K2EXDetected = K2EXPath.Length > 0 && Directory.Exists(K2EXPath);
         }
@@ -100,8 +89,6 @@ namespace amethyst_installer_gui.Installer {
         }
 
         private static void DetectUsbControllers() {
-            // @TODO: USB controller shit
-
             // Get USB Controller info
             var deviceTree = new DeviceTree();
             // Selects USB devices exclusively
@@ -202,7 +189,6 @@ namespace amethyst_installer_gui.Installer {
                 this.Name = device.Description;
             }
 
-            // @TODO: Regex :D
             this.FriendlyString = this.Name;
             this.ControllerQuality = UsbControllerQuality.Unknown;
             /*
@@ -291,11 +277,6 @@ ASMedia USB 3.1 eXtensible-Hostcontroller - 1.10 (Microsoft)                #
             }
 
             this.FriendlyString = this.FriendlyString.Trim();
-
-            // this.IsGoodController = false;
-            // @TODO: Blacklist / whitelist
-            // KinectV1_Compatible = false;
-            // KinectV2_Compatible = false;
 
             // This is slow as shit, but I don't see any other way of making this faster and more performant
             ReadOnlySpan<char> usbControllerTitleAsSpan = this.Name.AsSpan();

@@ -44,7 +44,4 @@ namespace AmethystUtils.Protocol {
             return true;
         }
     }
-
-    // @TODO: amethyst://kinect/toolkit => Launches toolkit
-    // @TODO: amethyst://kinect/toolkit/explorer => Launches Kinect Explorer D2D
 }

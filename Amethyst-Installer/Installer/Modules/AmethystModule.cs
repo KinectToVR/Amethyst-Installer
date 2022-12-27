@@ -115,7 +115,6 @@ if upgrade no
 
             string driverPath = Path.Combine(path, "Amethyst");
 
-            // @TODO: Skip this step during an upgrade
             Logger.Info(LogStrings.CheckingAmethystDriverConflicts);
             control.LogInfo(LogStrings.CheckingAmethystDriverConflicts);
 
@@ -130,7 +129,6 @@ if upgrade no
                 OpenVRUtil.RemoveDriversWithName("KinectToVR");
             }
 
-            // @TODO: Skip this step during an upgrade
             Logger.Info(LogStrings.RegisteringAmethystDriver);
             control.LogInfo(LogStrings.RegisteringAmethystDriver);
 

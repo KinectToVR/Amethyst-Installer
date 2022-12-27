@@ -254,8 +254,6 @@ namespace amethyst_installer_gui.Installer.Modules {
 
             Directory.CreateDirectory(driverTemp);
 
-            // @TODO: If successfully install driver log succ else log fuck
-
             // Device Driver
             {
                 File.Move(Path.Combine(pathToDriversDirectory, "Driver_Device_cat"),            Path.Combine(driverTemp, "kinect.cat"));

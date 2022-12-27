@@ -209,7 +209,6 @@ namespace amethyst_installer_gui {
 
             // 5. Locate %APPDATA%\Amethyst, and clear configs
             if ( removeConfig ) {
-                // @TODO: Implement
 
                 if ( Directory.Exists(Constants.AmethystConfigDirectory) ) {
                     

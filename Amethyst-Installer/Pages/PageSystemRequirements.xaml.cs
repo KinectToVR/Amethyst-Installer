@@ -67,7 +67,7 @@ namespace amethyst_installer_gui.Pages {
 
         private void DisplayStorage() {
 
-            diskSpaceDescription.Text = string.Format(Localisation.SystemRequirement_Description_Storage, Util.SizeSuffix(RequiredStorage)); // @TODO: String format
+            diskSpaceDescription.Text = string.Format(Localisation.SystemRequirement_Description_Storage, Util.SizeSuffix(RequiredStorage));
             diskSpace.State = Controls.TaskState.Checkmark;
 
             // If less than 2GB free on drive

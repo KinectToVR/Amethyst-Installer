@@ -129,7 +129,6 @@ namespace amethyst_installer_gui.Installer {
             // However, we are using SteamVR, so instead WE DO THIS:
             double sizeX = 0.0, sizeY = 0.0;
 
-            // @TODO: not be a lazy piece of shit
             // Oculus => config/oculus/driver_oculus.vrchap
             // Lighthouse => config/chaperone_info.vrchap
             // WMR => config/chaperone_info.vrchap

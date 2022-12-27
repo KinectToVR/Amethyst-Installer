@@ -129,7 +129,7 @@ namespace amethyst_installer_gui.Installer {
                 case "pimax":
                     ConnectionType = VRConnectionType.Tethered;
                     TrackingType = VRTrackingType.Lighthouse;
-                    HmdType = VRHmdType.Pimax; // @TODO: Specific models?
+                    HmdType = VRHmdType.Pimax;
                     return;
 
 
