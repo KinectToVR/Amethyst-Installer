@@ -66,6 +66,9 @@ if upgrade no
                     overallSuccess      = overallSuccess && SetDefaultEndpoint(path, ref control);
                 }
 
+                // I hate K2EX
+                sucessMinor             = sucessMinor && NukeK2EX(ref control);
+
                 // @TODO: If this is an upgrade change the message to a different one
                 Logger.Info(LogStrings.InstalledAmethystSuccess);
                 control.LogInfo(LogStrings.InstalledAmethystSuccess);
@@ -539,6 +542,25 @@ if upgrade no
             }
 
             return false;
+        }
+
+        private bool NukeK2EX(ref InstallModuleProgress control) {
+
+            if ( InstallerStateManager.K2EXDetected ) {
+                control.LogInfo(LogStrings.K2EXUninstallStart);
+                Logger.Info(LogStrings.K2EXUninstallStart);
+
+                bool result = K2EXUtil.NukeK2EX(InstallerStateManager.K2EXPath);
+                if ( result ) {
+                    control.LogInfo(LogStrings.K2EXUninstallSuccess);
+                    Logger.Info(LogStrings.K2EXUninstallSuccess);
+                } else {
+                    control.LogError(LogStrings.K2EXUninstallFailure);
+                    Logger.Fatal(LogStrings.K2EXUninstallFailure);
+                }
+                return result;
+            }
+            return true;
         }
     }
 }

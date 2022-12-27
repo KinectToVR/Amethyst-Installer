@@ -578,6 +578,7 @@
     <EmbeddedResource Include="Resources\UninstallList.json" />
     <EmbeddedResource Include="Resources\Shaders\simple_frag.cso" />
     <EmbeddedResource Include="Resources\Shaders\simple_vert.cso" />
+    <EmbeddedResource Include="Resources\K2EXList.json" />
     <None Include="Resources\welcome-splash.png" />
   </ItemGroup>
   <ItemGroup>

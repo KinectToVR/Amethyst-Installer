@@ -105,6 +105,11 @@
         public const string AssignMicrophoneDriver              = "Assigning driver \"(Generic USB Audio)\" for Kinect USB Audio!";
         public const string AssignMicrophoneDriverSuccess       = "Successfully assigned driver \"(Generic USB Audio)\" to Kinect USB Audio!";
 
+        // k2ex
+        public const string K2EXUninstallStart                  = "Uninstalling K2EX...";
+        public const string K2EXUninstallSuccess                = "Uninstalled K2EX successfully!";
+        public const string K2EXUninstallFailure                = "Failed to uninstall K2EX.";
+
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";
         public const string WaitingForExecution                 = "Waiting on other tasks to finish...";

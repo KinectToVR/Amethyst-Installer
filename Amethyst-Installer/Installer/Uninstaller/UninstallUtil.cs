@@ -167,6 +167,7 @@ namespace amethyst_installer_gui {
             UninstallListJSON uninstallList = FetchUninstallList();
 
             // Remove files
+            /*
             for ( int i = 0; i < uninstallList.Files.Length; i++ ) {
                 string file = Path.Combine(ameInstall, uninstallList.Files[i]);
                 if (File.Exists(file) )
@@ -192,6 +193,9 @@ namespace amethyst_installer_gui {
                     Directory.Delete(ameInstall);
                 }
             }
+            */
+
+            DeleteDirectoryUsingUninstallList(ameInstall, uninstallList);
 
             // 4. Locate the uninstall key, and remove it
             try {
@@ -231,16 +235,13 @@ namespace amethyst_installer_gui {
                         }
                     }
 
-                    // We would remove the logs and ame dir but because of the log file we're currently writing to, we can't!
-                    /*
-                    if (Directory.GetFiles(Path.Combine(Constants.AmethystConfigDirectory, "logs"), "*", SearchOption.AllDirectories).Length == 0) {
-                        Directory.Delete(Path.Combine(Constants.AmethystConfigDirectory, "logs"));
+                    // If the directory is empty, remove it
+                    if ( Directory.Exists(Constants.AmethystConfigDirectory) ) {
+                        if ( Directory.GetFiles(Constants.AmethystConfigDirectory, "*", SearchOption.AllDirectories).Length == 0 &&
+                             Directory.GetDirectories(Constants.AmethystConfigDirectory, "*", SearchOption.AllDirectories).Length == 0 ) {
+                            Directory.Delete(Constants.AmethystConfigDirectory);
+                        }
                     }
-
-                    if (Directory.GetFiles(Path.Combine(Constants.AmethystConfigDirectory), "*", SearchOption.AllDirectories).Length == 0) {
-                        Directory.Delete(Path.Combine(Constants.AmethystConfigDirectory));
-                    }
-                    */
                 }
 
             }
@@ -268,6 +269,36 @@ namespace amethyst_installer_gui {
             } catch (Exception e) {
                 Logger.Fatal("Failed to remove registry entry!");
                 Logger.Fatal(Util.FormatException(e));
+            }
+        }
+
+        public static void DeleteDirectoryUsingUninstallList(string directory, UninstallListJSON uninstallList) {
+
+            // Remove files
+            for ( int i = 0; i < uninstallList.Files.Length; i++ ) {
+                string file = Path.Combine(directory, uninstallList.Files[i]);
+                if ( File.Exists(file) )
+                    File.Delete(file);
+            }
+            // Remove directories
+            for ( int i = 0; i < uninstallList.Directories.Length; i++ ) {
+                string dir = Path.Combine(directory, uninstallList.Directories[i]);
+                if ( Directory.Exists(dir) ) {
+                    // Check to make sure the directory isn't empty
+                    if ( Directory.GetFiles(dir, "*", SearchOption.AllDirectories).Length == 0 &&
+                         Directory.GetDirectories(dir, "*", SearchOption.AllDirectories).Length == 0 ) {
+                        Directory.Delete(dir);
+                    }
+                }
+            }
+
+            // If the directory is empty, remove it
+            if ( Directory.Exists(directory) ) {
+                // If there are 0 files or directories left
+                if ( Directory.GetFiles(directory, "*", SearchOption.AllDirectories).Length == 0 &&
+                     Directory.GetDirectories(directory, "*", SearchOption.AllDirectories).Length == 0 ) {
+                    Directory.Delete(directory);
+                }
             }
         }
 
