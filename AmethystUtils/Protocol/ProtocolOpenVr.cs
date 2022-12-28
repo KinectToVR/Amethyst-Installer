@@ -48,6 +48,24 @@ namespace AmethystUtils.Protocol {
         }
     }
 
+    public class ProtocolAlvr : IProtocolCommand {
+        public string Command { get => "alvr"; set { } }
+
+        public bool Execute(string parameters) {
+            Util.PassToInstaller($"amethyst://{Command}");
+            return true;
+        }
+    }
+
+    public class ProtocolFuckYouNoelle : IProtocolCommand {
+        public string Command { get => "alvinandthechipmunks"; set { } }
+
+        public bool Execute(string parameters) {
+            Util.PassToInstaller($"amethyst://alvr");
+            return true;
+        }
+    }
+
     public class ProtocolOcusus : IProtocolCommand {
         public string Command { get => "ocusus"; set { } }
 

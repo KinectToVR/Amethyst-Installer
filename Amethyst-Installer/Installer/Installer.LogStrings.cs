@@ -6,6 +6,7 @@
         public const string ExtractingAmethyst                  = "Extracting Amethyst to {0}...";
         public const string ExtractAmethystFailed               = "Failed to extract Amethyst";
         public const string RegisteringAmethystDriver           = "Registering Amethyst SteamVR add-on...";
+        public const string RegisteringAlvrDriver               = "Registering ALVR SteamVR add-on...";
         public const string CheckingAmethystDriverConflicts     = "Checking for conflicting SteamVR add-ons...";
         public const string CreatingAmethystRegistryEntry       = "Creating registry entry...";
         public const string CreatingUninstallExecutable         = "Creating uninstall executable...";

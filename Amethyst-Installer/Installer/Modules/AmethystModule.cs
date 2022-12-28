@@ -124,11 +124,6 @@ if upgrade no
             Logger.Info(LogStrings.CheckingAmethystDriverConflicts);
             control.LogInfo(LogStrings.CheckingAmethystDriverConflicts);
 
-            // Check for existing Amethyst driver entries
-            if ( Directory.Exists(OpenVRUtil.GetDriverPath("Amethyst")) ) {
-                OpenVRUtil.RemoveDriversWithName("Amethyst");
-            }
-
             // Check for K2EX driver
             if ( Directory.Exists(OpenVRUtil.GetDriverPath("KinectToVR")) ) {
                 OpenVRUtil.ForceDisableDriver("KinectToVR");
@@ -137,6 +132,17 @@ if upgrade no
 
             Logger.Info(LogStrings.RegisteringAmethystDriver);
             control.LogInfo(LogStrings.RegisteringAmethystDriver);
+
+            // Check for existing Amethyst driver entries
+            if ( Directory.Exists(OpenVRUtil.GetDriverPath("Amethyst")) ) {
+                OpenVRUtil.RemoveDriversWithName("Amethyst");
+            }
+
+            if ( OpenVRUtil.ConnectionType == VRConnectionType.ALVR ) {
+                Logger.Info("Registering ALVR addon...");
+                control.LogInfo(LogStrings.RegisteringAlvrDriver);
+                OpenVRUtil.RegisterSteamVrDriver(OpenVRUtil.AlvrInstallPath);
+            }
 
             OpenVRUtil.RegisterSteamVrDriver(driverPath);
             Logger.Info("Force enabling addon");

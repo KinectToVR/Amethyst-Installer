@@ -12,7 +12,7 @@ namespace amethyst_installer_gui.Protocol {
             Logger.Info("Received protocol command \"register\"!");
 
             string ameDir = InstallUtil.LocateAmethystInstall();
-            if (ameDir.Length == 0) {
+            if ( ameDir.Length == 0 ) {
                 Logger.Info("Failed to locate Amethyst install! Aborting...");
                 Util.ShowMessageBox("Failed to locate Amethyst install!", "Oops");
                 return true;
@@ -121,7 +121,7 @@ namespace amethyst_installer_gui.Protocol {
             return true;
         }
     }
-    
+
     public class ProtocolCloseSteamVr : IProtocolCommand {
         public string Command { get => "closeconflictingapps"; set { } }
 
@@ -133,6 +133,48 @@ namespace amethyst_installer_gui.Protocol {
         }
     }
 
+    public class ProtocolAlvr : IProtocolCommand {
+        public string Command { get => "alvr"; set { } }
+
+        public bool Execute(string parameters) {
+            App.Init();
+            Logger.Info("Received protocol command \"alvr\"!");
+
+            string alvrDir = OpenVRUtil.AlvrInstallPath;
+            if ( alvrDir.Length == 0 ) {
+                Logger.Info("Failed to locate ALVR install! Aborting...");
+                Util.ShowMessageBox("Failed to locate ALVR install!", "Oops");
+                return true;
+            } else {
+                Logger.Info($"ALVR install found at {alvrDir}");
+            }
+
+            // Check for existing ALVR add-on entries
+            if ( Directory.Exists(OpenVRUtil.GetDriverPath("ALVR")) ) {
+                Logger.Info("Found multiple ALVR add-ons! Removing...");
+                OpenVRUtil.RemoveDriversWithName("ALVR");
+            }
+
+            Logger.Info(LogStrings.RegisteringAlvrDriver);
+
+            string driverPath = Path.Combine(alvrDir, "ALVR");
+
+            OpenVRUtil.RegisterSteamVrDriver(driverPath);
+            InstallUtil.TryKillingConflictingProcesses();
+
+            Util.ShowMessageBox("Successfully re-registered ALVR SteamVR add-on!", "Success");
+
+            return true;
+        }
+    }
+
+    public class ProtocolFuckYouNoelle : IProtocolCommand {
+        public string Command { get => "alvinandthechipmunks"; set { } }
+
+        public bool Execute(string parameters) {
+            return new ProtocolAlvr().Execute(parameters);
+        }
+    }
     public class ProtocolOcusus : IProtocolCommand {
         public string Command { get => "ocusus"; set { } }
 

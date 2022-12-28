@@ -11,6 +11,7 @@ namespace amethyst_installer_gui.Installer {
         public static VRConnectionType ConnectionType = VRConnectionType.Unknown;
         public static VRHmdType HmdType = VRHmdType.Unknown;
         public static VRTrackingType TrackingType = VRTrackingType.Unknown;
+        public static string AlvrInstallPath = string.Empty;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetSteamVRHmdModel() {
@@ -185,12 +186,12 @@ namespace amethyst_installer_gui.Installer {
             try {
                 // Try searching for ALVR
                 var alvrUninstallEntry = UninstallUtil.GetUninstallEntry("ALVR");
-                var alvrInstallLocation = alvrUninstallEntry?.InstallLocation ?? "";
+                AlvrInstallPath = alvrUninstallEntry?.InstallLocation ?? "";
                 var alvrLastUsageDate = DateTime.MinValue;
-                if ( Directory.Exists(alvrInstallLocation) ) {
-                    Logger.Info($"Detected an ALVR install at \"{alvrInstallLocation}\"!");
+                if ( Directory.Exists(AlvrInstallPath) ) {
+                    Logger.Info($"Detected an ALVR install at \"{AlvrInstallPath}\"!");
                     // I'm guessing all of this i have no clue if this will work or not
-                    string alvrExecutablePath = Path.GetFullPath(Path.Combine(alvrInstallLocation, "ALVR Launcher.exe"));
+                    string alvrExecutablePath = Path.GetFullPath(Path.Combine(AlvrInstallPath, "ALVR Launcher.exe"));
                     if ( File.Exists(alvrExecutablePath) ) {
                         alvrLastUsageDate = File.GetLastAccessTime(alvrExecutablePath);
                     }
