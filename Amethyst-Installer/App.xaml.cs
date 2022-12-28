@@ -102,14 +102,11 @@ namespace amethyst_installer_gui {
                     // If Windows version is not supported
                     Util.ShowMessageBox(LocaleStrings.InstallProhibited_WindowsAncient, LocaleStrings.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
-                } else if ( !InstallerStateManager.SteamVRInstalled ) {
-                    // If no SteamVR
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_NoSteamVR, LocaleStrings.InstallProhibited_Title);
-                    Util.Quit(ExitCodes.IncompatibleSetup);
                 } else if ( OpenVRUtil.HmdType == VRHmdType.Phone ) {
                     // If using a phone
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_PhoneVR, LocaleStrings.InstallProhibited_Title);
-                    Util.Quit(ExitCodes.IncompatibleSetup);
+                    if (Util.ShowMessageBox(LocaleStrings.InstallProhibited_PhoneVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OKCancel) == MessageBoxResult.Cancel) {
+                        Util.Quit(ExitCodes.IncompatibleSetup);
+                    }
                 } else if (!InstallerStateManager.HasEnoughStorage) {
                     Util.ShowMessageBox(LocaleStrings.InstallProhibited_DiskFull, LocaleStrings.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);

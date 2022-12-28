@@ -54,7 +54,7 @@ namespace amethyst_installer_gui.Installer {
             DetectCloudPc();
             DetectLaptop();
 
-            CanInstall = !IsCloudPC && SteamVRInstalled && !IsWindowsAncient && OpenVRUtil.HmdType != VRHmdType.Phone;
+            CanInstall = !IsCloudPC && !IsWindowsAncient && OpenVRUtil.HmdType != VRHmdType.Phone;
         }
 
         private static void CheckSteamVR() {

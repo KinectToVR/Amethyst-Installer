@@ -48,18 +48,24 @@ if upgrade no
 
                 bool overallSuccess = true;
                 if ( !InstallerStateManager.IsUpdating ) {
-                    overallSuccess = HandleDrivers(path, ref control);
+                    if ( InstallerStateManager.SteamVRInstalled ) {
+                        overallSuccess = HandleDrivers(path, ref control);
+                    }
                     // In some cases vrpathreg might open SteamVR, which we don't want; Kill it instantly!
                     InstallUtil.TryKillingConflictingProcesses();
                 }
                 overallSuccess      = overallSuccess && CreateRegistryEntry(path, ref control);
                 bool sucessMinor    =                   CreateUninstallEntry(path, ref control);
-                sucessMinor         = sucessMinor    && AssignTrackerRoles(ref control);
+                if ( InstallerStateManager.SteamVRInstalled ) {
+                    sucessMinor = sucessMinor && AssignTrackerRoles(ref control);
+                }
                 sucessMinor         = sucessMinor    && RegisterProtocolLink(path, ref control);
                 sucessMinor         = sucessMinor    && UpdateFirewallRules(ref control);
                 
                 if ( !InstallerStateManager.IsUpdating ) {
-                    sucessMinor         = sucessMinor    && AdjustSteamVrSettings(ref control);
+                    if ( InstallerStateManager.SteamVRInstalled ) {
+                        sucessMinor     = sucessMinor && AdjustSteamVrSettings(ref control);
+                    }
                     // Don't recreate shortcuts during an update!
                     overallSuccess      = overallSuccess && CreateShortcuts(path, ref control);
                     // Assign default settings
