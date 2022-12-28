@@ -31,6 +31,7 @@ namespace amethyst_installer_gui.Installer {
         public static Dictionary<string, int> ModuleIdLUT { get; private set; }
         public static Dictionary<string, PostBase> ModulePostOps { get; private set; }
         public static Dictionary<string, CheckBase> ModuleCheckOps { get; private set; }
+        public static Dictionary<string, ModuleDisplayStrings> ModuleStrings { get; private set; }
 
         public static string AmethystInstallDirectory;
 
@@ -83,9 +84,11 @@ namespace amethyst_installer_gui.Installer {
 
             // Create internal LUT for modules
             ModuleTypes = new Dictionary<string, ModuleBase>();
-            ModuleIdLUT = new Dictionary<string, int>();
-            ModulePostOps = new Dictionary<string, PostBase>();
-            ModuleCheckOps = new Dictionary<string, CheckBase>();
+            ModuleTypes     = new Dictionary<string, ModuleBase>();
+            ModuleIdLUT     = new Dictionary<string, int>();
+            ModulePostOps   = new Dictionary<string, PostBase>();
+            ModuleCheckOps  = new Dictionary<string, CheckBase>();
+            ModuleStrings   = new Dictionary<string, ModuleDisplayStrings>();
 
             ModuleTypes.Add("amethyst", new AmethystModule());
             ModuleTypes.Add("exe", new ExeModule());
@@ -97,6 +100,39 @@ namespace amethyst_installer_gui.Installer {
 
             ModuleCheckOps.Add("vcredist", new CheckVcredist());
 
+            // Module strings
+            ModuleStrings.Add("amethyst", new ModuleDisplayStrings() {
+                Title       = Localisation.AmethystModule_Amethyst_Title,
+                Summary     = Localisation.AmethystModule_Amethyst_Summary,
+                Description = Localisation.AmethystModule_Amethyst_Description,
+            });
+            ModuleStrings.Add("vcredist2022", new ModuleDisplayStrings() {
+                Title       = Localisation.AmethystModule_VCRedist_Title,
+                Summary     = Localisation.AmethystModule_VCRedist_Summary,
+                Description = Localisation.AmethystModule_VCRedist_Description,
+            });
+            ModuleStrings.Add("wix", new ModuleDisplayStrings() {
+                Title       = Localisation.AmethystModule_WIX_Title,
+                Summary     = Localisation.AmethystModule_WIX_Summary,
+                Description = Localisation.AmethystModule_WIX_Description,
+            });
+            ModuleStrings.Add("kinect-v1-sdk", new ModuleDisplayStrings() {
+                Title       = Localisation.AmethystModule_KinectV1_Title,
+                Summary     = Localisation.AmethystModule_KinectV1_Summary,
+                Description = Localisation.AmethystModule_KinectV1_Description,
+            });
+            ModuleStrings.Add("kinect-v1-toolkit", new ModuleDisplayStrings() {
+                Title       = Localisation.AmethystModule_KinectV1Toolkit_Title,
+                Summary     = Localisation.AmethystModule_KinectV1Toolkit_Summary,
+                Description = Localisation.AmethystModule_KinectV1Toolkit_Description,
+            });
+            ModuleStrings.Add("psmsex", new ModuleDisplayStrings() {
+                Title       = Localisation.AmethystModule_PSMS_Title,
+                Summary     = Localisation.AmethystModule_PSMS_Summary,
+                Description = Localisation.AmethystModule_PSMS_Description,
+            });
+
+            // Parse modules
             for ( int i = 0; i < API_Response.Modules.Count; i++ ) {
                 var module = API_Response.Modules[i];
 
@@ -104,7 +140,7 @@ namespace amethyst_installer_gui.Installer {
                 if ( ModuleTypes.ContainsKey(module.Install.Type) ) {
                     ModuleTypes[module.Install.Type].Module = module;
                 } else {
-                    Logger.Warn($"Unknown install type {module.Install.Type} on module {module.DisplayName}");
+                    Logger.Warn($"Unknown install type {module.Install.Type} on module {module.Id}");
                 }
 
                 ModuleIdLUT.Add(module.Id, i);

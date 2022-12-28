@@ -64,7 +64,7 @@ namespace amethyst_installer_gui.Pages {
 
                     if ( isChecked ) {
                         // For dependency in X
-                        Logger.Info($"Queueing dependency \"{thisModule.DisplayName}\"...");
+                        Logger.Info($"Queueing dependency \"{thisModule.Id}\"...");
                         if ( !InstallerStateManager.ModulesToInstall.Contains(thisModule) ) {
                             if ( InstallerStateManager.ShouldInstallModule(thisModule) ) {
                                 InstallerStateManager.ModulesToInstall.Add(thisModule);
@@ -74,7 +74,7 @@ namespace amethyst_installer_gui.Pages {
                 }
 
                 if ( isChecked ) {
-                    Logger.Info($"Queueing module \"{module.DisplayName}\"...");
+                    Logger.Info($"Queueing module \"{module.Id}\"...");
                     modulesPostBuffer.Add(module);
                 }
             }
@@ -111,8 +111,8 @@ namespace amethyst_installer_gui.Pages {
                 }
 
                 var currentControl = new InstallableItem();
-                currentControl.Title = currentModule.DisplayName;
-                currentControl.Description = currentModule.Summary;
+                currentControl.Title = InstallerStateManager.ModuleStrings[currentModule.Id].Title;
+                currentControl.Description = InstallerStateManager.ModuleStrings[currentModule.Id].Summary;
                 currentControl.Checked = ShouldAutoSelectModule(ref currentModule);
                 currentControl.Disabled = currentModule.Required;
                 currentControl.Margin = new Thickness(0, 0, 0, 8);
@@ -193,8 +193,8 @@ namespace amethyst_installer_gui.Pages {
             // Update right hand side
             CalculateInstallSize(m_currentModule);
 
-            fullTitle.Text = m_currentModule.DisplayName;
-            fullDescription.Text = m_currentModule.Description;
+            fullTitle.Text = InstallerStateManager.ModuleStrings[m_currentModule.Id].Title;
+            fullDescription.Text = InstallerStateManager.ModuleStrings[m_currentModule.Id].Description;
 
             downloadSize.Content = Util.SizeSuffix(m_currentModuleDownloadSize);
             installSize.Content = Util.SizeSuffix(m_currentModuleInstallSize);

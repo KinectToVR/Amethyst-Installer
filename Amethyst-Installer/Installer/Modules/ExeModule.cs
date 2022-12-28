@@ -37,8 +37,8 @@ namespace amethyst_installer_gui.Installer.Modules {
                             WindowStyle = ProcessWindowStyle.Hidden,
                         };
                     }
-                    Logger.Info(string.Format(LogStrings.InstallingExe, Module.DisplayName));
-                    control.LogInfo(string.Format(LogStrings.InstallingExe, Module.DisplayName));
+                    Logger.Info(string.Format(LogStrings.InstallingExe, InstallerStateManager.ModuleStrings[Module.Id].Title));
+                    control.LogInfo(string.Format(LogStrings.InstallingExe, InstallerStateManager.ModuleStrings[Module.Id].Title));
                     var executableInstall = Process.Start(procInfo);
                     executableInstall.WaitForExit(5 * 60 * 1000);
                     int[] exitCodeSuccess = new int [] { 0 };
@@ -50,12 +50,12 @@ namespace amethyst_installer_gui.Installer.Modules {
 
                     if ( false && exitCodeSuccess.Contains(executableInstall.ExitCode) ) {
                         Logger.Info($"Received exit code {executableInstall.ExitCode}");
-                        Logger.Info(string.Format(LogStrings.InstallExeSuccess, Module.DisplayName));
-                        control.LogInfo(string.Format(LogStrings.InstallExeSuccess, Module.DisplayName));
+                        Logger.Info(string.Format(LogStrings.InstallExeSuccess, InstallerStateManager.ModuleStrings[Module.Id].Title));
+                        control.LogInfo(string.Format(LogStrings.InstallExeSuccess, InstallerStateManager.ModuleStrings[Module.Id].Title));
                         success = success && true;
                     } else {
-                        Logger.Fatal(string.Format(LogStrings.FailedExeInvalidExitCodeTryManual, Module.DisplayName, executableInstall.ExitCode));
-                        control.LogError(string.Format(LogStrings.FailedExeInvalidExitCodeTryManual, Module.DisplayName, executableInstall.ExitCode));
+                        Logger.Fatal(string.Format(LogStrings.FailedExeInvalidExitCodeTryManual, InstallerStateManager.ModuleStrings[Module.Id].Title, executableInstall.ExitCode));
+                        control.LogError(string.Format(LogStrings.FailedExeInvalidExitCodeTryManual, InstallerStateManager.ModuleStrings[Module.Id].Title, executableInstall.ExitCode));
 
                         // Try executing via GUI
                         procInfo = new ProcessStartInfo() {
@@ -63,8 +63,8 @@ namespace amethyst_installer_gui.Installer.Modules {
                             CreateNoWindow = false,
                             WindowStyle = ProcessWindowStyle.Normal,
                         };
-                        Logger.Info(string.Format(LogStrings.InstallingExe, Module.DisplayName));
-                        control.LogInfo(string.Format(LogStrings.InstallingExe, Module.DisplayName));
+                        Logger.Info(string.Format(LogStrings.InstallingExe, InstallerStateManager.ModuleStrings[Module.Id].Title));
+                        control.LogInfo(string.Format(LogStrings.InstallingExe, InstallerStateManager.ModuleStrings[Module.Id].Title));
                         executableInstall = Process.Start(procInfo);
                         // Wait for it to create a window
                         while ( string.IsNullOrEmpty(executableInstall.MainWindowTitle) ) {
@@ -82,19 +82,19 @@ namespace amethyst_installer_gui.Installer.Modules {
                         // Handle exit codes
                         if ( exitCodeSuccess.Contains(executableInstall.ExitCode) ) {
                             Logger.Info($"Received exit code {executableInstall.ExitCode}");
-                            Logger.Info(string.Format(LogStrings.InstallExeSuccess, Module.DisplayName));
-                            control.LogInfo(string.Format(LogStrings.InstallExeSuccess, Module.DisplayName));
+                            Logger.Info(string.Format(LogStrings.InstallExeSuccess, InstallerStateManager.ModuleStrings[Module.Id].Title));
+                            control.LogInfo(string.Format(LogStrings.InstallExeSuccess, InstallerStateManager.ModuleStrings[Module.Id].Title));
                             success = success && true;
                         } else {
-                            Logger.Fatal(string.Format(LogStrings.FailedExeInvalidExitCode, Module.DisplayName, executableInstall.ExitCode));
-                            control.LogError(string.Format(LogStrings.FailedExeInvalidExitCode, Module.DisplayName, executableInstall.ExitCode));
+                            Logger.Fatal(string.Format(LogStrings.FailedExeInvalidExitCode, InstallerStateManager.ModuleStrings[Module.Id].Title, executableInstall.ExitCode));
+                            control.LogError(string.Format(LogStrings.FailedExeInvalidExitCode, InstallerStateManager.ModuleStrings[Module.Id].Title, executableInstall.ExitCode));
                             success = success && false;
                         }
                     }
                 }
             } catch ( Exception ex ) {
-                Logger.Fatal($"{string.Format(LogStrings.FailedInstallExe, Module.DisplayName)}:\n{Util.FormatException(ex)})");
-                control.LogError($"{string.Format(LogStrings.FailedInstallExe,Module.DisplayName)}! {LogStrings.ViewLogs}");
+                Logger.Fatal($"{string.Format(LogStrings.FailedInstallExe, InstallerStateManager.ModuleStrings[Module.Id].Title)}:\n{Util.FormatException(ex)})");
+                control.LogError($"{string.Format(LogStrings.FailedInstallExe, InstallerStateManager.ModuleStrings[Module.Id].Title)}! {LogStrings.ViewLogs}");
                 success = success && false;
             }
 

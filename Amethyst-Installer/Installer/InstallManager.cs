@@ -30,7 +30,7 @@ namespace amethyst_installer_gui.Installer {
                 return;
             }
 
-            Logger.Info($"Installing module {module.DisplayName} of type {module.Install.Type}...");
+            Logger.Info($"Installing module {module.Id} of type {module.Install.Type}...");
 
             TaskState outState;
             if ( moduleBase.Install(module.Remote.Filename, InstallerStateManager.AmethystInstallDirectory, ref control, out outState) ) {

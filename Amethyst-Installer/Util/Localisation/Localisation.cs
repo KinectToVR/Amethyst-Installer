@@ -219,11 +219,6 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("InstallProhibited_CloudPC");
             }
         }
-        public static string InstallProhibited_NoSteamVR {
-            get {
-                return LocaleManager.GetString("InstallProhibited_NoSteamVR");
-            }
-        }
         public static string InstallProhibited_WindowsAncient {
             get {
                 return LocaleManager.GetString("InstallProhibited_WindowsAncient");
@@ -392,6 +387,96 @@ namespace amethyst_installer_gui {
         public static string AmethystMode_OSC_Description {
             get {
                 return LocaleManager.GetString("AmethystMode_OSC_Description");
+            }
+        }
+        public static string AmethystModule_Amethyst_Title {
+            get {
+                return LocaleManager.GetString("AmethystModule_Amethyst_Title");
+            }
+        }
+        public static string AmethystModule_Amethyst_Summary {
+            get {
+                return LocaleManager.GetString("AmethystModule_Amethyst_Summary");
+            }
+        }
+        public static string AmethystModule_Amethyst_Description {
+            get {
+                return LocaleManager.GetString("AmethystModule_Amethyst_Description");
+            }
+        }
+        public static string AmethystModule_VCRedist_Title {
+            get {
+                return LocaleManager.GetString("AmethystModule_VCRedist_Title");
+            }
+        }
+        public static string AmethystModule_VCRedist_Summary {
+            get {
+                return LocaleManager.GetString("AmethystModule_VCRedist_Summary");
+            }
+        }
+        public static string AmethystModule_VCRedist_Description {
+            get {
+                return LocaleManager.GetString("AmethystModule_VCRedist_Description");
+            }
+        }
+        public static string AmethystModule_WIX_Title {
+            get {
+                return LocaleManager.GetString("AmethystModule_WIX_Title");
+            }
+        }
+        public static string AmethystModule_WIX_Summary {
+            get {
+                return LocaleManager.GetString("AmethystModule_WIX_Summary");
+            }
+        }
+        public static string AmethystModule_WIX_Description {
+            get {
+                return LocaleManager.GetString("AmethystModule_WIX_Description");
+            }
+        }
+        public static string AmethystModule_KinectV1_Title {
+            get {
+                return LocaleManager.GetString("AmethystModule_KinectV1_Title");
+            }
+        }
+        public static string AmethystModule_KinectV1_Summary {
+            get {
+                return LocaleManager.GetString("AmethystModule_KinectV1_Summary");
+            }
+        }
+        public static string AmethystModule_KinectV1_Description {
+            get {
+                return LocaleManager.GetString("AmethystModule_KinectV1_Description");
+            }
+        }
+        public static string AmethystModule_KinectV1Toolkit_Title {
+            get {
+                return LocaleManager.GetString("AmethystModule_KinectV1Toolkit_Title");
+            }
+        }
+        public static string AmethystModule_KinectV1Toolkit_Summary {
+            get {
+                return LocaleManager.GetString("AmethystModule_KinectV1Toolkit_Summary");
+            }
+        }
+        public static string AmethystModule_KinectV1Toolkit_Description {
+            get {
+                return LocaleManager.GetString("AmethystModule_KinectV1Toolkit_Description");
+            }
+        }
+        public static string AmethystModule_PSMS_Title {
+            get {
+                return LocaleManager.GetString("AmethystModule_PSMS_Title");
+            }
+        }
+        public static string AmethystModule_PSMS_Summary {
+            get {
+                return LocaleManager.GetString("AmethystModule_PSMS_Summary");
+            }
+        }
+        public static string AmethystModule_PSMS_Description {
+            get {
+                return LocaleManager.GetString("AmethystModule_PSMS_Description");
             }
         }
         public static string SystemRequirement_Category_Compatibility {

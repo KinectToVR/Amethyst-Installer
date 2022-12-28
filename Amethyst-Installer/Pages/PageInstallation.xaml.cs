@@ -82,10 +82,10 @@ namespace amethyst_installer_gui.Pages {
                     continue;
                 }
 
-                Logger.Info($"Installing module {module.DisplayName} of type {module.Install.Type}...");
+                Logger.Info($"Installing module {module.Id} of type {module.Install.Type}...");
 
                 InstallModuleProgress installControl = new InstallModuleProgress();
-                installControl.Title = module.DisplayName;
+                installControl.Title = InstallerStateManager.ModuleStrings[module.Id].Title;
                 installControl.State = TaskState.Default;
                 if ( i != InstallerStateManager.ModulesToInstall.Count )
                     installControl.Margin = new Thickness(0, 0, 0, 8);

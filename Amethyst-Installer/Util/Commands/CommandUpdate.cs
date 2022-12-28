@@ -160,7 +160,7 @@ namespace amethyst_installer_gui.Commands {
                     var thisModule = InstallerStateManager.API_Response.Modules[InstallerStateManager.ModuleIdLUT[module.Depends[j]]];
 
                     // For dependency in X
-                    Logger.Info($"Queueing dependency \"{thisModule.DisplayName}\"...");
+                    Logger.Info($"Queueing dependency \"{thisModule.Id}\"...");
                     if ( !InstallerStateManager.ModulesToInstall.Contains(thisModule) ) {
                         if ( InstallerStateManager.ShouldInstallModule(thisModule) ) {
                             InstallerStateManager.ModulesToInstall.Add(thisModule);
@@ -168,7 +168,7 @@ namespace amethyst_installer_gui.Commands {
                     }
                 }
 
-                Logger.Info($"Queueing module \"{module.DisplayName}\"...");
+                Logger.Info($"Queueing module \"{module.Id}\"...");
                 modulesPostBuffer.Add(module);
             }
 

@@ -58,7 +58,7 @@ namespace amethyst_installer_gui.Pages {
                 if ( i == InstallerStateManager.ModulesToInstall.Count - 1 )
                     downloadItem.Margin = new Thickness(0);
 
-                downloadItem.Title = moduleToInstall.DisplayName;
+                downloadItem.Title = InstallerStateManager.ModuleStrings[moduleToInstall.Id].Title;
                 downloadItem.DownloadedBytes = 0;
                 downloadItem.TotalBytes = moduleToInstall.DownloadSize;
 

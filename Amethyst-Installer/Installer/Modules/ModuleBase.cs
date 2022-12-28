@@ -28,4 +28,10 @@ namespace amethyst_installer_gui.Installer.Modules {
         /// </summary>
         public bool IsInstalled { get; protected set; }
     }
+
+    public struct ModuleDisplayStrings {
+        public string Title;
+        public string Summary;
+        public string Description;
+    }
 }

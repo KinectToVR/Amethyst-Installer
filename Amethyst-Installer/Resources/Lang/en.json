@@ -95,6 +95,31 @@
   "AmethystMode_OSC_Title": "OSC Tracking",
   "AmethystMode_OSC_Description": "Use this option when playing VRChat directly on the Meta Quest, and not this computer.\n\nOSC trackers is only supported in VRChat.",
 
+  /* Amethyst Modules */
+  "AmethystModule_Amethyst_Title": "Amethyst",
+  "AmethystModule_Amethyst_Summary": "The Amethyst application itself.",
+  "AmethystModule_Amethyst_Description": "The Amethyst application itself.",
+
+  "AmethystModule_VCRedist_Title": "Visual C++ Redistributable 2022",
+  "AmethystModule_VCRedist_Summary": "Visual C++ runtime libraries.",
+  "AmethystModule_VCRedist_Description": "Visual C++ runtime libraries.",
+
+  "AmethystModule_WIX_Title": "Windows Install XML Toolset",
+  "AmethystModule_WIX_Summary": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
+  "AmethystModule_WIX_Description": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
+
+  "AmethystModule_KinectV1_Title": "Kinect for Windows SDK v1.8",
+  "AmethystModule_KinectV1_Summary": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1.",
+  "AmethystModule_KinectV1_Description": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1. This is required to use those devices with Amethyst.",
+
+  "AmethystModule_KinectV1Toolkit_Title": "Kinect for Windows Developer Toolkit v1.8",
+  "AmethystModule_KinectV1Toolkit_Summary": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1.",
+  "AmethystModule_KinectV1Toolkit_Description": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1. Contains useful tools like Kinect Explorer that can help diagnose issues with your Kinect.",
+
+  "AmethystModule_PSMS_Title": "PSMoveServiceEx",
+  "AmethystModule_PSMS_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
+  "AmethystModule_PSMS_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
+
   "SystemRequirement_Category_Compatibility": "Compatible devices",
   "SystemRequirement_Category_Playspace": "Play Area",
   "SystemRequirement_Category_Storage": "Disk space",

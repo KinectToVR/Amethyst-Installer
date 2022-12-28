@@ -81,7 +81,7 @@ namespace amethyst_installer_gui.Pages {
                 MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
 
                 var moduleToInstall = InstallerStateManager.ModulesToInstall[index];
-                m_downloadControl.Title = moduleToInstall.DisplayName;
+                m_downloadControl.Title = InstallerStateManager.ModuleStrings[moduleToInstall.Id].Title;
                 m_downloadControl.TotalBytes = moduleToInstall.DownloadSize;
                 m_downloadControl.DownloadedBytes = 0;
                 m_downloadControl.IsPending = false;
@@ -211,7 +211,7 @@ namespace amethyst_installer_gui.Pages {
             // Setup the control
             m_installingControl.ClearLog();
             m_installingControl.State = TaskState.Busy;
-            m_installingControl.Title = module.DisplayName;
+            m_installingControl.Title = InstallerStateManager.ModuleStrings[module.Id].Title;
             m_installingControl.BringIntoView();
 
             // Execute the install process on a separate thread

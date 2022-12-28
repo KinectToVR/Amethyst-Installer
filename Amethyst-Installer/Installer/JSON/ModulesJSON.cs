@@ -7,15 +7,6 @@ namespace amethyst_installer_gui.Installer {
         [JsonProperty("id")]
         public string Id;
 
-        [JsonProperty("display_name")]
-        public string DisplayName;
-
-        [JsonProperty("summary")]
-        public string Summary;
-
-        [JsonProperty("description")]
-        public string Description;
-
         /// <summary>
         /// The version string shown to the user
         /// </summary>
