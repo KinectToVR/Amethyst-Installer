@@ -72,10 +72,52 @@ namespace amethyst_installer_gui.Installer {
 
             // The impostor was ejected!
             try {
-                // Get hardcoded K2EX uninstall list lol
+                // 1. Get hardcoded K2EX uninstall list lol
                 string k2exList = Util.ExtractResourceAsString("K2EXList.json");
                 UninstallListJSON uninstallList = JsonConvert.DeserializeObject<UninstallListJSON>(k2exList);
                 UninstallUtil.DeleteDirectoryUsingUninstallList(k2exDir, uninstallList);
+
+                const string globalStartMenuDir = @"C:\ProgramData\Microsoft\Windows\Start Menu";
+                string k2exPath = Path.Combine(globalStartMenuDir, "K2EX");
+                string k2exShortcut = Path.Combine(globalStartMenuDir, "K2EX", "KinectToVR.lnk");
+
+                // 2. Try removing the K2EX start menu shortcut
+                try {
+                    if ( Directory.Exists(k2exPath) ) {
+                        if ( File.Exists(k2exShortcut) ) {
+                            File.Delete(k2exShortcut);
+                        }
+                        if ( Directory.GetFiles(k2exPath).Length == 0 && Directory.GetDirectories(k2exPath).Length == 0 ) {
+                            Directory.Delete(Path.Combine(globalStartMenuDir, "K2EX"));
+                        }
+                    }
+                } catch ( Exception e ) {
+                    Logger.Fatal("Failed to remove K2EX start menu shortcuts!");
+                    Logger.Fatal(Util.FormatException(e));
+                }
+
+                // 3. Try removing it from the registry
+                try {
+                    var HKLMSoftware = Registry.LocalMachine.OpenSubKey(@"SOFTWARE", true);
+                    var K2VRSoftware = HKLMSoftware.OpenSubKey("KinectToVR", true);
+                    if ( K2VRSoftware != null ) {
+                        K2VRSoftware.Close();
+                        K2VRSoftware.DeleteSubKeyTree("KinectToVR");
+                    }
+                } catch ( Exception e ) {
+                    Logger.Fatal("Failed to remove registry keys!");
+                    Logger.Fatal(Util.FormatException(e));
+                }
+
+                // 4. Locate the uninstall key, and remove it
+                try {
+                    var HKLM = Registry.LocalMachine.OpenSubKey(UninstallUtil.UninstallSubKey, true);
+                    HKLM.DeleteSubKey("{BA21A8D1-E588-48AB-BF4C-B37E8FB3708E}");
+                    HKLM.Close();
+                } catch ( Exception e ) {
+                    Logger.Fatal("Failed to remove uninstall key!");
+                    Logger.Fatal(Util.FormatException(e));
+                }
 
             } catch ( Exception ex ) {
                 Logger.Fatal("Failed to nuke K2EX!");
