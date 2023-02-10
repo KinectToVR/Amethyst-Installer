@@ -153,7 +153,10 @@ namespace amethyst_installer_gui.Pages {
             if ( MainWindow.HandleSpeedrun() ) {
                 SoundPlayer.PlaySound(SoundEffect.MoveNext);
                 MainWindow.Instance.SetButtonsHidden(false);
-                MainWindow.Instance.SetPage(InstallerState.InstallOptions);
+
+                // @TODO: Fix target
+                // MainWindow.Instance.SetPage(InstallerState.InstallOptions);
+                MainWindow.Instance.SetPage(InstallerState.AmethystModeSelection);
             }
         }
     }
