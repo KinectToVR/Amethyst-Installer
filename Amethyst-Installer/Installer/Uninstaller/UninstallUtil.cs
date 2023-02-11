@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 
 namespace amethyst_installer_gui {
     public static class UninstallUtil {
-        private const string UninstallSubKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
+        internal const string UninstallSubKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
 
         private static List<UninstallEntry> uninstallEntries;
 
@@ -315,7 +315,7 @@ namespace amethyst_installer_gui {
                 }
             }
 
-            if ( uninstallListText.Length == 0 ) {
+            if ( uninstallListText.Trim().Replace("\0", "").Length == 0 ) {
                 uninstallListText = Util.ExtractResourceAsString("UninstallList.json");
             }
             if ( uninstallList == null ) {
