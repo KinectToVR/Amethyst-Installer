@@ -56,22 +56,23 @@ namespace amethyst_installer_gui {
             ContentRendered += Window_ContentRendered;
 
             // Init pages
-            Pages.Add(InstallerState.Welcome, new PageWelcome());
-            Pages.Add(InstallerState.InstallOptions, new PageInstallOptions());
+            Pages.Add(InstallerState.Welcome,               new PageWelcome());
+            Pages.Add(InstallerState.InstallOptions,        new PageInstallOptions());
             Pages.Add(InstallerState.AmethystModeSelection, new PageAmethystMode());
-            Pages.Add(InstallerState.InstallDestination, new PageInstallDestination());
-            Pages.Add(InstallerState.SystemRequirements, new PageSystemRequirements());
-            Pages.Add(InstallerState.Downloading, new PageDownloading());
-            Pages.Add(InstallerState.Installation, new PageInstallation());
-            Pages.Add(InstallerState.Done, new PageDone());
+            Pages.Add(InstallerState.InstallDestination,    new PageInstallDestination());
+            Pages.Add(InstallerState.SystemRequirements,    new PageSystemRequirements());
+            Pages.Add(InstallerState.Downloading,           new PageDownloading());
+            Pages.Add(InstallerState.Installation,          new PageInstallation());
+            Pages.Add(InstallerState.Done,                  new PageDone());
 
-            Pages.Add(InstallerState.Logs, new PageLogs());
-            Pages.Add(InstallerState.EULA, new PageEULA());
-            Pages.Add(InstallerState.Exception, new PageException());
-            Pages.Add(InstallerState.Updating, new PageUpdating());
-            Pages.Add(InstallerState.K2EXUpgrading, new PageK2EXUpgrade());
-            Pages.Add(InstallerState.Debug, new PageDebug());
-            Pages.Add(InstallerState.DooM, new PageDoom());
+            Pages.Add(InstallerState.Logs,                  new PageLogs());
+            Pages.Add(InstallerState.EULA,                  new PageEULA());
+            Pages.Add(InstallerState.Exception,             new PageException());
+            Pages.Add(InstallerState.Updating,              new PageUpdating());
+            Pages.Add(InstallerState.K2EXUpgrading,         new PageK2EXUpgrade());
+            Pages.Add(InstallerState.Uninstall,             new PageUninstall());
+            Pages.Add(InstallerState.Debug,                 new PageDebug());
+            Pages.Add(InstallerState.DooM,                  new PageDoom());
 
             // Set default page to welcome
             SetPage(App.InitialPage);
