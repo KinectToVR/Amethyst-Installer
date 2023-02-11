@@ -111,6 +111,16 @@
         public const string K2EXUninstallSuccess                = "Uninstalled K2EX successfully!";
         public const string K2EXUninstallFailure                = "Failed to uninstall K2EX.";
 
+        // psmsex
+        public const string PsmsVdmDefaultSettings              = "Writing default settings for VDM...";
+        public const string PsmsVdmDefaultSettingsSuccess       = "Successfully set default settings for VDM!";
+        public const string PsmsVdmDefaultSettingsFailure       = "Failed to set default settings for VDM.";
+        public const string PsmsInstallDrivers                  = "Installing PSEye drivers...";
+        public const string PsmsInstallDriversSuccess           = "Successfully installed PSEye drivers!";
+        public const string PsmsInstallDriversFailure           = "Failed to install PSEye drivers.";
+        public const string PsmsInstallDriversBadCode           = "Failed to install PSEye drivers. Proccess exited with code {0}.";
+        public const string PsmsInstallDriversTimeout           = "Failed to install PSEye drivers. Proccess timed out.";
+
         // common
         public const string ViewLogs                            = "Please view the logs for more info.";
         public const string WaitingForExecution                 = "Waiting on other tasks to finish...";

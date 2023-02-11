@@ -247,6 +247,8 @@
     <Compile Include="Installer\Modules\Post\PostBase.cs" />
     <Compile Include="Installer\Modules\Post\PostKinectV1.cs" />
     <Compile Include="Installer\Modules\Post\PostKinectV2.cs" />
+    <Compile Include="Installer\Modules\PsmsModule.cs" />
+    <Compile Include="Installer\Modules\PsmsVdmModule.cs" />
     <Compile Include="Installer\Modules\TempArchiveModule.cs" />
     <Compile Include="Installer\OpenVR\OculusDeviceCache.cs" />
     <Compile Include="Installer\OpenVR\OpenVrDriverManifest.cs" />

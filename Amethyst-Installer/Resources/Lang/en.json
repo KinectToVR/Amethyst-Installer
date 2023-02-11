@@ -84,6 +84,9 @@
   "Sidebar_Task_Sysreq": "System requirements",
   "Sidebar_Task_Welcome": "Welcome", /* Sidebar tasks are the list of "stages" of the installer on the left hand side, with checkmarks */
   "Sidebar_ViewLogs": "View logs",
+  "Sidebar_Uninstall_WhatToRemove": "What to remove",
+  "Sidebar_Uninstall_Working": "Uninstalling",
+  "Sidebar_Uninstall_Complete": "Uninstall complete",
 
   "Speedrunner_Description": "Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?\n\nBe careful where you click!", /* this dialog gets shown when the user spams through the installer */
   "Speedrunner_Title": "Slow down!", /* this dialog gets shown when the user spams through the installer */
@@ -119,6 +122,10 @@
   "AmethystModule_PSMS_Title": "PSMoveServiceEx",
   "AmethystModule_PSMS_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
   "AmethystModule_PSMS_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
+
+  "AmethystModule_PSMS_VDM_Title": "PSMoveServiceEx VDM",
+  "AmethystModule_PSMS_VDM_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
+  "AmethystModule_PSMS_VDM_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.\n\nVDM (Virtual Device Manager) is an additional tool that works alongside PSMSEX to provide support for additional interfaces and devices.",
 
   "SystemRequirement_Category_Compatibility": "Compatible devices",
   "SystemRequirement_Category_Playspace": "Play Area",

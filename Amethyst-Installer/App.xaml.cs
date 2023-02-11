@@ -144,7 +144,7 @@ namespace amethyst_installer_gui {
             // Init OpenVR
             OpenVRUtil.InitOpenVR();
 
-            // Init K2Archive native
+            // Init K2Archive native APIs
             K2Archive.Init();
 
             // Fetch installer API response from server

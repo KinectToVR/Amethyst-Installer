@@ -83,7 +83,6 @@ namespace amethyst_installer_gui.Installer {
             ModulesToInstall = new List<Module>();
 
             // Create internal LUT for modules
-            ModuleTypes = new Dictionary<string, ModuleBase>();
             ModuleTypes     = new Dictionary<string, ModuleBase>();
             ModuleIdLUT     = new Dictionary<string, int>();
             ModulePostOps   = new Dictionary<string, PostBase>();
@@ -94,6 +93,8 @@ namespace amethyst_installer_gui.Installer {
             ModuleTypes.Add("exe", new ExeModule());
             ModuleTypes.Add("dark-extract", new DarkModule());
             ModuleTypes.Add("temp-archive", new TempArchiveModule());
+            ModuleTypes.Add("psmsex", new PsmsModule());
+            ModuleTypes.Add("psmsex-vdm", new PsmsVdmModule());
 
             ModulePostOps.Add("kinectv1", new PostKinectV1());
             ModulePostOps.Add("kinectv2", new PostKinectV2());
@@ -130,6 +131,11 @@ namespace amethyst_installer_gui.Installer {
                 Title       = Localisation.AmethystModule_PSMS_Title,
                 Summary     = Localisation.AmethystModule_PSMS_Summary,
                 Description = Localisation.AmethystModule_PSMS_Description,
+            });
+            ModuleStrings.Add("psmsex-vdm", new ModuleDisplayStrings() {
+                Title       = Localisation.AmethystModule_PSMS_VDM_Title,
+                Summary     = Localisation.AmethystModule_PSMS_VDM_Summary,
+                Description = Localisation.AmethystModule_PSMS_VDM_Description,
             });
 
             // Parse modules

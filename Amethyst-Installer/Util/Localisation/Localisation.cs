@@ -479,6 +479,21 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("AmethystModule_PSMS_Description");
             }
         }
+        public static string AmethystModule_PSMS_VDM_Title {
+            get {
+                return LocaleManager.GetString("AmethystModule_PSMS_VDM_Title");
+            }
+        }
+        public static string AmethystModule_PSMS_VDM_Summary {
+            get {
+                return LocaleManager.GetString("AmethystModule_PSMS_VDM_Summary");
+            }
+        }
+        public static string AmethystModule_PSMS_VDM_Description {
+            get {
+                return LocaleManager.GetString("AmethystModule_PSMS_VDM_Description");
+            }
+        }
         public static string SystemRequirement_Category_Compatibility {
             get {
                 return LocaleManager.GetString("SystemRequirement_Category_Compatibility");
