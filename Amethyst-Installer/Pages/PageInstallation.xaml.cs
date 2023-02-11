@@ -78,7 +78,7 @@ namespace amethyst_installer_gui.Pages {
 
                 var module = InstallerStateManager.ModulesToInstall[i];
                 if ( !InstallerStateManager.ModuleTypes.ContainsKey(module.Install.Type) ) {
-                    Logger.Warn($"Module of type {module.Install.Type} couldn't be found! Skipping...");
+                    Logger.Warn($"Module ({module.Id}) of type {module.Install.Type} couldn't be found! Skipping...");
                     continue;
                 }
 
