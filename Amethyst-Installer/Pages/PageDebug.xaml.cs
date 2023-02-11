@@ -206,5 +206,23 @@ namespace amethyst_installer_gui.Pages {
                 Util.ShowMessageBox($"Your logs. Check them.\n\nNow.", "LOGS LOGS LOGS LOGS LOGS LOGS");
             });
         }
+
+        private void nukeK2EX_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+            if ( InstallerStateManager.K2EXDetected ) {
+                Logger.Info(LogStrings.K2EXUninstallStart);
+
+                bool result = K2EXUtil.NukeK2EX(InstallerStateManager.K2EXPath);
+                if ( result ) {
+                    Logger.Info(LogStrings.K2EXUninstallSuccess);
+                    Util.ShowMessageBox($"Successfully uninstalled K2EX.", "Nuclear warfare status");
+                } else {
+                    Logger.Fatal(LogStrings.K2EXUninstallFailure);
+                    Util.ShowMessageBox($"Failed to uninstall K2EX. You fucked up.", "Nuclear warfare status");
+                }
+            } else {
+                Util.ShowMessageBox($"K2EX install could not be found.", "Nuclear warfare status");
+            }
+        }
     }
 }
