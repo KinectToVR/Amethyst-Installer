@@ -178,5 +178,7 @@
   "Installer_K2EXUpgrade_Title": "You're about to upgrade to Amethyst",
   "Installer_K2EXUpgrade_Description": "Amethyst is a new app from K2VR Team. It replaces K2EX. It's faster, more stable and has a bunch of new features.",
   "Installer_K2EXUpgrade_LearnMore": "Click here to learn more.",
-  "Installer_K2EXUpgrade_UpgradeButton": "Upgrade now"
+  "Installer_K2EXUpgrade_UpgradeButton": "Upgrade now",
+
+  "Uninstall_Success": "It's sad to see you go. We wish you luck in your future VR adventures!"
 }

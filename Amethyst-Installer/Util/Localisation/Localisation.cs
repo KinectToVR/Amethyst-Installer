@@ -354,6 +354,21 @@ namespace amethyst_installer_gui {
                 return LocaleManager.GetString("Sidebar_ViewLogs");
             }
         }
+        public static string Sidebar_Uninstall_WhatToRemove {
+            get {
+                return LocaleManager.GetString("Sidebar_Uninstall_WhatToRemove");
+            }
+        }
+        public static string Sidebar_Uninstall_Working {
+            get {
+                return LocaleManager.GetString("Sidebar_Uninstall_Working");
+            }
+        }
+        public static string Sidebar_Uninstall_Complete {
+            get {
+                return LocaleManager.GetString("Sidebar_Uninstall_Complete");
+            }
+        }
         public static string Speedrunner_Description {
             get {
                 return LocaleManager.GetString("Speedrunner_Description");
@@ -717,6 +732,11 @@ namespace amethyst_installer_gui {
         public static string Installer_K2EXUpgrade_UpgradeButton {
             get {
                 return LocaleManager.GetString("Installer_K2EXUpgrade_UpgradeButton");
+            }
+        }
+        public static string Uninstall_Success {
+            get {
+                return LocaleManager.GetString("Uninstall_Success");
             }
         }
     }

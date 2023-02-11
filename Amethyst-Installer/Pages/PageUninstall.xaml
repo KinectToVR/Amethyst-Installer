@@ -9,6 +9,59 @@
              mc:Ignorable="d" 
              d:DesignHeight="414" d:DesignWidth="508">
     <Grid>
-        
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="{x:Static global:Localisation.Uninstall_Success}" Foreground="White" Margin="0,0,0,8"/>
+                <Viewbox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="22*" />
+                            <ColumnDefinition Width="163*"/>
+                            <ColumnDefinition Width="275*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+                                        <GradientStop Color="#2572cf" Offset="0" />
+                                        <GradientStop Color="#d500e1 " Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Image Source="/Resources/Image/start_10.png" x:Name="launchImage" />
+                        </Grid>
+                        <Grid Grid.Column="2" Margin="16,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" x:Name="launchFromPlace" Text="{x:Static global:Localisation.Done_LaunchStartMenu}" Foreground="White" />
+                            <CheckBox Grid.Row="1" x:Name="launchAmeOnExit" Content="{x:Static global:Localisation.Done_LaunchAmethyst}" Margin="0,8,0,0" IsChecked="True" />
+                            <TextBlock Grid.Row="3" x:Name="linksContainer">
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                </Viewbox>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Finish}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" />
+        </Grid>
     </Grid>
 </UserControl>
