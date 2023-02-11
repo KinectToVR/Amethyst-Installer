@@ -100,5 +100,10 @@ namespace amethyst_installer_gui.Installer {
             ExtractVrPathReg();
             s_vrpathreg = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, "vrpathreg.exe"));
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsSteamVrInstalled() {
+            return s_openvrpaths != null && Valve.VR.OpenVR.IsRuntimeInstalled();
+        }
     }
 }

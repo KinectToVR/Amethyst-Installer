@@ -55,7 +55,17 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.SetSidebarHidden(false);
             MainWindow.Instance.SetButtonsHidden(true);
 
+            // If SteamVR is installed and managed to locate vrpaths and the install, default to SteamVR
+            // otherwise default to OSC
+            if ( OpenVRUtil.IsSteamVrInstalled() ) {
+                radioOpenvr.IsChecked   = true;
+                radioOsc.IsChecked      = false;
+            } else {
+                radioOpenvr.IsChecked   = false;
+                radioOsc.IsChecked      = true;
+            }
         }
+
         public void OnButtonPrimary(object sender, RoutedEventArgs e) { }
         public void OnButtonSecondary(object sender, RoutedEventArgs e) { }
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
