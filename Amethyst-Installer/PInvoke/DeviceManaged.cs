@@ -422,4 +422,66 @@ namespace amethyst_installer_gui.PInvoke {
         QueryRemoveActive               = MultiFunctionalChild,     // Device is actively engaged in a query-remove IRP
 
     }
+
+    //
+    // DevInst problem values, returned by call to CM_Get_DevInst_Status
+    //
+    public enum DeviceNodeProblemCode : uint {
+        NotConfigured               = (0x00000001),   // no config for device
+        DevloaderFailed             = (0x00000002),   // service load failed
+        OutOfMemory                 = (0x00000003),   // out of memory
+        EntryIsWrongType            = (0x00000004),   //
+        LackedArbitrator            = (0x00000005),   //
+        BootConfigConflict          = (0x00000006),   // boot config conflict
+        FailedFilter                = (0x00000007),   //
+        DevloaderNotFound           = (0x00000008),   // Devloader not found
+        InvalidData                 = (0x00000009),   // Invalid ID
+        FailedStart                 = (0x0000000A),   //
+        Liar                        = (0x0000000B),   //
+        NormalConflict              = (0x0000000C),   // config conflict
+        NotVerified                 = (0x0000000D),   //
+        NeedRestart                 = (0x0000000E),   // requires restart
+        Reenumeration               = (0x0000000F),   //
+        PartialLogConf              = (0x00000010),   //
+        UnknownResource             = (0x00000011),   // unknown res type
+        Reinstall                   = (0x00000012),   //
+        Registry                    = (0x00000013),   //
+        VXDLDR                      = (0x00000014),   // WINDOWS 95 ONLY
+        WillBeRemoved               = (0x00000015),   // devinst will remove
+        Disabled                    = (0x00000016),   // devinst is disabled
+        DevloaderNotReady           = (0x00000017),   // Devloader not ready
+        DeviceNotThere              = (0x00000018),   // device doesn't exist
+        Moved                       = (0x00000019),   //
+        TooEarly                    = (0x0000001A),   //
+        NoValidLogConf              = (0x0000001B),   // no valid log config
+        FailedInstall               = (0x0000001C),   // install failed
+        HardwareDisabled            = (0x0000001D),   // device disabled
+        CantShareIrq                = (0x0000001E),   // can't share IRQ
+        FailedAdd                   = (0x0000001F),   // driver failed add
+        DisabledService             = (0x00000020),   // service's Start = 4
+        TranslationFailed           = (0x00000021),   // resource translation failed
+        NoSoftconfig                = (0x00000022),   // no soft config
+        BiosTable                   = (0x00000023),   // device missing in BIOS table
+        IrqTranslationFailed        = (0x00000024),   // IRQ translator failed
+        FailedDriverEntry           = (0x00000025),   // DriverEntry() failed.
+        DriverFailedPriorUnload     = (0x00000026),   // Driver should have unloaded.
+        DriverFailedLoad            = (0x00000027),   // Driver load unsuccessful.
+        DriverServiceKeyInvalid     = (0x00000028),   // Error accessing driver's service key
+        LegacyServiceNoDevices      = (0x00000029),   // Loaded legacy service created no devices
+        DuplicateDevice             = (0x0000002A),   // Two devices were discovered with the same name
+        FailedPostStart             = (0x0000002B),   // The drivers set the device state to failed
+        Halted                      = (0x0000002C),   // This device was failed post start via usermode
+        Phantom                     = (0x0000002D),   // The devinst currently exists only in the registry
+        SystemShutdown              = (0x0000002E),   // The system is shutting down
+        HeldForEject                = (0x0000002F),   // The device is offline awaiting removal
+        DriverBlocked               = (0x00000030),   // One or more drivers is blocked from loading
+        RegistryTooLarge            = (0x00000031),   // System hive has grown too large
+        SetPropertiesFailed         = (0x00000032),   // Failed to apply one or more registry properties  
+        WaitingOnDependency         = (0x00000033),   // Device is stalled waiting on a dependency to start
+        UnsignedDriver              = (0x00000034),   // Failed load driver due to unsigned image.
+        UsedByDebugger              = (0x00000035),   // Device is being used by kernel debugger
+        DeviceReset                 = (0x00000036),   // Device is being reset
+        ConsoleLocked               = (0x00000037),   // Device is blocked while console is locked
+        NeedClassConfig             = (0x00000038),   // Device needs extended class configuration to start
+    }
 }

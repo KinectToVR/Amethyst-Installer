@@ -137,6 +137,21 @@ namespace amethyst_installer_gui.Installer.Modules {
 
                 return false;
             }
+
+            if ( KinectUtil.IsCameraDriverFailing()) {
+
+                // @TODO: Change strings?
+                control.LogError(LogStrings.MemoryIntegrityEnabled);
+                Logger.Error(LogStrings.MemoryIntegrityEnabled);
+
+                Util.ShowMessageBox(Localisation.MustDisableMemoryIntegrity_Description, Localisation.MustDisableMemoryIntegrity_Title);
+
+                // Open Windows Security on the Core Isolation page
+                Process.Start("windowsdefender://coreisolation");
+
+                return false;
+            }
+
             return true;
         }
 

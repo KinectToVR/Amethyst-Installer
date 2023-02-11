@@ -66,8 +66,30 @@ namespace amethyst_installer_gui.Installer {
             // Once we have silent installations, chain load the installer into a silent install with a callback to this if necessary
         }
 
-        private static void DumpKinectDriverFiles() {
+        public static bool IsCameraDriverFailing() {
 
+            bool success = false;
+
+            TryGetDeviceTree();
+
+            // Get Kinect Devices
+            foreach ( var device in s_deviceTree.DeviceNodes ) {
+
+                // Device is a Kinect 360 Device
+                if (
+                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;" // Kinect for Windows Camera
+                    ) {
+
+                    DeviceNodeStatus status = device.GetStatus(out uint code);
+                    Logger.Info($"Camera:: status: {status} ; code: {(DeviceNodeProblemCode) code}");
+
+                    if (status == DeviceNodeStatus.HasProblem) {
+                        // @TODO: Check if this is the number we need?
+                    }
+                }
+            }
+
+            return success;
         }
 
         public static bool MustFixNotReady() {
