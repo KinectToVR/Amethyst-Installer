@@ -27,6 +27,8 @@ namespace amethyst_installer_gui.Installer.Modules {
                         Logger.Fatal($"{string.Format(LogStrings.FailedExtractArchiveDiskFull, sourceFile)}!)");
                         control.LogError($"{string.Format(LogStrings.FailedExtractArchiveDiskFull, sourceFile)}! {LogStrings.ViewLogs}");
 
+                        state = TaskState.Error;
+                        return false;
                     }
                     // ZipFile.ExtractToDirectory(sourceZip, tempDirectory);
 

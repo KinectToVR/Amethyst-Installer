@@ -49,6 +49,8 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
 
+            MainWindow.Instance.SetSidebarHidden(false);
+            MainWindow.Instance.SetButtonsHidden(true);
         }
 
         public void OnSelected() {
