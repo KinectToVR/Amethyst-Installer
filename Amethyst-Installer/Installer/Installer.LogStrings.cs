@@ -17,6 +17,8 @@
         public const string FailRemoveConflictingTrackerRoles   = "Failed to remove conflicting tracker roles";
         public const string AssigningTrackerRoles               = "Assigning tracker roles...";
         public const string FailAssignTrackerRoles              = "Failed to assign tracker roles";
+        public const string RemovingTrackerRoles                = "Removing tracker roles...";
+        public const string FailRemoveTrackerRoles              = "Failed to remove tracker roles";
         public const string CreatingStartMenuEntry              = "Creating Start menu entry...";
         public const string FailedCreateStartMenuEntry          = "Failed to create Start menu entry";
         public const string CreatingDesktopEntry                = "Creating desktop shortcut...";
