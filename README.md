@@ -10,9 +10,9 @@ The installer is currently in an **UNFINISHED** state, and actively being develo
 
 If you would like to contribute to this project by translating strings for other languages, you may do the following:
 
-1. Download the latest installer from Releases.
+1. Download the latest installer build from Releases.
 
-2. Throw the installer into a folder of your choice.
+2. Move the installer into a folder of your choice.
 
 3. Create a folder called "Lang" in this folder.
 
