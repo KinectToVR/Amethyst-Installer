@@ -14,6 +14,7 @@ namespace amethyst_installer_gui {
         public static string CurrentLocale { get; private set; }
 
         static LocaleManager() {
+            CurrentLocale = FetchSystemLocale();
             ReloadLocale();
         }
 
@@ -21,9 +22,9 @@ namespace amethyst_installer_gui {
             // I'm not sure why but on exit this function gets called again...
             // I'm not sure as to why this is happening either
             // Because of this, error sounds have been omitted
-            CurrentLocale = FetchSystemLocale();
 
             // Load defaults
+            UnloadLocales();
             LoadLocale("en");
 
             if ( MainWindow.DebugMode ) {
@@ -34,7 +35,7 @@ namespace amethyst_installer_gui {
                     return;
                 }
 
-                var localeFile = Path.Combine(langDir, $"{CurrentLocale}.json");
+                var localeFile = Path.Combine(langDir, $"locale.json");
                 if ( File.Exists(localeFile) ) {
                     try {
                         using ( var reader = new StreamReader(File.Open(localeFile,
@@ -43,8 +44,8 @@ namespace amethyst_installer_gui {
                             string localeJson = reader.ReadToEnd();
                             if ( localeJson.Length < 1 ) {
                                 LoadLocale(CurrentLocale);
-                                Console.Error.WriteLine(
-                                    $"File \"Lang\\{CurrentLocale}.json\" is invalid! Defaulting to built-in locale...");
+                                Logger.Error(
+                                    $"File \"Lang\\locale.json\" is invalid! Defaulting to built-in locale...");
                                 return;
                             }
 
@@ -59,12 +60,12 @@ namespace amethyst_installer_gui {
                         }
                     } catch ( Exception e ) {
                         LoadLocale(CurrentLocale);
-                        Console.Error.WriteLine("Failed to read locale.json! Defaulting to built-in locale...");
+                        Logger.Error("Failed to read locale.json! Defaulting to built-in locale...");
                         Console.Error.WriteLine(Util.FormatException(e));
                     }
                 } else {
                     LoadLocale(CurrentLocale);
-                    Console.Error.WriteLine("Directory \"Lang\" exists, but couldn't find file \"locale.json\"! Defaulting to built-in locale...");
+                    Logger.Error("Directory \"Lang\" exists, but couldn't find file \"locale.json\"! Defaulting to built-in locale...");
                 }
 
             } else {
@@ -103,6 +104,13 @@ namespace amethyst_installer_gui {
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Clears locale keymap from memory
+        /// </summary>
+        public static void UnloadLocales() {
+            m_loadedLocale.Clear();
         }
 
         private static string FetchSystemLocale() {
