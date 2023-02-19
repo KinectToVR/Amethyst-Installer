@@ -29,7 +29,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Localisation.Page_Install_Title;
+            return Localisation.Manager.Page_Install_Title;
         }
 
         public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
@@ -152,12 +152,12 @@ namespace amethyst_installer_gui.Pages {
 
                 m_nextButtonVisible = true;
                 ActionButtonPrimary.Visibility = Visibility.Visible;
-                ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
+                ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Exit;
 
                 ActionButtonSecondary.Visibility = Visibility.Visible;
-                ActionButtonSecondary.Content = Localisation.Installer_Action_Discord;
+                ActionButtonSecondary.Content = Localisation.Manager.Installer_Action_Discord;
 
-                Util.ShowMessageBox(String.Format(Localisation.InstallFailure_Modal_Description, control.Title), Localisation.InstallFailure_Modal_Title, MessageBoxButton.OK);
+                Util.ShowMessageBox(String.Format(Localisation.Manager.InstallFailure_Modal_Description, control.Title), Localisation.Manager.InstallFailure_Modal_Title, MessageBoxButton.OK);
             });
         }
 
@@ -168,7 +168,7 @@ namespace amethyst_installer_gui.Pages {
 #else
             ActionButtonPrimary.Visibility = m_nextButtonVisible ? Visibility.Visible : Visibility.Hidden;
 #endif
-            ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
+            ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 

@@ -23,7 +23,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Localisation.Page_Download_Title;
+            return Localisation.Manager.Page_Download_Title;
         }
 
         public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
@@ -92,7 +92,7 @@ namespace amethyst_installer_gui.Pages {
                 m_currentProgressControl.IsPending = false;
                 m_currentProgressControl.DownloadFailed = false;
                 m_currentProgressControl.IsErrorCritical = moduleToInstall.IsCritical;
-                m_currentProgressControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Download_FailureCritical : Localisation.Download_Failure;
+                m_currentProgressControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Manager.Download_FailureCritical : Localisation.Manager.Download_Failure;
                 m_currentProgressControl.Completed = false;
                 m_currentProgressControl.DownloadedBytes = 0;
                 m_currentProgressControl.Tag = index;
@@ -190,7 +190,7 @@ namespace amethyst_installer_gui.Pages {
 #else
             ActionButtonPrimary.Visibility = m_nextButtonVisibile ? Visibility.Visible : Visibility.Hidden;
 #endif
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 

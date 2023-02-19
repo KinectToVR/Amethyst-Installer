@@ -98,7 +98,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="headerTitle" Grid.Row="1" Foreground="White" Text="{x:Static global:Localisation.Installer_K2EXUpgrade_Title}" FontSize="26" FontWeight="Bold" TextAlignment="Center"  TextWrapping="WrapWithOverflow" Opacity="0" />
+            <TextBlock x:Name="headerTitle" Grid.Row="1" Foreground="White" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_K2EXUpgrade_Title}" FontSize="26" FontWeight="Bold" TextAlignment="Center"  TextWrapping="WrapWithOverflow" Opacity="0" />
             <Grid Grid.Row="2" MaxHeight="100" MaxWidth="400" Margin="0,35">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -122,9 +122,9 @@
                     </Image.RenderTransform>
                 </Image>
             </Grid>
-            <TextBlock x:Name="blurb" Grid.Row="3" MaxWidth="425" Foreground="White" TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{x:Static global:Localisation.Installer_K2EXUpgrade_Description}" FontSize="16" FontWeight="Normal" Opacity="0"/>
+            <TextBlock x:Name="blurb" Grid.Row="3" MaxWidth="425" Foreground="White" TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_K2EXUpgrade_Description}" FontSize="16" FontWeight="Normal" Opacity="0"/>
             <TextBlock x:Name="learnMore" Grid.Row="4" HorizontalAlignment="Center" Margin="0,12,0,0" Opacity="0">
-                <Hyperlink Click="learnMoreLink_Click"><TextBlock x:Name="learnMoreLink" Foreground="{StaticResource BrushAccent}" Text="{x:Static global:Localisation.Installer_K2EXUpgrade_LearnMore}" FontSize="16" FontWeight="SemiBold"/></Hyperlink>
+                <Hyperlink Click="learnMoreLink_Click"><TextBlock x:Name="learnMoreLink" Foreground="{StaticResource BrushAccent}" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_K2EXUpgrade_LearnMore}" FontSize="16" FontWeight="SemiBold"/></Hyperlink>
             </TextBlock>
         </Grid>
 
@@ -139,7 +139,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="ActionButtonPrimary" Grid.Column="1" Content="{x:Static global:Localisation.Installer_K2EXUpgrade_UpgradeButton}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click" Opacity="0">
+                <Button x:Name="ActionButtonPrimary" Grid.Column="1" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_K2EXUpgrade_UpgradeButton}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click" Opacity="0">
                     <Button.RenderTransform>
                         <TranslateTransform x:Name="ActionButtonPrimaryTransform" X="0" Y="100"/>
                     </Button.RenderTransform>

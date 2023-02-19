@@ -139,7 +139,7 @@ namespace amethyst_installer_gui {
                 Logger.Info($"User closed installer!");
                 Util.Quit(ExitCodes.OK);
             } else {
-                if (Util.ShowMessageBox(Localisation.Installer_QuitVerify_Modal_Title, Localisation.Installer_QuitVerify_Modal_Description, MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+                if (Util.ShowMessageBox(Localisation.Manager.Installer_QuitVerify_Modal_Title, Localisation.Manager.Installer_QuitVerify_Modal_Description, MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                     Logger.Info($"User closed installer during a download or install!");
                     Util.Quit(ExitCodes.OK);
                 }
@@ -269,7 +269,7 @@ namespace amethyst_installer_gui {
                     m_speedrunnerModeActive = true;
 
                     // Show prompt
-                    Util.ShowMessageBox(Localisation.Speedrunner_Description, Localisation.Speedrunner_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(Localisation.Manager.Speedrunner_Description, Localisation.Manager.Speedrunner_Title, MessageBoxButton.OK);
 
                     // In a perfect world, we would play Dream music here, but unfortunately, licensing is a thing, so oh no!
 
@@ -299,7 +299,7 @@ namespace amethyst_installer_gui {
                     Instance.m_speedrunnerModeActive = true;
 
                     // Show prompt
-                    Util.ShowMessageBox(Localisation.Speedrunner_Description, Localisation.Speedrunner_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(Localisation.Manager.Speedrunner_Description, Localisation.Manager.Speedrunner_Title, MessageBoxButton.OK);
 
                     // In a perfect world, we would play Dream music here, but unfortunately, licensing is a thing, so oh no!
 

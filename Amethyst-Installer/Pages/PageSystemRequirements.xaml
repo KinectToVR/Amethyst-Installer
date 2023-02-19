@@ -24,34 +24,34 @@
                     </Grid.ColumnDefinitions>
                     <Border x:Name="maxWidthControl" Background="Transparent" Focusable="False" BorderThickness="0" Grid.Column="0" />
                     <StackPanel Orientation="Vertical" MaxWidth="{Binding ElementName=maxWidthControl,Path=ActualWidth}">
-                        <controls:ItemTask x:Name="diskSpace" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_Storage}" Margin="0,0,0,16" Focusable="False">
+                        <controls:ItemTask x:Name="diskSpace" State="Default" Title="{Binding Source={x:Static global:Localisation.Manager}, Path=SystemRequirement_Category_Storage}" Margin="0,0,0,16" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                                 <TextBlock x:Name="diskSpaceDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                             </StackPanel>
                         </controls:ItemTask>
-                        <controls:ItemTask x:Name="usbControllers" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_UsbControllers}" Margin="0,0,0,16" Focusable="False">
+                        <controls:ItemTask x:Name="usbControllers" State="Default" Title="{Binding Source={x:Static global:Localisation.Manager}, Path=SystemRequirement_Category_UsbControllers}" Margin="0,0,0,16" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical" x:Name="usbControllersContainer">
                                 <TextBlock x:Name="usbControllersDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                                 <Border x:Name="usbControllersCard" Background="{StaticResource BrushBackgroundAlt}" Padding="8" CornerRadius="4" Margin="0,4,0,0" Visibility="Collapsed">
-                                    <TextBlock x:Name="usbControllersCardText" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow" Text="{x:Static global:Localisation.SystemRequirement_Description_UsbControllers_Laptop}" />
+                                    <TextBlock x:Name="usbControllersCardText" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=SystemRequirement_Description_UsbControllers_Laptop}" />
                                 </Border>
                             </StackPanel>
                         </controls:ItemTask>
-                        <controls:ItemTask x:Name="vrSystem" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_VrSystem}" Margin="0,0,0,16" Focusable="False">
+                        <controls:ItemTask x:Name="vrSystem" State="Default" Title="{Binding Source={x:Static global:Localisation.Manager}, Path=SystemRequirement_Category_VrSystem}" Margin="0,0,0,16" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                                 <TextBlock x:Name="vrSystemDescription" FontFamily="Segoe UI Semibold" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA weeeeeeeeeee</TextBlock>
                                 <TextBlock x:Name="vrSystemFootnote" Foreground="#4CFFFFFF" TextWrapping="WrapWithOverflow" Visibility="Collapsed">AAAA <Hyperlink Foreground="{StaticResource BrushAccent}">bbbbbbbbbbbbbbbbb</Hyperlink> weeeeeeeeeee</TextBlock>
                             </StackPanel>
                         </controls:ItemTask>
-                        <controls:ItemTask x:Name="compatDevices" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_Compatibility}" Margin="0,0,0,16" Focusable="False">
+                        <controls:ItemTask x:Name="compatDevices" State="Default" Title="{Binding Source={x:Static global:Localisation.Manager}, Path=SystemRequirement_Category_Compatibility}" Margin="0,0,0,16" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                                 <TextBlock x:Name="compatDevicesDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                                 <Border x:Name="compatDevicesCard" Background="{StaticResource BrushBackgroundAlt}" Padding="8" CornerRadius="4" Margin="0,4,0,0" Visibility="Collapsed">
-                                    <TextBlock x:Name="compatDevicesCardText" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow" Text="{x:Static global:Localisation.DeviceInfo_XboxOneKinectLighthouseIncompatible}" />
+                                    <TextBlock x:Name="compatDevicesCardText" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=DeviceInfo_XboxOneKinectLighthouseIncompatible}" />
                                 </Border>
                             </StackPanel>
                         </controls:ItemTask>
-                        <controls:ItemTask x:Name="minPlayspaceSize" State="Default" Title="{x:Static global:Localisation.SystemRequirement_Category_Playspace}" Margin="0" Focusable="False">
+                        <controls:ItemTask x:Name="minPlayspaceSize" State="Default" Title="{Binding Source={x:Static global:Localisation.Manager}, Path=SystemRequirement_Category_Playspace}" Margin="0" Focusable="False">
                             <StackPanel Margin="10,0,0,0" Orientation="Vertical">
                                 <TextBlock x:Name="minPlayspaceSizeDescription" Foreground="#FFFFFFFF" TextWrapping="WrapWithOverflow">AAAA</TextBlock>
                             </StackPanel>
@@ -67,7 +67,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -26,7 +26,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Localisation.Page_Logs_Title;
+            return Localisation.Manager.Page_Logs_Title;
         }
 
         // Force only the first button to have focus
@@ -34,9 +34,9 @@ namespace amethyst_installer_gui.Pages {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonTertiary.Content = Localisation.Installer_Action_Back;
+            MainWindow.Instance.ActionButtonTertiary.Content = Localisation.Manager.Installer_Action_Back;
 
-            logsPathTextPre.Content = Localisation.Logs_DirectoryIsLocatedHere + " ";
+            logsPathTextPre.Content = Localisation.Manager.Logs_DirectoryIsLocatedHere + " ";
             logsPathLink.Text = Constants.AmethystLogsDirectory;
             logsPathLink.Foreground = WindowsColorHelpers.AccentLight;
 

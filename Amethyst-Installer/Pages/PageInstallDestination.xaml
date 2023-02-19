@@ -37,11 +37,11 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="pathTextbox" Style="{DynamicResource WinUITextbox}" Tag="{x:Static global:Localisation.InstallDestination_PathPlaceholder}" Grid.Column="0" Margin="0,0,12,0" />
-            <Button x:Name="openDirectory" Content="{x:Static global:Localisation.InstallDestination_OpenFolder}" Grid.Column="1" Click="openDirectory_Click" />
+            <TextBox x:Name="pathTextbox" Style="{DynamicResource WinUITextbox}" Tag="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallDestination_PathPlaceholder}" Grid.Column="0" Margin="0,0,12,0" />
+            <Button x:Name="openDirectory" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallDestination_OpenFolder}" Grid.Column="1" Click="openDirectory_Click" />
         </Grid>
 
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Padding="0" Text="{x:Static global:Localisation.InstallDestination_AmethystInstallLocationFootnote}" TextWrapping="WrapWithOverflow" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Padding="0" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallDestination_AmethystInstallLocationFootnote}" TextWrapping="WrapWithOverflow" />
 
         <!-- TODO: Better UI for this card ; also hide it! -->
         <Border x:Name="installFoundCard" Background="{StaticResource BrushBackgroundAlt}" Grid.Row="3" Padding="8" CornerRadius="4" Margin="0,8,0,0">
@@ -52,13 +52,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Source="/Resources/Icons/4x/Warning.png" Width="20" Grid.Column="0"/>
-                <TextBlock Margin="8,0,0,0" Grid.Column="1" Foreground="White" Text="{x:Static global:Localisation.InstallDestination_AmeInstallFound}" TextWrapping="WrapWithOverflow" />
+                <TextBlock Margin="8,0,0,0" Grid.Column="1" Foreground="White" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallDestination_AmeInstallFound}" TextWrapping="WrapWithOverflow" />
             </Grid>
         </Border>
 
         <StackPanel Grid.Row="4" Margin="0,8,0,0">
-            <CheckBox x:Name="startMenuCheckbox" Content="{x:Static global:Localisation.InstallDestination_CreateStartMenuShortcut}" IsChecked="True" />
-            <CheckBox x:Name="desktopShortcutCheckbox" Content="{x:Static global:Localisation.InstallDestination_CreateDesktopShortcut}" Margin="0,8,0,0" IsChecked="False" />
+            <CheckBox x:Name="startMenuCheckbox" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallDestination_CreateStartMenuShortcut}" IsChecked="True" />
+            <CheckBox x:Name="desktopShortcutCheckbox" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallDestination_CreateDesktopShortcut}" Margin="0,8,0,0" IsChecked="False" />
         </StackPanel>
         
         <Border Background="Transparent" Grid.Row="5" />
@@ -70,7 +70,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
         </Grid>
     </Grid>
 </UserControl>

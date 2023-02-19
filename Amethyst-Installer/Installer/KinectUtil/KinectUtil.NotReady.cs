@@ -27,7 +27,7 @@ namespace amethyst_installer_gui.Installer {
             // Check if Memory Integrity is enabled, and if so, early exit
             // (We don't know if this is going to be fixed until we restart the machine, let the user know that a restart is required!)
             if (IsMemoryIntegrityEnabled()) {
-                Util.ShowMessageBox(Localisation.MustDisableMemoryIntegrity_Description, Localisation.MustDisableMemoryIntegrity_Title);
+                Util.ShowMessageBox(Localisation.Manager.MustDisableMemoryIntegrity_Description, Localisation.Manager.MustDisableMemoryIntegrity_Title);
 
                 // Open Windows Security on the Core Isolation page
                 Process.Start("windowsdefender://coreisolation");

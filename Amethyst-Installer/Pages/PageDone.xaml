@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="{x:Static global:Localisation.Done_InstallSuccess}" Foreground="White" Margin="0,0,0,8"/>
+                <TextBlock Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Done_InstallSuccess}" Foreground="White" Margin="0,0,0,8"/>
                 <Viewbox>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -43,8 +43,8 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" x:Name="launchFromPlace" Text="{x:Static global:Localisation.Done_LaunchStartMenu}" Foreground="White" />
-                            <CheckBox Grid.Row="1" x:Name="launchAmeOnExit" Content="{x:Static global:Localisation.Done_LaunchAmethyst}" Margin="0,8,0,0" IsChecked="True" Checked="launchAmeOnExit_Checked" Unchecked="launchAmeOnExit_Checked" />
+                            <TextBlock Grid.Row="0" x:Name="launchFromPlace" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Done_LaunchStartMenu}" Foreground="White" />
+                            <CheckBox Grid.Row="1" x:Name="launchAmeOnExit" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Done_LaunchAmethyst}" Margin="0,8,0,0" IsChecked="True" Checked="launchAmeOnExit_Checked" Unchecked="launchAmeOnExit_Checked" />
                             <TextBlock Grid.Row="3" x:Name="linksContainer">
                             </TextBlock>
                         </Grid>
@@ -59,7 +59,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Finish}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Finish}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
         </Grid>
     </Grid>
 </UserControl>

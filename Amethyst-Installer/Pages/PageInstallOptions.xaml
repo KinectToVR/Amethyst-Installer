@@ -26,7 +26,7 @@
                 </Border.Effect>
                 <ScrollViewer x:Name="installableScroller" Focusable="false" HorizontalScrollBarVisibility="Hidden" Padding="6,8,0,8">
                     <StackPanel x:Name="installOptionsContainer" Width="{Binding ElementName=installableScroller, Path=ViewportWidth}" Margin="0,0,0,-8">
-                        <TextBlock Text="{x:Static global:Localisation.InstallOptions_ClickToViewSummary}" FontSize="12" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="{DynamicResource BrushForegroundAlt}" Margin="2,0,0,6" />
+                        <TextBlock Text="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallOptions_ClickToViewSummary}" FontSize="12" FontFamily="Segoe UI Semibold" TextWrapping="WrapWithOverflow" Foreground="{DynamicResource BrushForegroundAlt}" Margin="2,0,0,6" />
                     </StackPanel>
                 </ScrollViewer>
             </Border>
@@ -54,8 +54,8 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left">
-                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_DownloadSize}" />
-                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_TotalDownloadSize}" />
+                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallOptions_DownloadSize}" />
+                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallOptions_TotalDownloadSize}" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right">
                             <Label x:Name="downloadSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">69 MegaFarts</Label>
@@ -71,8 +71,8 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" HorizontalAlignment="Left">
-                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_InstallSize}" />
-                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{x:Static global:Localisation.InstallOptions_TotalInstallSize}" />
+                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallOptions_InstallSize}" />
+                            <Label Foreground="{DynamicResource BrushForegroundAlt}" HorizontalAlignment="Left" FontFamily="Segoe UI Semibold" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=InstallOptions_TotalInstallSize}" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" HorizontalAlignment="Right">
                             <Label x:Name="installSize" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Right" FontFamily="Segoe UI Semibold">420 TeraShits</Label>
@@ -89,7 +89,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
         </Grid>
     </Grid>
 </UserControl>

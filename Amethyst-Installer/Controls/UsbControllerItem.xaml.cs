@@ -12,7 +12,7 @@ namespace amethyst_installer_gui.Controls {
         public UsbControllerItem(UsbControllerData data, int count) {
             InitializeComponent();
             if (count > 1) {
-                this.content.Text = string.Format(Localisation.SystemRequirement_Description_UsbControllers_MultipleControllers, count, data.FriendlyString);
+                this.content.Text = string.Format(Localisation.Manager.SystemRequirement_Description_UsbControllers_MultipleControllers, count, data.FriendlyString);
             } else {
                 this.content.Text = data.FriendlyString;
             }

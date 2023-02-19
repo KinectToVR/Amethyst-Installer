@@ -35,7 +35,7 @@ namespace amethyst_installer_gui.Pages {
         // Force only the first button to have focus
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 
@@ -50,7 +50,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnSelected() {
 
             // Localize the privacy policy thing
-            var readPrivacyPolicyRaw = Localisation.Welcome_ReadPrivacyPolicy;
+            var readPrivacyPolicyRaw = Localisation.Manager.Welcome_ReadPrivacyPolicy;
             string firstPart = readPrivacyPolicyRaw.Substring(0, readPrivacyPolicyRaw.IndexOf("%s%"));
             string secondPart = readPrivacyPolicyRaw.Substring(readPrivacyPolicyRaw.IndexOf("%s%") + 3);
 
@@ -61,7 +61,7 @@ namespace amethyst_installer_gui.Pages {
                 NavigateUri = new Uri($"https://k2vr.tech/{LocaleManager.CurrentLocale}/privacy"),
                 Foreground = WindowsColorHelpers.AccentLight,
             };
-            privacyPolicyLink.Inlines.Add(Localisation.Welcome_PrivacyPolicy);
+            privacyPolicyLink.Inlines.Add(Localisation.Manager.Welcome_PrivacyPolicy);
             privacyPolicyLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;
             readPrivacyPolicy.Inlines.Add(privacyPolicyLink);
             if ( secondPart.Length > 0 )
@@ -70,7 +70,7 @@ namespace amethyst_installer_gui.Pages {
             // @HACK: This is temporary, until we fully release the installer
 
             // Localize the privacy policy thing
-            var techPreviewRaw = Localisation.Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks;
+            var techPreviewRaw = Localisation.Manager.Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks;
             string t_firstPart = techPreviewRaw.Substring(0, techPreviewRaw.IndexOf("%s%"));
             string t_secondPart = techPreviewRaw.Substring(techPreviewRaw.IndexOf("%s%") + 3);
 
