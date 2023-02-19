@@ -96,19 +96,19 @@ namespace amethyst_installer_gui {
                 SystemSounds.Exclamation.Play();
                 if ( InstallerStateManager.IsCloudPC ) {
                     // If Cloud PC
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_CloudPC, LocaleStrings.InstallProhibited_Title);
+                    Util.ShowMessageBox(LocaleStrings.Manager.InstallProhibited_CloudPC, LocaleStrings.Manager.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 } else if ( InstallerStateManager.IsWindowsAncient ) {
                     // If Windows version is not supported
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_WindowsAncient, LocaleStrings.InstallProhibited_Title);
+                    Util.ShowMessageBox(LocaleStrings.Manager.InstallProhibited_WindowsAncient, LocaleStrings.Manager.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 } else if ( OpenVRUtil.HmdType == VRHmdType.Phone ) {
                     // If using a phone
-                    if (Util.ShowMessageBox(LocaleStrings.InstallProhibited_PhoneVR, LocaleStrings.InstallProhibited_Title, MessageBoxButton.OKCancel) == MessageBoxResult.Cancel) {
+                    if (Util.ShowMessageBox(LocaleStrings.Manager.InstallProhibited_PhoneVR, LocaleStrings.Manager.InstallProhibited_Title, MessageBoxButton.OKCancel) == MessageBoxResult.Cancel) {
                         Util.Quit(ExitCodes.IncompatibleSetup);
                     }
                 } else if (!InstallerStateManager.HasEnoughStorage) {
-                    Util.ShowMessageBox(LocaleStrings.InstallProhibited_DiskFull, LocaleStrings.InstallProhibited_Title);
+                    Util.ShowMessageBox(LocaleStrings.Manager.InstallProhibited_DiskFull, LocaleStrings.Manager.InstallProhibited_Title);
                     Util.Quit(ExitCodes.IncompatibleSetup);
                 }
             }
@@ -120,7 +120,7 @@ namespace amethyst_installer_gui {
 
             if ( AppWindow.Instance == null ) {
                 // uhhhhhhhhhh how the fuck did you get here
-                Util.ShowMessageBox(LocaleStrings.Dialog_Description_CritError.Replace("[server]", Constants.DiscordInvite), LocaleStrings.Dialog_Title_CritError);
+                Util.ShowMessageBox(LocaleStrings.Manager.Dialog_Description_CritError.Replace("[server]", Constants.DiscordInvite), LocaleStrings.Manager.Dialog_Title_CritError);
                 Util.Quit(ExitCodes.ExceptionPreInit);
                 return;
             }

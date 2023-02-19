@@ -69,7 +69,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonPrimary.IsEnabled = false;
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
 

@@ -51,7 +51,7 @@ namespace amethyst_installer_gui.Commands {
             } catch (Exception e) {
                 Logger.Fatal("An exception was thrown while trying to fetch the update list!");
                 Logger.Fatal(Util.FormatException(e));
-                Util.ShowMessageBox(Localisation.Updating_FailedReachApi, Localisation.Updating_InitFailed);
+                Util.ShowMessageBox(Localisation.Manager.Updating_FailedReachApi, Localisation.Manager.Updating_InitFailed);
                 return true;
             }
 

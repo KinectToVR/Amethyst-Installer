@@ -47,7 +47,7 @@ namespace amethyst_installer_gui {
                             }
                         } catch ( Exception ex ) {
                             if (Util.IsDiskFull(ex)) {
-                                Util.ShowMessageBox(Localisation.InstallFailure_DiskFull_Description, Localisation.InstallFailure_DiskFull_Title);
+                                Util.ShowMessageBox(Localisation.Manager.InstallFailure_DiskFull_Description, Localisation.Manager.InstallFailure_DiskFull_Title);
                                 return false;
                             }
                             throw ex;

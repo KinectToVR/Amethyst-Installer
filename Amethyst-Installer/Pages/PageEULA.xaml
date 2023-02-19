@@ -43,11 +43,11 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <RadioButton x:Name="eulaDeny"  Grid.Row="0" Content="{x:Static global:Localisation.EULA_DontAgree}" IsChecked="True" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
-                <RadioButton x:Name="eulaAgree" Grid.Row="1" Content="{x:Static global:Localisation.EULA_Agree}" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
+                <RadioButton x:Name="eulaDeny"  Grid.Row="0" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=EULA_DontAgree}" IsChecked="True" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
+                <RadioButton x:Name="eulaAgree" Grid.Row="1" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=EULA_Agree}" Checked="eulaRadioButton_Checked" Unchecked="eulaRadioButton_Checked" />
             </Grid>
 
-            <Button Grid.Column="1" x:Name="proceedButton" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="proceedButton_Click" TabIndex="2" IsDefault="True"/>
+            <Button Grid.Column="1" x:Name="proceedButton" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Next}" Width="160" Height="52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Click="proceedButton_Click" TabIndex="2" IsDefault="True"/>
         </Grid>
     </Grid>
 </UserControl>

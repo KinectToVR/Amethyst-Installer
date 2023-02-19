@@ -87,7 +87,7 @@ namespace amethyst_installer_gui.Pages {
                 m_downloadControl.IsPending = false;
                 m_downloadControl.DownloadFailed = false;
                 m_downloadControl.IsErrorCritical = moduleToInstall.IsCritical;
-                m_downloadControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Download_FailureCritical : Localisation.Download_Failure;
+                m_downloadControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Manager.Download_FailureCritical : Localisation.Manager.Download_Failure;
                 m_downloadControl.Completed = false;
                 m_downloadControl.Tag = index;
             // });
@@ -290,7 +290,7 @@ namespace amethyst_installer_gui.Pages {
                 MainWindow.Instance.sidebar_install.State = TaskState.Error;
                 SoundPlayer.PlaySound(SoundEffect.Error);
 
-                Util.ShowMessageBox(string.Format(Localisation.InstallFailure_Modal_Description, m_installingControl.Title), Localisation.InstallFailure_Modal_Title, MessageBoxButton.OK);
+                Util.ShowMessageBox(string.Format(Localisation.Manager.InstallFailure_Modal_Description, m_installingControl.Title), Localisation.Manager.InstallFailure_Modal_Title, MessageBoxButton.OK);
                 Util.Quit(ExitCodes.ExceptionInstall);
             });
         }
@@ -314,7 +314,7 @@ namespace amethyst_installer_gui.Pages {
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonPrimary.IsEnabled = false;
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Visible;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
         }

@@ -103,7 +103,7 @@ namespace amethyst_installer_gui.Installer {
             // Fixing an Audio device is hell lmfao
 
             // EW MANUAL METHOD!!!
-            // Util.ShowMessageBox(Localisation.PostOp_Kinect_EnableMic_Description, Localisation.PostOp_Kinect_EnableMic_Title, MessageBoxButton.OK);
+            // Util.ShowMessageBox(Localisation.Manager.PostOp_Kinect_EnableMic_Description, Localisation.Manager.PostOp_Kinect_EnableMic_Title, MessageBoxButton.OK);
 
             // Open sound control panel on the recording tab, and tell the user to enable the microphone since we can't simulate the keystrokes
             // ourselves

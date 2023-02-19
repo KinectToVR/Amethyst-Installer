@@ -36,7 +36,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Localisation.Page_Sysreq_Title;
+            return Localisation.Manager.Page_Sysreq_Title;
         }
 
         public void OnSelected() {
@@ -61,13 +61,13 @@ namespace amethyst_installer_gui.Pages {
             if ( !canContinue ) {
                 SoundPlayer.PlaySound(SoundEffect.Error);
                 MainWindow.Instance.sidebar_sysreq.State = Controls.TaskState.Error;
-                ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
+                ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Exit;
             }
         }
 
         private void DisplayStorage() {
 
-            diskSpaceDescription.Text = string.Format(Localisation.SystemRequirement_Description_Storage, Util.SizeSuffix(RequiredStorage));
+            diskSpaceDescription.Text = string.Format(Localisation.Manager.SystemRequirement_Description_Storage, Util.SizeSuffix(RequiredStorage));
             diskSpace.State = Controls.TaskState.Checkmark;
 
             // If less than 2GB free on drive
@@ -122,7 +122,7 @@ namespace amethyst_installer_gui.Pages {
                 usbControllersContainer.Children.Add(controllerItem);
             }
 
-            usbControllersDescription.Text = string.Format(Localisation.SystemRequirement_Description_UsbControllers, goodControllerCount);
+            usbControllersDescription.Text = string.Format(Localisation.Manager.SystemRequirement_Description_UsbControllers, goodControllerCount);
 
             usbControllers.State = overallQuality ? TaskState.Checkmark : TaskState.Error;
 
@@ -150,7 +150,7 @@ namespace amethyst_installer_gui.Pages {
                 vrSystem.State = Controls.TaskState.Error;
             }
 
-            string vrSystemFootnoteStringSrc = Localisation.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
+            string vrSystemFootnoteStringSrc = Localisation.Manager.SystemRequirement_Footnote_StageTracking_VirtualDesktop;
 
             string vrSystemFootnoteStringFirstPart = vrSystemFootnoteStringSrc.Substring(0, vrSystemFootnoteStringSrc.IndexOf('['));
             string vrSystemFootnoteStringHyperlink = vrSystemFootnoteStringSrc.Substring(vrSystemFootnoteStringSrc.IndexOf('[') + 1, vrSystemFootnoteStringSrc.IndexOf(']') - vrSystemFootnoteStringSrc.IndexOf('[') - 1);
@@ -193,29 +193,29 @@ namespace amethyst_installer_gui.Pages {
             if ( InstallerStateManager.IsWindowsAncient ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Localisation.InstallError_WindowsVersionIsOld);
+                compatibilityString.Append(Localisation.Manager.InstallError_WindowsVersionIsOld);
             }
             if ( !InstallerStateManager.SteamVRInstalled ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Localisation.InstallError_SteamVRNotFound);
+                compatibilityString.Append(Localisation.Manager.InstallError_SteamVRNotFound);
             }
             if ( InstallerStateManager.IsCloudPC ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Localisation.InstallError_CloudPC);
+                compatibilityString.Append(Localisation.Manager.InstallError_CloudPC);
             }
 
             // Check for Kinects
             if ( KinectUtil.IsKinectV1Present() ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Localisation.Device_Xbox360Kinect);
+                compatibilityString.Append(Localisation.Manager.Device_Xbox360Kinect);
             }
             if ( KinectUtil.IsKinectV2Present() ) {
                 if ( compatibilityString.Length > 0 )
                     compatibilityString.Append(Environment.NewLine);
-                compatibilityString.Append(Localisation.Device_XboxOneKinect);
+                compatibilityString.Append(Localisation.Manager.Device_XboxOneKinect);
 
                 if ( OpenVRUtil.TrackingType == VRTrackingType.Lighthouse ) {
                     // Oh no...
@@ -225,7 +225,7 @@ namespace amethyst_installer_gui.Pages {
             }
 
             if ( compatibilityString.Length == 0 )
-                compatibilityString.Append(Localisation.Device_NotDetected);
+                compatibilityString.Append(Localisation.Manager.Device_NotDetected);
 
             compatDevicesDescription.Text = compatibilityString.ToString();
         }
@@ -234,8 +234,8 @@ namespace amethyst_installer_gui.Pages {
 
             double minAxis = Math.Min(InstallerStateManager.PlayspaceBounds.x, InstallerStateManager.PlayspaceBounds.y);
             string compatibleDeviceDescriptionStringSrc =
-                    minAxis == 0 ? Localisation.SystemRequirement_Description_Playspace_Unknown :
-                    (minAxis < Constants.MinimumPlayspaceSize ? Localisation.SystemRequirement_Description_Playspace_Small : Localisation.SystemRequirement_Description_Playspace_Good);
+                    minAxis == 0 ? Localisation.Manager.SystemRequirement_Description_Playspace_Unknown :
+                    (minAxis < Constants.MinimumPlayspaceSize ? Localisation.Manager.SystemRequirement_Description_Playspace_Small : Localisation.Manager.SystemRequirement_Description_Playspace_Good);
 
             // Subtitute playspace bounds into string
             compatibleDeviceDescriptionStringSrc = string.Format(compatibleDeviceDescriptionStringSrc,
@@ -299,10 +299,10 @@ namespace amethyst_installer_gui.Pages {
                     headsetString = "Oculus Rift S";
                     break;
                 case VRHmdType.Quest:
-                    headsetString = string.Format(Localisation.SystemRequirement_Description_Headset_Via, "Meta Quest", vrConnectionType);
+                    headsetString = string.Format(Localisation.Manager.SystemRequirement_Description_Headset_Via, "Meta Quest", vrConnectionType);
                     break;
                 case VRHmdType.Quest2:
-                    headsetString = string.Format(Localisation.SystemRequirement_Description_Headset_Via, "Meta Quest 2", vrConnectionType);
+                    headsetString = string.Format(Localisation.Manager.SystemRequirement_Description_Headset_Via, "Meta Quest 2", vrConnectionType);
                     break;
 
                 case VRHmdType.Vive:
@@ -341,29 +341,29 @@ namespace amethyst_installer_gui.Pages {
                     break;
 
                 case VRHmdType.Phone:
-                    headsetString = Localisation.SystemRequirement_Description_Headset_Phone;
+                    headsetString = Localisation.Manager.SystemRequirement_Description_Headset_Phone;
                     break;
             }
 
             if ( headsetString.Length > 0 ) {
                 if ( OpenVRUtil.TrackingType == VRTrackingType.Lighthouse ) {
-                    return string.Format(Localisation.SystemRequirement_Description_Headset_UsingLighthouse, headsetString);
+                    return string.Format(Localisation.Manager.SystemRequirement_Description_Headset_UsingLighthouse, headsetString);
                 } else {
                     return headsetString;
                 }
             }
 
             if ( OpenVRUtil.HmdType == VRHmdType.Unknown ) {
-                return Localisation.SystemRequirement_Description_Headset_Not_Detected;
+                return Localisation.Manager.SystemRequirement_Description_Headset_Not_Detected;
             }
 
-            return $"{string.Format(Localisation.SystemRequirement_Description_Headset_Via, OpenVRUtil.HmdType.ToString(), OpenVRUtil.ConnectionType.ToString())} ({string.Format(Localisation.SystemRequirement_Description_Headset_TrackingUnder, OpenVRUtil.TrackingType.ToString())})";
+            return $"{string.Format(Localisation.Manager.SystemRequirement_Description_Headset_Via, OpenVRUtil.HmdType.ToString(), OpenVRUtil.ConnectionType.ToString())} ({string.Format(Localisation.Manager.SystemRequirement_Description_Headset_TrackingUnder, OpenVRUtil.TrackingType.ToString())})";
         }
 
         // Force only the first button to have focus
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 

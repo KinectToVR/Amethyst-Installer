@@ -22,7 +22,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Localisation.Page_Exception_Title;
+            return Localisation.Manager.Page_Exception_Title;
         }
 
         public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
@@ -44,17 +44,17 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Exit;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Exit;
 
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonSecondary.Content = Localisation.Installer_Action_Discord;
+            MainWindow.Instance.ActionButtonSecondary.Content = Localisation.Manager.Installer_Action_Discord;
 
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonTertiary.Content = Localisation.Installer_Action_CopyError;
+            MainWindow.Instance.ActionButtonTertiary.Content = Localisation.Manager.Installer_Action_CopyError;
 
             exceptionTraceBox.Text = Util.FormatException(currentException);
 
-            logsPathTextPre.Content = Localisation.Logs_DirectoryIsLocatedHere + " ";
+            logsPathTextPre.Content = Localisation.Manager.Logs_DirectoryIsLocatedHere + " ";
             logsPathLink.Text = Constants.AmethystLogsDirectory;
 
             MainWindow.Instance.SetSidebarHidden(false);

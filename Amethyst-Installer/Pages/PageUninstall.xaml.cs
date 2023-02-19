@@ -42,7 +42,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Localisation.Page_Uninstall_Title;
+            return Localisation.Manager.Page_Uninstall_Title;
         }
 
         public void OnButtonPrimary(object sender, RoutedEventArgs e) {}

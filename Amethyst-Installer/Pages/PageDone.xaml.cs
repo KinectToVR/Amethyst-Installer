@@ -23,7 +23,7 @@ namespace amethyst_installer_gui.Pages {
         }
 
         public string GetTitle() {
-            return Localisation.Page_Done_Title;
+            return Localisation.Manager.Page_Done_Title;
         }
 
         public void ActionButtonPrimary_Click(object sender, RoutedEventArgs e) {
@@ -58,18 +58,18 @@ namespace amethyst_installer_gui.Pages {
             string launchImagePath = $"/Resources/Image/start_{os_string}.png";
 
             if ( InstallerStateManager.CreateDesktopShortcut && !InstallerStateManager.CreateStartMenuEntry ) {
-                launchFromPlace.Text = Localisation.Done_LaunchDesktop;
+                launchFromPlace.Text = Localisation.Manager.Done_LaunchDesktop;
                 launchImagePath = $"/Resources/Image/desktop_{os_string}.png";
             }
             launchImage.Source = new BitmapImage(new Uri(launchImagePath, UriKind.Relative));
 
-            AddLink(Localisation.Done_LinkDocumentation, Util.GenerateDocsURL(string.Empty));
+            AddLink(Localisation.Manager.Done_LinkDocumentation, Util.GenerateDocsURL(string.Empty));
             linksContainer.Inlines.Add(Environment.NewLine);
-            AddLink(Localisation.Done_LinkDiscord, Constants.DiscordInvite);
+            AddLink(Localisation.Manager.Done_LinkDiscord, Constants.DiscordInvite);
             linksContainer.Inlines.Add(Environment.NewLine);
-            AddLink(Localisation.Done_LinkGitHub, "https://github.com/KinectToVR");
+            AddLink(Localisation.Manager.Done_LinkGitHub, "https://github.com/KinectToVR");
             linksContainer.Inlines.Add(Environment.NewLine);
-            AddLink(Localisation.Done_LinkDonations, "https://opencollective.com/k2vr");
+            AddLink(Localisation.Manager.Done_LinkDonations, "https://opencollective.com/k2vr");
         }
 
         private void AddLink(string displayString, string urlTarget) {
@@ -92,7 +92,7 @@ namespace amethyst_installer_gui.Pages {
         // Force only the first button to have focus
         public void OnFocus() {
             MainWindow.Instance.ActionButtonPrimary.Visibility = Visibility.Visible;
-            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Installer_Action_Next;
+            MainWindow.Instance.ActionButtonPrimary.Content = Localisation.Manager.Installer_Action_Next;
             MainWindow.Instance.ActionButtonSecondary.Visibility = Visibility.Hidden;
             MainWindow.Instance.ActionButtonTertiary.Visibility = Visibility.Hidden;
 

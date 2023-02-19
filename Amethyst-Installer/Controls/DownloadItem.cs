@@ -150,7 +150,7 @@ namespace amethyst_installer_gui.Controls {
         }
 
         public static readonly DependencyProperty ErrorMessageProperty =
-            DependencyProperty.Register("ErrorMessage", typeof(string), typeof(DownloadItem), new UIPropertyMetadata(Localisation.Download_Failure, new PropertyChangedCallback(ErrorMessageChanged)));
+            DependencyProperty.Register("ErrorMessage", typeof(string), typeof(DownloadItem), new UIPropertyMetadata(Localisation.Manager.Download_Failure, new PropertyChangedCallback(ErrorMessageChanged)));
 
         private static void ErrorMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             var thisControl = d as DownloadItem;

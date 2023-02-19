@@ -27,7 +27,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="ActionButtonPrimary" Grid.Column="1" Content="{x:Static global:Localisation.Installer_Action_Back}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="-1" IsDefault="False" Click="ActionButtonPrimary_Click"/>
+                <Button x:Name="ActionButtonPrimary" Grid.Column="1" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Back}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="-1" IsDefault="False" Click="ActionButtonPrimary_Click"/>
             </Grid>
 
             <TextBlock Grid.Column="0" Text="{x:Static global:Util.InstallerVersionString}" Foreground="{DynamicResource BrushForegroundAlt}" FontFamily="Segoe UI Semibold" Margin="8" VerticalAlignment="Bottom"/>

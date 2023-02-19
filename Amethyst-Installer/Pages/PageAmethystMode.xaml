@@ -20,10 +20,10 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Foreground="{DynamicResource BrushForegroundAlt}" Margin="0,0,0,8" Text="{x:Static global:Localisation.AmethystMode_Description}" />
+            <TextBlock Grid.Row="0" Foreground="{DynamicResource BrushForegroundAlt}" Margin="0,0,0,8" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=AmethystMode_Description}" />
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <controls:RadioOptionDescriptive x:Name="radioOpenvr" Margin="0,0,0,8" GroupName="ServiceEndpointRadioGroup" Title="{x:Static global:Localisation.AmethystMode_OpenVR_Title}" Description="{x:Static global:Localisation.AmethystMode_OpenVR_Description}" IsChecked="True"/>
-                <controls:RadioOptionDescriptive x:Name="radioOsc" GroupName="ServiceEndpointRadioGroup" Title="{x:Static global:Localisation.AmethystMode_OSC_Title}" Description="{x:Static global:Localisation.AmethystMode_OSC_Description}" IsChecked="False"/>
+                <controls:RadioOptionDescriptive x:Name="radioOpenvr" Margin="0,0,0,8" GroupName="ServiceEndpointRadioGroup" Title="{Binding Source={x:Static global:Localisation.Manager}, Path=AmethystMode_OpenVR_Title}" Description="{Binding Source={x:Static global:Localisation.Manager}, Path=AmethystMode_OpenVR_Description}" IsChecked="True"/>
+                <controls:RadioOptionDescriptive x:Name="radioOsc" GroupName="ServiceEndpointRadioGroup" Title="{Binding Source={x:Static global:Localisation.Manager}, Path=AmethystMode_OSC_Title}" Description="{Binding Source={x:Static global:Localisation.Manager}, Path=AmethystMode_OSC_Description}" IsChecked="False"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Margin="0,15,0,0">
@@ -32,7 +32,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Next}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -25,7 +25,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                     control.LogInfo(LogStrings.KinectMicrophoneDisabled);
                     Logger.Info(LogStrings.KinectMicrophoneDisabled);
 
-                    Util.ShowMessageBox(Localisation.PostOp_Kinect_EnableMic_Description, Localisation.PostOp_Kinect_EnableMic_Title, MessageBoxButton.OK);
+                    Util.ShowMessageBox(Localisation.Manager.PostOp_Kinect_EnableMic_Description, Localisation.Manager.PostOp_Kinect_EnableMic_Title, MessageBoxButton.OK);
 
                     // Open sound control panel on the recording tab
                     // @TODO: See if automating this is possible

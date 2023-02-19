@@ -45,9 +45,9 @@ Text="          No exception?
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="ActionButtonTertiary" Grid.Column="0" Content="{x:Static global:Localisation.Installer_Action_CopyError}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonTertiary_Click"/>
-            <Button x:Name="ActionButtonSecondary" Grid.Column="1" Content="{x:Static global:Localisation.Installer_Action_Discord}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonSecondary_Click"/>
-            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{x:Static global:Localisation.Installer_Action_Exit}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
+            <Button x:Name="ActionButtonTertiary" Grid.Column="0" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_CopyError}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonTertiary_Click"/>
+            <Button x:Name="ActionButtonSecondary" Grid.Column="1" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Discord}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonSecondary_Click"/>
+            <Button x:Name="ActionButtonPrimary" Grid.Column="2" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Installer_Action_Exit}" Width="160" Height="52" VerticalAlignment="Bottom" Margin="0,0,0,2" TabIndex="2" IsDefault="True" Click="ActionButtonPrimary_Click"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -224,7 +224,7 @@
                                 </Border>
                             </Grid>
                         </Border>
-                        <TextBlock Grid.Row="1" Text="{x:Static global:Localisation.Updating_UpdatingAmethyst}" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Center" FontSize="16" FontWeight="SemiBold" Margin="0,8" />
+                        <TextBlock Grid.Row="1" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Updating_UpdatingAmethyst}" Foreground="{DynamicResource BrushForeground}" HorizontalAlignment="Center" FontSize="16" FontWeight="SemiBold" Margin="0,8" />
                     </Grid>
                 </StackPanel>
                 <Grid Grid.Row="3">
