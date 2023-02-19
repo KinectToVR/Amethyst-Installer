@@ -51,7 +51,7 @@ namespace amethyst_installer_gui.Installer {
                 // Setup a temp directory for the currently staged driver
                 
 
-                DumpKinectDriverFiles();
+                // DumpKinectDriverFiles();
 
                 // Install drivers manually
 
