@@ -292,6 +292,26 @@ namespace amethyst_installer_gui {
                     OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-RFOOT");
                     OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-RKNEE");
                     OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-WAIST");
+
+                    // Just in case, K2EX tracker roles too
+
+                    // Ancient versions of KinectToVR
+                    OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/0");
+                    OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/1");
+                    OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/2");
+                    OpenVRUtil.RemoveTrackerRole("/devices/00vrinputemulator/3");
+
+                    // For most of K2EX's lifespan we tried mimicking Vive Trackers, sorry cnlohr (pls don't look at the OpenVrUtils files k thx)
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB11ABEC");
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB1441A7");
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T0");
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T1");
+                    OpenVRUtil.RemoveTrackerRole("/devices/htc/vive_trackerLHR-CB9AD1T2");
+
+                    // In K2EX 0.9.1 we use custom serial ids
+                    OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_HIP");
+                    OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_LFOOT");
+                    OpenVRUtil.RemoveTrackerRole("/devices/KinectToVR/Puck_RFOOT");
                 } catch ( Exception e ) {
                     Logger.Fatal($"{LogStrings.FailRemoveTrackerRoles}:\n{Util.FormatException(e)})");
                 }
