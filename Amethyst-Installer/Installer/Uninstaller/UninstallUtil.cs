@@ -269,6 +269,33 @@ namespace amethyst_installer_gui {
                 Logger.Fatal("Failed to remove registry entry!");
                 Logger.Fatal(Util.FormatException(e));
             }
+
+            // 7. Remove Amethyst Tracker Roles
+            {
+                Logger.Info(LogStrings.RemovingTrackerRoles);
+
+                try {
+                    // Remove all Amethyst tracker roles
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-00WAIST0");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-00WAIST00");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-CHEST");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-L0ELBOW0");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-L0FOOT00");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-L0KNEE00");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-LELBOW");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-LFOOT");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-LKNEE");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-R0ELBOW0");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-R0FOOT00");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-R0KNEE00");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-RELBOW");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-RFOOT");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-RKNEE");
+                    OpenVRUtil.RemoveTrackerRole("/devices/amethyst/vr_tracker/AME-WAIST");
+                } catch ( Exception e ) {
+                    Logger.Fatal($"{LogStrings.FailRemoveTrackerRoles}:\n{Util.FormatException(e)})");
+                }
+            }
         }
 
         public static void DeleteDirectoryUsingUninstallList(string directory, UninstallListJSON uninstallList) {
