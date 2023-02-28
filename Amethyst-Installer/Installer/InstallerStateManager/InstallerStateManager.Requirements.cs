@@ -97,7 +97,7 @@ namespace amethyst_installer_gui.Installer {
                 if ( device.EnumeratorName == "PCI" ) {
 
                     // Check if the USB controller is even usable
-                    uint problemCode;
+                    DeviceNodeProblemCode problemCode;
                     var status = device.GetStatus(out problemCode);
 
                     bool hasProblems = ((status & DeviceNodeStatus.HasProblem) == DeviceNodeStatus.HasProblem)

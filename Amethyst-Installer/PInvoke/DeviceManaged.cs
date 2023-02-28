@@ -275,12 +275,14 @@ namespace amethyst_installer_gui.PInvoke {
             Marshal.FreeHGlobal(buffer);
         }
 
-        public DeviceNodeStatus GetStatus(out uint problemCode) {
+        public DeviceNodeStatus GetStatus(out DeviceNodeProblemCode problemCode) {
             uint status;
-            if (CM_Get_DevNode_Status(out status, out problemCode, _deviceHandle, 0) == 0) {
+            uint code;
+            if (CM_Get_DevNode_Status(out status, out code, _deviceHandle, 0) == 0) {
+                problemCode = ( DeviceNodeProblemCode) code;
                 return ( DeviceNodeStatus ) status;
             }
-            problemCode = uint.MaxValue;
+            problemCode = ( DeviceNodeProblemCode ) uint.MaxValue;
             return DeviceNodeStatus.PrivateProblem;
         }
 

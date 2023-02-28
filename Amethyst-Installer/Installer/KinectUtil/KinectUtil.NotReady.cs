@@ -68,8 +68,6 @@ namespace amethyst_installer_gui.Installer {
 
         public static bool IsCameraDriverFailing() {
 
-            bool success = false;
-
             TryGetDeviceTree();
 
             // Get Kinect Devices
@@ -77,19 +75,21 @@ namespace amethyst_installer_gui.Installer {
 
                 // Device is a Kinect 360 Device
                 if (
-                    device.GetProperty(DevRegProperty.HardwareId) == "USB\\VID_045E&PID_02AE&REV_010;" // Kinect for Windows Camera
+                    device.GetProperty(DevRegProperty.HardwareId).StartsWith("USB\\VID_045E&PID_02AE") // Kinect for Windows Camera
                     ) {
 
-                    DeviceNodeStatus status = device.GetStatus(out uint code);
-                    Logger.Info($"Camera:: status: {status} ; code: {(DeviceNodeProblemCode) code}");
+                    DeviceNodeStatus status = device.GetStatus(out DeviceNodeProblemCode code);
+                    Logger.Info($"Camera:: status: {status} ; code: {code}");
 
-                    if (status == DeviceNodeStatus.HasProblem) {
-                        // @TODO: Check if this is the number we need?
+                    // If driver has a problem and it failed to load,
+                    // assume it's because of memory integrity
+                    if (( status & DeviceNodeStatus.HasProblem ) != 0 || ( code == DeviceNodeProblemCode.DriverFailedLoad )) {
+                        return true;
                     }
                 }
             }
 
-            return success;
+            return false;
         }
 
         public static bool MustFixNotReady() {
