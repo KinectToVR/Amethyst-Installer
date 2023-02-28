@@ -60,7 +60,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                 };
                 proc.BeginErrorReadLine();
                 proc.BeginOutputReadLine();
-                proc.WaitForExit(60000);
+                bool hasExited = proc.WaitForExit(60000);
 
                 if ( stdout.Length > 0 )
                     Logger.Info(stdout.ToString().Trim());
@@ -73,6 +73,11 @@ namespace amethyst_installer_gui.Installer.Modules {
                 // 0 - Success
                 // 1 - Error
                 // Just in case
+                if ( !hasExited ) {
+                    // WTF
+                    Logger.Error("Failed to execute dark.exe in the allocated time!");
+                    proc.Kill();
+                }
                 Logger.Info(string.Format(LogStrings.DarkExitCode, proc.ExitCode));
                 if ( proc.ExitCode == 1 ) {
                     // Assume WiX failed
