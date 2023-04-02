@@ -22,8 +22,8 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Row="0" x:Name="titleText" Text="Lorem Ipsum Dolor Sit Amet" Foreground="{DynamicResource BrushForeground}" SnapsToDevicePixels="True"></TextBlock>
-                                <TextBlock Grid.Row="1" x:Name="descriptionText" Text="Lorem ipsum dolor sit amet constecteur adispiling." Foreground="{DynamicResource BrushForegroundAlt}" SnapsToDevicePixels="True"></TextBlock>
+                                <TextBlock Grid.Row="0" x:Name="titleText" Text="Lorem Ipsum Dolor Sit Amet" Foreground="{DynamicResource BrushForeground}" SnapsToDevicePixels="True" TextWrapping="WrapWithOverflow"></TextBlock>
+                                <TextBlock Grid.Row="1" x:Name="descriptionText" Text="Lorem ipsum dolor sit amet constecteur adispiling." Foreground="{DynamicResource BrushForegroundAlt}" SnapsToDevicePixels="True" TextWrapping="WrapWithOverflow"></TextBlock>
                             </Grid>
                         </Grid>
                     </Border>
