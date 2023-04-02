@@ -37,7 +37,10 @@
   "Device_NotDetected": "No compatible devices detected",
   "Device_Xbox360Kinect": "Xbox 360 Kinect",
   "Device_XboxOneKinect": "Xbox One Kinect",
+  "Device_PsmoveEye": "PlayStation Eye",
   "DeviceInfo_XboxOneKinectLighthouseIncompatible": "Base station tracked devices will not work when an Xbox One Kinect is turned on. They interpret it as an invalid base station, and will stop tracking entirely.",
+  "DeviceInfo_PsmoveEyeLibusbWarning": "PlayStation Eye cameras are using LibUSB drivers! They won't be usable with PSMoveServiceEx unless you change the driver.",
+  "DeviceInfo_PsmoveEyeLibusbWarningOverwrite": "PlayStation Eye cameras are using LibUSB drivers! These will be overwritten.",
 
   "InstallFailure_Modal_Title": "An unexpected error occured!",
   "InstallFailure_Modal_Description": "An unexpected error occured while installing {0}. Please view the logs for more information. Join our Discord server for help. The installation cannot continue.", /* {0} gets replaced with the module that failed to install */
@@ -126,6 +129,10 @@
   "AmethystModule_PSMS_VDM_Title": "PSMoveServiceEx VDM",
   "AmethystModule_PSMS_VDM_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
   "AmethystModule_PSMS_VDM_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.\n\nVDM (Virtual Device Manager) is an additional tool that works alongside PSMSEX to provide support for additional interfaces and devices.",
+
+  "AmethystModule_PSMS_Drivers_Title": "PlayStation Eye Drivers",
+  "AmethystModule_PSMS_Drivers_Summary": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx.",
+  "AmethystModule_PSMS_Drivers_Description": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx.",
 
   "SystemRequirement_Category_Compatibility": "Compatible devices",
   "SystemRequirement_Category_Playspace": "Play Area",
