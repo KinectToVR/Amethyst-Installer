@@ -33,7 +33,7 @@ namespace amethyst_installer_gui.Installer.Modules {
                 var installDriversProc = Process.Start(new ProcessStartInfo() {
                     FileName = Path.Combine(libusbDir, "wdi-simple.exe"),
                     WorkingDirectory = libusbDir,
-                    Arguments = $"-n \"USB Playstation Eye Camera\" -f \"USB Playstation Eye Camera.inf\" -m \"Nam Tai E&E Products Ltd. or OmniVision Technologies, Inc.\" -v \"{VENDOR_ID}\" -p \"{PRODUCT_ID}\" -t 1",
+                    Arguments = $"--timeout 300000 -n \"USB Playstation Eye Camera\" -f \"USB Playstation Eye Camera.inf\" -m \"Nam Tai E&E Products Ltd. or OmniVision Technologies, Inc.\" -v \"{VENDOR_ID}\" -p \"{PRODUCT_ID}\" -t 1",
                     WindowStyle = ProcessWindowStyle.Hidden,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -46,34 +46,22 @@ namespace amethyst_installer_gui.Installer.Modules {
                 var stdout = installDriversProc.StandardOutput.ReadToEnd();
                 var stderr = installDriversProc.StandardError.ReadToEnd();
 
-                if ( installDriversProc.WaitForExit(300000) ) {
-                    if ( stdout.Length > 0 )
-                        Logger.Info(stdout);
-                    if ( stderr.Length > 0 )
-                        Logger.Error(stderr);
+                installDriversProc.WaitForExit();
 
-                    if ( installDriversProc.ExitCode == 0 ) {
-                        // Success
-                        Logger.Info(LogStrings.PsmsInstallDriversSuccess);
-                        control.LogInfo(LogStrings.PsmsInstallDriversSuccess);
-                        return true;
-                    } else {
-                        // Bad exit code, no special handling for exit codes yet
-                        Logger.Fatal($"{string.Format(LogStrings.PsmsInstallDriversBadCode, installDriversProc.ExitCode)}!)");
-                        control.LogError($"{string.Format(LogStrings.PsmsInstallDriversBadCode, installDriversProc.ExitCode)}! {LogStrings.ViewLogs}");
-                        return false;
-                    }
+                if ( stdout.Length > 0 )
+                    Logger.Info(stdout);
+                if ( stderr.Length > 0 )
+                    Logger.Error(stderr);
+
+                if ( installDriversProc.ExitCode == 0 ) {
+                    // Success
+                    Logger.Info(LogStrings.PsmsInstallDriversSuccess);
+                    control.LogInfo(LogStrings.PsmsInstallDriversSuccess);
+                    return true;
                 } else {
-                    // Driver installer helper timed out, abort...
-                    installDriversProc.Kill();
-
-                    if ( stdout.Length > 0 )
-                        Logger.Info(stdout);
-                    if ( stderr.Length > 0 )
-                        Logger.Error(stderr);
-
-                    Logger.Fatal(LogStrings.PsmsInstallDriversTimeout);
-                    control.LogError($"{LogStrings.PsmsInstallDriversTimeout} {LogStrings.ViewLogs}");
+                    // Bad exit code, no special handling for exit codes yet
+                    Logger.Fatal($"{string.Format(LogStrings.PsmsInstallDriversBadCode, installDriversProc.ExitCode)}!)");
+                    control.LogError($"{string.Format(LogStrings.PsmsInstallDriversBadCode, installDriversProc.ExitCode)}! {LogStrings.ViewLogs}");
                     return false;
                 }
             } catch ( Exception ex ) {
