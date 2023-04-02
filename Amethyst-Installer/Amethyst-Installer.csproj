@@ -247,6 +247,7 @@
     <Compile Include="Installer\Modules\Post\PostBase.cs" />
     <Compile Include="Installer\Modules\Post\PostKinectV1.cs" />
     <Compile Include="Installer\Modules\Post\PostKinectV2.cs" />
+    <Compile Include="Installer\Modules\PsmsDriversModule.cs" />
     <Compile Include="Installer\Modules\PsmsModule.cs" />
     <Compile Include="Installer\Modules\PsmsVdmModule.cs" />
     <Compile Include="Installer\Modules\TempArchiveModule.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Installer\OpenVR\OpenVRUtil.TrackerRoles.cs" />
     <Compile Include="Installer\JSON\UninstallListJSON.cs" />
     <Compile Include="Installer\JSON\UpdateJSON.cs" />
+    <Compile Include="Installer\PSMSUtil.cs" />
     <Compile Include="Pages\IInstallerPage.cs" />
     <Compile Include="Pages\PageAmethystMode.xaml.cs">
       <DependentUpon>PageAmethystMode.xaml</DependentUpon>

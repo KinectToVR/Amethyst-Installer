@@ -4,13 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using amethyst_installer_gui.Installer.Modules;
 using amethyst_installer_gui.Installer.Modules.Checks;
 using amethyst_installer_gui.PInvoke;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -95,6 +92,7 @@ namespace amethyst_installer_gui.Installer {
             ModuleTypes.Add("temp-archive", new TempArchiveModule());
             ModuleTypes.Add("psmsex", new PsmsModule());
             ModuleTypes.Add("psmsex-vdm", new PsmsVdmModule());
+            ModuleTypes.Add("psmsex-drivers", new PsmsDriversModule());
 
             ModulePostOps.Add("kinectv1", new PostKinectV1());
             ModulePostOps.Add("kinectv2", new PostKinectV2());
@@ -136,6 +134,11 @@ namespace amethyst_installer_gui.Installer {
                 Title       = Localisation.Manager.AmethystModule_PSMS_VDM_Title,
                 Summary     = Localisation.Manager.AmethystModule_PSMS_VDM_Summary,
                 Description = Localisation.Manager.AmethystModule_PSMS_VDM_Description,
+            });
+            ModuleStrings.Add("psmsex-drivers", new ModuleDisplayStrings() {
+                Title       = Localisation.Manager.AmethystModule_PSMS_Drivers_Title,
+                Summary     = Localisation.Manager.AmethystModule_PSMS_Drivers_Summary,
+                Description = Localisation.Manager.AmethystModule_PSMS_Drivers_Description,
             });
 
             // Parse modules

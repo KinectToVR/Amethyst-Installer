@@ -1,10 +1,5 @@
 ﻿using amethyst_installer_gui.Controls;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace amethyst_installer_gui.Installer.Modules {
     public class PsmsModule : ModuleBase {
@@ -29,9 +24,6 @@ namespace amethyst_installer_gui.Installer.Modules {
 
             Logger.Info(string.Format(LogStrings.ExtractingArchiveSuccess, sourceFile));
             control.LogInfo(string.Format(LogStrings.ExtractingArchiveSuccess, sourceFile));
-
-            // Idk do I make shortcuts or something?
-
 
             state = TaskState.Checkmark;
             return true;
