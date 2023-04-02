@@ -223,6 +223,13 @@ namespace amethyst_installer_gui.Pages {
                     compatDevicesCard.Visibility = Visibility.Visible;
                 }
             }
+            if ( PSMSUtil.IsLibusbDriverPresent() ) {
+                if ( compatibilityString.Length > 0 )
+                    compatibilityString.Append(Environment.NewLine);
+                compatibilityString.Append(Localisation.Manager.Device_PsmoveEye);
+                compatDevices.State = Controls.TaskState.Warning;
+                compatDevicesCard.Visibility = Visibility.Visible;
+            }
 
             if ( compatibilityString.Length == 0 )
                 compatibilityString.Append(Localisation.Manager.Device_NotDetected);

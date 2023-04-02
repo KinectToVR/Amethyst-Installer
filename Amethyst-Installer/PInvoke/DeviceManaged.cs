@@ -18,6 +18,8 @@ namespace amethyst_installer_gui.PInvoke {
         public static readonly Guid KinectForWindows    = new Guid("{3a0339cd-b5f0-421c-8661-f243eef1528c}");
         public static readonly Guid Mouse               = new Guid("{4d36e96f-e325-11ce-bfc1-08002be10318}");
         public static readonly Guid USB                 = new Guid("{36fc9e60-c465-11cf-8056-444553540000}");
+        public static readonly Guid Media               = new Guid("{4d36e96c-e325-11ce-bfc1-08002be10318}");
+        public static readonly Guid USBDevice           = new Guid("{88bae032-5a81-49f0-bc3d-a4ff138216d6}");
         public static readonly Guid Unknown             = new Guid("{00000000-0000-0000-0000-000000000000}");
     }
 
