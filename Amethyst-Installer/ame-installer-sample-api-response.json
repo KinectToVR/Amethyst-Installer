@@ -164,19 +164,19 @@
 			"display_name": "PSMoveServiceEx",
 			"summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
 			"description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
-			"display_version": "0.16.1",
+			"display_version": "0.20.0",
 			"version": 1,
-			"filesize": 18780002,
-			"downloadsize": 36897216,
+			"filesize": 8917634,
+			"downloadsize": 47517732,
 			"required": false,
 			"visible": false,
 			"critical": false,
 			"depends": [],
 			"remote": {
-				"main_url": "https://github.com/Timocop/PSMoveServiceEx/releases/download/v0.16.1/PSMoveService.zip",
+				"main_url": "https://github.com/Timocop/PSMoveServiceEx/releases/download/v0.20.0/PSMoveService.zip",
 				"mirror_url": "https://api.k2vr.tech/mirrors/PSMoveService-latest.zip",
 				"filename": "PSMoveService-latest.zip",
-				"checksum": "289142299369C81A9FC62C9134204F91"
+				"checksum": "E79C43D6450B099E3C033E7797DD718E"
 			},
 			"install": {
 				"type": "psmsex",
@@ -190,7 +190,7 @@
 			"display_name": "PSMoveServiceEx",
 			"summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
 			"description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
-			"display_version": "0.16.1",
+			"display_version": "0.20.0",
 			"version": 1,
 			"filesize": 107861999,
 			"downloadsize": 36897216,
