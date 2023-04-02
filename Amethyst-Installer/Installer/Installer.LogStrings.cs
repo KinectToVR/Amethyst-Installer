@@ -116,7 +116,7 @@
         // psmsex
         public const string PsmsVdmDefaultSettings              = "Writing default settings for VDM...";
         public const string PsmsVdmDefaultSettingsSuccess       = "Successfully set default settings for VDM!";
-        public const string PsmsVdmDefaultSettingsFailure       = "Failed to set default settings for VDM.";
+        public const string PsmsVdmDefaultSettingsFailure       = "Failed to set default settings for VDM";
         public const string PsmsInstallDrivers                  = "Installing PSEye drivers...";
         public const string PsmsInstallDriversSuccess           = "Successfully installed PSEye drivers!";
         public const string PsmsInstallDriversFailure           = "Failed to install PSEye drivers.";
