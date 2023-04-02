@@ -147,8 +147,17 @@ namespace amethyst_installer_gui {
 		public string Device_XboxOneKinect => 
 			LocaleManager.GetString("Device_XboxOneKinect");
 
+		public string Device_PsmoveEye => 
+			LocaleManager.GetString("Device_PsmoveEye");
+
 		public string DeviceInfo_XboxOneKinectLighthouseIncompatible => 
 			LocaleManager.GetString("DeviceInfo_XboxOneKinectLighthouseIncompatible");
+
+		public string DeviceInfo_PsmoveEyeLibusbWarning => 
+			LocaleManager.GetString("DeviceInfo_PsmoveEyeLibusbWarning");
+
+		public string DeviceInfo_PsmoveEyeLibusbWarningOverwrite => 
+			LocaleManager.GetString("DeviceInfo_PsmoveEyeLibusbWarningOverwrite");
 
 		public string InstallFailure_Modal_Title => 
 			LocaleManager.GetString("InstallFailure_Modal_Title");
@@ -360,6 +369,15 @@ namespace amethyst_installer_gui {
 		public string AmethystModule_PSMS_VDM_Description => 
 			LocaleManager.GetString("AmethystModule_PSMS_VDM_Description");
 
+		public string AmethystModule_PSMS_Drivers_Title => 
+			LocaleManager.GetString("AmethystModule_PSMS_Drivers_Title");
+
+		public string AmethystModule_PSMS_Drivers_Summary => 
+			LocaleManager.GetString("AmethystModule_PSMS_Drivers_Summary");
+
+		public string AmethystModule_PSMS_Drivers_Description => 
+			LocaleManager.GetString("AmethystModule_PSMS_Drivers_Description");
+
 		public string SystemRequirement_Category_Compatibility => 
 			LocaleManager.GetString("SystemRequirement_Category_Compatibility");
 
@@ -443,6 +461,9 @@ namespace amethyst_installer_gui {
 
 		public string Done_LaunchAmethyst => 
 			LocaleManager.GetString("Done_LaunchAmethyst");
+
+		public string Done_AutoStartSteamVr => 
+			LocaleManager.GetString("Done_AutoStartSteamVr");
 
 		public string Done_LinkDocumentation => 
 			LocaleManager.GetString("Done_LinkDocumentation");
