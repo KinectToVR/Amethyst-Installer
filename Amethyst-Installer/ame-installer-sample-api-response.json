@@ -212,6 +212,35 @@
 					"PSMSVirtualDeviceManager.zip"
 				]
 			}
+		},
+		{
+			"id": "psmsex-drivers",
+			"display_name": "PlayStation Eye Camera Drivers",
+			"summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
+			"description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
+			"display_version": "0.20.0",
+			"version": 1,
+			"filesize": 107861999,
+			"downloadsize": 36897216,
+			"required": false,
+			"visible": true,
+			"critical": false,
+			"depends": [
+				"psmsex",
+				"psmsex-vdm"
+			],
+			"remote": {
+				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/v1.1.0.0/version",
+				"mirror_url": "https://api.k2vr.tech/mirrors/Amethyst-version",
+				"filename": ".temp",
+				"checksum": "2709975BB822441EF1689235725FFA98"
+			},
+			"install": {
+				"type": "psmsex-drivers",
+				"items": [
+					"PSMSVirtualDeviceManager.zip"
+				]
+			}
 		}
 	],
 	"splashes": [
