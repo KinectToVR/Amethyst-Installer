@@ -111,8 +111,13 @@ namespace amethyst_installer_gui.Pages {
                 }
 
                 var currentControl = new InstallableItem();
-                currentControl.Title = InstallerStateManager.ModuleStrings[currentModule.Id].Title;
-                currentControl.Description = InstallerStateManager.ModuleStrings[currentModule.Id].Summary;
+                if ( InstallerStateManager.ModuleStrings.ContainsKey(currentModule.Id) ) {
+                    currentControl.Title = InstallerStateManager.ModuleStrings[currentModule.Id].Title;
+                    currentControl.Description = InstallerStateManager.ModuleStrings[currentModule.Id].Summary;
+                } else {
+                    currentControl.Title = currentModule.Id;
+                    currentControl.Description = "Lorem ipsum dolor sit amet constecteur adispiling.";
+                }
                 currentControl.Checked = ShouldAutoSelectModule(ref currentModule);
                 currentControl.Disabled = currentModule.Required;
                 currentControl.Margin = new Thickness(0, 0, 0, 8);
@@ -193,8 +198,13 @@ namespace amethyst_installer_gui.Pages {
             // Update right hand side
             CalculateInstallSize(m_currentModule);
 
-            fullTitle.Text = InstallerStateManager.ModuleStrings[m_currentModule.Id].Title;
-            fullDescription.Text = InstallerStateManager.ModuleStrings[m_currentModule.Id].Description;
+            if ( InstallerStateManager.ModuleStrings.ContainsKey(m_currentModule.Id) ) {
+                fullTitle.Text = InstallerStateManager.ModuleStrings[m_currentModule.Id].Title;
+                fullDescription.Text = InstallerStateManager.ModuleStrings[m_currentModule.Id].Description;
+            } else {
+                fullTitle.Text = m_currentModule.Id;
+                fullDescription.Text = "Lorem ipsum dolor sit amet constecteur adispiling.";
+            }
 
             downloadSize.Content = Util.SizeSuffix(m_currentModuleDownloadSize);
             installSize.Content = Util.SizeSuffix(m_currentModuleInstallSize);
