@@ -31,6 +31,11 @@ namespace amethyst_installer_gui.Pages {
 
             if ( MainWindow.HandleSpeedrun() ) {
 
+                if ( autoStartSteamVr.Visibility == Visibility.Visible ) {
+                    string ameManifestPath = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst.vrmanifest"));
+                    OpenVRUtil.RegisterOverlayAndAutoStart(ameManifestPath, Constants.OpenVROverlayKey, autoStartSteamVr.IsChecked ?? false);
+                }
+
                 if ( launchAmeOnExit.IsChecked.Value ) {
 
                     SystemUtility.ExecuteProcessUnElevated(
@@ -70,6 +75,13 @@ namespace amethyst_installer_gui.Pages {
             AddLink(Localisation.Manager.Done_LinkGitHub, "https://github.com/KinectToVR");
             linksContainer.Inlines.Add(Environment.NewLine);
             AddLink(Localisation.Manager.Done_LinkDonations, "https://opencollective.com/k2vr");
+
+            // Hide SteamVR option
+            autoStartSteamVr.Visibility = InstallerStateManager.DefaultToOSC ? Visibility.Collapsed : Visibility.Visible;
+            if ( !InstallerStateManager.DefaultToOSC ) {
+                // Sync it with OpenVR overlay settings
+                autoStartSteamVr.IsChecked = Valve.VR.OpenVR.Applications?.GetApplicationAutoLaunch(Constants.OpenVROverlayKey) ?? false;
+            }
         }
 
         private void AddLink(string displayString, string urlTarget) {
@@ -105,6 +117,11 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
         private void launchAmeOnExit_Checked(object sender, RoutedEventArgs e) {
+            if ( ActualHeight == 0 || ActualWidth == 0 )
+                return;
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+        }
+        private void autoStartWithSteamVr_Checked(object sender, RoutedEventArgs e) {
             if ( ActualHeight == 0 || ActualWidth == 0 )
                 return;
             SoundPlayer.PlaySound(SoundEffect.Invoke);

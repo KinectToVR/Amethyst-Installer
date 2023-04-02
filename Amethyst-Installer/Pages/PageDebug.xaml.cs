@@ -224,5 +224,14 @@ namespace amethyst_installer_gui.Pages {
                 Util.ShowMessageBox("K2EX install could not be found.", "Nuclear warfare status");
             }
         }
+
+        private void registerOverlay_Click(object sender, RoutedEventArgs e) {
+            SoundPlayer.PlaySound(SoundEffect.Invoke);
+
+            string ameManifestPath = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst.vrmanifest"));
+            OpenVRUtil.RegisterOverlayAndAutoStart(ameManifestPath, Constants.OpenVROverlayKey, true);
+
+            Util.ShowMessageBox("Registed Amethsyt overlay for OpenVR.", "OpenVR Status");
+        }
     }
 }

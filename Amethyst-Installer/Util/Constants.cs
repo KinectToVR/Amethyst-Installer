@@ -116,6 +116,11 @@ namespace amethyst_installer_gui {
         public const string AmethystRegsitryKey = @"Software\K2VR Team\Amethyst";
 
         /// <summary>
+        /// Amethyst OpenVR Overlay manifest key
+        /// </summary>
+        public static readonly string OpenVROverlayKey = "K2VR.Amethyst";
+
+        /// <summary>
         /// The minimum size a playspace should have
         /// </summary>
         public const float MinimumPlayspaceSize = 1.6f;

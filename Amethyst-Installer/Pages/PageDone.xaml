@@ -37,15 +37,22 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition />
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" x:Name="launchFromPlace" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Done_LaunchStartMenu}" Foreground="White" />
-                            <CheckBox Grid.Row="1" x:Name="launchAmeOnExit" Content="{Binding Source={x:Static global:Localisation.Manager}, Path=Done_LaunchAmethyst}" Margin="0,8,0,0" IsChecked="True" Checked="launchAmeOnExit_Checked" Unchecked="launchAmeOnExit_Checked" />
-                            <TextBlock Grid.Row="3" x:Name="linksContainer">
+                            <TextBlock Grid.Row="0" x:Name="launchFromPlace" Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Done_LaunchStartMenu}" Foreground="White" TextWrapping="WrapWithOverflow"/>
+                            <CheckBox Grid.Row="1" x:Name="launchAmeOnExit" Margin="0,8,0,0" IsChecked="True" Checked="launchAmeOnExit_Checked" Unchecked="launchAmeOnExit_Checked">
+                                <TextBlock Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Done_LaunchAmethyst}" TextWrapping="WrapWithOverflow"/>
+                            </CheckBox>
+
+                            <CheckBox Grid.Row="2" x:Name="autoStartSteamVr" Margin="0,8,0,0" IsChecked="False" Checked="autoStartWithSteamVr_Checked" Unchecked="autoStartWithSteamVr_Checked">
+                                <TextBlock Text="{Binding Source={x:Static global:Localisation.Manager}, Path=Done_AutoStartSteamVr}" TextWrapping="WrapWithOverflow"/>
+                            </CheckBox>
+                            <TextBlock Grid.Row="4" x:Name="linksContainer">
                             </TextBlock>
                         </Grid>
                     </Grid>

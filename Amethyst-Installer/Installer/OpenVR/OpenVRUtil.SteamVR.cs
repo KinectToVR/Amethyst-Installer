@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SharpDX.Direct3D9;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Valve.VR;
+using OVR = Valve.VR.OpenVR;
 
 namespace amethyst_installer_gui.Installer {
     /// <summary>
@@ -15,6 +18,8 @@ namespace amethyst_installer_gui.Installer {
         private static dynamic s_steamvrSettings;
         private static bool s_steamvrSettingsExists = false;
         private static string s_steamvrSettingsPath;
+        private static bool s_steamvrAppConfigExists = false;
+        private static string s_steamvrAppConfigPath;
         private static string s_openvrPathsPath;
 
         public static string OpenVrPathsPath { get { return s_openvrPathsPath; } }
@@ -163,10 +168,10 @@ namespace amethyst_installer_gui.Installer {
                 case VRHmdType.Pimax:
                 case VRHmdType.Index:
                 case VRHmdType.Deckard:
-                    // Lighthouse
+                // Lighthouse
 
                 case VRHmdType.WMR:
-                    // WMR
+                // WMR
 
                 default:
                     // Assume the playspace data is stored in chaperone_info.vrchap
@@ -274,6 +279,61 @@ namespace amethyst_installer_gui.Installer {
                 Logger.Warn("SteamVR advanced settings couldn't be enabled!");
                 return false;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void ComputeSteamVRAppConfigPath() {
+            if ( s_openvrpaths != null ) {
+                // Try getting SteamVR Settings from OpenVR Paths
+                for ( int i = 0; i < s_openvrpaths.config.Count; i++ ) {
+                    if ( Directory.Exists(s_openvrpaths.config[i]) ) {
+                        s_steamvrAppConfigPath = Path.Combine(s_openvrpaths.config[i], "appconfig.json");
+                        s_steamvrAppConfigExists = File.Exists(s_steamvrSettingsPath);
+                        return;
+                    }
+                }
+            }
+
+            // Fallback to Steam Directory
+            var steamInstallDirectory = GetSteamInstallDirectory();
+            if ( Directory.Exists(steamInstallDirectory) ) {
+                s_steamvrAppConfigPath = Path.Combine(steamInstallDirectory, "config", "appconfig.json");
+                s_steamvrAppConfigExists = File.Exists(s_steamvrSettingsPath);
+            }
+        }
+
+        /// <summary>
+        /// Registers an overlay with OpenVR
+        /// </summary>
+        /// <param name="manifestPath">A path pointing to the manifest file</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool RegisterOverlayAndAutoStart(string manifestPath, string manifestKey, bool startupMode) {
+
+            if ( !File.Exists(manifestPath) ) {
+                Logger.Error($"Manifest at \"{manifestPath}\" not found on disk!");
+                return false;
+            }
+
+            if ( OVR.Applications is null ) {
+                Logger.Error($"Failed to install manifest due to an unknown OpenVR error.");
+                return false;
+            }
+
+            // Attempt registering the overlay with SteamVR
+            if ( !OVR.Applications.IsApplicationInstalled(manifestKey) ) {
+                var appError = OVR.Applications.AddApplicationManifest(manifestPath, false);
+
+                if ( appError != EVRApplicationError.None ) {
+                    Logger.Error($"Failed to install manifest.\n{appError}");
+                }
+
+                Logger.Error($"Installed manifest at {manifestPath}");
+            }
+
+            // Set startup mode
+            OVR.Applications.SetApplicationAutoLaunch(manifestKey, startupMode);
+
+            return true;
         }
     }
 }

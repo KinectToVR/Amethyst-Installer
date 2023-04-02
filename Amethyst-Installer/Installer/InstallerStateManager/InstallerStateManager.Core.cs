@@ -73,6 +73,11 @@ namespace amethyst_installer_gui.Installer {
         /// </summary>
         public static bool ForceFixNotReady = false;
 
+        /// <summary>
+        /// Whether to automatically start Amethyst with SteanVR
+        /// </summary>
+        public static bool AutoStartAmethystWithSteamVr = false;
+
         public static void Initialize() {
 
             FetchInstallerJson();
