@@ -47,6 +47,10 @@ namespace amethyst_installer_gui.Installer {
                 return true;
             } else if ( hmdModel == "pvrserver" || hmdManufacturer == "viritualis res" ) { // PhoneVR (yeah look it up on GitHub its a real thing)
                 return true;
+            } else if ( hmdModel == "hades" || hmdManufacturer == "" ) {
+                // https://github.com/HadesVR/HadesVR
+                // cool project, if you can do this you're capable of getting past our installer.
+                return true;
             } // @TODO: More hell whenever we find more phone "vr" headset apps people use
 
             return false;
