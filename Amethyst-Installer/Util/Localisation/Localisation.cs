@@ -438,17 +438,11 @@ namespace amethyst_installer_gui {
 		public string SystemRequirement_Description_Headset_Not_Detected => 
 			LocaleManager.GetString("SystemRequirement_Description_Headset_Not_Detected");
 
-		public string Welcome_OptIn => 
-			LocaleManager.GetString("Welcome_OptIn");
+		public string Welcome_Discord => 
+			LocaleManager.GetString("Welcome_Discord");
 
-		public string Welcome_PrivacyPolicy => 
-			LocaleManager.GetString("Welcome_PrivacyPolicy");
-
-		public string Welcome_ReadPrivacyPolicy => 
-			LocaleManager.GetString("Welcome_ReadPrivacyPolicy");
-
-		public string Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks => 
-			LocaleManager.GetString("Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks");
+		public string Welcome_Footnote => 
+			LocaleManager.GetString("Welcome_Footnote");
 
 		public string Done_InstallSuccess => 
 			LocaleManager.GetString("Done_InstallSuccess");

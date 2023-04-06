@@ -49,28 +49,8 @@ namespace amethyst_installer_gui.Pages {
 
         public void OnSelected() {
 
-            // Localize the privacy policy thing
-            var readPrivacyPolicyRaw = Localisation.Manager.Welcome_ReadPrivacyPolicy;
-            string firstPart = readPrivacyPolicyRaw.Substring(0, readPrivacyPolicyRaw.IndexOf("%s%"));
-            string secondPart = readPrivacyPolicyRaw.Substring(readPrivacyPolicyRaw.IndexOf("%s%") + 3);
-
-            readPrivacyPolicy.Inlines.Clear();
-            readPrivacyPolicy.Inlines.Add(firstPart);
-            Hyperlink privacyPolicyLink = new Hyperlink()
-            {
-                NavigateUri = new Uri($"https://k2vr.tech/{LocaleManager.CurrentLocale}/privacy"),
-                Foreground = WindowsColorHelpers.AccentLight,
-            };
-            privacyPolicyLink.Inlines.Add(Localisation.Manager.Welcome_PrivacyPolicy);
-            privacyPolicyLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;
-            readPrivacyPolicy.Inlines.Add(privacyPolicyLink);
-            if ( secondPart.Length > 0 )
-                readPrivacyPolicy.Inlines.Add(secondPart);
-
-            // @HACK: This is temporary, until we fully release the installer
-
-            // Localize the privacy policy thing
-            var techPreviewRaw = Localisation.Manager.Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks;
+            // Localize the installer footnote
+            var techPreviewRaw = Localisation.Manager.Welcome_Footnote;
             string t_firstPart = techPreviewRaw.Substring(0, techPreviewRaw.IndexOf("%s%"));
             string t_secondPart = techPreviewRaw.Substring(techPreviewRaw.IndexOf("%s%") + 3);
 
@@ -82,8 +62,8 @@ namespace amethyst_installer_gui.Pages {
                 Foreground = WindowsColorHelpers.AccentLight,
                 BaselineAlignment = BaselineAlignment.Center,
             };
-            discordLink.Inlines.Add("K2VR Community Discord");
-            discordLink.RequestNavigate += OpenK2VRPrivacyPolicyURL;
+            discordLink.Inlines.Add(Localisation.Manager.Welcome_Discord);
+            discordLink.RequestNavigate += OpenUriUrl;
             previewWarning.Inlines.Add(discordLink);
             if ( t_secondPart.Length > 0 )
                 previewWarning.Inlines.Add(t_secondPart);
@@ -91,7 +71,7 @@ namespace amethyst_installer_gui.Pages {
             // Splash screen
             GenerateSplashText();
         }
-        private void OpenK2VRPrivacyPolicyURL(object sender, RequestNavigateEventArgs e) {
+        private void OpenUriUrl(object sender, RequestNavigateEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Process.Start(( sender as Hyperlink ).NavigateUri.ToString());
         }

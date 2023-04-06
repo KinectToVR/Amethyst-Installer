@@ -155,10 +155,8 @@
   "SystemRequirement_Description_Headset_Phone": "Mobile Phone",
   "SystemRequirement_Description_Headset_Not_Detected": "No VR Headset detected",
 
-  "Welcome_OptIn": "Opt in to anonymous analytics and crash reports.",
-  "Welcome_PrivacyPolicy": "Privacy Policy", /* The text for the link */
-  "Welcome_ReadPrivacyPolicy": "Read our %s% to see what we send.", /* %s% gets replaced with the link */
-  "Welcome_ThisIsATechnicalPreviewThisIsUnstablePleaseDoNotFuckingShareThisOrIWillShitBricks": "This installer is in technical preview. If you got this app from anywhere other than the %s% please join the server before using it.", /* %s% gets replaced with "Discord Server" */
+  "Welcome_Discord": "K2VR Community Discord", /* The text for the link pointing to the Discord server */
+  "Welcome_Footnote": "If you run into bugs, please contact us on our %s% for help.", /* %s0% gets replaced with file an issue on GitHub, %s1% gets replaced with K2VR Community Discord Server */
 
   "Done_InstallSuccess": "Thank you for choosing us.",
   "Done_LaunchDesktop": "You can find Amethyst on the desktop.\nAs shown on the left.",
