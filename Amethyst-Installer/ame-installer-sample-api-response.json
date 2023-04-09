@@ -5,10 +5,10 @@
 			"display_name": "Amethyst",
 			"summary": "The Amethyst application itself.",
 			"description": "The Amethyst application itself.",
-			"display_version": "1.2.1.2",
-			"version": 2,
-			"filesize": 638676724,
-			"downloadsize": 247218787,
+			"display_version": "1.2.1.3",
+			"version": 5,
+			"filesize": 638652156,
+			"downloadsize": 234696325,
 			"required": true,
 			"visible": true,
 			"critical": true,
@@ -16,10 +16,10 @@
 				"vcredist2022"
 			],
 			"remote": {
-				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/v1.0.3.0/Amethyst-Release-1cce2c4.k2a",
+				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/v1.2.1.3/Amethyst-Release-84d9ffc.k2a",
 				"mirror_url": "https://api.k2vr.tech/mirrors/amethyst-latest.k2a",
 				"filename": "amethyst-latest.k2a",
-				"checksum": "29D3EF2776D5510424162D2387C03B56"
+				"checksum": "D7353C5618F8C80CEF5B395B924618ED"
 			},
 			"install": {
 				"type": "amethyst",
@@ -58,15 +58,15 @@
 					{
 						"executable": "vc_redist.x64.exe",
 						"arguments": "/install /quiet /norestart",
-						"successful_exit_codes": [ 0, 3010, 1641 ]
+						"successful_exit_codes": [ 0, 3010, 1641, 1602, 1604, 1618 ]
 					}
 				]
 			},
 			"detect": {
-				"type": "vcredist"
+				"type": "vcredist",
+				"version": "2022"
 			}
 		},
-
 		{
 			"id": "wix",
 			"display_name": "Windows Install XML Toolset",
@@ -164,19 +164,19 @@
 			"display_name": "PSMoveServiceEx",
 			"summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
 			"description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
-			"display_version": "0.20.0",
+			"display_version": "0.21.0",
 			"version": 1,
-			"filesize": 8917634,
-			"downloadsize": 47517732,
+			"filesize": 47609380,
+			"downloadsize": 18942046,
 			"required": false,
 			"visible": false,
 			"critical": false,
 			"depends": [],
 			"remote": {
-				"main_url": "https://github.com/Timocop/PSMoveServiceEx/releases/download/v0.20.0/PSMoveService.zip",
+				"main_url": "https://github.com/Timocop/PSMoveServiceEx/releases/download/v0.21/PSMoveService.zip",
 				"mirror_url": "https://api.k2vr.tech/mirrors/PSMoveService-latest.zip",
 				"filename": "PSMoveService-latest.zip",
-				"checksum": "E79C43D6450B099E3C033E7797DD718E"
+				"checksum": "7DC4DFF28FD85C8879FA7B5C26C89DF9"
 			},
 			"install": {
 				"type": "psmsex",
@@ -216,12 +216,12 @@
 		{
 			"id": "psmsex-drivers",
 			"display_name": "PlayStation Eye Camera Drivers",
-			"summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
-			"description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
+			"summary": "Installs the drivers which are required to use PS Eye cameras with PSMoveServiceEx.",
+			"description": "Installs the drivers which are required to use PS Eye cameras with PSMoveServiceEx.",
 			"display_version": "0.20.0",
 			"version": 1,
-			"filesize": 107861999,
-			"downloadsize": 36897216,
+			"filesize": 0,
+			"downloadsize": 0,
 			"required": false,
 			"visible": true,
 			"critical": false,
@@ -334,7 +334,11 @@
 		"Nemi is in your walls.",
 		"Stanley, is this a bucket?",
 		"It just works! And it comes with a map, that glows in the fckin' dark.",
+		"Linus can't spell Renesas.",
 		"Type 666.",
-		"Now with DirectX 11!"
+		"Now with DirectX 11!",
+		"Deckard powered by quail calm.",
+		"Powered by Hekky Shaders.",
+		"Multiple cans of Amongr have been sacrificed in the making of this software."
 	]
 }
