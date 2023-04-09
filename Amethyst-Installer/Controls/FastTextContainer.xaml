@@ -14,7 +14,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <local:TextView x:Name="text_view" MinHeight="{Binding ElementName=scrollViewport,Path=Height}" Grid.Row="0" Margin="0,0,12,0"/>
-                    <Border x:Name="scrollViewport" Background="Transparent" BorderThickness="0" Grid.Row="0" Focusable="False"/>
+                    <Border x:Name="scrollViewport" Background="Transparent" BorderThickness="0" Grid.Row="0" Focusable="False" Height="1" />
                 </Grid>
             </StackPanel>
         </ScrollViewer>
