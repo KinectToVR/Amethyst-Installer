@@ -119,7 +119,7 @@ if upgrade no
 
         private bool HandleDrivers(string path, ref InstallModuleProgress control) {
 
-            string driverPath = Path.Combine(path, "Amethyst");
+            string driverPath = Path.Combine(path, "Plugins", "plugin_OpenVR", "Assets", "Amethyst");
 
             Logger.Info(LogStrings.CheckingAmethystDriverConflicts);
             control.LogInfo(LogStrings.CheckingAmethystDriverConflicts);
