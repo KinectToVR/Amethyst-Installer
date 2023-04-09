@@ -70,12 +70,14 @@ namespace amethyst_installer_gui {
         }
 
         private void EnsureNotInAmeDirectory() {
-            if (InstallUtil.IsAmethystInstalledInDirectory(Directory.GetCurrentDirectory()) ) {
+            // ReSharper disable PossibleNullReferenceException
+            string processPath = Process.GetCurrentProcess().MainModule.FileName;
+            string processDirectory = Path.GetDirectoryName(processPath);
+
+            if (InstallUtil.IsAmethystInstalledInDirectory(processDirectory) ) {
                 // We WILL encounter issues during an install / uninstall.
                 // This is due to how Windows loads binaries (namely openvr_api.dll)
                 // As a terrible horrible solution: bootstrap into a copy of the installer elsewhere
-                // ReSharper disable PossibleNullReferenceException
-                string processPath = Process.GetCurrentProcess().MainModule.FileName;
                 // ReSharper restore PossibleNullReferenceException
                 string newPath = Path.Combine(Constants.AmethystTempDirectory, "Amethyst-Installer.exe");
                 File.Copy(processPath, newPath, true);
@@ -87,7 +89,7 @@ namespace amethyst_installer_gui {
                     CreateNoWindow = true
                 });
                 Console.WriteLine(string.Join("\" \"", Arguments));
-                // Util.Quit(ExitCodes.InvalidStartupDirectory);
+                Util.Quit(ExitCodes.InvalidStartupDirectory);
             }
         }
 
