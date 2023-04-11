@@ -32,7 +32,7 @@ namespace amethyst_installer_gui.Pages {
             if ( MainWindow.HandleSpeedrun() ) {
 
                 if ( autoStartSteamVr.Visibility == Visibility.Visible ) {
-                    string ameManifestPath = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystInstallDirectory, "Amethyst.vrmanifest"));
+                    string ameManifestPath = Path.GetFullPath(Path.Combine(InstallerStateManager.AmethystOpenVrDirectory, "Amethyst.vrmanifest"));
                     OpenVRUtil.RegisterOverlayAndAutoStart(ameManifestPath, Constants.OpenVROverlayKey, autoStartSteamVr.IsChecked ?? false);
                 }
 

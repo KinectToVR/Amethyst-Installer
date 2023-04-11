@@ -31,6 +31,11 @@ namespace amethyst_installer_gui.Installer {
         public static Dictionary<string, ModuleDisplayStrings> ModuleStrings { get; private set; }
 
         public static string AmethystInstallDirectory;
+        public static string AmethystOpenVrDirectory {
+            get {
+                return Path.Combine(AmethystInstallDirectory ?? "C:\\", "Plugins", "plugin_OpenVR");
+            }
+        }
 
         /// <summary>
         /// Whether the installer is in the middle of the install process. This prevents the user from closing the installer mid-download or install.
