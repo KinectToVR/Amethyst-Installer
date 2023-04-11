@@ -43,6 +43,8 @@ namespace amethyst_installer_gui {
                 return;
             }
 
+            Logger.Info($"Received arguments: \"{string.Join(" ", Arguments)}\"");
+
             DeviceManaged.RegisterDeviceNotificationHandler();
 
             // Make sure we aren't running from within an ame install
@@ -56,8 +58,6 @@ namespace amethyst_installer_gui {
                 // SetTheme(WindowsColorHelpers.IsDarkTheme());
                 SetTheme(true);
                 Init();
-
-                Logger.Info(string.Join(" ", Arguments));
 
                 if ( InstallerStateManager.CanInstall ) {
                     // MainWindow
