@@ -7,8 +7,8 @@
 			"description": "The Amethyst application itself.",
 			"display_version": "1.2.1.3",
 			"version": 5,
-			"filesize": 638652156,
-			"downloadsize": 234696325,
+			"filesize": 638759756,
+			"downloadsize": 234740216,
 			"required": true,
 			"visible": true,
 			"critical": true,
@@ -19,7 +19,7 @@
 				"main_url": "https://github.com/KinectToVR/Amethyst-Releases/releases/download/v1.2.1.3/Amethyst-Release-84d9ffc.k2a",
 				"mirror_url": "https://api.k2vr.tech/mirrors/amethyst-latest.k2a",
 				"filename": "amethyst-latest.k2a",
-				"checksum": "D7353C5618F8C80CEF5B395B924618ED"
+				"checksum": "9BCE55A7B395CF6A9572FDE043EBF8AB"
 			},
 			"install": {
 				"type": "amethyst",
