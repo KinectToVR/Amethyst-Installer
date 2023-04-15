@@ -95,7 +95,7 @@ namespace amethyst_installer_gui {
 
         private static void CheckCanInstall() {
             if ( !InstallerStateManager.CanInstall ) {
-                SystemSounds.Exclamation.Play();
+                SystemSounds.Exclamation.Play(); // @TODO: Play ame sound instead of OS sound?
                 if ( InstallerStateManager.IsCloudPC ) {
                     // If Cloud PC
                     Util.ShowMessageBox(LocaleStrings.Manager.InstallProhibited_CloudPC, LocaleStrings.Manager.InstallProhibited_Title);
