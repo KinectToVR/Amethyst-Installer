@@ -1,9 +1,10 @@
 ﻿{
+  "language": "en",
   "messages": [
     {
       "id": "Dialog_Description_CritError",
       "translation": "An unknown error has occured, please join the Discord server for help at [server]",
-      "comment": "[server] gets replaced with the server invite"
+      "translatorComment": "[server] gets replaced with the server invite"
     },
     {
       "id": "Dialog_Title_CritError",
@@ -12,7 +13,7 @@
     {
       "id": "Download_Failure",
       "translation": "An error occured when trying to download this item. Try disabling any VPNs or firewalls.",
-      "comment": "Error message that gets displayed to the user whenever a download fails"
+      "translatorComment": "Error message that gets displayed to the user whenever a download fails"
     },
     {
       "id": "Download_Retry",
@@ -21,7 +22,7 @@
     {
       "id": "Download_FailureCritical",
       "translation": "An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue.",
-      "comment": "Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue."
+      "translatorComment": "Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue."
     },
     {
       "id": "EULA_Agree",
@@ -34,17 +35,17 @@
     {
       "id": "EULA_Licenses",
       "translation": "Follows are licenses for libraries used by this installer, Amethyst and device plugins.\n\nYou must accept the Kinect for Windows related EULAs to continue with installation.",
-      "comment": "We drop a lot of \"copy pastas\" here"
+      "translatorComment": "We drop a lot of \"copy pastas\" here"
     },
     {
       "id": "EULA_Warranty",
       "translation": "By continuing with installation, you agree that this software, and every component bundled or installed by it are provided \"as-is\" and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability.",
-      "comment": "We are not reponsible for you being braindead"
+      "translatorComment": "We are not reponsible for you being braindead"
     },
     {
       "id": "InstallDestination_AmeInstallFound",
       "translation": "This folder already contains an installation of Amethyst, it will be overwritten.",
-      "comment": "Shown if the install folder is detected to have a copy of Amethyst"
+      "translatorComment": "Shown if the install folder is detected to have a copy of Amethyst"
     },
     {
       "id": "InstallDestination_AmethystInstallLocationFootnote",
@@ -53,7 +54,7 @@
     {
       "id": "InstallDestination_DiskLabelFormat",
       "translation": "{0} ({1})",
-      "comment": "{0} gets replaced with the disk label (eg \"Local Disk\") and {1} gets replaced with the drive letter {eg \"C: \" )"
+      "translatorComment": "{0} gets replaced with the disk label (eg \"Local Disk\") and {1} gets replaced with the drive letter {eg \"C: \" )"
     },
     {
       "id": "InstallDestination_InvalidPathDescription",
@@ -74,7 +75,7 @@
     {
       "id": "InstallDestination_StorageFormatFree",
       "translation": "{0} free",
-      "comment": "{0} is required (it's going to get replaced with 420GB for example)"
+      "translatorComment": "{0} is required (it's going to get replaced with 420GB for example)"
     },
     {
       "id": "InstallDestination_CreateStartMenuShortcut",
@@ -107,17 +108,17 @@
     {
       "id": "InstallError_CloudPC",
       "translation": "Cloud PC detected. Amethyst does not support remote or \"cloud\" PCs.",
-      "comment": "The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere"
+      "translatorComment": "The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere"
     },
     {
       "id": "InstallError_SteamVRNotFound",
       "translation": "Couldn't find SteamVR! Is it installed, and have you run it at least once?",
-      "comment": "The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once."
+      "translatorComment": "The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once."
     },
     {
       "id": "InstallError_WindowsVersionIsOld",
       "translation": "Windows version is too old to run Amethyst. Please update Windows from the Settings app before using Amethyst.",
-      "comment": "The message shown to a user when they have an old version of Windows that is not supported by Amethyst"
+      "translatorComment": "The message shown to a user when they have an old version of Windows that is not supported by Amethyst"
     },
     {
       "id": "Device_NotDetected",
@@ -154,7 +155,7 @@
     {
       "id": "InstallFailure_Modal_Description",
       "translation": "An unexpected error occured while installing {0}. Please view the logs for more information. Join our Discord server for help. The installation cannot continue.",
-      "comment": "{0} gets replaced with the module that failed to install"
+      "translatorComment": "{0} gets replaced with the module that failed to install"
     },
     {
       "id": "InstallFailure_DiskFull_Description",
@@ -191,27 +192,27 @@
     {
       "id": "InstallProhibited_Title",
       "translation": "Cannot install Amethyst",
-      "comment": "The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window."
+      "translatorComment": "The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window."
     },
     {
       "id": "InstallProhibited_CloudPC",
       "translation": "Cloud PCs are unsupported. Amethyst does not work on remote PCs.",
-      "comment": "The error shown to users if they're running Amethyst Installer on a Cloud PC."
+      "translatorComment": "The error shown to users if they're running Amethyst Installer on a Cloud PC."
     },
     {
       "id": "InstallProhibited_WindowsAncient",
       "translation": "Your version of Windows is too old to work with Amethyst. Please update to a more recent version of Windows, 20H2 or newer, to install Amethyst.",
-      "comment": "The error message shown to users if they have an unsupported Windows install ."
+      "translatorComment": "The error message shown to users if they have an unsupported Windows install ."
     },
     {
       "id": "InstallProhibited_PhoneVR",
       "translation": "Amethyst does not work with Phone-based VR such as Trinus or VRidge. If you intend on using Amethyst for Quest standalone tracking, or if you believe this check was done in error, you may simply click OK.",
-      "comment": "The error message shown to users if they try using Amethyst with a phone."
+      "translatorComment": "The error message shown to users if they try using Amethyst with a phone."
     },
     {
       "id": "InstallProhibited_DiskFull",
       "translation": "Your Windows drive is full! Please clear some storage (at least 10GB), and re-run Amethyst Installer.",
-      "comment": "The error message shown to users whose C drive is full."
+      "translatorComment": "The error message shown to users whose C drive is full."
     },
     {
       "id": "Logs_DirectoryIsLocatedHere",
@@ -304,7 +305,7 @@
     {
       "id": "Sidebar_Task_Welcome",
       "translation": "Welcome",
-      "comment": "Sidebar tasks are the list of \"stages\" of the installer on the left hand side, with checkmarks"
+      "translatorComment": "Sidebar tasks are the list of \"stages\" of the installer on the left hand side, with checkmarks"
     },
     {
       "id": "Sidebar_ViewLogs",
@@ -325,12 +326,12 @@
     {
       "id": "Speedrunner_Description",
       "translation": "Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?\n\nBe careful where you click!",
-      "comment": "this dialog gets shown when the user spams through the installer"
+      "translatorComment": "this dialog gets shown when the user spams through the installer"
     },
     {
       "id": "Speedrunner_Title",
       "translation": "Slow down!",
-      "comment": "this dialog gets shown when the user spams through the installer"
+      "translatorComment": "this dialog gets shown when the user spams through the installer"
     },
     {
       "id": "AmethystMode_Description",
@@ -475,57 +476,57 @@
     {
       "id": "SystemRequirement_Description_Playspace_Good",
       "translation": "Your VR play area is large enough for tracking.\n{0}m by {1}m",
-      "comment": "Shown if the playspace is large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively"
+      "translatorComment": "Shown if the playspace is large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively"
     },
     {
       "id": "SystemRequirement_Description_Playspace_Small",
       "translation": "The size of your VR play area could cause issues with tracking. [Refer to the documentation for physical space requirements.]\n{0}m by {1}m",
-      "comment": "Shown if the playspace is not large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively. Everything in between [] will turn into a hyperlink leading to the relevant documentation page."
+      "translatorComment": "Shown if the playspace is not large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively. Everything in between [] will turn into a hyperlink leading to the relevant documentation page."
     },
     {
       "id": "SystemRequirement_Description_Playspace_Unknown",
       "translation": "Your play area size could not be detected. [Refer to the documentation for physical space requirements.]",
-      "comment": "Shown if the playspace size couldn't be determined. Everything in between [] will turn into a hyperlink leading to the relevant documentation page."
+      "translatorComment": "Shown if the playspace size couldn't be determined. Everything in between [] will turn into a hyperlink leading to the relevant documentation page."
     },
     {
       "id": "SystemRequirement_Description_Storage",
       "translation": "{0} of disk space based on the components selected.",
-      "comment": "{0} gets replaced with the storage string (eg \"400MB\")"
+      "translatorComment": "{0} gets replaced with the storage string (eg \"400MB\")"
     },
     {
       "id": "SystemRequirement_Description_UsbControllers",
       "translation": "{0} compatible controllers found:",
-      "comment": "{0} gets replaced with the number of USB host controllers (eg \"2\"), {1} gets replaced with the list of USB controllers (eg \"2 compatible controllers found:\")"
+      "translatorComment": "{0} gets replaced with the number of USB host controllers (eg \"2\"), {1} gets replaced with the list of USB controllers (eg \"2 compatible controllers found:\")"
     },
     {
       "id": "SystemRequirement_Description_UsbControllers_One",
       "translation": "{0} compatible controller found:",
-      "comment": "{0} gets replaced with the number of USB host controllers (eg \"1\"), {1} gets replaced with the list of USB controllers (eg \"1 compatible controller found:\")"
+      "translatorComment": "{0} gets replaced with the number of USB host controllers (eg \"1\"), {1} gets replaced with the list of USB controllers (eg \"1 compatible controller found:\")"
     },
     {
       "id": "SystemRequirement_Description_UsbControllers_MultipleControllers",
       "translation": "{0}x {1}",
-      "comment": "{0} gets replaced with the number of USB host controllers (eg \"2\"), {1} gets replaced with the list of USB controllers (eg \"2x Intel 3.1, Renesas 720201/720202\")"
+      "translatorComment": "{0} gets replaced with the number of USB host controllers (eg \"2\"), {1} gets replaced with the list of USB controllers (eg \"2x Intel 3.1, Renesas 720201/720202\")"
     },
     {
       "id": "SystemRequirement_Description_UsbControllers_Laptop",
       "translation": "Laptop detected! If needed, you won't be able to add new USB controllers.",
-      "comment": "Shown to a user if a laptop is detected"
+      "translatorComment": "Shown to a user if a laptop is detected"
     },
     {
       "id": "SystemRequirement_Footnote_StageTracking_VirtualDesktop",
       "translation": "We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.",
-      "comment": "The first string of text surrounded by []s will get turned into the hyperlink"
+      "translatorComment": "The first string of text surrounded by []s will get turned into the hyperlink"
     },
     {
       "id": "SystemRequirement_Description_Headset_Via",
       "translation": "{0} via {1}",
-      "comment": "{0} gets replaced with the headset (eg Meta Quest 2) and {1} gets replaced with the connection method (eg Virtual Desktop Streamer)"
+      "translatorComment": "{0} gets replaced with the headset (eg Meta Quest 2) and {1} gets replaced with the connection method (eg Virtual Desktop Streamer)"
     },
     {
       "id": "SystemRequirement_Description_Headset_UsingLighthouse",
       "translation": "{0} using Lighthouse devices",
-      "comment": "{0} gets replaced with the headset (eg Windows Mixed Reality)"
+      "translatorComment": "{0} gets replaced with the headset (eg Windows Mixed Reality)"
     },
     {
       "id": "SystemRequirement_Description_Headset_TrackingUnder",
@@ -542,12 +543,12 @@
     {
       "id": "Welcome_Discord",
       "translation": "K2VR Community Discord",
-      "comment": "The text for the link pointing to the Discord server"
+      "translatorComment": "The text for the link pointing to the Discord server"
     },
     {
       "id": "Welcome_Footnote",
       "translation": "If you run into bugs, please contact us on our %s% for help.",
-      "comment": "%s0% gets replaced with file an issue on GitHub, %s1% gets replaced with K2VR Community Discord Server"
+      "translatorComment": "%s0% gets replaced with file an issue on GitHub, %s1% gets replaced with K2VR Community Discord Server"
     },
     {
       "id": "Done_InstallSuccess",
@@ -604,7 +605,7 @@
     {
       "id": "Updating_FailedReachApi",
       "translation": "Failed to connect to K2VR Web API. Please check your internet connection, and re-run the updater.",
-      "comment": "Shown if fetching the API failed"
+      "translatorComment": "Shown if fetching the API failed"
     },
     {
       "id": "Updating_InitFailed",

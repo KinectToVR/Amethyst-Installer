@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace amethyst_installer_gui {
     public class LocalisationFileJSON {
+        [JsonProperty("language")]
+        public string Language;
+
         [JsonProperty("messages")]
         public List<LocalisedMessage> Messages;
     }
