@@ -1,190 +1,646 @@
 ﻿{
-  "Dialog_Description_CritError": "An unknown error has occured, please join the Discord server for help at [server]", /* [server] gets replaced with the server invite */
-  "Dialog_Title_CritError": "Critical Error",
-
-  "Download_Failure": "An error occured when trying to download this item. Try disabling any VPNs or firewalls.", /* Error message that gets displayed to the user whenever a download fails */
-  "Download_Retry": "Retry",
-  "Download_FailureCritical": "An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue.", /* Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue. */
-
-  "EULA_Agree": "I agree",
-  "EULA_DontAgree": "I do not agree",
-  "EULA_Licenses": "Follows are licenses for libraries used by this installer, Amethyst and device plugins.\n\nYou must accept the Kinect for Windows related EULAs to continue with installation.", /* We drop a lot of "copy pastas" here */
-  "EULA_Warranty": "By continuing with installation, you agree that this software, and every component bundled or installed by it are provided \"as-is\" and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability.", /* We are not reponsible for you being braindead */
-
-  "InstallDestination_AmeInstallFound": "This folder already contains an installation of Amethyst, it will be overwritten.", /* Shown if the install folder is detected to have a copy of Amethyst */
-  "InstallDestination_AmethystInstallLocationFootnote": "Only Amethyst will be installed to this folder. Other items will be installed to their default locations.",
-  "InstallDestination_DiskLabelFormat": "{0} ({1})", /* {0} gets replaced with the disk label (eg "Local Disk") and {1} gets replaced with the drive letter {eg "C:" ) */
-  "InstallDestination_InvalidPathDescription": "The path you've entered is invalid. Please enter a valid path.",
-  "InstallDestination_InvalidPathTitle": "Invalid Path",
-  "InstallDestination_OpenFolder": "Open Folder",
-  "InstallDestination_PathPlaceholder": "Please select a valid install folder",
-  "InstallDestination_StorageFormatFree": "{0} free", /* {0} is required (it's going to get replaced with 420GB for example) */
-  "InstallDestination_CreateStartMenuShortcut": "Create a Start menu entry",
-  "InstallDestination_CreateDesktopShortcut": "Create a desktop shortcut",
-
-  /* Install Options download size and install size strings */
-  "InstallOptions_ClickToViewSummary": "Click an item to see details.",
-  "InstallOptions_DownloadSize": "Download Size:",
-  "InstallOptions_InstallSize": "Installed Size:",
-  "InstallOptions_TotalDownloadSize": "Total Download Size:",
-  "InstallOptions_TotalInstallSize": "Total Installed Size:",
-
-  /* Shown on the System requirements page */
-  "InstallError_CloudPC": "Cloud PC detected. Amethyst does not support remote or \"cloud\" PCs.", /* The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere */
-  "InstallError_SteamVRNotFound": "Couldn't find SteamVR! Is it installed, and have you run it at least once?", /* The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once. */
-  "InstallError_WindowsVersionIsOld": "Windows version is too old to run Amethyst. Please update Windows from the Settings app before using Amethyst.", /* The message shown to a user when they have an old version of Windows that is not supported by Amethyst */
-
-  "Device_NotDetected": "No compatible devices detected",
-  "Device_Xbox360Kinect": "Xbox 360 Kinect",
-  "Device_XboxOneKinect": "Xbox One Kinect",
-  "Device_PsmoveEye": "PlayStation Eye",
-  "DeviceInfo_XboxOneKinectLighthouseIncompatible": "Base station tracked devices will not work when an Xbox One Kinect is turned on. They interpret it as an invalid base station, and will stop tracking entirely.",
-  "DeviceInfo_PsmoveEyeLibusbWarning": "PlayStation Eye cameras are using LibUSB drivers! They won't be usable with PSMoveServiceEx unless you change the driver.",
-  "DeviceInfo_PsmoveEyeLibusbWarningOverwrite": "PlayStation Eye cameras are using LibUSB drivers! These will be overwritten.",
-
-  "InstallFailure_Modal_Title": "An unexpected error occured!",
-  "InstallFailure_Modal_Description": "An unexpected error occured while installing {0}. Please view the logs for more information. Join our Discord server for help. The installation cannot continue.", /* {0} gets replaced with the module that failed to install */
-  "InstallFailure_DiskFull_Description": "One of your disk drives is full. Please clear some storage, then re-run this installer. The installation cannot continue.",
-  "InstallFailure_DiskFull_Title": "Disk Full!",
-
-  "Installer_Action_Back": "Back",
-  "Installer_Action_CopyError": "Copy error",
-  "Installer_Action_Discord": "Get help on Discord",
-  "Installer_Action_Exit": "Exit",
-  "Installer_Action_Next": "Next",
-  "Installer_Action_Finish": "Finish",
-
-  "InstallProhibited_Title": "Cannot install Amethyst", /* The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window. */
-  "InstallProhibited_CloudPC": "Cloud PCs are unsupported. Amethyst does not work on remote PCs.", /* The error shown to users if they're running Amethyst Installer on a Cloud PC. */
-  "InstallProhibited_WindowsAncient": "Your version of Windows is too old to work with Amethyst. Please update to a more recent version of Windows, 20H2 or newer, to install Amethyst.", /* The error message shown to users if they have an unsupported Windows install . */
-  "InstallProhibited_PhoneVR": "Amethyst does not work with Phone-based VR such as Trinus or VRidge. If you intend on using Amethyst for Quest standalone tracking, or if you believe this check was done in error, you may simply click OK.", /* The error message shown to users if they try using Amethyst with a phone. */
-  "InstallProhibited_DiskFull": "Your Windows drive is full! Please clear some storage (at least 10GB), and re-run Amethyst Installer.", /* The error message shown to users whose C drive is full. */
-
-  "Logs_DirectoryIsLocatedHere": "The log file is stored here:",
-
-  "Modal_Cancel": "Cancel",
-  "Modal_No": "No",
-  "Modal_OK": "OK",
-  "Modal_Yes": "Yes",
-
-  "Page_Done_Title": "Install completed",
-  "Page_Download_Title": "Downloading",
-  "Page_EULA_Title": "Licenses",
-  "Page_SelectAmethystMode_Title": "Use Amethyst for?",
-  "Page_Exception_Title": "An error happened",
-  "Page_InstallOptions_Title": "What to install",
-  "Page_Install_Title": "Installation",
-  "Page_Location_Title": "Choose destination",
-  "Page_Logs_Title": "Logs",
-  "Page_Sysreq_Title": "System requirements",
-  "Page_Uninstall_Title": "Uninstall",
-
-  "Sidebar_Task_Done": "Install completed",
-  "Sidebar_Task_Download": "Downloading",
-  "Sidebar_Task_Install": "Installation",
-  "Sidebar_Task_InstallOptions": "What to install",
-  "Sidebar_Task_Location": "Choose destination",
-  "Sidebar_Task_Sysreq": "System requirements",
-  "Sidebar_Task_Welcome": "Welcome", /* Sidebar tasks are the list of "stages" of the installer on the left hand side, with checkmarks */
-  "Sidebar_ViewLogs": "View logs",
-  "Sidebar_Uninstall_WhatToRemove": "What to remove",
-  "Sidebar_Uninstall_Working": "Uninstalling",
-  "Sidebar_Uninstall_Complete": "Uninstall complete",
-
-  "Speedrunner_Description": "Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?\n\nBe careful where you click!", /* this dialog gets shown when the user spams through the installer */
-  "Speedrunner_Title": "Slow down!", /* this dialog gets shown when the user spams through the installer */
-
-  /* The \n in these is important as they're a newline */
-  "AmethystMode_Description": "What will you use Amethyst for?\nThis can be changed later in Amethyst's Settings!",
-  "AmethystMode_OpenVR_Title": "SteamVR Tracking",
-  "AmethystMode_OpenVR_Description": "Use this option if the application(s) you will be using runs on the same PC as Amethyst.\n\nRequires SteamVR to be installed.",
-  "AmethystMode_OSC_Title": "OSC Tracking",
-  "AmethystMode_OSC_Description": "Use this option when playing VRChat directly on the Meta Quest, and not this computer.\n\nOSC trackers is only supported in VRChat.",
-
-  /* Amethyst Modules */
-  "AmethystModule_Amethyst_Title": "Amethyst",
-  "AmethystModule_Amethyst_Summary": "The Amethyst application itself.",
-  "AmethystModule_Amethyst_Description": "The Amethyst application itself.",
-
-  "AmethystModule_VCRedist_Title": "Visual C++ Redistributable 2022",
-  "AmethystModule_VCRedist_Summary": "Visual C++ runtime libraries.",
-  "AmethystModule_VCRedist_Description": "Visual C++ runtime libraries.",
-
-  "AmethystModule_WIX_Title": "Windows Install XML Toolset",
-  "AmethystModule_WIX_Summary": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
-  "AmethystModule_WIX_Description": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
-
-  "AmethystModule_KinectV1_Title": "Kinect for Windows SDK v1.8",
-  "AmethystModule_KinectV1_Summary": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1.",
-  "AmethystModule_KinectV1_Description": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1. This is required to use those devices with Amethyst.",
-
-  "AmethystModule_KinectV1Toolkit_Title": "Kinect for Windows Developer Toolkit v1.8",
-  "AmethystModule_KinectV1Toolkit_Summary": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1.",
-  "AmethystModule_KinectV1Toolkit_Description": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1. Contains useful tools like Kinect Explorer that can help diagnose issues with your Kinect.",
-
-  "AmethystModule_PSMS_Title": "PSMoveServiceEx",
-  "AmethystModule_PSMS_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
-  "AmethystModule_PSMS_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
-
-  "AmethystModule_PSMS_VDM_Title": "PSMoveServiceEx VDM",
-  "AmethystModule_PSMS_VDM_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
-  "AmethystModule_PSMS_VDM_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.\n\nVDM (Virtual Device Manager) is an additional tool that works alongside PSMSEX to provide support for additional interfaces and devices.",
-
-  "AmethystModule_PSMS_Drivers_Title": "PlayStation Eye Drivers",
-  "AmethystModule_PSMS_Drivers_Summary": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx.",
-  "AmethystModule_PSMS_Drivers_Description": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx.",
-
-  "SystemRequirement_Category_Compatibility": "Compatible devices",
-  "SystemRequirement_Category_Playspace": "Play Area",
-  "SystemRequirement_Category_Storage": "Disk space",
-  "SystemRequirement_Category_UsbControllers": "USB host controllers",
-  "SystemRequirement_Category_VrSystem": "VR headset",
-  "SystemRequirement_Description_NoDriversFound": "No drivers installed yet",
-  "SystemRequirement_Description_Playspace_Good": "Your VR play area is large enough for tracking.\n{0}m by {1}m", /* Shown if the playspace is large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively */
-  "SystemRequirement_Description_Playspace_Small": "The size of your VR play area could cause issues with tracking. [Refer to the documentation for physical space requirements.]\n{0}m by {1}m", /* Shown if the playspace is not large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively. Everything in between [] will turn into a hyperlink leading to the relevant documentation page. */
-  "SystemRequirement_Description_Playspace_Unknown": "Your play area size could not be detected. [Refer to the documentation for physical space requirements.]", /* Shown if the playspace size couldn't be determined. Everything in between [] will turn into a hyperlink leading to the relevant documentation page. */
-  "SystemRequirement_Description_Storage": "{0} of disk space based on the components selected.", /* {0} gets replaced with the storage string (eg "400MB") */
-  "SystemRequirement_Description_UsbControllers": "{0} compatible controllers found:", /* {0} gets replaced with the number of USB host controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "2 compatible controllers found:") */
-  "SystemRequirement_Description_UsbControllers_One": "{0} compatible controller found:", /* {0} gets replaced with the number of USB host controllers (eg "1"), {1} gets replaced with the list of USB controllers (eg "1 compatible controller found:") */
-  "SystemRequirement_Description_UsbControllers_MultipleControllers": "{0}x {1}", /* {0} gets replaced with the number of USB host controllers (eg "2"), {1} gets replaced with the list of USB controllers (eg "2x Intel 3.1, Renesas 720201/720202") */
-  "SystemRequirement_Description_UsbControllers_Laptop": "Laptop detected! If needed, you won't be able to add new USB controllers.", /* Shown to a user if a laptop is detected */
-  "SystemRequirement_Footnote_StageTracking_VirtualDesktop": "We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.", /* The first string of text surrounded by []s will get turned into the hyperlink */
-  "SystemRequirement_Description_Headset_Via": "{0} via {1}", /* {0} gets replaced with the headset (eg Meta Quest 2) and {1} gets replaced with the connection method (eg Virtual Desktop Streamer) */
-  "SystemRequirement_Description_Headset_UsingLighthouse": "{0} using Lighthouse devices", /* {0} gets replaced with the headset (eg Windows Mixed Reality) */
-  "SystemRequirement_Description_Headset_TrackingUnder": "Tracking under {0}",
-  "SystemRequirement_Description_Headset_Phone": "Mobile Phone",
-  "SystemRequirement_Description_Headset_Not_Detected": "No VR Headset detected",
-
-  "Welcome_Discord": "K2VR Community Discord", /* The text for the link pointing to the Discord server */
-  "Welcome_Footnote": "If you run into bugs, please contact us on our %s% for help.", /* %s0% gets replaced with file an issue on GitHub, %s1% gets replaced with K2VR Community Discord Server */
-
-  "Done_InstallSuccess": "Thank you for choosing us.",
-  "Done_LaunchDesktop": "You can find Amethyst on the desktop.\nAs shown on the left.",
-  "Done_LaunchStartMenu": "You can find Amethyst on the Start menu.\nAs shown on the left.",
-  "Done_LaunchAmethyst": "Launch Amethyst now",
-  "Done_AutoStartSteamVr": "Auto-start with SteamVR",
-  "Done_LinkDocumentation": "Documentation",
-  "Done_LinkDiscord": "Discord",
-  "Done_LinkGitHub": "GitHub",
-  "Done_LinkDonations": "Donations",
-
-  "PostOp_Kinect_EnableMic_Title": "Kinect microphone disabled!",
-  "PostOp_Kinect_EnableMic_Description": "Please enable the Kinect microphone. It is required for the Kinect for Windows SDK to function properly.",
-
-  "MustDisableMemoryIntegrity_Title": "Memory Integrity Detected!",
-  "MustDisableMemoryIntegrity_Description": "The Kinect for Windows drivers do not support Memory Integrity. Please disable Memory Integrity to be able to use your Kinect.",
-
-  "Updating_FailedReachApi": "Failed to connect to K2VR Web API. Please check your internet connection, and re-run the updater.", /* Shown if fetching the API failed */
-  "Updating_InitFailed": "Failed to initialize updater",
-  "Updating_UpdatingAmethyst": "Amethyst is being updated…",
-
-  "Installer_QuitVerify_Modal_Title": "If you exit now, Amethyst will not be installed.\nAre you sure you want to close the installer?",
-  "Installer_QuitVerify_Modal_Description": "Close Amethyst Installer?",
-
-  "Installer_K2EXUpgrade_Title": "You're about to upgrade to Amethyst",
-  "Installer_K2EXUpgrade_Description": "Amethyst is a new app from K2VR Team. It replaces K2EX. It's faster, more stable and has a bunch of new features.",
-  "Installer_K2EXUpgrade_LearnMore": "Click here to learn more.",
-  "Installer_K2EXUpgrade_UpgradeButton": "Upgrade now",
-
-  "Uninstall_Success": "It's sad to see you go. We wish you luck in your future VR adventures!"
+  "messages": [
+    {
+      "id": "Dialog_Description_CritError",
+      "translation": "An unknown error has occured, please join the Discord server for help at [server]",
+      "comment": "[server] gets replaced with the server invite"
+    },
+    {
+      "id": "Dialog_Title_CritError",
+      "translation": "Critical Error"
+    },
+    {
+      "id": "Download_Failure",
+      "translation": "An error occured when trying to download this item. Try disabling any VPNs or firewalls.",
+      "comment": "Error message that gets displayed to the user whenever a download fails"
+    },
+    {
+      "id": "Download_Retry",
+      "translation": "Retry"
+    },
+    {
+      "id": "Download_FailureCritical",
+      "translation": "An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue.",
+      "comment": "Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue."
+    },
+    {
+      "id": "EULA_Agree",
+      "translation": "I agree"
+    },
+    {
+      "id": "EULA_DontAgree",
+      "translation": "I do not agree"
+    },
+    {
+      "id": "EULA_Licenses",
+      "translation": "Follows are licenses for libraries used by this installer, Amethyst and device plugins.\n\nYou must accept the Kinect for Windows related EULAs to continue with installation.",
+      "comment": "We drop a lot of \"copy pastas\" here"
+    },
+    {
+      "id": "EULA_Warranty",
+      "translation": "By continuing with installation, you agree that this software, and every component bundled or installed by it are provided \"as-is\" and come with no warranty whatsoever. The developers and maintainers of each respective component, library, or software are not responsible for any claims, damages or liability.",
+      "comment": "We are not reponsible for you being braindead"
+    },
+    {
+      "id": "InstallDestination_AmeInstallFound",
+      "translation": "This folder already contains an installation of Amethyst, it will be overwritten.",
+      "comment": "Shown if the install folder is detected to have a copy of Amethyst"
+    },
+    {
+      "id": "InstallDestination_AmethystInstallLocationFootnote",
+      "translation": "Only Amethyst will be installed to this folder. Other items will be installed to their default locations."
+    },
+    {
+      "id": "InstallDestination_DiskLabelFormat",
+      "translation": "{0} ({1})",
+      "comment": "{0} gets replaced with the disk label (eg \"Local Disk\") and {1} gets replaced with the drive letter {eg \"C: \" )"
+    },
+    {
+      "id": "InstallDestination_InvalidPathDescription",
+      "translation": "The path you've entered is invalid. Please enter a valid path."
+    },
+    {
+      "id": "InstallDestination_InvalidPathTitle",
+      "translation": "Invalid Path"
+    },
+    {
+      "id": "InstallDestination_OpenFolder",
+      "translation": "Open Folder"
+    },
+    {
+      "id": "InstallDestination_PathPlaceholder",
+      "translation": "Please select a valid install folder"
+    },
+    {
+      "id": "InstallDestination_StorageFormatFree",
+      "translation": "{0} free",
+      "comment": "{0} is required (it's going to get replaced with 420GB for example)"
+    },
+    {
+      "id": "InstallDestination_CreateStartMenuShortcut",
+      "translation": "Create a Start menu entry"
+    },
+    {
+      "id": "InstallDestination_CreateDesktopShortcut",
+      "translation": "Create a desktop shortcut"
+    },
+    {
+      "id": "InstallOptions_ClickToViewSummary",
+      "translation": "Click an item to see details."
+    },
+    {
+      "id": "InstallOptions_DownloadSize",
+      "translation": "Download Size:"
+    },
+    {
+      "id": "InstallOptions_InstallSize",
+      "translation": "Installed Size:"
+    },
+    {
+      "id": "InstallOptions_TotalDownloadSize",
+      "translation": "Total Download Size:"
+    },
+    {
+      "id": "InstallOptions_TotalInstallSize",
+      "translation": "Total Installed Size:"
+    },
+    {
+      "id": "InstallError_CloudPC",
+      "translation": "Cloud PC detected. Amethyst does not support remote or \"cloud\" PCs.",
+      "comment": "The message shown to a user when they are running a Cloud PC solution such as Shadow or Plutosphere"
+    },
+    {
+      "id": "InstallError_SteamVRNotFound",
+      "translation": "Couldn't find SteamVR! Is it installed, and have you run it at least once?",
+      "comment": "The message shown to a user when the installer fails to locate SteamVR, usually because it's not installed, or has not been run at least once."
+    },
+    {
+      "id": "InstallError_WindowsVersionIsOld",
+      "translation": "Windows version is too old to run Amethyst. Please update Windows from the Settings app before using Amethyst.",
+      "comment": "The message shown to a user when they have an old version of Windows that is not supported by Amethyst"
+    },
+    {
+      "id": "Device_NotDetected",
+      "translation": "No compatible devices detected"
+    },
+    {
+      "id": "Device_Xbox360Kinect",
+      "translation": "Xbox 360 Kinect"
+    },
+    {
+      "id": "Device_XboxOneKinect",
+      "translation": "Xbox One Kinect"
+    },
+    {
+      "id": "Device_PsmoveEye",
+      "translation": "PlayStation Eye"
+    },
+    {
+      "id": "DeviceInfo_XboxOneKinectLighthouseIncompatible",
+      "translation": "Base station tracked devices will not work when an Xbox One Kinect is turned on. They interpret it as an invalid base station, and will stop tracking entirely."
+    },
+    {
+      "id": "DeviceInfo_PsmoveEyeLibusbWarning",
+      "translation": "PlayStation Eye cameras are using LibUSB drivers! They won't be usable with PSMoveServiceEx unless you change the driver."
+    },
+    {
+      "id": "DeviceInfo_PsmoveEyeLibusbWarningOverwrite",
+      "translation": "PlayStation Eye cameras are using LibUSB drivers! These will be overwritten."
+    },
+    {
+      "id": "InstallFailure_Modal_Title",
+      "translation": "An unexpected error occured!"
+    },
+    {
+      "id": "InstallFailure_Modal_Description",
+      "translation": "An unexpected error occured while installing {0}. Please view the logs for more information. Join our Discord server for help. The installation cannot continue.",
+      "comment": "{0} gets replaced with the module that failed to install"
+    },
+    {
+      "id": "InstallFailure_DiskFull_Description",
+      "translation": "One of your disk drives is full. Please clear some storage, then re-run this installer. The installation cannot continue."
+    },
+    {
+      "id": "InstallFailure_DiskFull_Title",
+      "translation": "Disk Full!"
+    },
+    {
+      "id": "Installer_Action_Back",
+      "translation": "Back"
+    },
+    {
+      "id": "Installer_Action_CopyError",
+      "translation": "Copy error"
+    },
+    {
+      "id": "Installer_Action_Discord",
+      "translation": "Get help on Discord"
+    },
+    {
+      "id": "Installer_Action_Exit",
+      "translation": "Exit"
+    },
+    {
+      "id": "Installer_Action_Next",
+      "translation": "Next"
+    },
+    {
+      "id": "Installer_Action_Finish",
+      "translation": "Finish"
+    },
+    {
+      "id": "InstallProhibited_Title",
+      "translation": "Cannot install Amethyst",
+      "comment": "The name of the dialog window shown to the user if they are unable to install Amethyst on their system. This dialog is shown instead of the main installer window."
+    },
+    {
+      "id": "InstallProhibited_CloudPC",
+      "translation": "Cloud PCs are unsupported. Amethyst does not work on remote PCs.",
+      "comment": "The error shown to users if they're running Amethyst Installer on a Cloud PC."
+    },
+    {
+      "id": "InstallProhibited_WindowsAncient",
+      "translation": "Your version of Windows is too old to work with Amethyst. Please update to a more recent version of Windows, 20H2 or newer, to install Amethyst.",
+      "comment": "The error message shown to users if they have an unsupported Windows install ."
+    },
+    {
+      "id": "InstallProhibited_PhoneVR",
+      "translation": "Amethyst does not work with Phone-based VR such as Trinus or VRidge. If you intend on using Amethyst for Quest standalone tracking, or if you believe this check was done in error, you may simply click OK.",
+      "comment": "The error message shown to users if they try using Amethyst with a phone."
+    },
+    {
+      "id": "InstallProhibited_DiskFull",
+      "translation": "Your Windows drive is full! Please clear some storage (at least 10GB), and re-run Amethyst Installer.",
+      "comment": "The error message shown to users whose C drive is full."
+    },
+    {
+      "id": "Logs_DirectoryIsLocatedHere",
+      "translation": "The log file is stored here:"
+    },
+    {
+      "id": "Modal_Cancel",
+      "translation": "Cancel"
+    },
+    {
+      "id": "Modal_No",
+      "translation": "No"
+    },
+    {
+      "id": "Modal_OK",
+      "translation": "OK"
+    },
+    {
+      "id": "Modal_Yes",
+      "translation": "Yes"
+    },
+    {
+      "id": "Page_Done_Title",
+      "translation": "Install completed"
+    },
+    {
+      "id": "Page_Download_Title",
+      "translation": "Downloading"
+    },
+    {
+      "id": "Page_EULA_Title",
+      "translation": "Licenses"
+    },
+    {
+      "id": "Page_SelectAmethystMode_Title",
+      "translation": "Use Amethyst for?"
+    },
+    {
+      "id": "Page_Exception_Title",
+      "translation": "An error happened"
+    },
+    {
+      "id": "Page_InstallOptions_Title",
+      "translation": "What to install"
+    },
+    {
+      "id": "Page_Install_Title",
+      "translation": "Installation"
+    },
+    {
+      "id": "Page_Location_Title",
+      "translation": "Choose destination"
+    },
+    {
+      "id": "Page_Logs_Title",
+      "translation": "Logs"
+    },
+    {
+      "id": "Page_Sysreq_Title",
+      "translation": "System requirements"
+    },
+    {
+      "id": "Page_Uninstall_Title",
+      "translation": "Uninstall"
+    },
+    {
+      "id": "Sidebar_Task_Done",
+      "translation": "Install completed"
+    },
+    {
+      "id": "Sidebar_Task_Download",
+      "translation": "Downloading"
+    },
+    {
+      "id": "Sidebar_Task_Install",
+      "translation": "Installation"
+    },
+    {
+      "id": "Sidebar_Task_InstallOptions",
+      "translation": "What to install"
+    },
+    {
+      "id": "Sidebar_Task_Location",
+      "translation": "Choose destination"
+    },
+    {
+      "id": "Sidebar_Task_Sysreq",
+      "translation": "System requirements"
+    },
+    {
+      "id": "Sidebar_Task_Welcome",
+      "translation": "Welcome",
+      "comment": "Sidebar tasks are the list of \"stages\" of the installer on the left hand side, with checkmarks"
+    },
+    {
+      "id": "Sidebar_ViewLogs",
+      "translation": "View logs"
+    },
+    {
+      "id": "Sidebar_Uninstall_WhatToRemove",
+      "translation": "What to remove"
+    },
+    {
+      "id": "Sidebar_Uninstall_Working",
+      "translation": "Uninstalling"
+    },
+    {
+      "id": "Sidebar_Uninstall_Complete",
+      "translation": "Uninstall complete"
+    },
+    {
+      "id": "Speedrunner_Description",
+      "translation": "Whoa there! Are you trying to get the world record on Amethyst Installer Any% ?\n\nBe careful where you click!",
+      "comment": "this dialog gets shown when the user spams through the installer"
+    },
+    {
+      "id": "Speedrunner_Title",
+      "translation": "Slow down!",
+      "comment": "this dialog gets shown when the user spams through the installer"
+    },
+    {
+      "id": "AmethystMode_Description",
+      "translation": "What will you use Amethyst for?\nThis can be changed later in Amethyst's Settings!"
+    },
+    {
+      "id": "AmethystMode_OpenVR_Title",
+      "translation": "SteamVR Tracking"
+    },
+    {
+      "id": "AmethystMode_OpenVR_Description",
+      "translation": "Use this option if the application(s) you will be using runs on the same PC as Amethyst.\n\nRequires SteamVR to be installed."
+    },
+    {
+      "id": "AmethystMode_OSC_Title",
+      "translation": "OSC Tracking"
+    },
+    {
+      "id": "AmethystMode_OSC_Description",
+      "translation": "Use this option when playing VRChat directly on the Meta Quest, and not this computer.\n\nOSC trackers is only supported in VRChat."
+    },
+    {
+      "id": "AmethystModule_Amethyst_Title",
+      "translation": "Amethyst"
+    },
+    {
+      "id": "AmethystModule_Amethyst_Summary",
+      "translation": "The Amethyst application itself."
+    },
+    {
+      "id": "AmethystModule_Amethyst_Description",
+      "translation": "The Amethyst application itself."
+    },
+    {
+      "id": "AmethystModule_VCRedist_Title",
+      "translation": "Visual C++ Redistributable 2022"
+    },
+    {
+      "id": "AmethystModule_VCRedist_Summary",
+      "translation": "Visual C++ runtime libraries."
+    },
+    {
+      "id": "AmethystModule_VCRedist_Description",
+      "translation": "Visual C++ runtime libraries."
+    },
+    {
+      "id": "AmethystModule_WIX_Title",
+      "translation": "Windows Install XML Toolset"
+    },
+    {
+      "id": "AmethystModule_WIX_Summary",
+      "translation": "An intermediary tool required to install the Kinect for Windows SDK v1.8."
+    },
+    {
+      "id": "AmethystModule_WIX_Description",
+      "translation": "An intermediary tool required to install the Kinect for Windows SDK v1.8."
+    },
+    {
+      "id": "AmethystModule_KinectV1_Title",
+      "translation": "Kinect for Windows SDK v1.8"
+    },
+    {
+      "id": "AmethystModule_KinectV1_Summary",
+      "translation": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1."
+    },
+    {
+      "id": "AmethystModule_KinectV1_Description",
+      "translation": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1. This is required to use those devices with Amethyst."
+    },
+    {
+      "id": "AmethystModule_KinectV1Toolkit_Title",
+      "translation": "Kinect for Windows Developer Toolkit v1.8"
+    },
+    {
+      "id": "AmethystModule_KinectV1Toolkit_Summary",
+      "translation": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1."
+    },
+    {
+      "id": "AmethystModule_KinectV1Toolkit_Description",
+      "translation": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1. Contains useful tools like Kinect Explorer that can help diagnose issues with your Kinect."
+    },
+    {
+      "id": "AmethystModule_PSMS_Title",
+      "translation": "PSMoveServiceEx"
+    },
+    {
+      "id": "AmethystModule_PSMS_Summary",
+      "translation": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras."
+    },
+    {
+      "id": "AmethystModule_PSMS_Description",
+      "translation": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more."
+    },
+    {
+      "id": "AmethystModule_PSMS_VDM_Title",
+      "translation": "PSMoveServiceEx VDM"
+    },
+    {
+      "id": "AmethystModule_PSMS_VDM_Summary",
+      "translation": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras."
+    },
+    {
+      "id": "AmethystModule_PSMS_VDM_Description",
+      "translation": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.\n\nVDM (Virtual Device Manager) is an additional tool that works alongside PSMSEX to provide support for additional interfaces and devices."
+    },
+    {
+      "id": "AmethystModule_PSMS_Drivers_Title",
+      "translation": "PlayStation Eye Drivers"
+    },
+    {
+      "id": "AmethystModule_PSMS_Drivers_Summary",
+      "translation": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx."
+    },
+    {
+      "id": "AmethystModule_PSMS_Drivers_Description",
+      "translation": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx."
+    },
+    {
+      "id": "SystemRequirement_Category_Compatibility",
+      "translation": "Compatible devices"
+    },
+    {
+      "id": "SystemRequirement_Category_Playspace",
+      "translation": "Play Area"
+    },
+    {
+      "id": "SystemRequirement_Category_Storage",
+      "translation": "Disk space"
+    },
+    {
+      "id": "SystemRequirement_Category_UsbControllers",
+      "translation": "USB host controllers"
+    },
+    {
+      "id": "SystemRequirement_Category_VrSystem",
+      "translation": "VR headset"
+    },
+    {
+      "id": "SystemRequirement_Description_NoDriversFound",
+      "translation": "No drivers installed yet"
+    },
+    {
+      "id": "SystemRequirement_Description_Playspace_Good",
+      "translation": "Your VR play area is large enough for tracking.\n{0}m by {1}m",
+      "comment": "Shown if the playspace is large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively"
+    },
+    {
+      "id": "SystemRequirement_Description_Playspace_Small",
+      "translation": "The size of your VR play area could cause issues with tracking. [Refer to the documentation for physical space requirements.]\n{0}m by {1}m",
+      "comment": "Shown if the playspace is not large enough. {0} and {1} get replaces with the bounds along the X and Y axis respectively. Everything in between [] will turn into a hyperlink leading to the relevant documentation page."
+    },
+    {
+      "id": "SystemRequirement_Description_Playspace_Unknown",
+      "translation": "Your play area size could not be detected. [Refer to the documentation for physical space requirements.]",
+      "comment": "Shown if the playspace size couldn't be determined. Everything in between [] will turn into a hyperlink leading to the relevant documentation page."
+    },
+    {
+      "id": "SystemRequirement_Description_Storage",
+      "translation": "{0} of disk space based on the components selected.",
+      "comment": "{0} gets replaced with the storage string (eg \"400MB\")"
+    },
+    {
+      "id": "SystemRequirement_Description_UsbControllers",
+      "translation": "{0} compatible controllers found:",
+      "comment": "{0} gets replaced with the number of USB host controllers (eg \"2\"), {1} gets replaced with the list of USB controllers (eg \"2 compatible controllers found:\")"
+    },
+    {
+      "id": "SystemRequirement_Description_UsbControllers_One",
+      "translation": "{0} compatible controller found:",
+      "comment": "{0} gets replaced with the number of USB host controllers (eg \"1\"), {1} gets replaced with the list of USB controllers (eg \"1 compatible controller found:\")"
+    },
+    {
+      "id": "SystemRequirement_Description_UsbControllers_MultipleControllers",
+      "translation": "{0}x {1}",
+      "comment": "{0} gets replaced with the number of USB host controllers (eg \"2\"), {1} gets replaced with the list of USB controllers (eg \"2x Intel 3.1, Renesas 720201/720202\")"
+    },
+    {
+      "id": "SystemRequirement_Description_UsbControllers_Laptop",
+      "translation": "Laptop detected! If needed, you won't be able to add new USB controllers.",
+      "comment": "Shown to a user if a laptop is detected"
+    },
+    {
+      "id": "SystemRequirement_Footnote_StageTracking_VirtualDesktop",
+      "translation": "We recommend [enabling stage tracking] inside the Quest portion of Virtual Desktop to avoid needing to recalibrate Amethyst at the start of each VR session.",
+      "comment": "The first string of text surrounded by []s will get turned into the hyperlink"
+    },
+    {
+      "id": "SystemRequirement_Description_Headset_Via",
+      "translation": "{0} via {1}",
+      "comment": "{0} gets replaced with the headset (eg Meta Quest 2) and {1} gets replaced with the connection method (eg Virtual Desktop Streamer)"
+    },
+    {
+      "id": "SystemRequirement_Description_Headset_UsingLighthouse",
+      "translation": "{0} using Lighthouse devices",
+      "comment": "{0} gets replaced with the headset (eg Windows Mixed Reality)"
+    },
+    {
+      "id": "SystemRequirement_Description_Headset_TrackingUnder",
+      "translation": "Tracking under {0}"
+    },
+    {
+      "id": "SystemRequirement_Description_Headset_Phone",
+      "translation": "Mobile Phone"
+    },
+    {
+      "id": "SystemRequirement_Description_Headset_Not_Detected",
+      "translation": "No VR Headset detected"
+    },
+    {
+      "id": "Welcome_Discord",
+      "translation": "K2VR Community Discord",
+      "comment": "The text for the link pointing to the Discord server"
+    },
+    {
+      "id": "Welcome_Footnote",
+      "translation": "If you run into bugs, please contact us on our %s% for help.",
+      "comment": "%s0% gets replaced with file an issue on GitHub, %s1% gets replaced with K2VR Community Discord Server"
+    },
+    {
+      "id": "Done_InstallSuccess",
+      "translation": "Thank you for choosing us."
+    },
+    {
+      "id": "Done_LaunchDesktop",
+      "translation": "You can find Amethyst on the desktop.\nAs shown on the left."
+    },
+    {
+      "id": "Done_LaunchStartMenu",
+      "translation": "You can find Amethyst on the Start menu.\nAs shown on the left."
+    },
+    {
+      "id": "Done_LaunchAmethyst",
+      "translation": "Launch Amethyst now"
+    },
+    {
+      "id": "Done_AutoStartSteamVr",
+      "translation": "Auto-start with SteamVR"
+    },
+    {
+      "id": "Done_LinkDocumentation",
+      "translation": "Documentation"
+    },
+    {
+      "id": "Done_LinkDiscord",
+      "translation": "Discord"
+    },
+    {
+      "id": "Done_LinkGitHub",
+      "translation": "GitHub"
+    },
+    {
+      "id": "Done_LinkDonations",
+      "translation": "Donations"
+    },
+    {
+      "id": "PostOp_Kinect_EnableMic_Title",
+      "translation": "Kinect microphone disabled!"
+    },
+    {
+      "id": "PostOp_Kinect_EnableMic_Description",
+      "translation": "Please enable the Kinect microphone. It is required for the Kinect for Windows SDK to function properly."
+    },
+    {
+      "id": "MustDisableMemoryIntegrity_Title",
+      "translation": "Memory Integrity Detected!"
+    },
+    {
+      "id": "MustDisableMemoryIntegrity_Description",
+      "translation": "The Kinect for Windows drivers do not support Memory Integrity. Please disable Memory Integrity to be able to use your Kinect."
+    },
+    {
+      "id": "Updating_FailedReachApi",
+      "translation": "Failed to connect to K2VR Web API. Please check your internet connection, and re-run the updater.",
+      "comment": "Shown if fetching the API failed"
+    },
+    {
+      "id": "Updating_InitFailed",
+      "translation": "Failed to initialize updater"
+    },
+    {
+      "id": "Updating_UpdatingAmethyst",
+      "translation": "Amethyst is being updated…"
+    },
+    {
+      "id": "Installer_QuitVerify_Modal_Title",
+      "translation": "If you exit now, Amethyst will not be installed.\nAre you sure you want to close the installer?"
+    },
+    {
+      "id": "Installer_QuitVerify_Modal_Description",
+      "translation": "Close Amethyst Installer?"
+    },
+    {
+      "id": "Installer_K2EXUpgrade_Title",
+      "translation": "You're about to upgrade to Amethyst"
+    },
+    {
+      "id": "Installer_K2EXUpgrade_Description",
+      "translation": "Amethyst is a new app from K2VR Team. It replaces K2EX. It's faster, more stable and has a bunch of new features."
+    },
+    {
+      "id": "Installer_K2EXUpgrade_LearnMore",
+      "translation": "Click here to learn more."
+    },
+    {
+      "id": "Installer_K2EXUpgrade_UpgradeButton",
+      "translation": "Upgrade now"
+    },
+    {
+      "id": "Uninstall_Success",
+      "translation": "It's sad to see you go. We wish you luck in your future VR adventures!"
+    }
+  ]
 }
