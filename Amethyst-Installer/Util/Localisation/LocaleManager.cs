@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 
 namespace amethyst_installer_gui {
     public static class LocaleManager {
@@ -49,14 +50,7 @@ namespace amethyst_installer_gui {
                                 return;
                             }
 
-                            var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(localeJson);
-                            foreach ( var key in dictionary.Keys ) {
-                                if ( m_loadedLocale.ContainsKey(key) ) {
-                                    m_loadedLocale[key] = dictionary[key];
-                                } else {
-                                    m_loadedLocale.Add(key, dictionary[key]);
-                                }
-                            }
+                            LoadStringsFromJson(localeJson);
                         }
                     } catch ( Exception e ) {
                         LoadLocale(CurrentLocale);
@@ -93,14 +87,7 @@ namespace amethyst_installer_gui {
                 if ( resource != null ) {
                     using ( StreamReader reader = new StreamReader(resource) ) {
                         string localeJson = reader.ReadToEnd();
-                        var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(localeJson);
-                        foreach (var key in dictionary.Keys) {
-                            if (m_loadedLocale.ContainsKey(key)) {
-                                m_loadedLocale[key] = dictionary[key];
-                            } else {
-                                m_loadedLocale.Add(key, dictionary[key]);
-                            }
-                        }
+                        LoadStringsFromJson(localeJson);
                     }
                 }
             }
@@ -117,6 +104,17 @@ namespace amethyst_installer_gui {
 
             string windowsLocale = CultureInfo.CurrentUICulture.Name;
             return windowsLocale.Substring(0, windowsLocale.IndexOf('-'));
+        }
+
+        private static void LoadStringsFromJson(string jsonString) {
+            var localisationFile = JsonConvert.DeserializeObject<LocalisationFileJSON>(jsonString);
+            foreach ( var messageInfo in localisationFile.Messages ) {
+                if ( m_loadedLocale.ContainsKey(messageInfo.Id) ) {
+                    m_loadedLocale[messageInfo.Id] = messageInfo.Translation;
+                } else {
+                    m_loadedLocale.Add(messageInfo.Id, messageInfo.Translation);
+                }
+            }
         }
     }
 }

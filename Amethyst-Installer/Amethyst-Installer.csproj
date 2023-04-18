@@ -367,6 +367,7 @@
     <Compile Include="Installer\InstallUtil.cs" />
     <Compile Include="Util\Localisation\LocaleManager.cs" />
     <Compile Include="Util\Localisation\Localisation.cs" />
+    <Compile Include="Util\Localisation\LocalisationFileJSON.cs" />
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\Protocol\IProtocolCommand.cs" />
     <Compile Include="Util\Protocol\ProtocolInstallerFlags.cs" />
