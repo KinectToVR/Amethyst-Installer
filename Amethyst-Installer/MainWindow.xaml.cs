@@ -96,17 +96,18 @@ namespace amethyst_installer_gui {
 
             // Fix corners on Win11
             DWM.SetWindowCorners(this, CornerPreference.Round);
-            DWM.SetWindowAccentColor(this, WindowsColorHelpers.GetAccentColor());
+            DWM.SetWindowAccentColor(this, UxTheme.ThemeAccent);
 
             // @TODO: Theming!!
             // Dark / Light mode
             DWM.SetDarkMode(this, true);
 
             // Mica some bitches
+            // @TODO: Check if transparency effects are enabled
             if (DWM.EnableBackdropBlur(this)) {
-
                 DWM.ExtendWindowChrome(this);
             } else {
+                // Force opaque if we can't enable mica / acryllic
                 var color = ( ( SolidColorBrush ) Background ).Color;
                 color.A = 255;
                 Background = new SolidColorBrush(color);

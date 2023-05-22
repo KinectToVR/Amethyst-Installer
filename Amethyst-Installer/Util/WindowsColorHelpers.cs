@@ -23,11 +23,17 @@ namespace amethyst_installer_gui {
         public static Brush AccentHighlightBackground { get { return new SolidColorBrush(ColorAccentHighlightBackground); } }
         public static Brush AccentHighlightForeground { get { return new SolidColorBrush(ColorAccentHighlightForeground); } }
 
-        public static Color ColorAccent { get { return GetAccentColor(); } }
-        public static Color ColorAccentLight { get { return Lighten(GetAccentColor(), 0.1f); } }
-        public static Color ColorAccentText { get { return GetContrastingColor(GetAccentColor()); } }
-        public static Color ColorAccentHighlightBackground { get { return GetAccentColor(); } }
-        public static Color ColorAccentHighlightForeground { get { return GetContrastingColor(GetAccentColor()); } }
+        public static Color ColorAccent { get { return UxTheme.ThemeAccent; } }
+        public static Color ColorAccentLight { get { return UxTheme.ThemeAccent1; } }
+        public static Color ColorAccentText { get { return GetContrastingColor(UxTheme.ThemeAccent1); } }
+        public static Color ColorAccentHighlightBackground { get { return UxTheme.ThemeAccent1; } }
+        public static Color ColorAccentHighlightForeground { get { return GetContrastingColor(UxTheme.ThemeAccent1); } }
+
+        // public static Color ColorAccent { get { return GetAccentColor(); } }
+        // public static Color ColorAccentLight { get { return Lighten(GetAccentColor(), 0.1f); } }
+        // public static Color ColorAccentText { get { return GetContrastingColor(GetAccentColor()); } }
+        // public static Color ColorAccentHighlightBackground { get { return GetAccentColor(); } }
+        // public static Color ColorAccentHighlightForeground { get { return GetContrastingColor(GetAccentColor()); } }
 
         // Extended from
         // https://stackoverflow.com/a/50848113

@@ -347,6 +347,7 @@
     <Compile Include="PInvoke\SetupApi.cs" />
     <Compile Include="PInvoke\Shell.cs" />
     <Compile Include="PInvoke\SystemUtility.cs" />
+    <Compile Include="PInvoke\UxTheme.cs" />
     <Compile Include="Popups\WinUI3MessageBox.xaml.cs">
       <DependentUpon>WinUI3MessageBox.xaml</DependentUpon>
     </Compile>
