@@ -102,12 +102,14 @@ namespace amethyst_installer_gui.Installer {
 
             // Verify checksum
             string filePath = Path.GetFullPath(Path.Combine(Constants.AmethystTempDirectory, InstallerStateManager.ModulesToInstall[DownloadIndex].Remote.Filename));
-            if ( Util.GetChecksum(filePath) != InstallerStateManager.ModulesToInstall[DownloadIndex].Remote.Checksum ) {
+            var checksum = Util.GetChecksum(filePath);
+            if ( checksum != InstallerStateManager.ModulesToInstall[DownloadIndex].Remote.Checksum ) {
 
-                Logger.Fatal("Invalid checksum!");
+                Logger.Fatal($"Invalid checksum! Expected {InstallerStateManager.ModulesToInstall[DownloadIndex].Remote.Checksum} but got {checksum}.");
                 if ( OnInvalidChecksum != null )
                     OnInvalidChecksum.Invoke();
-                DownloadFailed(DownloadIndex);
+                else
+                    DownloadFailed(DownloadIndex);
                 return;
             }
             

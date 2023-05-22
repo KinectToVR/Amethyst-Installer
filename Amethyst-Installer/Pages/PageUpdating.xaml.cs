@@ -59,6 +59,7 @@ namespace amethyst_installer_gui.Pages {
             // Setup events
             DownloadManager.OnDownloadingNewModule += DownloadNewModule;
             DownloadManager.OnTransferSpeedChanged += TransferSpeedChanged;
+            DownloadManager.OnInvalidChecksum += DownloadInvalidChecksum;
             DownloadManager.OnDownloadFailed += DownloadFailed;
             DownloadManager.OnDownloadProgressChanged += DownloadProgressChanged;
             DownloadManager.OnDownloadComplete += DownloadComplete;
@@ -155,11 +156,28 @@ namespace amethyst_installer_gui.Pages {
             }
         }
 
+        private void DownloadInvalidChecksum() {
+            m_downloadControl.Dispatcher.Invoke(() => {
+
+                InstallerStateManager.CanClose = true;
+
+                m_downloadControl.ErrorMessage = Localisation.Manager.Download_FailureChecksum;
+                m_downloadControl.DownloadFailed = true;
+                m_downloadControl.IsPending = false;
+
+                MainWindow.Instance.taskBarItemInfo.ProgressState = TaskbarItemProgressState.Error;
+                MainWindow.Instance.taskBarItemInfo.ProgressValue = 0.0;
+            });
+        }
+        
+
         private void DownloadFailed() {
             m_downloadControl.Dispatcher.Invoke(() => {
 
                 InstallerStateManager.CanClose = true;
 
+                var moduleToInstall = InstallerStateManager.ModulesToInstall[(int)m_downloadControl.Tag];
+                m_downloadControl.ErrorMessage = moduleToInstall.IsCritical ? Localisation.Manager.Download_FailureCritical : Localisation.Manager.Download_Failure;
                 m_downloadControl.DownloadFailed = true;
                 m_downloadControl.IsPending = false;
 
