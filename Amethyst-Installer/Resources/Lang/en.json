@@ -5,6 +5,7 @@
   "Download_Failure": "An error occured when trying to download this item. Try disabling any VPNs or firewalls.", /* Error message that gets displayed to the user whenever a download fails */
   "Download_Retry": "Retry",
   "Download_FailureCritical": "An error occured when trying to download this item. Try disabling any VPNs or firewalls. Installation cannot continue.", /* Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue. */
+  "Download_FailureChecksum": "An error occured when trying to download this item. Try downloading again, if it fails again, we probably messed something up. Installation cannot continue.", /* Error message that gets displayed to the user whenever a download fails, and the module is a critical component, meaning the installation CANNOT continue. */
 
   "EULA_Agree": "I agree",
   "EULA_DontAgree": "I do not agree",
@@ -110,29 +111,29 @@
   "AmethystModule_VCRedist_Summary": "Visual C++ runtime libraries.",
   "AmethystModule_VCRedist_Description": "Visual C++ runtime libraries.",
 
-  "AmethystModule_WIX_Title": "Windows Install XML Toolset",
-  "AmethystModule_WIX_Summary": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
-  "AmethystModule_WIX_Description": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
+  "KinectModule_WIX_Title": "Windows Install XML Toolset",
+  "KinectModule_WIX_Summary": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
+  "KinectModule_WIX_Description": "An intermediary tool required to install the Kinect for Windows SDK v1.8.",
 
-  "AmethystModule_KinectV1_Title": "Kinect for Windows SDK v1.8",
-  "AmethystModule_KinectV1_Summary": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1.",
-  "AmethystModule_KinectV1_Description": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1. This is required to use those devices with Amethyst.",
+  "KinectModule_KinectV1_Title": "Kinect for Windows SDK v1.8",
+  "KinectModule_KinectV1_Summary": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1.",
+  "KinectModule_KinectV1_Description": "SDK and runtime for Xbox 360 Kinect and Kinect for Windows V1. This is required to use those devices with Amethyst.",
 
-  "AmethystModule_KinectV1Toolkit_Title": "Kinect for Windows Developer Toolkit v1.8",
-  "AmethystModule_KinectV1Toolkit_Summary": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1.",
-  "AmethystModule_KinectV1Toolkit_Description": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1. Contains useful tools like Kinect Explorer that can help diagnose issues with your Kinect.",
+  "KinectModule_KinectV1Toolkit_Title": "Kinect for Windows Developer Toolkit v1.8",
+  "KinectModule_KinectV1Toolkit_Summary": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1.",
+  "KinectModule_KinectV1Toolkit_Description": "Developer Samples for Xbox 360 Kinect and Kinect for Windows V1. Contains useful tools like Kinect Explorer that can help diagnose issues with your Kinect.",
 
-  "AmethystModule_PSMS_Title": "PSMoveServiceEx",
-  "AmethystModule_PSMS_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
-  "AmethystModule_PSMS_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
+  "PsmoveModule_PSMS_Title": "PSMoveServiceEx",
+  "PsmoveModule_PSMS_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
+  "PsmoveModule_PSMS_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.",
 
-  "AmethystModule_PSMS_VDM_Title": "PSMoveServiceEx VDM",
-  "AmethystModule_PSMS_VDM_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
-  "AmethystModule_PSMS_VDM_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.\n\nVDM (Virtual Device Manager) is an additional tool that works alongside PSMSEX to provide support for additional interfaces and devices.",
+  "PsmoveModule_PSMS_VDM_Title": "PSMoveServiceEx VDM",
+  "PsmoveModule_PSMS_VDM_Summary": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.",
+  "PsmoveModule_PSMS_VDM_Description": "PSMoveService is a third-party application that adds support for PS Move controllers and optionally to track them using PS Eye cameras.\n\nPSMoveServiceEx is a modern fork that fixes many bugs, adds new features and more.\n\nVDM (Virtual Device Manager) is an additional tool that works alongside PSMSEX to provide support for additional interfaces and devices.",
 
-  "AmethystModule_PSMS_Drivers_Title": "PlayStation Eye Drivers",
-  "AmethystModule_PSMS_Drivers_Summary": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx.",
-  "AmethystModule_PSMS_Drivers_Description": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx.",
+  "PsmoveModule_PSMS_Drivers_Title": "PlayStation Eye Drivers",
+  "PsmoveModule_PSMS_Drivers_Summary": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx.",
+  "PsmoveModule_PSMS_Drivers_Description": "Installs the drivers for PlayStation Eye devices. Recommended if using PSMoveServiceEx.",
 
   "SystemRequirement_Category_Compatibility": "Compatible devices",
   "SystemRequirement_Category_Playspace": "Play Area",

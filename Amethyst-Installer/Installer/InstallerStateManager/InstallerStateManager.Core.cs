@@ -121,34 +121,34 @@ namespace amethyst_installer_gui.Installer {
                 Description = Localisation.Manager.AmethystModule_VCRedist_Description,
             });
             ModuleStrings.Add("wix", new ModuleDisplayStrings() {
-                Title       = Localisation.Manager.AmethystModule_WIX_Title,
-                Summary     = Localisation.Manager.AmethystModule_WIX_Summary,
-                Description = Localisation.Manager.AmethystModule_WIX_Description,
+                Title       = Localisation.Manager.KinectModule_WIX_Title,
+                Summary     = Localisation.Manager.KinectModule_WIX_Summary,
+                Description = Localisation.Manager.KinectModule_WIX_Description,
             });
             ModuleStrings.Add("kinect-v1-sdk", new ModuleDisplayStrings() {
-                Title       = Localisation.Manager.AmethystModule_KinectV1_Title,
-                Summary     = Localisation.Manager.AmethystModule_KinectV1_Summary,
-                Description = Localisation.Manager.AmethystModule_KinectV1_Description,
+                Title       = Localisation.Manager.KinectModule_KinectV1_Title,
+                Summary     = Localisation.Manager.KinectModule_KinectV1_Summary,
+                Description = Localisation.Manager.KinectModule_KinectV1_Description,
             });
             ModuleStrings.Add("kinect-v1-toolkit", new ModuleDisplayStrings() {
-                Title       = Localisation.Manager.AmethystModule_KinectV1Toolkit_Title,
-                Summary     = Localisation.Manager.AmethystModule_KinectV1Toolkit_Summary,
-                Description = Localisation.Manager.AmethystModule_KinectV1Toolkit_Description,
+                Title       = Localisation.Manager.KinectModule_KinectV1Toolkit_Title,
+                Summary     = Localisation.Manager.KinectModule_KinectV1Toolkit_Summary,
+                Description = Localisation.Manager.KinectModule_KinectV1Toolkit_Description,
             });
             ModuleStrings.Add("psmsex", new ModuleDisplayStrings() {
-                Title       = Localisation.Manager.AmethystModule_PSMS_Title,
-                Summary     = Localisation.Manager.AmethystModule_PSMS_Summary,
-                Description = Localisation.Manager.AmethystModule_PSMS_Description,
+                Title       = Localisation.Manager.PsmoveModule_PSMS_Title,
+                Summary     = Localisation.Manager.PsmoveModule_PSMS_Summary,
+                Description = Localisation.Manager.PsmoveModule_PSMS_Description,
             });
             ModuleStrings.Add("psmsex-vdm", new ModuleDisplayStrings() {
-                Title       = Localisation.Manager.AmethystModule_PSMS_VDM_Title,
-                Summary     = Localisation.Manager.AmethystModule_PSMS_VDM_Summary,
-                Description = Localisation.Manager.AmethystModule_PSMS_VDM_Description,
+                Title       = Localisation.Manager.PsmoveModule_PSMS_VDM_Title,
+                Summary     = Localisation.Manager.PsmoveModule_PSMS_VDM_Summary,
+                Description = Localisation.Manager.PsmoveModule_PSMS_VDM_Description,
             });
             ModuleStrings.Add("psmsex-drivers", new ModuleDisplayStrings() {
-                Title       = Localisation.Manager.AmethystModule_PSMS_Drivers_Title,
-                Summary     = Localisation.Manager.AmethystModule_PSMS_Drivers_Summary,
-                Description = Localisation.Manager.AmethystModule_PSMS_Drivers_Description,
+                Title       = Localisation.Manager.PsmoveModule_PSMS_Drivers_Title,
+                Summary     = Localisation.Manager.PsmoveModule_PSMS_Drivers_Summary,
+                Description = Localisation.Manager.PsmoveModule_PSMS_Drivers_Description,
             });
 
             // Parse modules

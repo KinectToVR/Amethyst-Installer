@@ -72,6 +72,9 @@ namespace amethyst_installer_gui {
 		public string Download_FailureCritical => 
 			LocaleManager.GetString("Download_FailureCritical");
 
+		public string Download_FailureChecksum => 
+			LocaleManager.GetString("Download_FailureChecksum");
+
 		public string EULA_Agree => 
 			LocaleManager.GetString("EULA_Agree");
 
@@ -324,59 +327,59 @@ namespace amethyst_installer_gui {
 		public string AmethystModule_VCRedist_Description => 
 			LocaleManager.GetString("AmethystModule_VCRedist_Description");
 
-		public string AmethystModule_WIX_Title => 
-			LocaleManager.GetString("AmethystModule_WIX_Title");
+		public string KinectModule_WIX_Title => 
+			LocaleManager.GetString("KinectModule_WIX_Title");
 
-		public string AmethystModule_WIX_Summary => 
-			LocaleManager.GetString("AmethystModule_WIX_Summary");
+		public string KinectModule_WIX_Summary => 
+			LocaleManager.GetString("KinectModule_WIX_Summary");
 
-		public string AmethystModule_WIX_Description => 
-			LocaleManager.GetString("AmethystModule_WIX_Description");
+		public string KinectModule_WIX_Description => 
+			LocaleManager.GetString("KinectModule_WIX_Description");
 
-		public string AmethystModule_KinectV1_Title => 
-			LocaleManager.GetString("AmethystModule_KinectV1_Title");
+		public string KinectModule_KinectV1_Title => 
+			LocaleManager.GetString("KinectModule_KinectV1_Title");
 
-		public string AmethystModule_KinectV1_Summary => 
-			LocaleManager.GetString("AmethystModule_KinectV1_Summary");
+		public string KinectModule_KinectV1_Summary => 
+			LocaleManager.GetString("KinectModule_KinectV1_Summary");
 
-		public string AmethystModule_KinectV1_Description => 
-			LocaleManager.GetString("AmethystModule_KinectV1_Description");
+		public string KinectModule_KinectV1_Description => 
+			LocaleManager.GetString("KinectModule_KinectV1_Description");
 
-		public string AmethystModule_KinectV1Toolkit_Title => 
-			LocaleManager.GetString("AmethystModule_KinectV1Toolkit_Title");
+		public string KinectModule_KinectV1Toolkit_Title => 
+			LocaleManager.GetString("KinectModule_KinectV1Toolkit_Title");
 
-		public string AmethystModule_KinectV1Toolkit_Summary => 
-			LocaleManager.GetString("AmethystModule_KinectV1Toolkit_Summary");
+		public string KinectModule_KinectV1Toolkit_Summary => 
+			LocaleManager.GetString("KinectModule_KinectV1Toolkit_Summary");
 
-		public string AmethystModule_KinectV1Toolkit_Description => 
-			LocaleManager.GetString("AmethystModule_KinectV1Toolkit_Description");
+		public string KinectModule_KinectV1Toolkit_Description => 
+			LocaleManager.GetString("KinectModule_KinectV1Toolkit_Description");
 
-		public string AmethystModule_PSMS_Title => 
-			LocaleManager.GetString("AmethystModule_PSMS_Title");
+		public string PsmoveModule_PSMS_Title => 
+			LocaleManager.GetString("PsmoveModule_PSMS_Title");
 
-		public string AmethystModule_PSMS_Summary => 
-			LocaleManager.GetString("AmethystModule_PSMS_Summary");
+		public string PsmoveModule_PSMS_Summary => 
+			LocaleManager.GetString("PsmoveModule_PSMS_Summary");
 
-		public string AmethystModule_PSMS_Description => 
-			LocaleManager.GetString("AmethystModule_PSMS_Description");
+		public string PsmoveModule_PSMS_Description => 
+			LocaleManager.GetString("PsmoveModule_PSMS_Description");
 
-		public string AmethystModule_PSMS_VDM_Title => 
-			LocaleManager.GetString("AmethystModule_PSMS_VDM_Title");
+		public string PsmoveModule_PSMS_VDM_Title => 
+			LocaleManager.GetString("PsmoveModule_PSMS_VDM_Title");
 
-		public string AmethystModule_PSMS_VDM_Summary => 
-			LocaleManager.GetString("AmethystModule_PSMS_VDM_Summary");
+		public string PsmoveModule_PSMS_VDM_Summary => 
+			LocaleManager.GetString("PsmoveModule_PSMS_VDM_Summary");
 
-		public string AmethystModule_PSMS_VDM_Description => 
-			LocaleManager.GetString("AmethystModule_PSMS_VDM_Description");
+		public string PsmoveModule_PSMS_VDM_Description => 
+			LocaleManager.GetString("PsmoveModule_PSMS_VDM_Description");
 
-		public string AmethystModule_PSMS_Drivers_Title => 
-			LocaleManager.GetString("AmethystModule_PSMS_Drivers_Title");
+		public string PsmoveModule_PSMS_Drivers_Title => 
+			LocaleManager.GetString("PsmoveModule_PSMS_Drivers_Title");
 
-		public string AmethystModule_PSMS_Drivers_Summary => 
-			LocaleManager.GetString("AmethystModule_PSMS_Drivers_Summary");
+		public string PsmoveModule_PSMS_Drivers_Summary => 
+			LocaleManager.GetString("PsmoveModule_PSMS_Drivers_Summary");
 
-		public string AmethystModule_PSMS_Drivers_Description => 
-			LocaleManager.GetString("AmethystModule_PSMS_Drivers_Description");
+		public string PsmoveModule_PSMS_Drivers_Description => 
+			LocaleManager.GetString("PsmoveModule_PSMS_Drivers_Description");
 
 		public string SystemRequirement_Category_Compatibility => 
 			LocaleManager.GetString("SystemRequirement_Category_Compatibility");
