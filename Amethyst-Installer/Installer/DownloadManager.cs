@@ -54,13 +54,17 @@ namespace amethyst_installer_gui.Installer {
 
             try {
                 Task.Run(() => {
+#if !DEBUG
                     try {
+#endif
                         Download.DownloadFileAsync(moduleToInstall.Remote.MainUrl, moduleToInstall.Remote.Filename, Constants.AmethystTempDirectory, DownloadModule_ProgressCallback, DownloadComplete, DownloadIndex).GetAwaiter().GetResult();
+#if !DEBUG
                     } catch ( Exception e ) {
                         Logger.Fatal($"Failed to download file {moduleToInstall.Remote.Filename}!");
                         Logger.Fatal(Util.FormatException(e));
                         DownloadFailed(index);
                     }
+#endif
                 });
             } catch ( OperationCanceledException ) {
                 DownloadFailed(index);
