@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using WpfColor = System.Windows.Media.Color;
 
 namespace amethyst_installer_gui.PInvoke {
@@ -109,7 +105,9 @@ namespace amethyst_installer_gui.PInvoke {
 
         #endregion
 
-
+        /// <summary>
+        /// Whether the current application should use dark mode or not
+        /// </summary>
         public static bool ShouldUseDarkMode {
             get {
                 if ( WindowsUtils.GetVersion().Major > ( int ) WindowsUtils.WindowsMajorReleases.Win10_1903 ) {

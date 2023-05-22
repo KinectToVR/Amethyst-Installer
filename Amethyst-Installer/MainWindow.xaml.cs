@@ -114,6 +114,8 @@ namespace amethyst_installer_gui {
             }
         }
 
+        // @TODO: Attach WPF handlers to receive events when themes are changed, so that we can react to them (hopefully)
+
         private void PrepareAnalytics() {
             Analytics.Devices = DeviceFlags.None;
             Analytics.HeadsetModel = OpenVRUtil.HmdType;
