@@ -1,6 +1,7 @@
 using amethyst_installer_gui.Controls;
 using amethyst_installer_gui.Installer;
 using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shell;
@@ -50,6 +51,14 @@ namespace amethyst_installer_gui.Pages {
             for ( int i = 0; i < InstallerStateManager.ModulesToInstall.Count; i++ ) {
 
                 var moduleToInstall = InstallerStateManager.ModulesToInstall[i];
+
+                if ( !InstallerStateManager.ModuleStrings.ContainsKey(moduleToInstall.Id) ) {
+                    Logger.Fatal($"Module \"{moduleToInstall.Id}\" does not have any strings associated with it! Skipping...");
+#if DEBUG
+                    throw new Exception($"ModuleStringNotFoundException: Module ({moduleToInstall.Id}) does not have any strings associated with it.");
+#endif
+                    continue;
+                }
 
                 DownloadItem downloadItem = new DownloadItem();
                 downloadItem.Margin = new Thickness(0, 0, 0, 12);

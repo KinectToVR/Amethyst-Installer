@@ -81,6 +81,13 @@ namespace amethyst_installer_gui.Pages {
                     Logger.Warn($"Module ({module.Id}) of type {module.Install.Type} couldn't be found! Skipping...");
                     continue;
                 }
+                if ( !InstallerStateManager.ModuleStrings.ContainsKey(module.Id) ) {
+                    Logger.Warn($"Module ({module.Id}) doesn't have any associated keys! Skipping...");
+#if DEBUG
+                    throw new Exception($"ModuleStringNotFoundException: Module ({module.Id}) does not have any strings associated with it.");
+#endif
+                    continue;
+                }
 
                 Logger.Info($"Installing module {module.Id} of type {module.Install.Type}...");
 
