@@ -2,6 +2,7 @@ using amethyst_installer_gui.Installer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,67 +49,69 @@ namespace amethyst_installer_gui.Pages {
         public void OnButtonTertiary(object sender, RoutedEventArgs e) { }
 
         public void OnSelected() {
-
             // Localize the installer footnote
-            var techPreviewRaw = Localisation.Manager.Welcome_Footnote;
+            string techPreviewRaw = Localisation.Manager.Welcome_Footnote;
             string t_firstPart = techPreviewRaw.Substring(0, techPreviewRaw.IndexOf("%s%"));
             string t_secondPart = techPreviewRaw.Substring(techPreviewRaw.IndexOf("%s%") + 3);
 
             previewWarning.Inlines.Clear();
-            previewWarning.Inlines.Add(t_firstPart);
-            Hyperlink discordLink = new Hyperlink()
-            {
+            previewWarning.Inlines.Add("Amethyst was moved to the Microsoft Store! ");
+            previewWarning.Inlines.Add("The current one will need to be uninstalled. ");
+
+            Hyperlink discordLink = new Hyperlink {
                 NavigateUri = new Uri(Constants.DiscordInvite),
                 Foreground = WindowsColorHelpers.AccentLight,
-                BaselineAlignment = BaselineAlignment.Center,
+                BaselineAlignment = BaselineAlignment.Center
             };
-            discordLink.Inlines.Add(Localisation.Manager.Welcome_Discord);
+            discordLink.Inlines.Add("You can find more info on that, here.");
             discordLink.RequestNavigate += OpenUriUrl;
             previewWarning.Inlines.Add(discordLink);
-            if ( t_secondPart.Length > 0 )
-                previewWarning.Inlines.Add(t_secondPart);
 
             // Splash screen
             GenerateSplashText();
         }
+
         private void OpenUriUrl(object sender, RequestNavigateEventArgs e) {
             SoundPlayer.PlaySound(SoundEffect.Invoke);
             Process.Start(( sender as Hyperlink ).NavigateUri.ToString());
         }
 
         private void splash_MouseUp(object sender, MouseButtonEventArgs e) {
-
-            if ( e.ChangedButton != MouseButton.Left )
+            if ( e.ChangedButton != MouseButton.Left ) {
                 return;
+            }
 
             SoundPlayer.PlaySound(SoundEffect.Focus);
             GenerateSplashText();
         }
 
         private void splash_MouseWheel(object sender, MouseWheelEventArgs e) {
-
 #if DEBUG
             // UP
-            if ( e.Delta > 0 )
+            if ( e.Delta > 0 ) {
                 splashId += 2;
+            }
+
             // DOWN
-            if ( e.Delta < 0)
+            if ( e.Delta < 0 ) {
                 splashId -= 2;
+            }
+
             GenerateSplashText();
 #endif
         }
 
 #if DEBUG
-        int splashId = -1;
+        private int splashId = -1;
 #endif
 
         private void GenerateSplashText() {
-
 #if DEBUG
             splashId++;
             splashId %= InstallerStateManager.API_Response.Splashes.Count;
             if ( splashId < 0 ) {
-                splashId = (splashId + InstallerStateManager.API_Response.Splashes.Count) % InstallerStateManager.API_Response.Splashes.Count;
+                splashId = ( splashId + InstallerStateManager.API_Response.Splashes.Count ) %
+                           InstallerStateManager.API_Response.Splashes.Count;
             }
 #else
             Random rng = new Random();
@@ -116,24 +119,32 @@ namespace amethyst_installer_gui.Pages {
 #endif
 
             string splashString = InstallerStateManager.API_Response.Splashes[splashId];
-            if ( splashString[0] == '"' )
+            if ( splashString[0] == '"' ) {
                 splashText.Text = splashString;
-            else
+            } else {
                 splashText.Text = $"\"{splashString}\"";
-        }
-
-        private void proceedButton_Click(object sender, RoutedEventArgs e) {
-            Util.HandleKeyboardFocus(e);
-            // Advance to next page
-            if ( MainWindow.HandleSpeedrun() ) {
-                MainWindow.Instance.SetPage(InstallerState.EULA, false);
-                SoundPlayer.PlaySound(SoundEffect.MoveNext);
             }
         }
 
+        private void proceedButton_Click(object sender, RoutedEventArgs e) {
+            Process.Start(
+                new ProcessStartInfo("ms-windows-store://pdp/?productid=9P7R8FGDDGDH") { UseShellExecute = true });
+
+            ProcessStartInfo procInfo = new ProcessStartInfo() {
+                // Pass same args
+                FileName = Process.GetCurrentProcess().MainModule.FileName,
+                Arguments = " --uninstall",
+                WorkingDirectory = Directory.GetCurrentDirectory()
+            };
+
+            Process.Start(procInfo);
+        }
+
         private void CheckBox_Checked(object sender, RoutedEventArgs e) {
-            if ( ActualWidth == 0 || ActualHeight == 0 )
+            if ( ActualWidth == 0 || ActualHeight == 0 ) {
                 return;
+            }
+
             SoundPlayer.PlaySound(SoundEffect.Invoke);
         }
     }

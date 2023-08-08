@@ -41,12 +41,13 @@
                     <Border Background="Transparent" Grid.Row="0" MouseDown="Titlebar_MouseDown" Margin="-34,0,0,0" Height="25" />
                     <StackPanel Grid.Row="1" Orientation="Vertical">
                         <Controls:SidebarTask x:Name="sidebar_welcome" State="Checkmark" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Welcome}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_installOptions" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_InstallOptions}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_location" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Location}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_sysreq" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Sysreq}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_download" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Download}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_install" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Install}" Margin="0,0,0,22" IsTabStop="False"/>
-                        <Controls:SidebarTask x:Name="sidebar_done" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Done}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask Visibility="Collapsed" x:Name="sidebar_installOptions" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_InstallOptions}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask Visibility="Collapsed" x:Name="sidebar_location" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Location}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask Visibility="Collapsed" x:Name="sidebar_sysreq" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Sysreq}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask Visibility="Collapsed" x:Name="sidebar_download" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Download}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask Visibility="Collapsed" x:Name="sidebar_install" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Install}" Margin="0,0,0,22" IsTabStop="False"/>
+                        <Controls:SidebarTask Visibility="Collapsed" x:Name="sidebar_done" State="Default" Text="{Binding Source={x:Static local:Localisation.Manager}, Path=Sidebar_Task_Done}" Margin="0,0,0,22" IsTabStop="False"/>
+                       
                     </StackPanel>
                     <StackPanel Grid.Row="3" Margin="-5,0,0,25">
                         <Label x:Name="speedrunTimer" FontWeight="SemiBold" Content="00:00:00" FontSize="22" Visibility="Hidden">
