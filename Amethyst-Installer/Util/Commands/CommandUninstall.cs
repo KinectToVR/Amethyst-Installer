@@ -6,10 +6,9 @@ using System.Windows;
 
 namespace amethyst_installer_gui.Commands {
     public class CommandUninstall : ICommand {
-
         public string Command { get => "uninstall"; set { } }
         public string Description { get => "Starts the uninstall workflow"; set { } }
-        public string[] Aliases { get => new string[] { "x" }; set {  } }
+        public string[] Aliases { get => new string[] { "x" }; set { } }
 
         public bool Execute(ref string[] parameters) {
             // @TODO: Rework whenever we have a better upgrade workflow
@@ -25,20 +24,16 @@ namespace amethyst_installer_gui.Commands {
                 Process.Start(new ProcessStartInfo() {
                     FileName = tempAmeInstallerPath,
                     Arguments = string.Join("\" \"", App.Arguments),
-                    WorkingDirectory = Constants.AmethystTempDirectory,
+                    WorkingDirectory = Constants.AmethystTempDirectory
                 });
                 Util.Quit(ExitCodes.Command);
                 return true;
             }
 
-            if (Util.ShowMessageBox("Are you sure you want to uninstall Amethyst?", "Uninstalling Amethyst", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
-
-                App.Init();
-                UninstallUtil.UninstallAmethyst();
-                Util.ShowMessageBox("Successfully uninstalled Amethyst!", "Uninstalling Amethyst", MessageBoxButton.OK);
-            }
-
+            App.Init();
+            UninstallUtil.UninstallAmethyst();
             Util.Quit(ExitCodes.Command);
+
             return true;
         }
     }
